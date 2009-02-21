@@ -1,0 +1,33 @@
+<project name="jbehave-deploy" default="help">
+
+	<!-- Load env properties -->
+  <property environment="env" />
+	<!-- Load deploy.properties -->
+  <property file="deploy.properties" />
+
+  <target name="help">
+    <echo message="usage: ant deploy:webapp" />
+  </target>
+
+  <target name="deploy:webapp" depends="war">
+    <copy file="${webapp.war}" todir="${deploy.dir}" />
+  </target>
+  
+  <target name="war" depends="copy:webapp">
+    <jar basedir="${webapp.unpacked}" destfile="${webapp.war}" />
+  </target>
+
+  <target name="copy:webapp">
+    <mkdir dir="${webapp.unpacked}"/>
+    <copy todir="${webapp.unpacked}">
+      <fileset dir="${webapp.dir}"/>
+    </copy>
+    <copy todir="${webapp.unpacked}/WEB-INF/lib">
+      <fileset dir="${lib.dir}"/>
+    </copy>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
+  </target>
+</project>

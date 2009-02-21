@@ -1,0 +1,212 @@
+body {
+	background-color: #ccc;
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+	font-size: 12px;
+}
+
+#view {
+	background-color: #fff;
+	position: relative;
+	width: 860px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+#content {
+	width: 840px;
+	float: left;
+	margin-top: -50px;
+	padding: 10px
+}
+
+#content h2 {
+	margin-bottom: 5px;
+	font-size: 12px;
+	color: white;
+	font-weight: bold;
+	padding: 2px 6px 2px 6px;
+}
+
+#navigation {
+	width: 170px;
+	float: left;
+}
+
+#menu {
+	background-color: #ebebeb;
+	border: 2px solid #ccc;
+	padding: 10px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 120px;
+	line-height: 1;
+}
+
+.menu-group {
+	font-weight: bold;
+	padding: 0px 1px 0px 1px;
+	text-decoration: none;
+	text-shadow: none;
+}
+
+.menu-group a {
+	background: #ccc none repeat scroll 0%;
+	border-right: 4px solid #b3b3a1;
+	color: #333;
+	cursor: pointer;
+	display: block;
+	font-weight: bold;
+	padding: 2px 5px 2px 2px;
+	text-align: right;
+	text-decoration: none;
+	text-shadow: none;
+}
+
+.menu-group-content {
+	font-weight: normal;
+	text-transform: none;
+}
+
+#menu-selected,.menu-file a:link,.menu-file a:visited,.menu-index a:link,.menu-index a:visited
+	{
+	background: #999 none repeat scroll 0%;
+	border-right: 4px solid #666;
+	color: #333;
+	display: block;
+	font-weight: bold;
+	margin: 2px 0pt;
+	padding: 2px 2px 2px 5px;
+	text-align: left;
+	text-decoration: none;
+	text-shadow: none;
+}
+
+.menu-file a:hover,.menu-file a:active,.menu-index a:hover,.menu-index a:active
+	{
+	background-color: #999;
+	border-right: 4px solid #333;
+	color: #090;
+}
+
+#menu-selected {
+	background-color: #fff;
+	border-right: 4px solid #fff;
+	color: #333;
+	text-shadow: none;
+}
+
+#header {
+	height: 167px;
+}
+
+#footer {
+	clear: both;
+}
+
+#actions {
+	margin: 10px;
+}
+
+#filters {
+	margin: 10px;
+}
+
+#errors {
+	color: #666;
+	border: solid #090 2px;
+	padding: 2px;
+}
+
+a,a:active,a:link,a:hover,a:visited {
+	color: #090;
+	font-weight: bold;
+	text-decoration: none
+}
+
+.label {
+	text-align: right;
+}
+
+fieldset {
+	background-color: #ebebeb;
+	border: 2px solid #ccc;
+}
+
+fieldset legend {
+	font-weight: bold;
+}
+
+fieldset table {
+	border-style: none;
+}
+
+fieldset table td {
+	text-align: left;
+}
+
+fieldset table td>label {
+	text-align: right;
+}
+
+fieldset p {
+	display: block;
+	vertical-align: bottom;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+fieldset label {
+	width: 120px;
+	text-align: right;
+	padding-right: 10px;
+	padding-top: 10px;
+}
+
+#actions fieldset label,#filters fieldset label {
+	width: auto;
+	text-align: left;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+fieldset input {
+	width: auto;
+	text-align: left;
+	padding-left: 2px;
+}
+
+#actions fieldset input,#filters fieldset input {
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+#actions fieldset a,#filters fieldset a {
+	padding-left: 10px;
+	padding-top: 2px;
+}
+
+table {
+	background-color: #ebebeb;
+	border: 2px solid #ccc;
+	width: 100%;
+	margin-top: 10px;
+}
+
+table th {
+	font-weight: bold;
+	background-color: #666;
+	color: #fff;
+}
+
+table th {
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: center;
+}
+
+table td {
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: center;
+}
