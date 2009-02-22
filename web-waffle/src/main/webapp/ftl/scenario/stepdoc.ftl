@@ -15,10 +15,10 @@
         <div id="stepdocs">  
 	 		 <fieldset>
 	             <legend><@i.messageFor "stepdocs" "Stepdocs"/></legend>
-                 <p><@i.messageFor "stepdocsDescription" "Listed steps are extracted from registered steps classes"/></p>
-                 <p>
-                   <@w.selectSingle "stepdocContext.view" w.asNameableValues(stepdocContext.getViews(),"name()","name()") stepdocContext.getView() /></td></tr>
-                   <a onclick="fireActionMethod('toggle');"><@i.messageFor "updateView" "Update View"/></a>        
+                 <p><@i.messageFor "stepdocsDescription" "The following stepdocs are automatically generated from the registered Java Steps class"/></p>
+                 <p><@i.messageFor "view" "View"/>
+                   <@w.selectSingle "stepdocContext.view" w.asNameableValues(stepdocContext.getViews(),"name()","name()") stepdocContext.getView() 
+                   "onchange=\"fireActionMethod('toggle');\"" />
                  </p>
                  <p>
                     <pre class="brush: plain">
@@ -31,7 +31,7 @@
 								  </#list>
 							 </#if>
 							 <#if (view == 'METHODS') >
-	   		 		            ${stepdoc.signature}
+	   		 		            ${stepdoc.methodSignature}
 	    		            </#if>
 	            		</#list>
                     </pre>
