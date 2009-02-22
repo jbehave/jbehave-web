@@ -9,13 +9,17 @@
 <div id="content">
     <form action="${base}/scenario/stepdoc.action">
 
-		<#assign stepdocs = stepdocContext.stepdocs />
-		<#assign methodsShown = stepdocContext.methodsShown />
+		<#assign stepdocs = stepdocContext.stepdocs />		
+		<#assign view = stepdocContext.view />
         <#if (stepdocs.size() > 0) >
         <div id="stepdocs">  
 	 		 <fieldset>
 	             <legend><@i.messageFor "stepdocs" "Stepdocs"/></legend>
 				 <p>
+                   <@w.selectSingle "stepdocContext.view" w.asNameableValues(stepdocContext.getViews(),"name()","name()") stepdocContext.getView() /></td></tr>
+                   <a onclick="fireActionMethod('toggle');"><@i.messageFor "updateView" "Update View"/></a>        
+                 </p>
+                 <p>
                     <pre class="brush: plain">
 			            <#list stepdocs as stepdoc>
 	    		            ${stepdoc.annotation.simpleName} ${stepdoc.pattern}
@@ -25,7 +29,7 @@
 									  ${alias}
 								  </#list>
 							 </#if>
-							 <#if (methodsShown) >
+							 <#if (view == 'METHODS') >
 	   		 		            ${stepdoc.method}
 	    		            </#if>
 	            		</#list>

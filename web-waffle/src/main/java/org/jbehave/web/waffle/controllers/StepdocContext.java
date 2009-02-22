@@ -1,6 +1,7 @@
 package org.jbehave.web.waffle.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -8,9 +9,11 @@ import org.jbehave.scenario.steps.Stepdoc;
 
 public class StepdocContext {
 
+	public enum View { SIMPLE, METHODS }
+	
 	private List<Stepdoc> stepdocs = new ArrayList<Stepdoc>();
-	private boolean methodsShown = false;
-
+	private View view = View.SIMPLE;
+	
 	public StepdocContext() {	
 	}
 	
@@ -26,14 +29,18 @@ public class StepdocContext {
 		this.stepdocs.clear();
 	}
 	
-	public boolean isMethodsShown() {
-		return methodsShown;
-	}
-
-	public void setMethodsShown(boolean methodsShown) {
-		this.methodsShown = methodsShown;
+	public List<View> getViews(){
+		return Arrays.asList(View.values());
 	}
 	
+	public View getView() {
+		return view;
+	}
+
+	public void setView(View view) {
+		this.view = view;
+	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);

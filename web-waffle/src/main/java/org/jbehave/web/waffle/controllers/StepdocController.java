@@ -27,6 +27,11 @@ public class StepdocController extends MenuAwareController {
 		stepdocContext.addStepdocs(stepdocGenerator.generate(steps.getClass()));
 	}
 
+	@ActionMethod
+	public void toggle() {
+		// used to toggle context view
+	}
+	
 	public StepdocContext getStepdocContext() {
 		return stepdocContext;
 	}
