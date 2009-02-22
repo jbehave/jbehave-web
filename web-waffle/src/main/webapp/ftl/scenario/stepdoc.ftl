@@ -15,7 +15,8 @@
         <div id="stepdocs">  
 	 		 <fieldset>
 	             <legend><@i.messageFor "stepdocs" "Stepdocs"/></legend>
-				 <p>
+                 <p><@i.messageFor "stepdocsDescription" "Listed steps are extracted from registered steps classes"/></p>
+                 <p>
                    <@w.selectSingle "stepdocContext.view" w.asNameableValues(stepdocContext.getViews(),"name()","name()") stepdocContext.getView() /></td></tr>
                    <a onclick="fireActionMethod('toggle');"><@i.messageFor "updateView" "Update View"/></a>        
                  </p>
