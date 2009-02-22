@@ -31,7 +31,7 @@
 								  </#list>
 							 </#if>
 							 <#if (view == 'METHODS') >
-	   		 		            ${stepdoc.method}
+	   		 		            ${stepdoc.signature}
 	    		            </#if>
 	            		</#list>
                     </pre>
