@@ -1,7 +1,7 @@
 package org.jbehave.web.examples.trader.scenarios;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.jbehave.util.JUnit4Ensure.ensureThat;
+import static org.jbehave.Ensure.ensureThat;
 
 import java.util.List;
 

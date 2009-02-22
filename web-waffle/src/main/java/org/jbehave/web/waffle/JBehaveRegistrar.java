@@ -19,12 +19,14 @@ import org.codehaus.waffle.view.ViewResolver;
 import org.jbehave.scenario.MostUsefulConfiguration;
 import org.jbehave.scenario.ScenarioRunner;
 import org.jbehave.scenario.parser.PatternScenarioParser;
+import org.jbehave.scenario.steps.DefaultStepdocGenerator;
 import org.jbehave.scenario.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
 import org.jbehave.web.io.ZipFileArchiver;
 import org.jbehave.web.waffle.controllers.FileUploadController;
 import org.jbehave.web.waffle.controllers.FilesController;
 import org.jbehave.web.waffle.controllers.ScenarioController;
+import org.jbehave.web.waffle.controllers.StepdocController;
 
 public class JBehaveRegistrar extends AbstractRegistrar {
 
@@ -39,6 +41,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 		registerScenarioParser();
 		registerScenarioRunner();
 		registerSteps();
+		registerStepdocGenerator();
 		registerFileManager();
 		register("data/files", FilesController.class);
 		configureViews();
@@ -47,6 +50,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	@Override
 	public void session() {
 		register("scenario/scenario", ScenarioController.class);
+		register("scenario/stepdoc", StepdocController.class);
 	}
 	
 	@Override
@@ -63,7 +67,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 
 	protected Menu createMenu() {
 		Map<String, List<String>> content = new HashMap<String, List<String>>();
-		content.put("Menu", asList("Home:home", "Data Files:data/files", "Data Upload:data/upload", "Run Scenario:scenario/scenario"));
+		content.put("Menu", asList("Home:home", "Data Files:data/files", "Data Upload:data/upload", "Run Scenario:scenario/scenario", "Stepdoc:scenario/stepdoc"));
 		return new Menu(content);
 	}
 
@@ -73,6 +77,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 		viewResolver.configureView("data/files", "ftl/data/files");
 		viewResolver.configureView("data/upload", "ftl/data/upload");
 		viewResolver.configureView("scenario/scenario", "ftl/scenario/scenario");
+		viewResolver.configureView("scenario/stepdoc", "ftl/scenario/stepdoc");
 	}
 
 	protected void registerConfiguration() {
@@ -91,11 +96,14 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 		register(Steps.class);
 	}
 
+	protected void registerStepdocGenerator() {
+		register(DefaultStepdocGenerator.class);
+	}
+
 	protected void registerFileManager() {
 		register(ZipFileArchiver.class);
 		register(ArchivingFileManager.class);
 		registerInstance("uploadDirectory", new File(getProperty("java.io.tmpdir")+separator+"upload"));
 	}
-
 
 }
