@@ -15,13 +15,13 @@ import org.jbehave.scenario.definition.StoryDefinition;
 import org.jbehave.scenario.parser.ScenarioParser;
 import org.jbehave.scenario.reporters.PrintStreamScenarioReporter;
 import org.jbehave.scenario.reporters.ScenarioReporter;
-import org.jbehave.scenario.steps.Steps;
+import org.jbehave.scenario.steps.CandidateSteps;
 
 public class ScenarioController extends MenuAwareController {
 
 	private final ScenarioParser scenarioParser;
 	private final ScenarioRunner scenarioRunner;
-	private final Steps steps;
+	private final CandidateSteps[] steps;
 
 	private ByteArrayOutputStream outputStream;
 	private Configuration configuration;
@@ -29,7 +29,7 @@ public class ScenarioController extends MenuAwareController {
 	
 	public ScenarioController(Menu menu, Configuration configuration,
 			ScenarioParser scenarioParser, ScenarioRunner scenarioRunner,
-			Steps steps) {
+			CandidateSteps... steps) {
 		super(menu);
 		this.scenarioParser = scenarioParser;
 		this.scenarioRunner = scenarioRunner;
