@@ -24,9 +24,7 @@ public class StepdocController extends MenuAwareController {
 	@ActionMethod(asDefault = true)
 	public void generate() {
 		stepdocContext.clearStepdocs();
-		for ( CandidateSteps candidateSteps : steps ){
-			stepdocContext.addStepdocs(stepdocGenerator.generate(candidateSteps.getClass()));			
-		}
+		stepdocContext.addStepdocs(stepdocGenerator.generate(steps));			
 	}
 
 	@ActionMethod
