@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.codehaus.waffle.action.annotation.ActionMethod;
+import org.codehaus.waffle.action.annotation.PRG;
 import org.codehaus.waffle.menu.Menu;
 import org.codehaus.waffle.menu.MenuAwareController;
 import org.jbehave.scenario.Configuration;
@@ -44,8 +45,14 @@ public class ScenarioController extends MenuAwareController {
 		};
 		this.scenarioContext = new ScenarioContext();
 	}
-
+	
 	@ActionMethod(asDefault = true)
+	public void show() {
+		// no-op
+	}
+
+	@ActionMethod(asDefault = false)
+	@PRG(false)
 	public void run() {
 		if (isNotBlank(scenarioContext.getInput())) {
 			try {
