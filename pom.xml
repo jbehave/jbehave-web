@@ -5,7 +5,7 @@
   <version>2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBehave Web</name>
-  <description>JBehave Web aims to provide a web integration layer for Behaviou-Driven Development</description>
+  <description>JBehave Web aims to provide a web integration layer for Behaviour-Driven Development</description>
 
   <modules>
     <module>web-io</module>
