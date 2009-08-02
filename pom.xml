@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jbehave.web</groupId>
   <artifactId>jbehave-web</artifactId>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.0-rc1</version>
   <packaging>pom</packaging>
   <name>JBehave Web</name>
   <description>JBehave Web aims to provide a web integration layer for Behaviour-Driven Development</description>
@@ -344,9 +344,9 @@
   <contributors />
 
   <scm>
-    <connection>scm:svn:https://svn.codehaus.org/jbehave/sandbox/jbehave-web</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/jbehave/sandbox/jbehave-web</developerConnection>
-    <url>http://svn.codehaus.org/jbehave/sandbox/jbehave-web</url>
+    <connection>scm:svn:https://svn.codehaus.org/jbehave/tags/jbehave-web-2.0-rc1</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/jbehave/tags/jbehave-web-2.0-rc1</developerConnection>
+    <url>http://svn.codehaus.org/jbehave/tags/jbehave-web-2.0-rc1</url>
   </scm>
 
   <distributionManagement>
