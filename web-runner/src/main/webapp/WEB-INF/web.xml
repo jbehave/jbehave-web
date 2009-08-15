@@ -8,7 +8,7 @@
   <!-- Waffle Registrar and custom components -->
   <context-param>
     <param-name>org.codehaus.waffle.registrar.Registrar</param-name>
-    <param-value>org.jbehave.web.waffle.JBehaveRegistrar</param-value>
+    <param-value>org.jbehave.web.runner.waffle.JBehaveRegistrar</param-value>
   </context-param>
   <context-param>
     <param-name>register:DateValueConverter</param-name>
