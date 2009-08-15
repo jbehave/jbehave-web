@@ -21,7 +21,7 @@
     </dependency>
     <dependency>
       <groupId>org.jbehave.web</groupId>
-      <artifactId>jbehave-web-waffle</artifactId>
+      <artifactId>jbehave-web-runner</artifactId>
       <version>${pom.version}</version>
     </dependency>
   </dependencies>

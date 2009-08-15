@@ -11,7 +11,7 @@
     <module>web-io</module>
     <module>web-resources</module>
     <module>web-selenium</module>
-    <module>web-waffle</module>
+    <module>web-runner</module>
   </modules>
 
   <properties>
