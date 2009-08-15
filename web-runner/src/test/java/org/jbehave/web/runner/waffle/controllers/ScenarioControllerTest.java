@@ -1,4 +1,4 @@
-package org.jbehave.web.waffle.controllers;
+package org.jbehave.web.runner.waffle.controllers;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
@@ -14,6 +14,7 @@ import org.jbehave.scenario.annotations.When;
 import org.jbehave.scenario.parser.PatternScenarioParser;
 import org.jbehave.scenario.parser.ScenarioParser;
 import org.jbehave.scenario.steps.Steps;
+import org.jbehave.web.runner.waffle.controllers.ScenarioController;
 import org.junit.Test;
 
 

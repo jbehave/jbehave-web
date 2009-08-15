@@ -21,7 +21,7 @@
       </outputFileNameMapping>
       <unpack>true</unpack>
       <includes>
-        <include>${pom.groupId}:jbehave-web-waffle</include>
+        <include>${pom.groupId}:jbehave-web-runner</include>
       </includes>
     </dependencySet>
     <dependencySet>

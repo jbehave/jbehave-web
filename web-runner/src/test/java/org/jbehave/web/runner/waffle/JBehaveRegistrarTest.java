@@ -1,4 +1,4 @@
-package org.jbehave.web.waffle;
+package org.jbehave.web.runner.waffle;
 
 import static org.codehaus.waffle.context.ContextLevel.APPLICATION;
 import static org.codehaus.waffle.context.ContextLevel.REQUEST;
@@ -6,7 +6,7 @@ import static org.codehaus.waffle.context.ContextLevel.SESSION;
 import static org.junit.Assert.assertNotNull;
 
 import org.codehaus.waffle.testing.registrar.RegistrarHelper;
-import org.jbehave.web.waffle.JBehaveRegistrar;
+import org.jbehave.web.runner.waffle.JBehaveRegistrar;
 import org.junit.Test;
 
 public class JBehaveRegistrarTest {

@@ -33,7 +33,7 @@ Or Copy/paste the following in:-
    Then the alert status should be ON
 
 Note: src/main/webapp only contains the custom resources that override the default ones contained in 
-jbehave-web-waffle.  So, e.g. to change override default style, only src/main/webapp/style/jbehave.css needs
+jbehave-web-runner.  So, e.g. to change override default style, only src/main/webapp/style/jbehave.css needs
 to be added. Similary, to change home page template, only src/main/webapp/ftl/home.ftl is needed.  If any of 
 these are removed the defaults will apply.
 

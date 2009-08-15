@@ -1,4 +1,4 @@
-package org.jbehave.web.waffle.controllers;
+package org.jbehave.web.runner.waffle.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;

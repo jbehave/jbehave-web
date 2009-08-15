@@ -1,4 +1,4 @@
-package org.jbehave.web.waffle;
+package org.jbehave.web.runner.waffle;
 
 import static java.io.File.separator;
 import static java.lang.System.getProperty;
@@ -23,10 +23,10 @@ import org.jbehave.scenario.steps.DefaultStepdocGenerator;
 import org.jbehave.scenario.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
 import org.jbehave.web.io.ZipFileArchiver;
-import org.jbehave.web.waffle.controllers.FileUploadController;
-import org.jbehave.web.waffle.controllers.FilesController;
-import org.jbehave.web.waffle.controllers.ScenarioController;
-import org.jbehave.web.waffle.controllers.StepdocController;
+import org.jbehave.web.runner.waffle.controllers.FileUploadController;
+import org.jbehave.web.runner.waffle.controllers.FilesController;
+import org.jbehave.web.runner.waffle.controllers.ScenarioController;
+import org.jbehave.web.runner.waffle.controllers.StepdocController;
 
 public class JBehaveRegistrar extends AbstractRegistrar {
 

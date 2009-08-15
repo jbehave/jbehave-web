@@ -1,4 +1,4 @@
-package org.jbehave.web.waffle.controllers;
+package org.jbehave.web.runner.waffle.controllers;
 
 import org.codehaus.waffle.action.annotation.ActionMethod;
 import org.codehaus.waffle.menu.Menu;
