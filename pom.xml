@@ -344,9 +344,9 @@
   <contributors />
 
   <scm>
-    <connection>scm:svn:https://svn.codehaus.org/jbehave/trunk</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/jbehave/trunk</developerConnection>
-    <url>http://svn.codehaus.org/jbehave/trunk</url>
+    <connection>scm:svn:https://svn.codehaus.org/jbehave/trunk/web</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/jbehave/trunk/web</developerConnection>
+    <url>http://svn.codehaus.org/jbehave/trunk/web</url>
   </scm>
 
   <distributionManagement>
