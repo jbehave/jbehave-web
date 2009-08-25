@@ -56,9 +56,40 @@ public class SeleniumStepsTest {
 		};
 		runner.run(parser.defineStoryFrom(scenarioInput), configuration, steps);
 	}
+	@Test
+
+	public void canRunSuccessfulScenario2() throws Throwable{
+		String scenarioInput = "Scenario: A simple web test" + NL
+						+ NL
+						+ "Given a test" + NL
+						+ "When a test is executed" + NL
+						+ "Then a tester is a happy hopper";
+		mockery.checking(new Expectations(){{
+			one(mockedSelenium).start();
+			one(mockedSelenium).close();
+			one(mockedSelenium).stop();
+		}});
+		Steps steps = new MySteps(mockedSelenium){
+
+			@Override
+			protected ConditionRunner createConditionRunner(Selenium selenium) {
+				return mockRunner;
+			}
+
+		};
+		runner.run(parser.defineStoryFrom(scenarioInput), configuration, steps);
+	}
 
 	public static class MySteps extends SeleniumSteps {
-		@Given("a test")
+
+        public MySteps() {
+        }
+
+        public MySteps(Selenium selenium) {
+            super(selenium);
+        }
+
+        @Given("a test")
 		public void aTest() {
 		}
 

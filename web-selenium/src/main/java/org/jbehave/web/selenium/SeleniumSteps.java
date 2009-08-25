@@ -30,12 +30,22 @@ public class SeleniumSteps extends Steps {
 		this(new StepsConfiguration());
 	}
 
+    public SeleniumSteps(Selenium selenium) {
+        this(new StepsConfiguration(), selenium);
+    }
+
 	public SeleniumSteps(StepsConfiguration configuration){
 		super(configuration);
 		this.selenium = createSelenium();
 		this.runner = createConditionRunner(selenium);
 	}
-	
+
+	public SeleniumSteps(StepsConfiguration configuration, Selenium selenium){
+		super(configuration);
+		this.selenium = selenium;
+		this.runner = createConditionRunner(selenium);
+	}
+
 	@BeforeScenario
 	public void beforeScenario() throws Exception {
 		selenium.start();
@@ -55,6 +65,7 @@ public class SeleniumSteps extends Steps {
 	 * Selenium.
 	 * 
 	 * @return A Selenium instance
+     * @deprecated Use second constructor instead
 	 */
 	protected Selenium createSelenium() {
 		return new DefaultSelenium("localhost", 4444, "*firefox",
