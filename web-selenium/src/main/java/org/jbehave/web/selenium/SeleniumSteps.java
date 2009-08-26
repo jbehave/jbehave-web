@@ -30,19 +30,19 @@ public class SeleniumSteps extends Steps {
 		this(new StepsConfiguration());
 	}
 
-    public SeleniumSteps(Selenium selenium) {
-        this(new StepsConfiguration(), selenium);
-    }
-
 	public SeleniumSteps(StepsConfiguration configuration){
 		super(configuration);
 		this.selenium = createSelenium();
 		this.runner = createConditionRunner(selenium);
 	}
 
-	public SeleniumSteps(StepsConfiguration configuration, Selenium selenium){
+    public SeleniumSteps(Selenium selenium) {
+        this(new SeleniumStepsConfiguration(selenium, new SeleniumContext()));
+    }
+
+	public SeleniumSteps(SeleniumStepsConfiguration configuration){
 		super(configuration);
-		this.selenium = selenium;
+		this.selenium = configuration.getSelenium();
 		this.runner = createConditionRunner(selenium);
 	}
 

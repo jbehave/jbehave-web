@@ -25,8 +25,8 @@ public class SeleniumStepsTest {
 	private final Configuration configuration = new MostUsefulConfiguration();
 	private final ScenarioParser parser = new PatternScenarioParser();
 	private final ScenarioRunner runner = new ScenarioRunner();
-	private final Selenium mockedSelenium = mockery.mock(Selenium.class);
-	private final ConditionRunner mockRunner = mockery
+	private final Selenium selenium = mockery.mock(Selenium.class);
+	private final ConditionRunner conditionRunner = mockery
 			.mock(ConditionRunner.class);
 
 	@Test
@@ -37,20 +37,21 @@ public class SeleniumStepsTest {
 						+ "When a test is executed" + NL
 						+ "Then a tester is a happy hopper"; 
 		mockery.checking(new Expectations(){{
-			one(mockedSelenium).start();
-			one(mockedSelenium).close();
-			one(mockedSelenium).stop();
+			exactly(3).of(selenium).setContext(with(any(String.class)));
+			one(selenium).start();
+			one(selenium).close();
+			one(selenium).stop();
 		}});
-		Steps steps = new MySteps(){
+		Steps steps = new MySteps(selenium){
 
 			@Override
 			protected ConditionRunner createConditionRunner(Selenium selenium) {
-				return mockRunner;
+				return conditionRunner;
 			}
 
 			@Override
 			protected Selenium createSelenium() {
-				return mockedSelenium;
+				return selenium;
 			}
 			
 		};
@@ -65,15 +66,16 @@ public class SeleniumStepsTest {
 						+ "When a test is executed" + NL
 						+ "Then a tester is a happy hopper";
 		mockery.checking(new Expectations(){{
-			one(mockedSelenium).start();
-			one(mockedSelenium).close();
-			one(mockedSelenium).stop();
+			exactly(3).of(selenium).setContext(with(any(String.class)));
+			one(selenium).start();
+			one(selenium).close();
+			one(selenium).stop();
 		}});
-		Steps steps = new MySteps(mockedSelenium){
+		Steps steps = new MySteps(selenium){
 
 			@Override
 			protected ConditionRunner createConditionRunner(Selenium selenium) {
-				return mockRunner;
+				return conditionRunner;
 			}
 
 		};
