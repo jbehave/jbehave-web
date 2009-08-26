@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.jbehave.web.selenium;
 
 import java.lang.reflect.Type;
@@ -9,12 +6,12 @@ import org.jbehave.scenario.steps.StepMonitor;
 
 import com.thoughtworks.selenium.Selenium;
 
-class SeleniumStepsMonitor implements StepMonitor {
+public class SeleniumStepsMonitor implements StepMonitor {
 	private final Selenium selenium;
 	private final SeleniumContext seleniumContext;
 	private final StepMonitor delegate;
 
-	SeleniumStepsMonitor(Selenium selenium,
+	public SeleniumStepsMonitor(Selenium selenium,
 			SeleniumContext seleniumContext, StepMonitor delegate) {
 		this.selenium = selenium;
 		this.seleniumContext = seleniumContext;
