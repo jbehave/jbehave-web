@@ -27,22 +27,22 @@ public class ZipFileArchiverTest {
 		File zip = resourceFile("dir1.zip");
 		assertTrue(archiver.isArchive(zip));
 		archiver.unarchive(zip, dir);
-		assertFilesUnarchived(asList("dir1", "dir1/file1.txt", "dir1/subdir1", "dir1/subdir1/subfile1.txt"));
+		assertFilesUnarchived(asList("dir1", "dir1/file1.txt", "dir1/subdir1",
+				"dir1/subdir1/subfile1.txt"));
 	}
-	
+
 	private void assertFilesUnarchived(List<String> paths) {
-		for ( String path : paths ){
+		for (String path : paths) {
 			assertFileExists(path);
 		}
 	}
 
 	private void assertFileExists(String path) {
 		assertTrue(new File(dir, path).exists());
-		
 	}
 
-	private File resourceFile( String path ) {
-		return new File(getClass().getClassLoader().getResource(path).getFile());		
+	private File resourceFile(String path) {
+		return new File(getClass().getClassLoader().getResource(path).getFile());
 	}
-	
+
 }
