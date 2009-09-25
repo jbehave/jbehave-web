@@ -27,6 +27,11 @@ public class StockExchangeSteps extends Steps {
     	
     }
 
+	@Given("a resource root directory $rootDirectory")
+    public void aRootDirectory(String rootDirectory){
+		this.resourceFinder.useRootDirectory(rootDirectory);
+	}
+
 	@Given("a stock exchange $stockExchange")
     public void aStockExchange(String stockExchange){
 		this.stockExchange = stockExchange;
