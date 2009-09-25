@@ -1,5 +1,6 @@
-Given a stock exchange EXCH
+Given a stock exchange EXCH1
 When the stock exchange is opened
+Then the stock exchanges opened are as contained in data/STOCK-EXCHANGES.txt
 Given a stock of prices 0.5,1.0 and a threshold of 10.0
 When the stock is traded at 5.0
 Then the alert status should be OFF
