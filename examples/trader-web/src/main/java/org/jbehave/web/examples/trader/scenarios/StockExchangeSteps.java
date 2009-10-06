@@ -3,6 +3,7 @@ package org.jbehave.web.examples.trader.scenarios;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.codehaus.waffle.Startable;
 import org.jbehave.scenario.annotations.AfterScenario;
 import org.jbehave.scenario.annotations.BeforeScenario;
 import org.jbehave.scenario.annotations.Given;
@@ -11,7 +12,7 @@ import org.jbehave.scenario.annotations.When;
 import org.jbehave.scenario.steps.Steps;
 import org.jbehave.web.io.ResourceFinder;
 
-public class StockExchangeSteps extends Steps {
+public class StockExchangeSteps extends Steps implements Startable {
 
 	private ResourceFinder resourceFinder = new ResourceFinder("classpath:org/jbehave/web/examples/trader/scenarios");
 	
@@ -45,6 +46,14 @@ public class StockExchangeSteps extends Steps {
 	@Then("the stock exchanges opened are as contained in $resource")
 	public void theStockExchangesAreEqualTo(String resource){
 		assertEquals(resourceFinder.resourceAsString(resource), stockExchange);
+	}
+
+	public void start() {
+		System.err.println("Starting");
+	}
+
+	public void stop() {
+		System.err.println("Stopping");
 	}
 
 }
