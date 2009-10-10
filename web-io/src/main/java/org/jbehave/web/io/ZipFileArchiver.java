@@ -19,6 +19,9 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * File archiver for zip files
+ */
 public class ZipFileArchiver implements FileArchiver {
 
 	private static final String ZIP = "zip";

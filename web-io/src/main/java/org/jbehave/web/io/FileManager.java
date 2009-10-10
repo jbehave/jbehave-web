@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.apache.commons.fileupload.FileItem;
 
+/**
+ * Allow to list, delete and upload data files.
+ */
 public interface FileManager {
 
 	List<File> list();
@@ -16,6 +19,6 @@ public interface FileManager {
 
 	void delete(List<String> paths);
 
-	List<File> write(List<FileItem> fileItems, List<String> errors);
+	List<File> upload(List<FileItem> fileItems, List<String> errors);
 
 }

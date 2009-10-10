@@ -35,7 +35,7 @@ public class FileUploadController extends MenuAwareController {
 		uploadedFiles.clear();
 		List<FileItem> files = uploader.getFiles();
 		errors.addAll(uploader.getErrors());
-		uploadedFiles.addAll(manager.write(files, errors));
+		uploadedFiles.addAll(manager.upload(files, errors));
 	}
 
 	public Collection<String> getErrors() {

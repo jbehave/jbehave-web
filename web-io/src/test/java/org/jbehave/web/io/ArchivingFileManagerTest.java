@@ -85,7 +85,7 @@ public class ArchivingFileManagerTest {
 		// ensure files do not exists
 		file2.delete();
 		dir1.delete();
-		manager.write(asList(file2FileItem, zipFileItem), errors);
+		manager.upload(asList(file2FileItem, zipFileItem), errors);
 		assertEquals(0, errors.size());
 	}
 
@@ -109,7 +109,7 @@ public class ArchivingFileManagerTest {
 		dir1.delete();
 		// remove zip
 		zip.delete();
-		manager.write(asList(file2FileItem, zipFileItem), errors);
+		manager.upload(asList(file2FileItem, zipFileItem), errors);
 		assertEquals(2, errors.size());
 	}
 
@@ -126,7 +126,7 @@ public class ArchivingFileManagerTest {
 				will(returnValue(""));
 			}
 		});
-		manager.write(asList(file2FileItem, zipFileItem), errors);
+		manager.upload(asList(file2FileItem, zipFileItem), errors);
 		assertEquals(0, errors.size());
 	}
 
@@ -150,7 +150,7 @@ public class ArchivingFileManagerTest {
 		// ensure files do not exists
 		file2.delete();
 		zip.delete();
-		manager.write(asList(file2FileItem, zipFileItem), errors);
+		manager.upload(asList(file2FileItem, zipFileItem), errors);
 		assertEquals(4, errors.size());
 	}
 

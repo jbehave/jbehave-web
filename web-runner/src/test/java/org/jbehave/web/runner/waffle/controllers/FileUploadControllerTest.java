@@ -38,7 +38,7 @@ public class FileUploadControllerTest {
 				will(returnValue(fileItems));
 				one(uploader).getErrors();
 				will(returnValue(errors));
-				one(manager).write(with(equal(fileItems)), with(equal(errors)));
+				one(manager).upload(with(equal(fileItems)), with(equal(errors)));
 				will(returnValue(files));
 			}
 		});

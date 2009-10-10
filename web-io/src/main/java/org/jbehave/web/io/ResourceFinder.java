@@ -7,6 +7,15 @@ import java.io.InputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
+/**
+ * A utility class to retrieve resource, either from classpath or from
+ * filesystem, and convert them to strings. Classpath resources are identified
+ * by a configurable classpath prefix, which defaults to "classpath:". The
+ * finder will resolve the resource path (i.e. stripping the prefix) and first
+ * try to find the resource in the injected classloader, which default the
+ * current thread context classloader, and failing that will fall back on
+ * looking for the resource in the filesystem.
+ */
 public class ResourceFinder {
 
 	public static final String DEFAULT_CLASSPATH_PREFIX = "classpath:";

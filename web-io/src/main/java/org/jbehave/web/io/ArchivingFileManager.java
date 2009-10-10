@@ -11,6 +11,9 @@ import java.util.List;
 import org.apache.commons.fileupload.FileItem;
 import org.jbehave.web.io.ZipFileArchiver.FileUnarchiveFailedException;
 
+/**
+ * File manager that uploads and unarchives data files
+ */
 public class ArchivingFileManager implements FileManager {
 
 	private final FileArchiver archiver;
@@ -58,7 +61,7 @@ public class ArchivingFileManager implements FileManager {
 		file.delete();
 	}
 	
-	public List<File> write(List<FileItem> fileItems, List<String> errors) {
+	public List<File> upload(List<FileItem> fileItems, List<String> errors) {
 		List<File> files = new ArrayList<File>();
 		File directory = uploadDirectory();
 		for (FileItem item : fileItems) {
