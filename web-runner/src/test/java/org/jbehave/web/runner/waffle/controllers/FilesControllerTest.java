@@ -2,6 +2,7 @@ package org.jbehave.web.runner.waffle.controllers;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.List;
@@ -24,7 +25,7 @@ public class FilesControllerTest {
 
 	@Test
 	public void canListFiles() {
-		final List<File> files = asList(new File("file1"));
+		final List<File> files = asList(new File("archive1"));
 		mockery.checking(new Expectations() {
 			{
 				one(manager).list();
@@ -34,6 +35,31 @@ public class FilesControllerTest {
 		FilesController controller = new FilesController(MENU, manager);
 		controller.list();
 		assertEquals(files, controller.getFiles());
+	}
+
+	@Test
+	public void canListContentFiles() {
+		final List<String> paths = asList("archive1");
+		final List<File> files = asList(new File("file1"), new File("file2"));
+		mockery.checking(new Expectations() {
+			{
+				for ( String path : paths ){
+					one(manager).listContent(path);					
+					will(returnValue(files));
+				}
+			}
+		});
+		FilesController controller = new FilesController(MENU, manager);
+		controller.setSelectedPaths(paths);
+		controller.listContent();
+		assertEquals(files, controller.getContentFiles());
+	}
+
+	@Test
+	public void canHideContentFiles() {
+		FilesController controller = new FilesController(MENU, manager);
+		controller.hideContent();
+		assertTrue(controller.getContentFiles().isEmpty());
 	}
 
 	@Test

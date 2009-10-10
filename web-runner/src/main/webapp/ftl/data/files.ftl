@@ -26,11 +26,29 @@
             </fieldset>
         </div>
 
+	    <#assign contentFiles = controller.contentFiles />
+        <#if (contentFiles.size() > 0) >		       		
+        <div id="contentFiles">
+           <fieldset>
+               <legend><@i.messageFor "contentFiles" "Content Files"/></legend>
+	           <table>
+	             <#list contentFiles as file>	
+	                <tr>
+	                    <td>${file.absolutePath}</td>
+	                </tr>
+	             </#list>
+	           </table>
+            </fieldset>
+        </div>
+		</#if>                   
+ 		
         <div id="actions">
            <fieldset>
                 <legend><@i.messageFor "actions" "Actions"/></legend>
                	<p>
                     <a class="buttonDelete" onclick="fireActionMethod('delete');"><@i.messageFor "delete" "Delete"/></a>        
+                    <a class="buttonDelete" onclick="fireActionMethod('listContent');"><@i.messageFor "listContent" "List Content"/></a>        
+                    <a class="buttonDelete" onclick="fireActionMethod('hideContent');"><@i.messageFor "hideContent" "Hide Content"/></a>        
                 </p>
             </fieldset>
         </div>

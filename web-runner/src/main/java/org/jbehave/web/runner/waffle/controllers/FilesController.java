@@ -14,6 +14,7 @@ public class FilesController extends MenuAwareController {
 	private final FileManager manager;
 	private List<File> files = new ArrayList<File>();
 	private List<String> selectedPaths = new ArrayList<String>();
+	private List<File> contentFiles = new ArrayList<File>();
 	
 	public FilesController(Menu menu, FileManager manager) {
 		super(menu);
@@ -26,6 +27,19 @@ public class FilesController extends MenuAwareController {
 	}
 
 	@ActionMethod
+	public void listContent() {
+		contentFiles.clear();
+		for (String path : selectedPaths) {
+			contentFiles.addAll(manager.listContent(path));			
+		}
+	}
+
+	@ActionMethod
+	public void hideContent() {
+		contentFiles.clear();
+	}
+
+	@ActionMethod
 	public void delete() {
 		manager.delete(selectedPaths);
 		list();
@@ -33,6 +47,10 @@ public class FilesController extends MenuAwareController {
 	
 	public List<File> getFiles() {
 		return files;
+	}
+	
+	public List<File> getContentFiles() {
+		return contentFiles;
 	}
 
 	public List<String> getSelectedPaths() {
