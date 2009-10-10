@@ -27,7 +27,6 @@ import org.junit.runner.RunWith;
 public class ArchivingFileManagerTest {
 
 	private Mockery mockery = new Mockery();
-	private static final String TMP = System.getProperty("java.io.tmpdir");
 	private FileManager manager;
 	private File upload;
 	private File dir1;
@@ -37,8 +36,7 @@ public class ArchivingFileManagerTest {
 
 	@Before
 	public void setup() throws IOException {
-		upload = new File(TMP, "upload");
-		upload.mkdirs();
+		upload = createUploadDir();
 		dir1 = createDir("dir1");
 		file1 = create("file1");
 		file2 = create("file2");
@@ -112,7 +110,7 @@ public class ArchivingFileManagerTest {
 		// remove zip
 		zip.delete();
 		manager.write(asList(file2FileItem, zipFileItem), errors);
-		assertEquals(1, errors.size());
+		assertEquals(2, errors.size());
 	}
 
 	@Test
@@ -153,7 +151,7 @@ public class ArchivingFileManagerTest {
 		file2.delete();
 		zip.delete();
 		manager.write(asList(file2FileItem, zipFileItem), errors);
-		assertEquals(2, errors.size());
+		assertEquals(4, errors.size());
 	}
 
 	private File create(String path) throws IOException {
@@ -170,6 +168,13 @@ public class ArchivingFileManagerTest {
 		return dir;
 	}
 
+	private File createUploadDir() throws IOException {
+		File dir = new File(System.getProperty("java.io.tmpdir"), "upload");
+		dir.mkdirs();
+		return dir;
+	}
+
+	
 	private void archiveFiles(File archive, List<File> files) throws IOException {
 		FileOutputStream fileStream = new FileOutputStream(archive);
 		ZipOutputStream zipStream = new ZipOutputStream(fileStream);

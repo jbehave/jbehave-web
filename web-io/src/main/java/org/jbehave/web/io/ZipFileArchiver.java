@@ -52,16 +52,15 @@ public class ZipFileArchiver implements FileArchiver {
 		List<File> content = new ArrayList<File>();
 		try {
 			content.add(directory);
-			if ( directory.isDirectory() ){
-				for (File file : directory.listFiles() ) {
-					content.addAll(listContent(file));					
+			if (directory.isDirectory()) {
+				for (File file : directory.listFiles()) {
+					content.addAll(listContent(file));
 				}
 			}
 		} catch (Exception e) {
 		}
 		return content;
 	}
-
 
 	private void unzipEntry(ZipArchiveEntry entry, InputStream in,
 			File outputDir) throws IOException {
@@ -75,13 +74,13 @@ public class ZipFileArchiver implements FileArchiver {
 		if (!outputFile.getParentFile().exists()) {
 			createDir(outputFile.getParentFile());
 		}
-		
+
 		copy(entry, in, outputDir);
 
 	}
 
 	private void createDir(File dir) throws IOException {
-		if (dir.exists()){
+		if (dir.exists()) {
 			return;
 		}
 		if (!dir.mkdirs()) {
@@ -103,8 +102,7 @@ public class ZipFileArchiver implements FileArchiver {
 
 		public FileUnarchiveFailedException(File archive, File outputDir,
 				Exception cause) {
-			super(archive.toString() + File.pathSeparator
-					+ outputDir.toString(), cause);
+			super("Failed to unarchive " + archive + " to output dir " + outputDir, cause);
 		}
 
 	}

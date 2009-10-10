@@ -70,12 +70,18 @@ public class ArchivingFileManager implements FileManager {
 						archiver.unarchive(file, directory);
 					} catch (FileUnarchiveFailedException e) {
 						errors.add(e.getMessage());
+						if ( e.getCause() != null ){
+							errors.add(e.getCause().getMessage());
+						}
 					}
 				}
 			} catch (FileItemNameMissingException e) {
 				// ignore and carry on
 			} catch (FileWriteFailedException e) {
 				errors.add(e.getMessage());
+				if ( e.getCause() != null ){
+					errors.add(e.getCause().getMessage());
+				}
 			}
 		}
 		return files;
