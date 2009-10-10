@@ -34,6 +34,10 @@ public class ArchivingFileManager implements FileManager {
 		return uploadDirectory;
 	}
 
+	public List<File> listContent(String path){
+		return archiver.listContent(archiver.unarchivedDir(new File(path)));
+	}
+	
 	public void delete(List<String> paths) {
 		for (String path : paths) {
 			deleteFile(new File(path));

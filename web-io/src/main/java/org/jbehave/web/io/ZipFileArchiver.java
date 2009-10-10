@@ -9,7 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
@@ -19,20 +21,21 @@ import org.apache.commons.io.IOUtils;
 
 public class ZipFileArchiver implements FileArchiver {
 
-	private static final String ZIP = ".zip";
+	private static final String ZIP = "zip";
+	private static final String ZIP_EXT = ".zip";
 	private ArchiveStreamFactory factory = new ArchiveStreamFactory();
 
 	public boolean isArchive(File file) {
-		return file.getName().endsWith(ZIP);
+		return file.getName().endsWith(ZIP_EXT);
 	}
 
-	public File unarchivedDir(File file) {
-		return new File(removeEnd(file.getPath(), ZIP));
+	public File unarchivedDir(File archive) {
+		return new File(removeEnd(archive.getPath(), ZIP_EXT));
 	}
 
 	public void unarchive(File archive, File outputDir) {
 		try {
-			ArchiveInputStream in = factory.createArchiveInputStream("zip",
+			ArchiveInputStream in = factory.createArchiveInputStream(ZIP,
 					new FileInputStream(archive));
 			ZipFile zipfile = new ZipFile(archive);
 			for (Enumeration<?> e = zipfile.getEntries(); e.hasMoreElements();) {
@@ -44,6 +47,21 @@ public class ZipFileArchiver implements FileArchiver {
 			throw new FileUnarchiveFailedException(archive, outputDir, e);
 		}
 	}
+
+	public List<File> listContent(File directory) {
+		List<File> content = new ArrayList<File>();
+		try {
+			content.add(directory);
+			if ( directory.isDirectory() ){
+				for (File file : directory.listFiles() ) {
+					content.addAll(listContent(file));					
+				}
+			}
+		} catch (Exception e) {
+		}
+		return content;
+	}
+
 
 	private void unzipEntry(ZipArchiveEntry entry, InputStream in,
 			File outputDir) throws IOException {

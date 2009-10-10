@@ -1,6 +1,7 @@
 package org.jbehave.web.io;
 
 import java.io.File;
+import java.util.List;
 
 public interface FileArchiver {
 
@@ -8,6 +9,8 @@ public interface FileArchiver {
 
 	void unarchive(File archive, File outputDir);
 
-	File unarchivedDir(File file);	
+	File unarchivedDir(File archive);	
 
+	List<File> listContent(File directory);
+	
 }

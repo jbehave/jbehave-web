@@ -11,6 +11,8 @@ import org.apache.commons.fileupload.FileItem;
 public interface FileManager {
 
 	List<File> list();
+	
+	List<File> listContent(String path);
 
 	void delete(List<String> paths);
 
