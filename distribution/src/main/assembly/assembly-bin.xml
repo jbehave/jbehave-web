@@ -13,6 +13,10 @@
       <directory>src/main/conf</directory>
       <outputDirectory>conf</outputDirectory>
     </fileSet>
+    <fileSet>
+      <directory>target/site</directory>
+      <outputDirectory>docs</outputDirectory>
+    </fileSet>
   </fileSets>
   <dependencySets>
     <dependencySet>
