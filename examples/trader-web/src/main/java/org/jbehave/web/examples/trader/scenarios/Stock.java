@@ -1,5 +1,6 @@
 package org.jbehave.web.examples.trader.scenarios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Stock {
@@ -8,22 +9,21 @@ public class Stock {
         ON, OFF
     };
 
-    private List<Double> prices;
-    private double alertPrice;
+    private double threshold;
+    private List<Double> prices = new ArrayList<Double>();
     private AlertStatus status = AlertStatus.OFF;
 
-    public Stock(List<Double> prices, double alertPrice) {
-        this.prices = prices;
-        this.alertPrice = alertPrice;
-    }
+    public Stock(double threshold) {
+    	this.threshold = threshold;
+	}
 
-    public List<Double> getPrices() {
+	public List<Double> getPrices() {
         return prices;
     }
 
     public void tradeAt(double price) {
         this.prices.add(price);
-        if (price > alertPrice) {
+        if (price > threshold) {
             status = AlertStatus.ON;
         }
     }

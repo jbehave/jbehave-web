@@ -1,14 +1,13 @@
 Scenario:
 
 Given a stock exchange EXCH1
-When the stock exchange is opened
-Then the stock exchanges opened are as contained in data/STOCK-EXCHANGES.txt
 Given a resource root directory classpath:org/jbehave/web/examples/trader/scenarios/data
+When the stock exchange is opened
 Then the stock exchanges opened are as contained in STOCK-EXCHANGES.txt
 
 Scenario:
 
-Given a stock of prices 0.5,1.0 and a threshold of 10.0
+Given a threshold of 10.0
 When the stock is traded at 5.0
 Then the alert status should be OFF
 When the stock is traded at 11.0

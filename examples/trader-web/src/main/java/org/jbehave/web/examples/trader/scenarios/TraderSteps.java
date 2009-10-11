@@ -3,8 +3,6 @@ package org.jbehave.web.examples.trader.scenarios;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.jbehave.Ensure.ensureThat;
 
-import java.util.List;
-
 import org.jbehave.scenario.annotations.Given;
 import org.jbehave.scenario.annotations.Then;
 import org.jbehave.scenario.annotations.When;
@@ -15,9 +13,9 @@ public class TraderSteps extends Steps {
     private Stock stock;
     private Trader trader;
 
-    @Given("a stock of prices $prices and a threshold of $threshold")
-    public void aStockOfPrice(List<Double> prices, double threshold) {
-        stock = new Stock(prices, threshold);
+    @Given("a threshold of $threshold")
+    public void aThreshold(double threshold) {
+        stock = new Stock(threshold);
     }
 
     @When("the stock is traded at $price")
