@@ -2,5 +2,17 @@
   <section>
     <name>About</name>
     <page>index.html</page>
+    <page>license.html</page>
+    <page>download.html</page>
+    <page>javadoc.html</page>
   </section>
+  <section>
+    <name>Web Runner</name>
+    <page>customising-web-runner.html</page>
+    <page>using-web-runner.html</page>
+  </section>
+  <section>
+    <name>Selenium</name>
+    <page>selenium-steps.html</page>
+  </section>  
 </sitemap>

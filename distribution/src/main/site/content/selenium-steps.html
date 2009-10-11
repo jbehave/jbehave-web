@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Selenium Steps</title>
+</head>
+
+<body>
+
+<h2>Running Scenarios with Selenium</h2>
+
+<p><a href="http://seleniumhq.org">Selenium</a> is a powerful
+open-source tool for automated web testing. To demonstrate the use of
+JBehave with Selenium, we'll draw upon the fully-functional <a
+    href="https://svn.codehaus.org/picocontainer/java/2.x/trunk/web/examples/ajax-email/">Ajax
+Email example webapp</a> from <a href="http://www.picocontainer.org/web/">Pico
+Web</a> project.</p>
+
+<p>Let's see how we can easily use Selenium to run web-based
+scenarios. As usual, we'll have a Scenario class that maps to a textual
+scenario, e.g.</p>
+
+<pre class="brush: bdd">Scenario: User logs in successfully
+
+Given nobody is logged in
+When user Gill Bates with password 1234 attempts to log in
+Then the Inbox is selected
+And there are some messages listed
+
+Scenario: User fails to login with invalid password
+
+Given nobody is logged in
+When user Gill Bates with password 99999 attempts to log in
+And there are no messages listed
+And the text "Invalid Login" should be visible
+
+Scenario: User fails to login with invalid username
+
+Given nobody is logged in
+When user Fred with password 1234 attempts to log in
+Then the Inbox should not be visible
+And the text "Invalid Login" should be visible
+</pre>
+
+<p>The objective in creating a DSL is to represent the
+business-domain functionality whilst abstracting away the details of the
+implementation, in this case the access to the web layer via a specific
+testing tool, such as Selenium. The same DSL should be re-usable with
+different testing tools.</p>
+<p>The Scenario class will specify the Steps class is where all the
+Selenium magic happens:</p>
+<pre class="brush: java">public class AjaxEmailSteps extends SeleniumSteps {
+    
+    private Main main;
+    private String[] lastFormValues;
+    private String prefix;
+
+    @Given("nobody is logged in")
+    public void nobodyLoggedIn() {
+        Main.logout(selenium);
+    }
+
+    @Given("user is viewing their Inbox")
+    public void theyreInTheirInbox() {
+        nobodyLoggedIn();
+        logIn("Gill Bates", "1234");
+        boxIsSelected("Inbox");
+    }
+
+    @When("user $userName with password $password attempts to log in")
+    public void logIn(String userName, String password) {
+        main = new LoginForm(selenium, runner).login(userName, password);
+    }
+
+    @Then("the Inbox should not be visible")
+    public void inBoxIsNotVisible() {
+    main.textIsNotVisible("Instant Millionaire");
+    } 
+
+    @Then("the text \"$text\" should be visible")
+    public void textIsVisible(String text) {
+    main.waitFor(new Text(text));
+    }
+
+    @Then("the text \"$text\" should not be visible")
+    public void textIsNotVisible(String text) {
+    waitFor(new Not(new Text(text)));
+    }
+
+    private void waitFor(Condition condition) {
+    runner.waitFor(condition);
+    waitFor(1);
+    }
+}
+</pre>
+<p>The <b>@BeforeScenario</b> and <b>@AfterScenario</b> annotations
+in the SeleniumSteps methods allow to start and stop the selenium server
+before and after scenario. Users can of course override the default
+behaviour, but generally don't need to bother for most use cases.</p>
+
+<p><strong>NOTE</strong>: To get the Selenium based tests running in
+an automated way, you need to run both a webapp server (e.g. Jetty) and
+the Selenium server. See the <a
+    href="https://svn.codehaus.org/picocontainer/java/2.x/trunk/web/examples/ajax-email/">Ajax
+Email example webapp</a> for a way to do this using <a
+    href="http://maven.apache.org">Maven</a>.</p>
+
+</body>
+</html>

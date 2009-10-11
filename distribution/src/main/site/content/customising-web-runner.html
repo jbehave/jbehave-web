@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Customising Web Runner</title>
+</head>
+
+<body>
+
+<h2>Registering your Steps in the Web Runner</h2>
+
+<p>The Web Runner is a webapp that allows users to run any generic
+textual scenario. In order to do this, the appropriate JBehave Steps
+instances required to match the textual steps need to be registered with
+the application.</p>
+
+<p>Maven users can model their own module on the <a
+    href="https://svn.codehaus.org/jbehave/trunk/web/examples/trader-web">trader
+web example</a></p>
+
+<p>Ant users can download the web distribution from <a
+    href="download.html">download page</a></p>
+
+<ul>
+    <li>Unzip it to a local directory</li>
+    <li>Add a jar containing your Steps and Registrar instances to
+    lib/ directory</li>
+    <li>Edit <b>webapp/WEB-INF/web.xml</b> to configure the
+    Registrar class name that you've defined, replacing the <b>org.jbehave.web.runner.waffle.JBehaveRegistrar</b>
+    class name with your fully-qualified Registrar class name. See <a
+        href="https://svn.codehaus.org/jbehave/trunk/web/examples/trader-web/src/main/java/org/jbehave/web/examples/trader/runner/TraderRegistrar.java">TraderRegistrar</a>
+    for an example of how easy it is. The minimal requirement is to
+    specify the one or more instances of Steps that you need to run the
+    scenarios.</li>
+    <li>In <b>bin/</b> dir execute: <b>ant -f deploy.xml
+    deploy:webapp</b>, which will deploy a new jbehave-web.war to your local
+    Jetty installation (provided you have <b>$JETTY_HOME</b> defined).
+    You can configure your own deploy dir via the <b>deploy.properties</b>
+    file or simply copy the war created in the target/ dir to your
+    favourite webapp container.</li>
+</ul>
+
+<h2>Customising the Web Runner resources</h2>
+
+<p>The Web Runner comes with default web resources, but these can be
+overridden by adding them to the <b>src/main/webapp</b> directory. Only
+custom resources that override the default ones are required. So, e.g.
+to change the default style, only <b>src/main/webapp/style/jbehave/jbehave.css</b>
+needs to be added. Similary, to change home page template, only <b>src/main/webapp/ftl/home.ftl</b>
+is needed. If any of these are removed the defaults will apply.</p>
+
+</body>
+</html>
