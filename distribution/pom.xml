@@ -168,7 +168,7 @@
               <descriptors>
                 <descriptor>${basedir}/src/main/assembly/assembly-bin.xml</descriptor>
               </descriptors>
-              <finalName>${pom.artifactId}-${pom.version}</finalName>
+              <finalName>jbehave-web-${pom.version}</finalName>
               <workDirectory>${project.build.directory}/assembly/bin</workDirectory>
             </configuration>
           </execution>
@@ -182,7 +182,7 @@
               <descriptors>
                 <descriptor>${basedir}/src/main/assembly/assembly-src.xml</descriptor>
               </descriptors>
-              <finalName>${pom.artifactId}-${pom.version}</finalName>
+              <finalName>jbehave-web-${pom.version}</finalName>
               <workDirectory>${project.build.directory}/assembly/src</workDirectory>
             </configuration>
           </execution>
