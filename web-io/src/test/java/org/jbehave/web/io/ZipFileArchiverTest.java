@@ -14,19 +14,26 @@ import org.junit.Test;
 public class ZipFileArchiverTest {
 
 	private File dir;
+	private FileArchiver archiver = new ZipFileArchiver();
 
 	@Before
 	public void setup() throws IOException {
-		dir = File.createTempFile("dir", "");
-		dir.delete();
+		dir = new File("/tmp", "dir");
+	}
+
+	@Test
+	public void canArchiveZip() throws IOException {
+		File zip = new File("target", "dir1.zip");
 		dir.mkdir();
+		archiver.archive(zip , dir);
 	}
 
 	@Test
 	public void canUnarchiveZip() throws IOException {
-		FileArchiver archiver = new ZipFileArchiver();
 		File zip = resourceFile("dir1.zip");
 		assertTrue(archiver.isArchive(zip));
+		dir.delete();
+		dir.mkdir();
 		archiver.unarchive(zip, dir);
 		assertFilesUnarchived(asList("dir1", "dir1/file1.txt", "dir1/subdir1",
 				"dir1/subdir1/subfile1.txt"));
@@ -34,16 +41,16 @@ public class ZipFileArchiverTest {
 
 	@Test
 	public void canListFileContentOfUnarchiveZip() throws IOException {
-		FileArchiver archiver = new ZipFileArchiver();
 		File zip = resourceFile("dir1.zip");
 		assertTrue(archiver.isArchive(zip));
-		archiver.unarchive(zip, dir);		
+		archiver.unarchive(zip, dir);
 		List<File> content = archiver.listContent(new File(dir, "dir1"));
-		assertFilesEquals(content, asList("dir1", "dir1/file1.txt", "dir1/subdir1",
-						"dir1/subdir1/subfile1.txt"));
+		assertFilesEquals(content, asList("dir1", "dir1/file1.txt",
+				"dir1/subdir1", "dir1/subdir1/subfile1.txt"));
 	}
 
-	private void assertFilesEquals(List<File> content, List<String> expectedPaths) {
+	private void assertFilesEquals(List<File> content,
+			List<String> expectedPaths) {
 		for (int i = 0; i < content.size(); i++) {
 			File file = content.get(i);
 			assertEquals(file, new File(dir, expectedPaths.get(i)));

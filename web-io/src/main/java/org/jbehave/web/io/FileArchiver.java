@@ -10,10 +10,14 @@ public interface FileArchiver {
 
 	boolean isArchive(File file);
 
-	void unarchive(File archive, File outputDir);
-
-	File unarchivedDir(File archive);	
+	void archive(File archive, File directory);
+	
+	void unarchive(File archive, File directory);
 
 	List<File> listContent(File directory);
-	
+
+	File directoryOf(File archive);	
+
+	File relativeTo(File file, File directory);
+
 }

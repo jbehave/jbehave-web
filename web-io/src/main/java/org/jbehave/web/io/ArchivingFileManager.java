@@ -38,7 +38,7 @@ public class ArchivingFileManager implements FileManager {
 	}
 
 	public List<File> listContent(String path){
-		return archiver.listContent(archiver.unarchivedDir(new File(path)));
+		return archiver.listContent(archiver.directoryOf(new File(path)));
 	}
 	
 	public void delete(List<String> paths) {
@@ -56,7 +56,7 @@ public class ArchivingFileManager implements FileManager {
 		}
 		if ( archiver.isArchive(file) ){
 			// delete the unarchived directory too
-			deleteFile(archiver.unarchivedDir(file));
+			deleteFile(archiver.directoryOf(file));
 		}
 		file.delete();
 	}
