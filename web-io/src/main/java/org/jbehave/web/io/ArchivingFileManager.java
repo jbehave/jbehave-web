@@ -38,7 +38,12 @@ public class ArchivingFileManager implements FileManager {
 	}
 
 	public List<File> listContent(String path){
-		return archiver.listContent(archiver.directoryOf(new File(path)));
+		File directory = archiver.directoryOf(new File(path));
+		List<File> content = new ArrayList<File>();
+		for ( File file : archiver.listContent(directory) ){
+			content.add(archiver.relativeTo(file, directory));
+		}		
+		return content;
 	}
 	
 	public void delete(List<String> paths) {

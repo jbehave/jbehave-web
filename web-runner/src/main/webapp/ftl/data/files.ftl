@@ -17,8 +17,8 @@
 	           <table>
 	             <#list files as file>	
 	                <tr>
-	                    <td>${file.absolutePath}</td>
-	                    <td><@w.checkbox "selectedPaths" "${file.absolutePath}" /></td>
+	                    <td>${file.path}</td>
+	                    <td><@w.checkbox "selectedPaths" "${file.path}" /></td>
 	                </tr>
 	             </#list>
 	           </table>
@@ -32,10 +32,12 @@
            <fieldset>
                <legend><@i.messageFor "contentFiles" "Content Files"/></legend>
 	           <table>
-	             <#list contentFiles as file>	
-	                <tr>
-	                    <td>${file.absolutePath}</td>
-	                </tr>
+	             <#list contentFiles.keySet() as path>	
+	             	<#assign files=contentFiles.get(path)>
+	             	<tr><td>${path}</td></tr>
+	             	<#list files as file>	
+	                <tr><td class="contentFilePath">${file.path}</td></tr>
+	                </#list>
 	             </#list>
 	           </table>
             </fieldset>
@@ -47,7 +49,7 @@
                 <legend><@i.messageFor "actions" "Actions"/></legend>
                	<p>
                     <a class="buttonDelete" onclick="fireActionMethod('delete');"><@i.messageFor "delete" "Delete"/></a>        
-                    <a class="buttonDelete" onclick="fireActionMethod('listContent');"><@i.messageFor "listContent" "List Content"/></a>        
+                    <a class="buttonDelete" onclick="fireActionMethod('showContent');"><@i.messageFor "showContent" "Show Content"/></a>        
                     <a class="buttonDelete" onclick="fireActionMethod('hideContent');"><@i.messageFor "hideContent" "Hide Content"/></a>        
                 </p>
             </fieldset>

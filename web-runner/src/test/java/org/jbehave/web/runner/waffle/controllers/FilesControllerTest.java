@@ -51,8 +51,8 @@ public class FilesControllerTest {
 		});
 		FilesController controller = new FilesController(MENU, manager);
 		controller.setSelectedPaths(paths);
-		controller.listContent();
-		assertEquals(files, controller.getContentFiles());
+		controller.showContent();
+		assertEquals(files, controller.getContentFiles().get("archive1"));
 	}
 
 	@Test
