@@ -93,15 +93,19 @@ public class ZipFileArchiver implements FileArchiver {
 		}
 	}
 
-	public List<File> listContent(File directory) {
+	public List<File> listContent(File file) {
 		List<File> content = new ArrayList<File>();
-		content.add(directory);
-		if (directory.isDirectory()) {
-			for (File file : directory.listFiles()) {
-				content.addAll(listContent(file));
+		content.add(normalisePath(file));
+		if (file.isDirectory()) {
+			for (File child : file.listFiles()) {
+				content.addAll(listContent(child));
 			}
 		}
 		return content;
+	}
+
+	private File normalisePath(File file) {
+		return new File(file.getPath().replace('\\', '/'));
 	}
 
 	private void unzipEntry(ZipArchiveEntry entry, InputStream in,
