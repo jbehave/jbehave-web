@@ -19,24 +19,36 @@ public class ZipFileArchiverTest {
 	@Before
 	public void setup() throws IOException {
 		dir = new File("/tmp", "dir");
+		dir.createNewFile();
 	}
 
 	@Test
 	public void canArchiveZip() throws IOException {
-		File zip = new File("target", "dir1.zip");
-		dir.mkdir();
-		archiver.archive(zip , dir);
+		File zip = createFile("dir1.zip");
+		archiver.archive(zip, dir);
+	}
+
+	private File createFile(String path) throws IOException {
+		File parent = new File("target");
+		parent.mkdirs();
+		File file = new File(parent, path);
+		file.createNewFile();
+		return file;
 	}
 
 	@Test
 	public void canUnarchiveZip() throws IOException {
 		File zip = resourceFile("dir1.zip");
 		assertTrue(archiver.isArchive(zip));
-		dir.delete();
-		dir.mkdir();
+		clearDir(dir);
 		archiver.unarchive(zip, dir);
 		assertFilesUnarchived(asList("dir1", "dir1/file1.txt", "dir1/subdir1",
 				"dir1/subdir1/subfile1.txt"));
+	}
+
+	private void clearDir(File dir) {
+		dir.delete();
+		dir.mkdir();
 	}
 
 	@Test
