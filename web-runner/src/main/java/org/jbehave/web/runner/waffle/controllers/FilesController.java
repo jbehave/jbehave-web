@@ -32,7 +32,10 @@ public class FilesController extends MenuAwareController {
 	public void showContent() {
 		contentFiles.clear();
 		for (String path : selectedPaths) {
-			contentFiles.put(path, manager.listContent(path));			
+			List<File> content = manager.listContent(path);
+			if ( content.size() > 0 ){
+				contentFiles.put(content.get(0).getPath(), content);							
+			}
 		}
 	}
 

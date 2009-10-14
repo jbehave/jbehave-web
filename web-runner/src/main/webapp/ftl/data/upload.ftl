@@ -48,7 +48,7 @@
 	         <table>
 	            <#list uploadedFiles as file>
 	                <tr>
-	                    <td>${file.absolutePath}</td>
+	                    <td>${file.path}</td>
 	                </tr>
 	            </#list>
 	         </table>   

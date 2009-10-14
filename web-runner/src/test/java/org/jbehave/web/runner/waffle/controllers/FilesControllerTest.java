@@ -39,8 +39,8 @@ public class FilesControllerTest {
 
 	@Test
 	public void canListContentFiles() {
-		final List<String> paths = asList("archive1");
-		final List<File> files = asList(new File("file1"), new File("file2"));
+		final List<String> paths = asList("archive1.zip");
+		final List<File> files = asList(new File("archive1"), new File("file1"), new File("file2"));
 		mockery.checking(new Expectations() {
 			{
 				for ( String path : paths ){

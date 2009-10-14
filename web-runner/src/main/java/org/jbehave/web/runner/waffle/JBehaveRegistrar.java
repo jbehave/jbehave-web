@@ -1,7 +1,5 @@
 package org.jbehave.web.runner.waffle;
 
-import static java.io.File.separator;
-import static java.lang.System.getProperty;
 import static java.util.Arrays.asList;
 
 import java.io.File;
@@ -23,6 +21,7 @@ import org.jbehave.scenario.steps.DefaultStepdocGenerator;
 import org.jbehave.scenario.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
 import org.jbehave.web.io.ZipFileArchiver;
+import org.jbehave.web.runner.waffle.controllers.FileController;
 import org.jbehave.web.runner.waffle.controllers.FileUploadController;
 import org.jbehave.web.runner.waffle.controllers.FilesController;
 import org.jbehave.web.runner.waffle.controllers.ScenarioController;
@@ -43,6 +42,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 		registerSteps();
 		registerStepdocGenerator();
 		registerFileManager();
+		register("data/file", FileController.class);
 		register("data/files", FilesController.class);
 		configureViews();
 	}
@@ -74,6 +74,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	protected void configureViews() {
 		ViewResolver viewResolver = getComponentRegistry().locateByKey(ViewResolver.class);
 		viewResolver.configureView("home", "ftl/home");
+		viewResolver.configureView("data/file", "ftl/data/file");
 		viewResolver.configureView("data/files", "ftl/data/files");
 		viewResolver.configureView("data/upload", "ftl/data/upload");
 		viewResolver.configureView("scenario/scenario", "ftl/scenario/scenario");
@@ -103,7 +104,11 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	protected void registerFileManager() {
 		register(ZipFileArchiver.class);
 		register(ArchivingFileManager.class);
-		registerInstance("uploadDirectory", new File(getProperty("java.io.tmpdir")+separator+"upload"));
+		registerInstance("uploadDirectory", uploadDirectory());
+	}
+
+	protected File uploadDirectory() {
+		return new File(System.getProperty("java.io.tmpdir"), "upload");
 	}
 
 }

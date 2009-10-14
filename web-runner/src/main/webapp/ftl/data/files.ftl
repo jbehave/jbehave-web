@@ -34,9 +34,15 @@
 	           <table>
 	             <#list contentFiles.keySet() as path>	
 	             	<#assign files=contentFiles.get(path)>
-	             	<tr><td>${path}</td></tr>
 	             	<#list files as file>	
-	                <tr><td class="contentFilePath">${file.path}</td></tr>
+		                <tr>
+		                	<td>
+		                	<#if (file.getPath().matches(".*\\.[a-z]+")) >
+		                		<a class="buttonView" onclick="window.open('${base}/data/file.action?method=viewContent&selectedPath=${path}/${file.path}')"><@i.messageFor "viewContent" "View"/></a>
+		                	</#if>
+		                	</td>
+		                	<td class="contentFilePath">${file.path}</td>
+		                </tr>
 	                </#list>
 	             </#list>
 	           </table>
