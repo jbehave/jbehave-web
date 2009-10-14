@@ -169,7 +169,7 @@ public class ArchivingFileManagerTest {
 	}
 
 	private File createUploadDir() throws IOException {
-		File dir = new File(System.getProperty("java.io.tmpdir"), "upload");
+		File dir = new File("target", "upload");
 		dir.mkdirs();
 		return dir;
 	}

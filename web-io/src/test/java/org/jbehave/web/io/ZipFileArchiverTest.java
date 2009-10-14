@@ -18,13 +18,13 @@ public class ZipFileArchiverTest {
 
 	@Before
 	public void setup() throws IOException {
-		dir = new File("/tmp", "dir");
+		dir = new File("target", "dir");
 		dir.createNewFile();
 	}
 
 	@Test
 	public void canArchiveZip() throws IOException {
-		File zip = createFile("dir1.zip");
+		File zip = createFile("archive.zip");
 		archiver.archive(zip, dir);
 	}
 
@@ -38,12 +38,12 @@ public class ZipFileArchiverTest {
 
 	@Test
 	public void canUnarchiveZip() throws IOException {
-		File zip = resourceFile("dir1.zip");
+		File zip = resourceFile("archive.zip");
 		assertTrue(archiver.isArchive(zip));
 		clearDir(dir);
 		archiver.unarchive(zip, dir);
-		assertFilesUnarchived(asList("dir1", "dir1/file1.txt", "dir1/subdir1",
-				"dir1/subdir1/subfile1.txt"));
+		assertFilesUnarchived(asList("archive", "archive/file1.txt", "archive/subdir1",
+				"archive/subdir1/subfile1.txt"));
 	}
 
 	private void clearDir(File dir) {
@@ -53,12 +53,12 @@ public class ZipFileArchiverTest {
 
 	@Test
 	public void canListFileContentOfUnarchiveZip() throws IOException {
-		File zip = resourceFile("dir1.zip");
+		File zip = resourceFile("archive.zip");
 		assertTrue(archiver.isArchive(zip));
 		archiver.unarchive(zip, dir);
-		List<File> content = archiver.listContent(new File(dir, "dir1"));
-		assertFilesEquals(content, asList("dir1", "dir1/file1.txt",
-				"dir1/subdir1", "dir1/subdir1/subfile1.txt"));
+		List<File> content = archiver.listContent(new File(dir, "archive"));
+		assertFilesEquals(content, asList("archive", "archive/file1.txt",
+				"archive/subdir1", "archive/subdir1/subfile1.txt"));
 	}
 
 	private void assertFilesEquals(List<File> content,
@@ -70,13 +70,14 @@ public class ZipFileArchiverTest {
 	}
 
 	private void assertFilesUnarchived(List<String> paths) {
+		ResourceFinder finder = new ResourceFinder("");
 		for (String path : paths) {
-			assertFileExists(path);
+			File file = new File(dir, path);
+			assertTrue(file.exists());
+			if ( !file.isDirectory() ){
+				assertTrue(finder.resourceAsString(file.getPath()).length() > 0);
+			}
 		}
-	}
-
-	private void assertFileExists(String path) {
-		assertTrue(new File(dir, path).exists());
 	}
 
 	private File resourceFile(String path) {

@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * A utility class to retrieve resource, either from classpath or from
@@ -86,6 +87,9 @@ public class ResourceFinder {
 	}
 
 	private String resourcePath(String rootDirectory, String relativePath) {
+		if ( StringUtils.isBlank(rootDirectory) ){
+			return relativePath;
+		}
 		return rootDirectory + "/" + relativePath;
 	}
 

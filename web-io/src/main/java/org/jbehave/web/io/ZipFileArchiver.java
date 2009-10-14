@@ -11,14 +11,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -40,9 +38,10 @@ public class ZipFileArchiver implements FileArchiver {
 					new FileOutputStream(archive));
 			List<File> files = listContent(directory);
 			for (File file : files) {
-				if ( !file.isDirectory() ){
-					ZipArchiveEntry entry = new ZipArchiveEntry(relativeTo(file, directory).getPath());
-					zipEntry(entry, out, file);					
+				if (!file.isDirectory()) {
+					ZipArchiveEntry entry = new ZipArchiveEntry(relativeTo(
+							file, directory).getPath());
+					zipEntry(entry, out, file);
 				}
 			}
 			out.close();
@@ -52,11 +51,11 @@ public class ZipFileArchiver implements FileArchiver {
 	}
 
 	public File relativeTo(File file, File directory) {
-		return new File(removeStart(file.getPath(), directory.getPath()+"/"));
+		return new File(removeStart(file.getPath(), directory.getPath() + "/"));
 	}
 
-	private void zipEntry(ZipArchiveEntry entry, ArchiveOutputStream out, File file)
-			throws IOException, FileNotFoundException {
+	private void zipEntry(ZipArchiveEntry entry, ArchiveOutputStream out,
+			File file) throws IOException, FileNotFoundException {
 		out.putArchiveEntry(entry);
 		IOUtils.copy(new FileInputStream(file), out);
 		out.closeArchiveEntry();
@@ -67,30 +66,50 @@ public class ZipFileArchiver implements FileArchiver {
 	}
 
 	public void unarchive(File archive, File directory) {
+		InputStream is = null;
+		ArchiveInputStream in = null;
 		try {
-			ArchiveInputStream in = factory.createArchiveInputStream(ZIP,
-					new FileInputStream(archive));
-			ZipFile zipfile = new ZipFile(archive);
-			for (Enumeration<?> e = zipfile.getEntries(); e.hasMoreElements();) {
-				ZipArchiveEntry entry = (ZipArchiveEntry) e.nextElement();
+			is = new FileInputStream(archive);
+			in = factory.createArchiveInputStream(ZIP, is);
+			ZipArchiveEntry entry = null;
+			while ((entry = (ZipArchiveEntry) in.getNextEntry()) != null) {
 				unzipEntry(entry, in, directory);
 			}
-			in.close();
 		} catch (Exception e) {
 			throw new FileUnarchiveFailedException(archive, directory, e);
+		} finally {
+			close(is);
+			close(in);
+		}
+	}
+
+	private void close(InputStream is) {
+		try {
+			if (is != null) {
+				is.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void close(ArchiveInputStream in) {
+		try {
+			if (in != null) {
+				in.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public List<File> listContent(File directory) {
 		List<File> content = new ArrayList<File>();
-		try {
-			content.add(directory);
-			if (directory.isDirectory()) {
-				for (File file : directory.listFiles()) {
-					content.addAll(listContent(file));
-				}
+		content.add(directory);
+		if (directory.isDirectory()) {
+			for (File file : directory.listFiles()) {
+				content.addAll(listContent(file));
 			}
-		} catch (Exception e) {
 		}
 		return content;
 	}
@@ -104,11 +123,8 @@ public class ZipFileArchiver implements FileArchiver {
 		}
 
 		File outputFile = new File(directory, entry.getName());
-		if (!outputFile.getParentFile().exists()) {
-			createDir(outputFile.getParentFile());
-		}
-
-		copy(entry, in, directory);
+		createDir(outputFile.getParentFile());
+		copy(entry, in, outputFile);
 
 	}
 
@@ -121,25 +137,27 @@ public class ZipFileArchiver implements FileArchiver {
 		}
 	}
 
-	private void copy(ZipArchiveEntry entry, InputStream in, File directory)
+	private void copy(ZipArchiveEntry entry, InputStream in, File outputFile)
 			throws FileNotFoundException, IOException {
-		File entryFile = new File(directory, entry.getName());
-		OutputStream out = new FileOutputStream(entryFile);
-		IOUtils.copy(in, out);
-		out.close();
+		OutputStream out = new FileOutputStream(outputFile);
+		try {
+			IOUtils.copy(in, out);
+		} finally {
+			out.close();
+		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	public static final class FileArchiveFailedException extends
 			RuntimeException {
 
 		public FileArchiveFailedException(File archive, File directory,
 				Exception cause) {
-			super("Failed to archive dir " + directory + " to " + archive, cause);
+			super("Failed to archive dir " + directory + " to " + archive,
+					cause);
 		}
 
 	}
-
 
 	@SuppressWarnings("serial")
 	public static final class FileUnarchiveFailedException extends
@@ -147,7 +165,8 @@ public class ZipFileArchiver implements FileArchiver {
 
 		public FileUnarchiveFailedException(File archive, File directory,
 				Exception cause) {
-			super("Failed to unarchive " + archive + " to dir " + directory, cause);
+			super("Failed to unarchive " + archive + " to dir " + directory,
+					cause);
 		}
 
 	}
