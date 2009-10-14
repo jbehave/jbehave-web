@@ -79,7 +79,7 @@ public class ZipFileArchiver implements FileArchiver {
 			throw new FileUnarchiveFailedException(archive, directory, e);
 		} finally {
 			close(is);
-			close(in);
+ 			close(in);
 		}
 	}
 
@@ -87,16 +87,6 @@ public class ZipFileArchiver implements FileArchiver {
 		try {
 			if (is != null) {
 				is.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void close(ArchiveInputStream in) {
-		try {
-			if (in != null) {
-				in.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
