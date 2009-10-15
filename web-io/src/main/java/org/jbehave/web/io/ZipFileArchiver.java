@@ -51,9 +51,13 @@ public class ZipFileArchiver implements FileArchiver {
 	}
 
 	public File relativeTo(File file, File directory) {
-		return new File(removeStart(file.getPath(), directory.getPath() + "/"));
+		return new File(removeStart(normalisePath(file.getPath()), normalisePath(directory.getPath()) + "/"));
 	}
 
+	private String normalisePath(String path) {
+		return path.replace('\\', '/');
+	}
+	
 	private void zipEntry(ZipArchiveEntry entry, ArchiveOutputStream out,
 			File file) throws IOException, FileNotFoundException {
 		out.putArchiveEntry(entry);
@@ -95,17 +99,13 @@ public class ZipFileArchiver implements FileArchiver {
 
 	public List<File> listContent(File file) {
 		List<File> content = new ArrayList<File>();
-		content.add(normalisePath(file));
+		content.add(file);
 		if (file.isDirectory()) {
 			for (File child : file.listFiles()) {
 				content.addAll(listContent(child));
 			}
 		}
 		return content;
-	}
-
-	private File normalisePath(File file) {
-		return new File(file.getPath().replace('\\', '/'));
 	}
 
 	private void unzipEntry(ZipArchiveEntry entry, InputStream in,
