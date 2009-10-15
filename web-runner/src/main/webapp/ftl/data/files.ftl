@@ -1,5 +1,6 @@
 <#import "/ftl/waffle/i18n.ftl" as i>
 <#import "/ftl/waffle/form.ftl" as w>
+<#import "/ftl/paths.ftl" as p>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <head>
@@ -17,7 +18,7 @@
 	           <table>
 	             <#list files as file>	
 	                <tr>
-	                    <td>${file.path}</td>
+	                    <td><@p.normalise file.path/></td>
 	                    <td><@w.checkbox "selectedPaths" "${file.path}" /></td>
 	                </tr>
 	             </#list>
@@ -37,11 +38,11 @@
 	             	<#list files as file>	
 		                <tr>
 		                	<td>
-		                	<#if (file.getPath().matches(".*\\.[a-z]+")) >
-		                		<a class="buttonView" onclick="window.open('${base}/data/file.action?method=viewContent&selectedPath=${path}/${file.path}')"><@i.messageFor "viewContent" "View"/></a>
+		                	<#if (p.isViewable(file)) >
+		                		<a class="buttonView" onclick="window.open('${base}/data/file.action?method=viewContent&selectedPath=<@p.normalise path/>/<@p.normalise file.path/>')"><@i.messageFor "viewContent" "View"/></a>
 		                	</#if>
 		                	</td>
-		                	<td class="contentFilePath">${file.path}</td>
+		                	<td class="contentFilePath"><@p.normalise file.path/></td>
 		                </tr>
 	                </#list>
 	             </#list>
