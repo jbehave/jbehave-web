@@ -9,7 +9,7 @@
 <#include "/ftl/navigation.ftl" parse="true">
 <div id="content">
     <form action="${base}/data/files.action">
-    
+        
         <div id="files">
            <fieldset>
                <legend><@i.messageFor "dataFiles" "Data Files"/></legend>
@@ -17,9 +17,10 @@
 		       <#if (files.size() > 0) >		       		
 	           <table>
 	             <#list files as file>	
+					<#assign path=p.normalise(file.path)>	             
 	                <tr>
-	                    <td><@p.normalise file.path/></td>
-	                    <td><@w.checkbox "selectedPaths" "${file.path}" /></td>
+	                    <td>${path}</td>
+	                    <td><@w.checkbox "selectedPaths" "${path}" /></td>
 	                </tr>
 	             </#list>
 	           </table>
@@ -39,10 +40,12 @@
 		                <tr>
 		                	<td>
 		                	<#if (p.isViewable(file)) >
-		                		<a class="buttonView" onclick="window.open('${base}/data/file.action?method=viewContent&selectedPath=<@p.normalise path/>/<@p.normalise file.path/>')"><@i.messageFor "viewContent" "View"/></a>
+		                	    <#assign selectedPath=p.normalise(path)+"/"+p.normalise(file.path)>
+		                		<a class="buttonView" onclick="window.open('${base}/data/file.action?method=viewContent&selectedPath=${selectedPath}')"><@i.messageFor "viewContent" "View"/></a>
 		                	</#if>
 		                	</td>
-		                	<td class="contentFilePath"><@p.normalise file.path/></td>
+		                	<#assign relativePath=p.normalise(file.path)>
+		                	<td class="contentFilePath">${relativePath}</td>
 		                </tr>
 	                </#list>
 	             </#list>

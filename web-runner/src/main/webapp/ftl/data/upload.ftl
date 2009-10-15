@@ -1,5 +1,6 @@
 <#import "/ftl/waffle/i18n.ftl" as i>
 <#import "/ftl/waffle/form.ftl" as w>
+<#import "/ftl/paths.ftl" as p>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <head>
@@ -48,7 +49,8 @@
 	         <table>
 	            <#list uploadedFiles as file>
 	                <tr>
-	                    <td>${file.path}</td>
+						<#assign path=p.normalise(file.path)>	             
+	                    <td>${path}</td>
 	                </tr>
 	            </#list>
 	         </table>   
