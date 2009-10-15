@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -55,16 +57,25 @@ public class ArchivingFileManagerTest {
 
 	@Test
 	public void canListFilesThatAreNotDirectories() throws IOException {
-		assertEquals(asList(zip, file1, file2), manager.list());
+		assertEquals(asList(zip, file1, file2), listFiles());
+	}
+
+	private List<File> listFiles() {
+		List<File> list = manager.list();		
+		Collections.sort(list, new Comparator<File>(){
+		public int compare(File arg0, File arg1) {
+			return arg0.getName().compareTo(arg1.getName());
+		}});
+		return list;
 	}
 
 	@Test
 	public void canDeleteFilesAndDirectories() throws IOException {
-		assertEquals(asList(zip, file1, file2), manager.list());
+		assertEquals(asList(zip, file1, file2), listFiles());
 		manager.delete(asList(file1.getAbsolutePath()));
-		assertEquals(asList(zip, file2), manager.list());
+		assertEquals(asList(zip, file2), listFiles());
 		manager.delete(asList(zip.getAbsolutePath()));
-		assertEquals(asList(file2), manager.list());
+		assertEquals(asList(file2), listFiles());
 	}
 
 	@Test
@@ -169,7 +180,7 @@ public class ArchivingFileManagerTest {
 	}
 
 	private File createUploadDir() throws IOException {
-		File dir = new File("target", "upload");
+		File dir = new File("target/upload");
 		dir.mkdirs();
 		return dir;
 	}

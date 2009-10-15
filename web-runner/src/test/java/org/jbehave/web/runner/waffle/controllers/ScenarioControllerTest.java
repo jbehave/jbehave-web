@@ -38,7 +38,7 @@ public class ScenarioControllerTest {
 		String scenarioOutput = scenarioInput; // if successfully, input=output
 		controller.getScenarioContext().setInput(scenarioInput);
 		controller.run();
-		assertEquals(scenarioOutput, controller.getScenarioContext().getOutput().trim());
+		assertLinesMatch(scenarioOutput, controller.getScenarioContext().getOutput().trim());
 		assertEquals(0, controller.getScenarioContext().getFailureMessages().size());
 		assertEquals("", controller.getScenarioContext().getFailureStackTrace());
 	}
@@ -58,11 +58,21 @@ public class ScenarioControllerTest {
 						+ "Then a tester is a happy hopper (NOT PERFORMED)"; 
 		controller.getScenarioContext().setInput(scenarioInput);
 		controller.run();
-		assertEquals(scenarioOutput, controller.getScenarioContext().getOutput().trim());
+		assertLinesMatch(scenarioOutput, controller.getScenarioContext().getOutput().trim());
 		assertEquals(asList("Test failed"), controller.getScenarioContext().getFailureMessages());
 		assertTrue(controller.getScenarioContext().getFailureStackTrace().startsWith("java.lang.RuntimeException: Test failed"));
 	}
 	
+	private void assertLinesMatch(String expected, String actual) {
+		String[] expectedLines = expected.split(NL);
+		String[] actualLines = actual.split(NL);
+		assertEquals(expectedLines.length, actualLines.length);
+		for (int i = 0; i < expectedLines.length; i++ ){ 
+			assertEquals(expectedLines[i].trim(), actualLines[i].trim());
+		}
+		
+	}
+
 	public static class MySteps extends Steps {
 		@Given("a test")
 		public void aTest(){

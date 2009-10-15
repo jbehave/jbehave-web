@@ -18,8 +18,8 @@ public class ZipFileArchiverTest {
 
 	@Before
 	public void setup() throws IOException {
-		dir = new File("target", "dir");
-		dir.createNewFile();
+		dir = new File("target/dir");
+		dir.mkdirs();
 	}
 
 	@Test
