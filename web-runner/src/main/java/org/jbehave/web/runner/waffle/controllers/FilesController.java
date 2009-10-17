@@ -1,8 +1,8 @@
 package org.jbehave.web.runner.waffle.controllers;
 
+import static org.jbehave.web.runner.waffle.controllers.FilesContext.View.RELATIVE_PATH;
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,56 +14,51 @@ import org.jbehave.web.io.FileManager;
 public class FilesController extends MenuAwareController {
 
 	private final FileManager manager;
-	private List<File> files = new ArrayList<File>();
-	private List<String> selectedPaths = new ArrayList<String>();
-	private Map<String,List<File>> contentFiles = new HashMap<String,List<File>>();
-	
+	private FilesContext filesContext;
+
 	public FilesController(Menu menu, FileManager manager) {
 		super(menu);
 		this.manager = manager;
+		this.filesContext = new FilesContext();
 	}
 
 	@ActionMethod(asDefault = true)
 	public void list() {
-		this.files = manager.list();
+		this.filesContext.setFiles(manager.list());
 	}
 
 	@ActionMethod
 	public void showContent() {
+		Map<String, List<File>> contentFiles = filesContext.getContentFiles();
 		contentFiles.clear();
-		for (String path : selectedPaths) {
-			List<File> content = manager.listContent(path);
-			if ( content.size() > 0 ){
-				contentFiles.put(content.get(0).getPath(), content);							
+		boolean relativePaths = filesContext.getView() == RELATIVE_PATH ? true
+				: false;
+		for (String path : filesContext.getSelectedPaths()) {
+			List<File> content = manager.listContent(path, relativePaths);
+			if (content.size() > 0) {
+				contentFiles.put(content.get(0).getPath(), content);
 			}
 		}
 	}
 
 	@ActionMethod
 	public void hideContent() {
-		contentFiles.clear();
+		filesContext.getContentFiles().clear();
 	}
 
 	@ActionMethod
 	public void delete() {
-		manager.delete(selectedPaths);
+		manager.delete(filesContext.getSelectedPaths());
+		hideContent();
 		list();
 	}
-	
-	public List<File> getFiles() {
-		return files;
-	}
-	
-	public Map<String, List<File>> getContentFiles() {
-		return contentFiles;
+
+	public FilesContext getFilesContext() {
+		return filesContext;
 	}
 
-	public List<String> getSelectedPaths() {
-		return selectedPaths;
-	}
-
-	public void setSelectedPaths(List<String> selectedPaths) {
-		this.selectedPaths = selectedPaths;
+	public void setFilesContext(FilesContext filesContext) {
+		this.filesContext = filesContext;
 	}
 
 }

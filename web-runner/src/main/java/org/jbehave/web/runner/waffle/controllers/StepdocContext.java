@@ -1,7 +1,8 @@
 package org.jbehave.web.runner.waffle.controllers;
 
+import static java.util.Arrays.asList;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -30,7 +31,7 @@ public class StepdocContext {
 	}
 	
 	public List<View> getViews(){
-		return Arrays.asList(View.values());
+		return asList(View.values());
 	}
 	
 	public View getView() {

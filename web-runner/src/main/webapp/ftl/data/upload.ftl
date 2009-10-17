@@ -49,7 +49,7 @@
 	         <table>
 	            <#list uploadedFiles as file>
 	                <tr>
-						<#assign path=p.normalise(file.path)>	             
+						<#assign path=p.unixPath(file.path)>	             
 	                    <td>${path}</td>
 	                </tr>
 	            </#list>

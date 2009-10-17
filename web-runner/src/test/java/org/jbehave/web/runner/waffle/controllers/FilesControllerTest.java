@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.codehaus.waffle.menu.Menu;
 import org.jbehave.web.io.FileManager;
-import org.jbehave.web.runner.waffle.controllers.FilesController;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -34,32 +33,34 @@ public class FilesControllerTest {
 		});
 		FilesController controller = new FilesController(MENU, manager);
 		controller.list();
-		assertEquals(files, controller.getFiles());
+		assertEquals(files, controller.getFilesContext().getFiles());
 	}
 
 	@Test
 	public void canListContentFiles() {
 		final List<String> paths = asList("archive1.zip");
 		final List<File> files = asList(new File("archive1"), new File("file1"), new File("file2"));
+		final boolean relativeContentPaths = true;
 		mockery.checking(new Expectations() {
 			{
 				for ( String path : paths ){
-					one(manager).listContent(path);					
+					one(manager).listContent(path, relativeContentPaths);					
 					will(returnValue(files));
 				}
 			}
 		});
 		FilesController controller = new FilesController(MENU, manager);
-		controller.setSelectedPaths(paths);
+		FilesContext filesContext = controller.getFilesContext();
+		filesContext.setSelectedPaths(paths);
 		controller.showContent();
-		assertEquals(files, controller.getContentFiles().get("archive1"));
+		assertEquals(files, filesContext.getContentFiles().get("archive1"));
 	}
 
 	@Test
 	public void canHideContentFiles() {
 		FilesController controller = new FilesController(MENU, manager);
 		controller.hideContent();
-		assertTrue(controller.getContentFiles().isEmpty());
+		assertTrue(controller.getFilesContext().getContentFiles().isEmpty());
 	}
 
 	@Test
@@ -74,9 +75,10 @@ public class FilesControllerTest {
 			}
 		});
 		FilesController controller = new FilesController(MENU, manager);
-		controller.setSelectedPaths(paths);
+		FilesContext filesContext = controller.getFilesContext();
+		filesContext.setSelectedPaths(paths);
 		controller.delete();
-		assertEquals(files, controller.getFiles());
+		assertEquals(files, filesContext.getFiles());
 	}
 
 }

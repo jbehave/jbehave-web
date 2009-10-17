@@ -20,6 +20,7 @@ public class TraderRegistrar extends JBehaveRegistrar {
 	}
 	
 	protected File uploadDirectory() {
-		return new File("/tmp/upload");
+		// Can be overridden to return, e.g. new File("/tmp/upload");
+		return super.uploadDirectory();
 	}
 }

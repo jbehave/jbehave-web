@@ -1,13 +1,27 @@
 <#ftl strip_whitespace=true>
 <#--
- * Normalises path by replacing '\' with '/'
+ * Returns the URL path based on the view
+ *
+ * @param view the FilesContext.View
+ * @param path the path
+ * @param directoryPath the directory path to use with relative views
+ * @return the url path
+ -->
+<#function urlPath view path directoryPath>
+    <#if (view == 'FULL_PATH')><#return unixPath(path)?url('UTF-8')></#if>
+    <#assign full = unixPath(directoryPath)+"/"+unixPath(path)>
+    <#return full?url('UTF-8')>
+</#function>
+
+<#--
+ * Ensures path uses unix separators by replacing '\' with '/'
  *
  * @param path the path
- * @return the normalised path
+ * @return the unix path
  -->
-<#function normalise path>
-    <#assign normalised = path.replace("\\","/")>
-    <#return normalised>
+<#function unixPath path>
+    <#assign unix = path.replace("\\","/")>
+    <#return unix>
 </#function>
 
 <#--

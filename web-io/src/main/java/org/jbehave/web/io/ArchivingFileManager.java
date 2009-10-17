@@ -25,10 +25,10 @@ public class ArchivingFileManager implements FileManager {
 	}
 
 	public List<File> list() {
-		return asList(uploadDirectory().listFiles(new FileFilter(){
+		return asList(uploadDirectory().listFiles(new FileFilter() {
 			public boolean accept(File file) {
 				return !file.isDirectory();
-			}			
+			}
 		}));
 	}
 
@@ -37,15 +37,17 @@ public class ArchivingFileManager implements FileManager {
 		return uploadDirectory;
 	}
 
-	public List<File> listContent(String path){
+	public List<File> listContent(String path, boolean relativePaths) {
 		File directory = archiver.directoryOf(new File(path));
 		List<File> content = new ArrayList<File>();
-		for ( File file : archiver.listContent(directory) ){
-			content.add(archiver.relativeTo(file, directory));
-		}		
+		for (File file : archiver.listContent(directory)) {
+			File contentFile = (relativePaths ? archiver.relativeTo(file,
+					directory) : file);
+			content.add(contentFile);
+		}
 		return content;
 	}
-	
+
 	public void delete(List<String> paths) {
 		for (String path : paths) {
 			deleteFile(new File(path));
@@ -59,13 +61,13 @@ public class ArchivingFileManager implements FileManager {
 				deleteFile(new File(file, child));
 			}
 		}
-		if ( archiver.isArchive(file) ){
+		if (archiver.isArchive(file)) {
 			// delete the unarchived directory too
 			deleteFile(archiver.directoryOf(file));
 		}
 		file.delete();
 	}
-	
+
 	public List<File> upload(List<FileItem> fileItems, List<String> errors) {
 		List<File> files = new ArrayList<File>();
 		File directory = uploadDirectory();
@@ -78,7 +80,7 @@ public class ArchivingFileManager implements FileManager {
 						archiver.unarchive(file, directory);
 					} catch (FileUnarchiveFailedException e) {
 						errors.add(e.getMessage());
-						if ( e.getCause() != null ){
+						if (e.getCause() != null) {
 							errors.add(e.getCause().getMessage());
 						}
 					}
@@ -87,7 +89,7 @@ public class ArchivingFileManager implements FileManager {
 				// ignore and carry on
 			} catch (FileWriteFailedException e) {
 				errors.add(e.getMessage());
-				if ( e.getCause() != null ){
+				if (e.getCause() != null) {
 					errors.add(e.getCause().getMessage());
 				}
 			}
@@ -95,7 +97,6 @@ public class ArchivingFileManager implements FileManager {
 		return files;
 	}
 
-	
 	private File writeItemToFile(File directory, FileItem item) {
 		if (isBlank(item.getName())) {
 			throw new FileItemNameMissingException(item);
