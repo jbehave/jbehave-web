@@ -44,7 +44,7 @@ public class ArchivingFileManagerTest {
 		file2 = create("file2");
 		zip = create("dir1.zip");
 		archiveFiles(zip, asList(file1, file2));
-		manager = new ArchivingFileManager(new ZipFileArchiver(), upload);
+		manager = new ArchivingFileManager(new ZipFileArchiver(), new SilentFileMonitor(), upload);
 	}
 
 	@After

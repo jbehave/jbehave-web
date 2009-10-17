@@ -17,19 +17,24 @@ import org.jbehave.web.io.ZipFileArchiver.FileUnarchiveFailedException;
 public class ArchivingFileManager implements FileManager {
 
 	private final FileArchiver archiver;
+	private final FileMonitor monitor;
 	private final File uploadDirectory;
 
-	public ArchivingFileManager(FileArchiver archiver, File uploadDirectory) {
+	public ArchivingFileManager(FileArchiver archiver, FileMonitor monitor, File uploadDirectory) {
 		this.archiver = archiver;
+		this.monitor = monitor;
 		this.uploadDirectory = uploadDirectory;
 	}
 
 	public List<File> list() {
-		return asList(uploadDirectory().listFiles(new FileFilter() {
+		File directory = uploadDirectory();
+		List<File> files = asList(directory.listFiles(new FileFilter() {
 			public boolean accept(File file) {
 				return !file.isDirectory();
 			}
 		}));
+		monitor.filesListed(directory, files);
+		return files;
 	}
 
 	private File uploadDirectory() {
@@ -45,6 +50,7 @@ public class ArchivingFileManager implements FileManager {
 					directory) : file);
 			content.add(contentFile);
 		}
+		monitor.contentListed(path, directory, relativePaths, content);
 		return content;
 	}
 
@@ -63,9 +69,12 @@ public class ArchivingFileManager implements FileManager {
 		}
 		if (archiver.isArchive(file)) {
 			// delete the unarchived directory too
-			deleteFile(archiver.directoryOf(file));
+			File directory = archiver.directoryOf(file);
+			deleteFile(directory);
+			monitor.fileDeleted(directory);
 		}
 		file.delete();
+		monitor.fileDeleted(file);
 	}
 
 	public List<File> upload(List<FileItem> fileItems, List<String> errors) {
@@ -78,6 +87,7 @@ public class ArchivingFileManager implements FileManager {
 				if (archiver.isArchive(file)) {
 					try {
 						archiver.unarchive(file, directory);
+						monitor.fileUnarchived(file, directory);
 					} catch (FileUnarchiveFailedException e) {
 						errors.add(e.getMessage());
 						if (e.getCause() != null) {

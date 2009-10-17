@@ -20,6 +20,7 @@ import org.jbehave.scenario.parser.PatternScenarioParser;
 import org.jbehave.scenario.steps.DefaultStepdocGenerator;
 import org.jbehave.scenario.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
+import org.jbehave.web.io.SilentFileMonitor;
 import org.jbehave.web.io.ZipFileArchiver;
 import org.jbehave.web.runner.waffle.controllers.FileController;
 import org.jbehave.web.runner.waffle.controllers.FileUploadController;
@@ -41,6 +42,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 		registerScenarioRunner();
 		registerSteps();
 		registerStepdocGenerator();
+		registerFileMonitor();
 		registerFileManager();
 		register("data/file", FileController.class);
 		register("data/files", FilesController.class);
@@ -99,6 +101,10 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 
 	protected void registerStepdocGenerator() {
 		register(DefaultStepdocGenerator.class);
+	}
+
+	protected void registerFileMonitor() {
+		register(SilentFileMonitor.class);
 	}
 
 	protected void registerFileManager() {
