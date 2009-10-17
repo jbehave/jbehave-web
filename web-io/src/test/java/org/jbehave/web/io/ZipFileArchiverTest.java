@@ -1,6 +1,7 @@
 package org.jbehave.web.io;
 
 import static java.util.Arrays.asList;
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -46,11 +47,23 @@ public class ZipFileArchiverTest {
 				"archive/subdir1/subfile1.txt"));
 	}
 
-	private void clearDir(File dir) {
-		dir.delete();
-		dir.mkdir();
+	@Test
+	public void canResolveFileRelativeToDirectoryUsingUnixSeparators(){
+		assertRelativeFileUsesUnixSeparators("target/dir", "archive/file.txt");
+		assertRelativeFileUsesUnixSeparators("/tmp/dir", "archive/file.txt");
+		assertRelativeFileUsesUnixSeparators("\\\\UNC\\share\\dir", "archive\\file.txt");
+		assertRelativeFileUsesUnixSeparators("C:\\Documents and Settings\\user\\dir", "archive\\file.txt");
+		assertRelativeFileUsesUnixSeparators(System.getProperty("java.io.tmpdir"), "archive\\file.txt");
+		assertRelativeFileUsesUnixSeparators(System.getProperty("java.io.tmpdir"), "archive/file.txt");
 	}
 
+	private void assertRelativeFileUsesUnixSeparators(String directoryPath, String relativePath) {
+		String unixPath = separatorsToUnix(relativePath);
+		File directory = new File(directoryPath);
+		File file = new File(directoryPath +"/"+ relativePath);		
+		assertEquals(new File(unixPath), archiver.relativeTo(file, directory));
+	}
+	
 	@Test
 	public void canListFileContentOfUnarchiveZip() throws IOException {
 		File zip = resourceFile("archive.zip");
@@ -80,8 +93,13 @@ public class ZipFileArchiverTest {
 		}
 	}
 
+	private void clearDir(File dir) {
+		dir.delete();
+		dir.mkdir();
+	}
+
 	private File resourceFile(String path) {
 		return new File(getClass().getClassLoader().getResource(path).getFile());
 	}
-
+	
 }

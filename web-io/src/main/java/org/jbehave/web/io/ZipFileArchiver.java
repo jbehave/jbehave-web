@@ -1,7 +1,8 @@
 package org.jbehave.web.io;
 
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
+import static org.apache.commons.lang.StringUtils.remove;
 import static org.apache.commons.lang.StringUtils.removeEnd;
-import static org.apache.commons.lang.StringUtils.removeStart;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +25,7 @@ import org.apache.commons.io.IOUtils;
  */
 public class ZipFileArchiver implements FileArchiver {
 
+	private static final String UNIX_SEPARATOR = "/";
 	private static final String ZIP = "zip";
 	private static final String ZIP_EXT = ".zip";
 	private ArchiveStreamFactory factory = new ArchiveStreamFactory();
@@ -51,11 +53,14 @@ public class ZipFileArchiver implements FileArchiver {
 	}
 
 	public File relativeTo(File file, File directory) {
-		return new File(removeStart(normalisePath(file.getPath()), normalisePath(directory.getPath()) + "/"));
-	}
-
-	private String normalisePath(String path) {
-		return path.replace('\\', '/');
+		String filePath = separatorsToUnix(file.getPath());
+		String directoryPath = separatorsToUnix(directory.getPath());
+		if ( !directoryPath.endsWith(UNIX_SEPARATOR) ){ 
+			// ensure directory has a trailing separator 
+			// that will be removed from the full file path
+			directoryPath = directoryPath + UNIX_SEPARATOR;
+		}
+		return new File(remove(filePath, directoryPath));
 	}
 	
 	private void zipEntry(ZipArchiveEntry entry, ArchiveOutputStream out,
