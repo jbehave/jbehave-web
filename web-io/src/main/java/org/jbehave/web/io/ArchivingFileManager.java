@@ -84,6 +84,7 @@ public class ArchivingFileManager implements FileManager {
 			try {
 				File file = writeItemToFile(directory, item);
 				files.add(file);
+				monitor.fileUploaded(file);
 				if (archiver.isArchive(file)) {
 					try {
 						archiver.unarchive(file, directory);
@@ -102,6 +103,7 @@ public class ArchivingFileManager implements FileManager {
 				if (e.getCause() != null) {
 					errors.add(e.getCause().getMessage());
 				}
+				monitor.fileUploadFailed(item, e);
 			}
 		}
 		return files;
@@ -111,7 +113,7 @@ public class ArchivingFileManager implements FileManager {
 		if (isBlank(item.getName())) {
 			throw new FileItemNameMissingException(item);
 		}
-		File file = new File(directory, item.getName());
+		File file = new File(directory, fileName(item));
 		try {
 			if (file.exists()) {
 				file.createNewFile();
@@ -121,6 +123,11 @@ public class ArchivingFileManager implements FileManager {
 			throw new FileWriteFailedException(file, e);
 		}
 		return file;
+	}
+
+	private String fileName(FileItem item) {
+		File file = new File(item.getName());
+		return file.getName();
 	}
 
 	@SuppressWarnings("serial")
