@@ -19,12 +19,14 @@ public class PrintStreamFileMonitor implements FileMonitor {
 	}
 
 	protected void print(PrintStream output, String message) {
-		output.println(message);
+		print(output, message, null);
 	}
 
 	protected void print(PrintStream output, String message, Exception cause) {
 		output.println(message);
-		cause.printStackTrace(output);		
+		if ( cause != null ){
+			cause.printStackTrace(output);			
+		}
 	}
 
 	public void contentListed(String path, File directory,
