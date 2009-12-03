@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.io.FilenameUtils;
 import org.jbehave.web.io.ZipFileArchiver.FileUnarchiveFailedException;
 
 /**
@@ -125,10 +126,13 @@ public class ArchivingFileManager implements FileManager {
 		return file;
 	}
 
-	private String fileName(FileItem item) {
-		File file = new File(item.getName());
-		return file.getName();
-	}
+    private String fileName(FileItem item) {
+        // FileItem.getName() may return the full path, depending on the client
+        // (e.g. IE or Opera)
+        // FilenameUtils.getName(path) extracts file name whatever the path
+        // separator (Unix or Windows)
+        return FilenameUtils.getName(item.getName());
+    }
 
 	@SuppressWarnings("serial")
 	public static final class FileItemNameMissingException extends
