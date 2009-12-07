@@ -7,7 +7,7 @@
 </head>
 <#include "/ftl/navigation.ftl" parse="true">
 <div id="content">
-    <form action="${base}/scenario/scenario.action">
+    <form action="${base}/scenario/scenario.action" method="${scenarioContext.method}">
     
         <#include "/ftl/errors.ftl" parse="true">
         <div id="scenarioInput">

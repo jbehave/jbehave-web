@@ -11,26 +11,38 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class ScenarioContext {
 
-	private static final String EMPTY = "";
+	private static final String POST = "post";
+    private static final String EMPTY = "";
 	private static final List<String> EMPTY_LIST = asList();
 
+    private String method;
 	private String input;
 	private String output;
 	private List<String> messages;
 	private Throwable cause;
 
 	public ScenarioContext() {
-		this(EMPTY, EMPTY, EMPTY_LIST);
+		this(POST, EMPTY, EMPTY, EMPTY_LIST);
 	}
 
-	public ScenarioContext(String input, String output, List<String> messages) {
-		this.input = input;
+	public ScenarioContext(String method, String input, String output, List<String> messages) {
+		this.method = method;
+        this.input = input;
 		this.output = output;
 		this.messages = new ArrayList<String>();
 		this.messages.addAll(messages);
 	}
 
-	public String getInput() {
+	
+	public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getInput() {
 		return input;
 	}
 
