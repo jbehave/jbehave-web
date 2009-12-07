@@ -15,7 +15,7 @@ public class ScenarioContext {
     private static final String EMPTY = "";
 	private static final List<String> EMPTY_LIST = asList();
 
-    private String method;
+    private String method = POST;
 	private String input;
 	private String output;
 	private List<String> messages;
