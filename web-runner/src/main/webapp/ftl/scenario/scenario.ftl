@@ -16,7 +16,10 @@
                 <p>
                 	<@w.textarea "scenarioContext.input" "${scenarioContext.input}" "rows='25' cols='100'"/>
                 </p>
- 				<p><a href="javascript:fireActionMethod('run');"><@i.messageFor "runScenario" "Run Scenario"/></a></p> 
+ 				<p><a href="javascript:fireActionMethod('run');"><@i.messageFor "runScenario" "Run Scenario"/></a> (Method 
+ 				   <@w.selectSingle "scenarioContext.method" w.asNameableValues(scenarioContext.getMethods(),"name()","name()") scenarioContext.getMethod() 
+                   "onchange=\"fireActionMethod('show');\"" />)				
+ 				</p> 
             </fieldset>
         </div>
 

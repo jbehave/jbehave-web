@@ -11,8 +11,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class ScenarioContext {
 
-	private static final String POST = "post";
+    private static final String POST = "post";
+    private static final String GET = "get";
     private static final String EMPTY = "";
+    private static final List<String> METHODS = asList(POST, GET);
 	private static final List<String> EMPTY_LIST = asList();
 
     private String method = POST;
@@ -32,7 +34,10 @@ public class ScenarioContext {
 		this.messages = new ArrayList<String>();
 		this.messages.addAll(messages);
 	}
-
+	
+	public List<String> getMethods(){
+	    return METHODS;
+	}
 	
 	public String getMethod() {
         return method;

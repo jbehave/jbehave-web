@@ -4,6 +4,8 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.codehaus.waffle.menu.Menu;
 import org.jbehave.scenario.Configuration;
 import org.jbehave.scenario.MostUsefulConfiguration;
@@ -62,6 +64,17 @@ public class ScenarioControllerTest {
 		assertEquals(asList("Test failed"), controller.getScenarioContext().getFailureMessages());
 		assertTrue(controller.getScenarioContext().getFailureStackTrace().startsWith("java.lang.RuntimeException: Test failed"));
 	}
+
+    @Test
+    public void canChangeScenarioContextMethod(){
+        ScenarioController controller = new ScenarioController(MENU, configuration, parser, runner, new MySteps());
+        ScenarioContext scenarioContext = controller.getScenarioContext();
+        List<String> methods = scenarioContext.getMethods();
+        assertEquals(methods.get(0), scenarioContext.getMethod());
+        scenarioContext.setMethod(methods.get(1));
+        controller.show();
+        assertEquals(methods.get(1), scenarioContext.getMethod());
+    }	
 	
 	private void assertLinesMatch(String expected, String actual) {
 		String[] expectedLines = expected.split(NL);
