@@ -4,6 +4,7 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Properties;
 
 import org.codehaus.waffle.action.annotation.ActionMethod;
 import org.codehaus.waffle.action.annotation.PRG;
@@ -12,6 +13,7 @@ import org.codehaus.waffle.menu.MenuAwareController;
 import org.jbehave.scenario.Configuration;
 import org.jbehave.scenario.PropertyBasedConfiguration;
 import org.jbehave.scenario.ScenarioRunner;
+import org.jbehave.scenario.definition.KeyWords;
 import org.jbehave.scenario.definition.StoryDefinition;
 import org.jbehave.scenario.parser.ScenarioParser;
 import org.jbehave.scenario.reporters.PrintStreamScenarioReporter;
@@ -36,11 +38,15 @@ public class ScenarioController extends MenuAwareController {
 		this.scenarioRunner = scenarioRunner;
 		this.steps = steps;
 		this.outputStream = new ByteArrayOutputStream();
+        final Properties properties = new Properties();
+        properties.setProperty("beforeStory", "{0}\n");
+        final KeyWords keywords = configuration.keywords();
+        final boolean reportErrors = false;
 		this.configuration = new PropertyBasedConfiguration(configuration) {
 			@Override
 			public ScenarioReporter forReportingScenarios() {
 				return new PrintStreamScenarioReporter(new PrintStream(
-						outputStream));
+						outputStream), properties, keywords, reportErrors);
 			}
 		};
 		this.scenarioContext = new ScenarioContext();
@@ -67,7 +73,7 @@ public class ScenarioController extends MenuAwareController {
 	}
 
 	private StoryDefinition storyDefinition() {
-		return scenarioParser.defineStoryFrom(scenarioContext.getInput());
+		return scenarioParser.defineStoryFrom(scenarioContext.getInput(), null);
 	}
 
 	public ScenarioContext getScenarioContext() {

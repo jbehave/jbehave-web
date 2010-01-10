@@ -31,11 +31,12 @@ public class SeleniumStepsTest {
 
 	@Test
 	public void canRunSuccessfulScenario() throws Throwable{
-		String scenarioInput = "Scenario: A simple web test" + NL 
+		String input = "Scenario: A simple web test" + NL
 						+ NL
 						+ "Given a test" + NL
 						+ "When a test is executed" + NL
-						+ "Then a tester is a happy hopper"; 
+						+ "Then a tester is a happy hopper";
+        String path = "/path/to/input";
 		mockery.checking(new Expectations(){{
 			exactly(3).of(selenium).setContext(with(any(String.class)));
 			one(selenium).start();
@@ -55,32 +56,9 @@ public class SeleniumStepsTest {
 			}
 			
 		};
-		runner.run(parser.defineStoryFrom(scenarioInput), configuration, steps);
+		runner.run(parser.defineStoryFrom(input, path), configuration, steps);
 	}
-	@Test
 
-	public void canRunSuccessfulScenario2() throws Throwable{
-		String scenarioInput = "Scenario: A simple web test" + NL
-						+ NL
-						+ "Given a test" + NL
-						+ "When a test is executed" + NL
-						+ "Then a tester is a happy hopper";
-		mockery.checking(new Expectations(){{
-			exactly(3).of(selenium).setContext(with(any(String.class)));
-			one(selenium).start();
-			one(selenium).close();
-			one(selenium).stop();
-		}});
-		Steps steps = new MySteps(selenium){
-
-			@Override
-			protected ConditionRunner createConditionRunner(Selenium selenium) {
-				return conditionRunner;
-			}
-
-		};
-		runner.run(parser.defineStoryFrom(scenarioInput), configuration, steps);
-	}
 
 	public static class MySteps extends SeleniumSteps {
 

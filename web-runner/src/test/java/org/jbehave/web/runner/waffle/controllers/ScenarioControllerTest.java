@@ -32,12 +32,15 @@ public class ScenarioControllerTest {
 	@Test
 	public void canRunSuccessfulScenario(){
 		ScenarioController controller = new ScenarioController(MENU, configuration, parser, runner, new MySteps());
-		String scenarioInput = "Scenario: A simple test" + NL 
+		String scenarioInput = "Scenario: A simple test" + NL
 						+ NL
 						+ "Given a test" + NL
 						+ "When a test is executed" + NL
-						+ "Then a tester is a happy hopper"; 
-		String scenarioOutput = scenarioInput; // if successfully, input=output
+						+ "Then a tester is a happy hopper";
+		String scenarioOutput = "Scenario: A simple test" + NL
+						+ "Given a test" + NL
+						+ "When a test is executed" + NL
+						+ "Then a tester is a happy hopper";
 		controller.getScenarioContext().setInput(scenarioInput);
 		controller.run();
 		assertLinesMatch(scenarioOutput, controller.getScenarioContext().getOutput().trim());
@@ -48,21 +51,19 @@ public class ScenarioControllerTest {
 	@Test
 	public void canRunFailingScenario(){
 		ScenarioController controller = new ScenarioController(MENU, configuration, parser, runner, new MySteps());
-		String scenarioInput = "Scenario: A simple test" + NL 
-						+ NL
+		String scenarioInput = "Scenario: A simple test" + NL
 						+ "Given a test" + NL
 						+ "When a test fails" + NL
 						+ "Then a tester is a happy hopper"; 
-		String scenarioOutput = "Scenario: A simple test" + NL 
-						+ NL
+		String scenarioOutput = "Scenario: A simple test" + NL
 						+ "Given a test" + NL
 						+ "When a test fails (FAILED)" + NL
 						+ "Then a tester is a happy hopper (NOT PERFORMED)"; 
 		controller.getScenarioContext().setInput(scenarioInput);
 		controller.run();
 		assertLinesMatch(scenarioOutput, controller.getScenarioContext().getOutput().trim());
-		assertEquals(asList("Test failed"), controller.getScenarioContext().getFailureMessages());
-		assertTrue(controller.getScenarioContext().getFailureStackTrace().startsWith("java.lang.RuntimeException: Test failed"));
+		assertTrue(controller.getScenarioContext().getFailureMessages().contains("Test failed"));
+		assertTrue(controller.getScenarioContext().getFailureStackTrace().contains("java.lang.RuntimeException: Test failed"));
 	}
 
     @Test
