@@ -73,7 +73,7 @@ public class ScenarioController extends MenuAwareController {
 	}
 
 	private StoryDefinition storyDefinition() {
-		return scenarioParser.defineStoryFrom(scenarioContext.getInput(), null);
+		return scenarioParser.defineStoryFrom(scenarioContext.getInput());
 	}
 
 	public ScenarioContext getScenarioContext() {
