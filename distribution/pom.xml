@@ -8,6 +8,9 @@
   <artifactId>jbehave-web-distribution</artifactId>
   <packaging>pom</packaging>
   <name>JBehave Web Distribution</name>
+  <properties>
+      <jbehave.site.version>2.0.2</jbehave.site.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.jbehave.web</groupId>
@@ -30,7 +33,7 @@
       <plugin>
         <groupId>org.codehaus.xsite</groupId>
         <artifactId>xsite-maven-plugin</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
         <configuration>
           <sourceDirectoryPath>${basedir}/src/main/site/</sourceDirectoryPath>
           <sitemapPath>content/sitemap.xml</sitemapPath>
@@ -126,7 +129,7 @@
                 <artifactItem>
                   <groupId>org.jbehave.site</groupId>
                   <artifactId>jbehave-site-resources</artifactId>
-                  <version>2.0</version>
+                  <version>${jbehave.site.version}</version>
                   <outputDirectory>${project.build.directory}/site</outputDirectory>
                 </artifactItem>
               </artifactItems>
@@ -145,7 +148,7 @@
                 <artifactItem>
                   <groupId>org.jbehave.site</groupId>
                   <artifactId>jbehave-site-templates</artifactId>
-                  <version>2.0</version>
+                  <version>${jbehave.site.version}</version>
                   <outputDirectory>${project.build.directory}/templates</outputDirectory>
                 </artifactItem>
               </artifactItems>
