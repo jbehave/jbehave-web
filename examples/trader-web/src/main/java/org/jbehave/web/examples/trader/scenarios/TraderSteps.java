@@ -12,10 +12,15 @@ public class TraderSteps extends Steps {
 
     private Stock stock;
     private Trader trader;
+    private TradingService service;
+
+    public TraderSteps(TradingService service) {
+        this.service = service;
+    }
 
     @Given("a threshold of $threshold")
     public void aThreshold(double threshold) {
-        stock = new Stock(threshold);
+        stock = service.newStock(threshold);
     }
 
     @When("the stock is traded at $price")

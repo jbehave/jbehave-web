@@ -11,7 +11,15 @@
   <name>JBehave Web Examples</name>
 
   <modules>
-    <module>trader-web</module>
+      <module>trader-web</module>
   </modules>
-  
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-pico</artifactId>
+            <version>${jbehave.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

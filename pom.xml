@@ -15,6 +15,7 @@
   </modules>
 
   <properties>
+    <jbehave.version>2.5-SNAPSHOT</jbehave.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
   </properties>
 
@@ -22,7 +23,7 @@
     <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-core</artifactId>
-      <version>2.4.1</version>
+      <version>${jbehave.version}</version>
     </dependency>
      <dependency>
       <groupId>org.jmock</groupId>
