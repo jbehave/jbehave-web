@@ -8,7 +8,7 @@ import org.jbehave.scenario.steps.StepsConfiguration;
 /**
  * Steps implementation that can be used in Selenium-based scenarios. It
  * provides annotated methods to start and stop Selenium before and after
- * stories. It also provides defaults for Selenium and ConditionRunner
+ * stories. It can also provides defaults for Selenium and ConditionRunner
  * dependencies, which may be overridden by user when providing the
  * implementation of scenario steps.
  *

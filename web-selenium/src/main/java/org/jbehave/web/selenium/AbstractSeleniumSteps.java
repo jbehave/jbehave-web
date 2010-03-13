@@ -9,6 +9,15 @@ import org.jbehave.scenario.steps.StepsConfiguration;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Steps implementation that can be used in Selenium-based scenarios. It does not start,
+ * stop or close Selenium at all.
+ * It can also provides defaults for Selenium and ConditionRunner
+ * dependencies, which may be overridden by user when providing the
+ * implementation of scenario steps.
+ *
+ * @author Mauro Talevi
+ */
 public class AbstractSeleniumSteps extends Steps {
 
     protected final Selenium selenium;
