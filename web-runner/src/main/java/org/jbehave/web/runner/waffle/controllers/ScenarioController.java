@@ -1,11 +1,5 @@
 package org.jbehave.web.runner.waffle.controllers;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Properties;
-
 import org.codehaus.waffle.action.annotation.ActionMethod;
 import org.codehaus.waffle.action.annotation.PRG;
 import org.codehaus.waffle.menu.Menu;
@@ -19,6 +13,12 @@ import org.jbehave.scenario.parser.ScenarioParser;
 import org.jbehave.scenario.reporters.PrintStreamScenarioReporter;
 import org.jbehave.scenario.reporters.ScenarioReporter;
 import org.jbehave.scenario.steps.CandidateSteps;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Properties;
+
+import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 public class ScenarioController extends MenuAwareController {
 
@@ -64,7 +64,7 @@ public class ScenarioController extends MenuAwareController {
 			try {
 				outputStream.reset();
 				scenarioContext.clearFailureCause();
-				scenarioRunner.run(storyDefinition(), configuration, steps);
+				scenarioRunner.run(storyDefinition(), configuration, true, steps);
 			} catch (Throwable e) {
 				scenarioContext.runFailedFor(e);
 			}

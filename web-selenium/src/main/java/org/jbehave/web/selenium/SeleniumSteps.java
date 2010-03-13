@@ -1,16 +1,13 @@
 package org.jbehave.web.selenium;
 
-import java.util.concurrent.TimeUnit;
-
-import org.jbehave.scenario.annotations.AfterScenario;
-import org.jbehave.scenario.annotations.BeforeScenario;
-import org.jbehave.scenario.steps.Steps;
-import org.jbehave.scenario.steps.StepsConfiguration;
-
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 import com.thoughtworks.selenium.condition.JUnitConditionRunner;
+import org.jbehave.scenario.steps.Steps;
+import org.jbehave.scenario.steps.StepsConfiguration;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Steps implementation that can be used in Selenium-based scenarios. It
@@ -21,7 +18,7 @@ import com.thoughtworks.selenium.condition.JUnitConditionRunner;
  * 
  * @author Mauro Talevi
  */
-public class SeleniumSteps extends Steps {
+public abstract class SeleniumSteps extends Steps {
 
 	protected final Selenium selenium;
 	protected final ConditionRunner runner;
@@ -44,17 +41,6 @@ public class SeleniumSteps extends Steps {
 		super(configuration);
 		this.selenium = configuration.getSelenium();
 		this.runner = createConditionRunner(selenium);
-	}
-
-	@BeforeScenario
-	public void beforeScenario() throws Exception {
-		selenium.start();
-	}
-
-	@AfterScenario
-	public void afterScenario() throws Exception {
-		selenium.close();
-		selenium.stop();
 	}
 
 	/**

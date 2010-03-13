@@ -16,7 +16,7 @@
   </modules>
 
   <properties>
-    <jbehave.version>2.5-SNAPSHOT</jbehave.version>
+    <jbehave.version>2.6-SNAPSHOT</jbehave.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
   </properties>
 

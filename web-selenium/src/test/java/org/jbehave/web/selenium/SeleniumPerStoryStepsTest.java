@@ -1,11 +1,14 @@
 package org.jbehave.web.selenium;
 
+import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.condition.ConditionRunner;
 import org.jbehave.scenario.Configuration;
 import org.jbehave.scenario.MostUsefulConfiguration;
 import org.jbehave.scenario.ScenarioRunner;
 import org.jbehave.scenario.annotations.Given;
 import org.jbehave.scenario.annotations.Then;
 import org.jbehave.scenario.annotations.When;
+import org.jbehave.scenario.definition.StoryDefinition;
 import org.jbehave.scenario.parser.PatternScenarioParser;
 import org.jbehave.scenario.parser.ScenarioParser;
 import org.jbehave.scenario.steps.Steps;
@@ -13,10 +16,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
 
-import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.condition.ConditionRunner;
-
-public class SeleniumStepsTest {
+public class SeleniumPerStoryStepsTest {
 
 	private Mockery mockery = new Mockery();
 
@@ -54,13 +54,14 @@ public class SeleniumStepsTest {
 			protected Selenium createSelenium() {
 				return selenium;
 			}
-			
+
 		};
-		runner.run(parser.defineStoryFrom(input, path), configuration, steps);
+        StoryDefinition definition = parser.defineStoryFrom(input, path);
+        runner.run(definition, configuration, true, steps);
 	}
 
 
-	public static class MySteps extends SeleniumSteps {
+	public static class MySteps extends SeleniumPerStorySteps {
 
         public MySteps() {
         }
