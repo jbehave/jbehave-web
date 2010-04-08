@@ -9,7 +9,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class ScenarioContext {
+public class StoryContext {
 
     private static final String POST = "post";
     private static final String GET = "get";
@@ -23,19 +23,19 @@ public class ScenarioContext {
 	private List<String> messages;
 	private Throwable cause;
 
-	public ScenarioContext() {
+	public StoryContext() {
 		this(POST, EMPTY, EMPTY, EMPTY_LIST);
 	}
 
-	public ScenarioContext(String method, String input, String output, List<String> messages) {
+	public StoryContext(String method, String input, String output, List<String> messages) {
 		this.method = method;
         this.input = input;
 		this.output = output;
 		this.messages = new ArrayList<String>();
 		this.messages.addAll(messages);
 	}
-	
-	public List<String> getMethods(){
+
+    public List<String> getMethods(){
 	    return METHODS;
 	}
 	

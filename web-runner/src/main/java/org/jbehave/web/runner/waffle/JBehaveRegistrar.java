@@ -34,8 +34,8 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	public void application() {
 		registerMenu();
 		registerConfiguration();
-		registerScenarioParser();
-		registerScenarioRunner();
+		registerStoryParser();
+		registerStoryRunner();
 		registerSteps();
 		registerStepdocGenerator();
 		registerFileMonitor();
@@ -47,8 +47,8 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 
 	@Override
 	public void session() {
-		register("scenario/scenario", ScenarioController.class);
-		register("scenario/stepdoc", StepdocController.class);
+		register("story/story", StoryController.class);
+		register("story/stepdoc", StepdocController.class);
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 
 	protected Menu createMenu() {
 		Map<String, List<String>> content = new HashMap<String, List<String>>();
-		content.put("Menu", asList("Home:home", "Data Files:data/files", "Data Upload:data/upload", "Run Scenario:scenario/scenario", "Stepdoc:scenario/stepdoc"));
+		content.put("Menu", asList("Home:home", "Data Files:data/files", "Data Upload:data/upload", "Run Story:story/story", "Stepdoc:story/stepdoc"));
 		return new Menu(content);
 	}
 
@@ -75,19 +75,19 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 		viewResolver.configureView("data/file", "ftl/data/file");
 		viewResolver.configureView("data/files", "ftl/data/files");
 		viewResolver.configureView("data/upload", "ftl/data/upload");
-		viewResolver.configureView("scenario/scenario", "ftl/scenario/scenario");
-		viewResolver.configureView("scenario/stepdoc", "ftl/scenario/stepdoc");
+		viewResolver.configureView("story/story", "ftl/story/story");
+		viewResolver.configureView("story/stepdoc", "ftl/story/stepdoc");
 	}
 
 	protected void registerConfiguration() {
 		register(MostUsefulStoryConfiguration.class);
 	}
 
-	protected void registerScenarioParser() {
+	protected void registerStoryParser() {
 		register(PatternStoryParser.class);
 	}
 
-	protected void registerScenarioRunner() {
+	protected void registerStoryRunner() {
 		register(StoryRunner.class);
 	}
 

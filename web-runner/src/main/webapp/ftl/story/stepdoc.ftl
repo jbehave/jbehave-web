@@ -3,11 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <head>
-    <title><@i.messageFor "scenarioRunner" "Scenario Runner"/></title>
+    <title><@i.messageFor "storyRunner" "Story Runner"/></title>
 </head>
 <#include "/ftl/navigation.ftl" parse="true">
 <div id="content">
-    <form action="${base}/scenario/stepdoc.action">
+    <form action="${base}/story/stepdoc.action">
 
 		<#assign stepdocs = stepdocContext.stepdocs />		
 		<#assign view = stepdocContext.view />
