@@ -1,11 +1,11 @@
 package org.jbehave.web.io;
 
-import static org.junit.Assert.assertEquals;
+import org.jbehave.web.io.ResourceFinder.ResourceNotFoundException;
+import org.junit.Test;
 
 import java.io.IOException;
 
-import org.jbehave.web.io.ResourceFinder.ResourceNotFoundException;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class ResourceFinderTest {
 

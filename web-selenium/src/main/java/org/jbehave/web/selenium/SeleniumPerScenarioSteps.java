@@ -1,9 +1,9 @@
 package org.jbehave.web.selenium;
 
 import com.thoughtworks.selenium.Selenium;
-import org.jbehave.scenario.annotations.AfterScenario;
-import org.jbehave.scenario.annotations.BeforeScenario;
-import org.jbehave.scenario.steps.StepsConfiguration;
+import org.jbehave.core.annotations.AfterScenario;
+import org.jbehave.core.annotations.BeforeScenario;
+import org.jbehave.core.steps.StepsConfiguration;
 
 /**
  * Steps implementation that can be used in Selenium-based scenarios. It

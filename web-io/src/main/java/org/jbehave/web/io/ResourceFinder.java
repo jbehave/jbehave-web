@@ -1,12 +1,12 @@
 package org.jbehave.web.io;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * A utility class to retrieve resource, either from classpath or from

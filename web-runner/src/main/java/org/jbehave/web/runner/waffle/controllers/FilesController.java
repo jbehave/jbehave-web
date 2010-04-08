@@ -1,15 +1,15 @@
 package org.jbehave.web.runner.waffle.controllers;
 
-import static org.jbehave.web.runner.waffle.controllers.FilesContext.View.RELATIVE_PATH;
+import org.codehaus.waffle.action.annotation.ActionMethod;
+import org.codehaus.waffle.menu.Menu;
+import org.codehaus.waffle.menu.MenuAwareController;
+import org.jbehave.web.io.FileManager;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.waffle.action.annotation.ActionMethod;
-import org.codehaus.waffle.menu.Menu;
-import org.codehaus.waffle.menu.MenuAwareController;
-import org.jbehave.web.io.FileManager;
+import static org.jbehave.web.runner.waffle.controllers.FilesContext.View.RELATIVE_PATH;
 
 public class FilesController extends MenuAwareController {
 

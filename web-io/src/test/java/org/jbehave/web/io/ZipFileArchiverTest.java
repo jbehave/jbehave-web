@@ -1,16 +1,16 @@
 package org.jbehave.web.io;
 
-import static java.util.Arrays.asList;
-import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static java.util.Arrays.asList;
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ZipFileArchiverTest {
 

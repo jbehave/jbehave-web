@@ -1,6 +1,6 @@
 package org.jbehave.web.runner.waffle.controllers;
 
-import static java.util.Arrays.asList;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import static java.util.Arrays.asList;
 
 public class FilesContext {
 

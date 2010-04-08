@@ -1,12 +1,5 @@
 package org.jbehave.web.runner.waffle;
 
-import static java.util.Arrays.asList;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.codehaus.waffle.io.RequestFileUploader;
 import org.codehaus.waffle.menu.Menu;
@@ -14,19 +7,22 @@ import org.codehaus.waffle.menu.MenuAwareController;
 import org.codehaus.waffle.registrar.AbstractRegistrar;
 import org.codehaus.waffle.registrar.Registrar;
 import org.codehaus.waffle.view.ViewResolver;
-import org.jbehave.scenario.MostUsefulConfiguration;
-import org.jbehave.scenario.ScenarioRunner;
-import org.jbehave.scenario.parser.PatternScenarioParser;
-import org.jbehave.scenario.steps.DefaultStepdocGenerator;
-import org.jbehave.scenario.steps.Steps;
+import org.jbehave.core.MostUsefulStoryConfiguration;
+import org.jbehave.core.StoryRunner;
+import org.jbehave.core.parser.PatternStoryParser;
+import org.jbehave.core.steps.DefaultStepdocGenerator;
+import org.jbehave.core.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
 import org.jbehave.web.io.SilentFileMonitor;
 import org.jbehave.web.io.ZipFileArchiver;
-import org.jbehave.web.runner.waffle.controllers.FileController;
-import org.jbehave.web.runner.waffle.controllers.FileUploadController;
-import org.jbehave.web.runner.waffle.controllers.FilesController;
-import org.jbehave.web.runner.waffle.controllers.ScenarioController;
-import org.jbehave.web.runner.waffle.controllers.StepdocController;
+import org.jbehave.web.runner.waffle.controllers.*;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.Arrays.asList;
 
 public class JBehaveRegistrar extends AbstractRegistrar {
 
@@ -84,15 +80,15 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	}
 
 	protected void registerConfiguration() {
-		register(MostUsefulConfiguration.class);
+		register(MostUsefulStoryConfiguration.class);
 	}
 
 	protected void registerScenarioParser() {
-		register(PatternScenarioParser.class);
+		register(PatternStoryParser.class);
 	}
 
 	protected void registerScenarioRunner() {
-		register(ScenarioRunner.class);
+		register(StoryRunner.class);
 	}
 
 	protected void registerSteps() {

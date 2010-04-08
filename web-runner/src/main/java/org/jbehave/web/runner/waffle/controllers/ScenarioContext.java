@@ -1,13 +1,13 @@
 package org.jbehave.web.runner.waffle.controllers;
 
-import static java.util.Arrays.asList;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import static java.util.Arrays.asList;
 
 public class ScenarioContext {
 

@@ -1,24 +1,18 @@
 package org.jbehave.web.io;
 
-import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
-import static org.apache.commons.lang.StringUtils.remove;
-import static org.apache.commons.lang.StringUtils.removeEnd;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.io.IOUtils;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
+import static org.apache.commons.lang.StringUtils.remove;
+import static org.apache.commons.lang.StringUtils.removeEnd;
 
 /**
  * File archiver for zip files

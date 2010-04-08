@@ -1,11 +1,6 @@
 package org.jbehave.web.runner.waffle.controllers;
 
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.commons.fileupload.FileItem;
 import org.codehaus.waffle.action.annotation.ActionMethod;
 import org.codehaus.waffle.action.annotation.PRG;
@@ -13,6 +8,11 @@ import org.codehaus.waffle.io.FileUploader;
 import org.codehaus.waffle.menu.Menu;
 import org.codehaus.waffle.menu.MenuAwareController;
 import org.jbehave.web.io.FileManager;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class FileUploadController extends MenuAwareController {
 

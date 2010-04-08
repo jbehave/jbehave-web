@@ -1,12 +1,5 @@
 package org.jbehave.web.runner.waffle.controllers;
 
-import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.util.List;
-
 import org.codehaus.waffle.menu.Menu;
 import org.jbehave.web.io.FileManager;
 import org.jmock.Expectations;
@@ -14,6 +7,13 @@ import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.File;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JMock.class)
 public class FilesControllerTest {

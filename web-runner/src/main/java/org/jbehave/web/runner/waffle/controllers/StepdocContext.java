@@ -1,12 +1,12 @@
 package org.jbehave.web.runner.waffle.controllers;
 
-import static java.util.Arrays.asList;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.jbehave.core.steps.Stepdoc;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.jbehave.scenario.steps.Stepdoc;
+import static java.util.Arrays.asList;
 
 public class StepdocContext {
 

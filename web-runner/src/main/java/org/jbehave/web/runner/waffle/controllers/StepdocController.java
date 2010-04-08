@@ -3,8 +3,8 @@ package org.jbehave.web.runner.waffle.controllers;
 import org.codehaus.waffle.action.annotation.ActionMethod;
 import org.codehaus.waffle.menu.Menu;
 import org.codehaus.waffle.menu.MenuAwareController;
-import org.jbehave.scenario.steps.CandidateSteps;
-import org.jbehave.scenario.steps.StepdocGenerator;
+import org.jbehave.core.steps.CandidateSteps;
+import org.jbehave.core.steps.StepdocGenerator;
 
 public class StepdocController extends MenuAwareController {
 

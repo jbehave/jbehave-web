@@ -1,6 +1,6 @@
 package org.jbehave.web.selenium;
 
-import org.jbehave.scenario.steps.StepMonitor;
+import org.jbehave.core.steps.StepMonitor;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -29,7 +29,7 @@ public class SeleniumStepsConfigurationTest {
 		}});
 		SeleniumStepsConfiguration configuration = new SeleniumStepsConfiguration(selenium, seleniumContext, stepMonitor);
 		seleniumContext.setCurrentScenario(currentScenario);
-		configuration.getMonitor().performing(step);		
+		configuration.monitor().performing(step);		
 	}
 
 	@Test

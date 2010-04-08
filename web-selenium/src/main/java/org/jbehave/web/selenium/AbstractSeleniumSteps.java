@@ -4,8 +4,9 @@ import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 import com.thoughtworks.selenium.condition.JUnitConditionRunner;
-import org.jbehave.scenario.steps.Steps;
-import org.jbehave.scenario.steps.StepsConfiguration;
+import org.jbehave.core.steps.MostUsefulStepsConfiguration;
+import org.jbehave.core.steps.Steps;
+import org.jbehave.core.steps.StepsConfiguration;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +25,7 @@ public class AbstractSeleniumSteps extends Steps {
     protected final ConditionRunner runner;
 
     public AbstractSeleniumSteps() {
-        this(new StepsConfiguration());
+        this(new MostUsefulStepsConfiguration());
     }
 
     public AbstractSeleniumSteps(StepsConfiguration configuration){

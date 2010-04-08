@@ -2,7 +2,7 @@ package org.jbehave.web.selenium;
 
 import java.lang.reflect.Type;
 
-import org.jbehave.scenario.steps.StepMonitor;
+import org.jbehave.core.steps.StepMonitor;
 
 import com.thoughtworks.selenium.Selenium;
 

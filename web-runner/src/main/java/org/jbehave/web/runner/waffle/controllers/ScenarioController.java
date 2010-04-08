@@ -4,15 +4,14 @@ import org.codehaus.waffle.action.annotation.ActionMethod;
 import org.codehaus.waffle.action.annotation.PRG;
 import org.codehaus.waffle.menu.Menu;
 import org.codehaus.waffle.menu.MenuAwareController;
-import org.jbehave.scenario.Configuration;
-import org.jbehave.scenario.PropertyBasedConfiguration;
-import org.jbehave.scenario.ScenarioRunner;
-import org.jbehave.scenario.definition.KeyWords;
-import org.jbehave.scenario.definition.StoryDefinition;
-import org.jbehave.scenario.parser.ScenarioParser;
-import org.jbehave.scenario.reporters.PrintStreamScenarioReporter;
-import org.jbehave.scenario.reporters.ScenarioReporter;
-import org.jbehave.scenario.steps.CandidateSteps;
+import org.jbehave.core.PropertyBasedStoryConfiguration;
+import org.jbehave.core.StoryConfiguration;
+import org.jbehave.core.StoryRunner;
+import org.jbehave.core.model.KeyWords;
+import org.jbehave.core.parser.StoryParser;
+import org.jbehave.core.reporters.PrintStreamStoryReporter;
+import org.jbehave.core.reporters.StoryReporter;
+import org.jbehave.core.steps.CandidateSteps;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -22,16 +21,16 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 public class ScenarioController extends MenuAwareController {
 
-	private final ScenarioParser scenarioParser;
-	private final ScenarioRunner scenarioRunner;
+	private final StoryParser scenarioParser;
+	private final StoryRunner scenarioRunner;
 	private final CandidateSteps[] steps;
 
 	private ByteArrayOutputStream outputStream;
-	private Configuration configuration;
+	private StoryConfiguration configuration;
 	private ScenarioContext scenarioContext;
 	
-	public ScenarioController(Menu menu, Configuration configuration,
-			ScenarioParser scenarioParser, ScenarioRunner scenarioRunner,
+	public ScenarioController(Menu menu, StoryConfiguration configuration,
+			StoryParser scenarioParser, StoryRunner scenarioRunner,
 			CandidateSteps... steps) {
 		super(menu);
 		this.scenarioParser = scenarioParser;
@@ -42,10 +41,10 @@ public class ScenarioController extends MenuAwareController {
         properties.setProperty("beforeStory", "{0}\n");
         final KeyWords keywords = configuration.keywords();
         final boolean reportErrors = false;
-		this.configuration = new PropertyBasedConfiguration(configuration) {
+		this.configuration = new PropertyBasedStoryConfiguration(configuration) {
 			@Override
-			public ScenarioReporter forReportingScenarios() {
-				return new PrintStreamScenarioReporter(new PrintStream(
+			public StoryReporter storyReporter() {
+				return new PrintStreamStoryReporter(new PrintStream(
 						outputStream), properties, keywords, reportErrors);
 			}
 		};
@@ -64,7 +63,7 @@ public class ScenarioController extends MenuAwareController {
 			try {
 				outputStream.reset();
 				scenarioContext.clearFailureCause();
-				scenarioRunner.run(storyDefinition(), configuration, true, steps);
+                scenarioRunner.run(configuration, scenarioParser.parseStory(scenarioContext.getInput()), steps);
 			} catch (Throwable e) {
 				scenarioContext.runFailedFor(e);
 			}
@@ -72,11 +71,7 @@ public class ScenarioController extends MenuAwareController {
 		}
 	}
 
-	private StoryDefinition storyDefinition() {
-		return scenarioParser.defineStoryFrom(scenarioContext.getInput());
-	}
-
-	public ScenarioContext getScenarioContext() {
+    public ScenarioContext getScenarioContext() {
 		return scenarioContext;
 	}
 

@@ -1,8 +1,8 @@
 package org.jbehave.web.selenium;
 
-import org.jbehave.scenario.steps.SilentStepMonitor;
-import org.jbehave.scenario.steps.StepMonitor;
-import org.jbehave.scenario.steps.StepsConfiguration;
+import org.jbehave.core.steps.SilentStepMonitor;
+import org.jbehave.core.steps.StepMonitor;
+import org.jbehave.core.steps.StepsConfiguration;
 
 import com.thoughtworks.selenium.Selenium;
 
