@@ -7,9 +7,9 @@ import org.codehaus.waffle.menu.MenuAwareController;
 import org.jbehave.core.PropertyBasedStoryConfiguration;
 import org.jbehave.core.StoryConfiguration;
 import org.jbehave.core.StoryRunner;
-import org.jbehave.core.model.KeyWords;
+import org.jbehave.core.model.Keywords;
 import org.jbehave.core.parser.StoryParser;
-import org.jbehave.core.reporters.PrintStreamStoryReporter;
+import org.jbehave.core.reporters.PrintStreamOutput;
 import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.steps.CandidateSteps;
 
@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Properties;
 
+import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 public class StoryController extends MenuAwareController {
@@ -39,12 +40,12 @@ public class StoryController extends MenuAwareController {
 		this.outputStream = new ByteArrayOutputStream();
         final Properties properties = new Properties();
         properties.setProperty("beforeStory", "{0}\n");
-        final KeyWords keywords = configuration.keywords();
+        final Keywords keywords = configuration.keywords();
         final boolean reportErrors = false;
 		this.configuration = new PropertyBasedStoryConfiguration(configuration) {
 			@Override
 			public StoryReporter storyReporter() {
-				return new PrintStreamStoryReporter(new PrintStream(
+				return new PrintStreamOutput(new PrintStream(
 						outputStream), properties, keywords, reportErrors);
 			}
 		};
@@ -63,7 +64,7 @@ public class StoryController extends MenuAwareController {
 			try {
 				outputStream.reset();
 				storyContext.clearFailureCause();
-                scenarioRunner.run(configuration, scenarioParser.parseStory(storyContext.getInput()), steps);
+                scenarioRunner.run(configuration, asList(steps), scenarioParser.parseStory(storyContext.getInput()));
 			} catch (Throwable e) {
 				storyContext.runFailedFor(e);
 			}

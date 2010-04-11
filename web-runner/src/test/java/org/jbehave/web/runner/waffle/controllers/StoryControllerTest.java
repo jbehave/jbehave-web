@@ -7,7 +7,7 @@ import org.jbehave.core.StoryRunner;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.parser.PatternStoryParser;
+import org.jbehave.core.parser.RegexStoryParser;
 import org.jbehave.core.parser.StoryParser;
 import org.jbehave.core.steps.Steps;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class StoryControllerTest {
 
 	private final Menu MENU = new Menu();
 	private final StoryConfiguration configuration = new MostUsefulStoryConfiguration();
-	private final StoryParser parser = new PatternStoryParser();
+	private final StoryParser parser = new RegexStoryParser();
 	private final StoryRunner runner = new StoryRunner();
 
 	@Test

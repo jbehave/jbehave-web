@@ -9,12 +9,15 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.Story;
-import org.jbehave.core.parser.PatternStoryParser;
+import org.jbehave.core.parser.RegexStoryParser;
 import org.jbehave.core.parser.StoryParser;
+import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.Steps;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
+
+import static java.util.Arrays.asList;
 
 public class SeleniumPerStoryStepsTest {
 
@@ -23,7 +26,7 @@ public class SeleniumPerStoryStepsTest {
 	private static final String NL = "\n";
 
 	private final StoryConfiguration configuration = new MostUsefulStoryConfiguration();
-	private final StoryParser parser = new PatternStoryParser();
+	private final StoryParser parser = new RegexStoryParser();
 	private final StoryRunner runner = new StoryRunner();
 	private final Selenium selenium = mockery.mock(Selenium.class);
 	private final ConditionRunner conditionRunner = mockery
@@ -56,7 +59,8 @@ public class SeleniumPerStoryStepsTest {
 			}
 
 		};
-        runner.run(configuration, parser.parseStory(input, path), true, steps);
+        Story story = parser.parseStory(input, path);
+        runner.run(configuration, asList((CandidateSteps)steps), story, true);
 	}
 
 

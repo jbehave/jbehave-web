@@ -9,13 +9,17 @@ import org.codehaus.waffle.registrar.Registrar;
 import org.codehaus.waffle.view.ViewResolver;
 import org.jbehave.core.MostUsefulStoryConfiguration;
 import org.jbehave.core.StoryRunner;
-import org.jbehave.core.parser.PatternStoryParser;
+import org.jbehave.core.parser.RegexStoryParser;
 import org.jbehave.core.steps.DefaultStepdocGenerator;
 import org.jbehave.core.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
 import org.jbehave.web.io.SilentFileMonitor;
 import org.jbehave.web.io.ZipFileArchiver;
-import org.jbehave.web.runner.waffle.controllers.*;
+import org.jbehave.web.runner.waffle.controllers.FileController;
+import org.jbehave.web.runner.waffle.controllers.FileUploadController;
+import org.jbehave.web.runner.waffle.controllers.FilesController;
+import org.jbehave.web.runner.waffle.controllers.StepdocController;
+import org.jbehave.web.runner.waffle.controllers.StoryController;
 
 import java.io.File;
 import java.util.HashMap;
@@ -84,7 +88,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	}
 
 	protected void registerStoryParser() {
-		register(PatternStoryParser.class);
+		register(RegexStoryParser.class);
 	}
 
 	protected void registerStoryRunner() {
