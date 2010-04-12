@@ -7,44 +7,46 @@ import org.codehaus.waffle.menu.MenuAwareController;
 import org.jbehave.core.PropertyBasedStoryConfiguration;
 import org.jbehave.core.StoryConfiguration;
 import org.jbehave.core.StoryRunner;
-import org.jbehave.core.model.KeyWords;
+import org.jbehave.core.model.Keywords;
 import org.jbehave.core.parser.StoryParser;
-import org.jbehave.core.reporters.PrintStreamStoryReporter;
+import org.jbehave.core.reporters.PrintStreamOutput;
 import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.steps.CandidateSteps;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Properties;
 
+import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 public class StoryController extends MenuAwareController {
 
-	private final StoryParser scenarioParser;
-	private final StoryRunner scenarioRunner;
-	private final CandidateSteps[] steps;
+	private final StoryParser storyParser;
+	private final StoryRunner storyRunner;
+	private final List<CandidateSteps> steps;
 
 	private ByteArrayOutputStream outputStream;
 	private StoryConfiguration configuration;
 	private StoryContext storyContext;
 
     public StoryController(Menu menu, StoryConfiguration configuration,
-			StoryParser scenarioParser, StoryRunner scenarioRunner,
+			StoryParser storyParser, StoryRunner storyRunner,
 			CandidateSteps... steps) {
 		super(menu);
-		this.scenarioParser = scenarioParser;
-		this.scenarioRunner = scenarioRunner;
-		this.steps = steps;
+		this.storyParser = storyParser;
+		this.storyRunner = storyRunner;
+		this.steps = asList(steps);
 		this.outputStream = new ByteArrayOutputStream();
         final Properties properties = new Properties();
         properties.setProperty("beforeStory", "{0}\n");
-        final KeyWords keywords = configuration.keywords();
+        final Keywords keywords = configuration.keywords();
         final boolean reportErrors = false;
 		this.configuration = new PropertyBasedStoryConfiguration(configuration) {
 			@Override
 			public StoryReporter storyReporter() {
-				return new PrintStreamStoryReporter(new PrintStream(
+				return new PrintStreamOutput(new PrintStream(
 						outputStream), properties, keywords, reportErrors);
 			}
 		};
@@ -63,7 +65,7 @@ public class StoryController extends MenuAwareController {
 			try {
 				outputStream.reset();
 				storyContext.clearFailureCause();
-                scenarioRunner.run(configuration, scenarioParser.parseStory(storyContext.getInput()), steps);
+                storyRunner.run(configuration, steps, storyParser.parseStory(storyContext.getInput()));
 			} catch (Throwable e) {
 				storyContext.runFailedFor(e);
 			}

@@ -7,7 +7,7 @@ import org.jbehave.core.StoryRunner;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.parser.PatternStoryParser;
+import org.jbehave.core.parser.RegexStoryParser;
 import org.jbehave.core.parser.StoryParser;
 import org.jbehave.core.steps.Steps;
 import org.junit.Test;
@@ -24,24 +24,24 @@ public class StoryControllerTest {
 
 	private final Menu MENU = new Menu();
 	private final StoryConfiguration configuration = new MostUsefulStoryConfiguration();
-	private final StoryParser parser = new PatternStoryParser();
+	private final StoryParser parser = new RegexStoryParser();
 	private final StoryRunner runner = new StoryRunner();
 
 	@Test
 	public void canRunSuccessfulStory(){
 		StoryController controller = new StoryController(MENU, configuration, parser, runner, new MySteps());
-		String scenarioInput = "Scenario: A simple test" + NL
+		String input = "Scenario: A simple test" + NL
 						+ NL
 						+ "Given a test" + NL
 						+ "When a test is executed" + NL
 						+ "Then a tester is a happy hopper";
-		String scenarioOutput = "Scenario: A simple test" + NL
+		String output = "Scenario: A simple test" + NL
 						+ "Given a test" + NL
 						+ "When a test is executed" + NL
 						+ "Then a tester is a happy hopper";
-		controller.getStoryContext().setInput(scenarioInput);
+		controller.getStoryContext().setInput(input);
 		controller.run();
-		assertLinesMatch(scenarioOutput, controller.getStoryContext().getOutput().trim());
+		assertLinesMatch(output, controller.getStoryContext().getOutput().trim());
 		assertEquals(0, controller.getStoryContext().getFailureMessages().size());
 		assertEquals("", controller.getStoryContext().getFailureStackTrace());
 	}
@@ -49,17 +49,17 @@ public class StoryControllerTest {
 	@Test
 	public void canRunFailingStory(){
 		StoryController controller = new StoryController(MENU, configuration, parser, runner, new MySteps());
-		String scenarioInput = "Scenario: A simple test" + NL
+		String input = "Scenario: A simple test" + NL
 						+ "Given a test" + NL
 						+ "When a test fails" + NL
 						+ "Then a tester is a happy hopper"; 
-		String scenarioOutput = "Scenario: A simple test" + NL
+		String output = "Scenario: A simple test" + NL
 						+ "Given a test" + NL
 						+ "When a test fails (FAILED)" + NL
 						+ "Then a tester is a happy hopper (NOT PERFORMED)"; 
-		controller.getStoryContext().setInput(scenarioInput);
+		controller.getStoryContext().setInput(input);
 		controller.run();
-		assertLinesMatch(scenarioOutput, controller.getStoryContext().getOutput().trim());
+		assertLinesMatch(output, controller.getStoryContext().getOutput().trim());
 		assertTrue(controller.getStoryContext().getFailureMessages().contains("Test failed"));
 		assertTrue(controller.getStoryContext().getFailureStackTrace().contains("java.lang.RuntimeException: Test failed"));
 	}
