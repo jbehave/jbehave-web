@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jbehave.web</groupId>
   <artifactId>jbehave-web</artifactId>
-  <version>3.0-beta-2</version>
+  <version>3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBehave Web</name>
   <description>JBehave Web aims to provide a web integration layer for Behaviour-Driven Development</description>
