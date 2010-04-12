@@ -47,7 +47,6 @@ public class SeleniumPerScenarioStepsTest {
 			one(selenium).stop();
 		}});
 		CandidateSteps steps = new MySteps(selenium){
-
 			@Override
 			protected ConditionRunner createConditionRunner(Selenium selenium) {
 				return conditionRunner;

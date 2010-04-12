@@ -48,7 +48,7 @@ testing tool, such as Selenium. The same DSL should be re-usable with
 different testing tools.</p>
 <p>The Scenario class will specify the Steps class is where all the
 Selenium magic happens:</p>
-<pre class="brush: java">public class AjaxEmailSteps extends SeleniumSteps {
+<pre class="brush: java">public class AjaxEmailSteps extends SeleniumPerStorySteps {
     
     private Main main;
     private String[] lastFormValues;
@@ -92,10 +92,11 @@ Selenium magic happens:</p>
     }
 }
 </pre>
-<p>The <b>@BeforeScenario</b> and <b>@AfterScenario</b> annotations
-in the SeleniumSteps methods allow to start and stop the selenium server
-before and after scenario. Users can of course override the default
-behaviour, but generally don't need to bother for most use cases.</p>
+<p>The <b>@BeforeStory</b> and <b>@AfterStory</b> annotations
+in the SeleniumPerStorySteps methods allow to start and stop the selenium server
+before and after story. Users can of course override the default
+behaviour, but generally don't need to bother for most use cases.  
+There is also a SeleniumPerScenarioSteps implementation.</p>
 
 <p><strong>NOTE</strong>: To get the Selenium based tests running in
 an automated way, you need to run both a webapp server (e.g. Jetty) and
