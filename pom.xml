@@ -5,7 +5,7 @@
   <version>3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBehave Web</name>
-  <description>JBehave Web aims to provide a web integration layer for Behaviour-Driven Development</description>
+  <description>JBehave Web provides a web integration layer for Behaviour-Driven Development</description>
 
   <modules>
     <module>web-io</module>
@@ -15,7 +15,7 @@
   </modules>
 
   <properties>
-    <jbehave.version>3.0-beta-2</jbehave.version>
+    <jbehave.core.version>3.0-beta-3</jbehave.core.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
   </properties>
 
@@ -23,7 +23,7 @@
     <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-core</artifactId>
-      <version>${jbehave.version}</version>
+      <version>${jbehave.core.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jmock</groupId>

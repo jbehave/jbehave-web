@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.jbehave</groupId>
             <artifactId>jbehave-pico</artifactId>
-            <version>${jbehave.version}</version>
+            <version>${jbehave.core.version}</version>
         </dependency>
     </dependencies>
 

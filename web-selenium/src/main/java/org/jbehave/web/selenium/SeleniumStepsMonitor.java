@@ -3,6 +3,7 @@ package org.jbehave.web.selenium;
 import java.lang.reflect.Type;
 
 import org.jbehave.core.steps.StepMonitor;
+import org.jbehave.core.steps.StepType;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -27,6 +28,11 @@ public class SeleniumStepsMonitor implements StepMonitor {
 	public void convertedValueOfType(String value, Type type, Object converted,
 			Class<?> converterClass) {
 		delegate.convertedValueOfType(value, type, converted, converterClass);
+	}
+
+	public void stepMatchesType(String stepAsString, String previousAsString,
+			boolean matchesType, StepType stepType) {
+		delegate.stepMatchesType(stepAsString, previousAsString, matchesType, stepType);		
 	}
 
 	public void stepMatchesPattern(String step, boolean matches, String pattern) {
