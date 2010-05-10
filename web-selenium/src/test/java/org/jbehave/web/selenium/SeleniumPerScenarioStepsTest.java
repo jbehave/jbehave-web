@@ -1,23 +1,22 @@
 package org.jbehave.web.selenium;
 
-import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.condition.ConditionRunner;
+import static java.util.Arrays.asList;
+
 import org.jbehave.core.MostUsefulStoryConfiguration;
 import org.jbehave.core.StoryConfiguration;
 import org.jbehave.core.StoryRunner;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.model.Story;
 import org.jbehave.core.parser.RegexStoryParser;
 import org.jbehave.core.parser.StoryParser;
 import org.jbehave.core.steps.CandidateSteps;
-import org.jbehave.core.steps.Steps;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
 
-import static java.util.Arrays.asList;
+import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.condition.ConditionRunner;
 
 public class SeleniumPerScenarioStepsTest {
 
@@ -58,7 +57,7 @@ public class SeleniumPerScenarioStepsTest {
 			}
 			
 		};
-        runner.run(configuration, asList(steps), parser.parseStory(input, path), true);
+        runner.run(configuration, asList(steps), parser.parseStory(input, path), false);
 	}
 
 
