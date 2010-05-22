@@ -3,7 +3,6 @@ package org.jbehave.web.examples.trader.runner;
 import org.codehaus.waffle.registrar.Registrar;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.MostUsefulStepsConfiguration;
-import org.jbehave.core.steps.StepsConfiguration;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.examples.trader.scenarios.StockExchangeSteps;
 import org.jbehave.web.examples.trader.scenarios.TraderSteps;
