@@ -1,7 +1,7 @@
 package org.jbehave.web.examples.trader.scenarios;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.jbehave.Ensure.ensureThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -30,13 +30,13 @@ public class TraderSteps extends Steps {
 
     @Then("the alert status should be $status")
     public void theAlertStatusShouldBe(String status) {
-        ensureThat(stock.getStatus().name(), equalTo(status));
+        assertThat(stock.getStatus().name(), equalTo(status));
     }
 
     @Then("the trader sells all stocks")
     public void theTraderSellsAllStocks() {
         trader.sellAllStocks();
-        ensureThat(trader.getStocks().size(), equalTo(0));
+        assertThat(trader.getStocks().size(), equalTo(0));
     }
 
 }

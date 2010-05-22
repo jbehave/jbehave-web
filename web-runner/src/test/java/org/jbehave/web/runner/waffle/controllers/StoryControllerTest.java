@@ -1,21 +1,21 @@
 package org.jbehave.web.runner.waffle.controllers;
 
-import org.codehaus.waffle.menu.Menu;
-import org.jbehave.core.MostUsefulStoryConfiguration;
-import org.jbehave.core.StoryConfiguration;
-import org.jbehave.core.StoryRunner;
-import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
-import org.jbehave.core.parser.RegexStoryParser;
-import org.jbehave.core.parser.StoryParser;
-import org.jbehave.core.steps.Steps;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.codehaus.waffle.menu.Menu;
+import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
+import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
+import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.parsers.RegexStoryParser;
+import org.jbehave.core.parsers.StoryParser;
+import org.jbehave.core.runner.StoryRunner;
+import org.jbehave.core.steps.Steps;
+import org.junit.Test;
 
 
 public class StoryControllerTest {

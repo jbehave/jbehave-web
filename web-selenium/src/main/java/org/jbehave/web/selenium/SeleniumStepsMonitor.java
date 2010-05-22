@@ -1,5 +1,6 @@
 package org.jbehave.web.selenium;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 import org.jbehave.core.steps.StepMonitor;
@@ -19,10 +20,10 @@ public class SeleniumStepsMonitor implements StepMonitor {
 		this.delegate = delegate;
 	}
 
-	public void performing(String step){
+	public void performing(String step, boolean dryRun){
 		String context = seleniumContext.getCurrentScenario() + "<br>" + step;
 		selenium.setContext(context);
-		delegate.performing(step);
+		delegate.performing(step, dryRun);
 	}
 
 	public void convertedValueOfType(String value, Type type, Object converted,
@@ -31,12 +32,12 @@ public class SeleniumStepsMonitor implements StepMonitor {
 	}
 
 	public void stepMatchesType(String stepAsString, String previousAsString,
-			boolean matchesType, StepType stepType) {
-		delegate.stepMatchesType(stepAsString, previousAsString, matchesType, stepType);		
+			boolean matchesType, StepType stepType, Method method, Object stepsInstance){
+		delegate.stepMatchesType(stepAsString, previousAsString, matchesType, stepType, method, stepsInstance);		
 	}
 
-	public void stepMatchesPattern(String step, boolean matches, String pattern) {
-		delegate.stepMatchesPattern(step, matches, pattern);
+	public void stepMatchesPattern(String step, boolean matches, String pattern, Method method, Object stepsInstance){
+		delegate.stepMatchesPattern(step, matches, pattern, method, stepsInstance);		
 	}
 
 	public void foundArg(String arg, int position) {

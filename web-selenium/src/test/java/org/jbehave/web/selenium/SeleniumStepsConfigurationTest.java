@@ -1,5 +1,7 @@
 package org.jbehave.web.selenium;
 
+import java.lang.reflect.Method;
+
 import org.jbehave.core.steps.StepMonitor;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -23,13 +25,14 @@ public class SeleniumStepsConfigurationTest {
 		String currentScenario = "current scenario";
 		final String step = "a step";
 		final String context = currentScenario + "<br>" + step;
+		final boolean dryRun = false;
 		mockery.checking(new Expectations(){{
 			one(selenium).setContext(context);
-			one(stepMonitor).performing(step);
+			one(stepMonitor).performing(step, dryRun);
 		}});
 		SeleniumStepsConfiguration configuration = new SeleniumStepsConfiguration(selenium, seleniumContext, stepMonitor);
 		seleniumContext.setCurrentScenario(currentScenario);
-		configuration.monitor().performing(step);		
+		configuration.monitor().performing(step, dryRun);		
 	}
 
 	@Test
@@ -41,13 +44,15 @@ public class SeleniumStepsConfigurationTest {
 		final Class<String> converterClass = String.class;
 		final String pattern = "pattern";
 		final boolean matches = true;
+		final Method method = null;
+		final Object stepsInstance = new Object();
 		mockery.checking(new Expectations(){{
 			one(stepMonitor).convertedValueOfType(value, type, converted, converterClass);
-			one(stepMonitor).stepMatchesPattern(step, matches, pattern);
+			one(stepMonitor).stepMatchesPattern(step, matches, pattern, method, stepsInstance);
 		}});
 		SeleniumStepsMonitor monitor = new SeleniumStepsMonitor(selenium, new SeleniumContext(), stepMonitor);
 		monitor.convertedValueOfType(value, type, converted, converterClass);
-		monitor.stepMatchesPattern(step, matches, pattern);
+		monitor.stepMatchesPattern(step, matches, pattern, method, stepsInstance);
 	}
 
 }

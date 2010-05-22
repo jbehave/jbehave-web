@@ -2,14 +2,14 @@ package org.jbehave.web.selenium;
 
 import static java.util.Arrays.asList;
 
-import org.jbehave.core.MostUsefulStoryConfiguration;
-import org.jbehave.core.StoryConfiguration;
-import org.jbehave.core.StoryRunner;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.parser.RegexStoryParser;
-import org.jbehave.core.parser.StoryParser;
+import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
+import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.parsers.RegexStoryParser;
+import org.jbehave.core.parsers.StoryParser;
+import org.jbehave.core.runner.StoryRunner;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
