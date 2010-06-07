@@ -56,6 +56,7 @@ public class StoryControllerTest {
 		String output = "Scenario: A simple test" + NL
 						+ "Given a test" + NL
 						+ "When a test fails (FAILED)" + NL
+						+ "(java.lang.RuntimeException: Test failed)"+ NL
 						+ "Then a tester is a happy hopper (NOT PERFORMED)"; 
 		controller.getStoryContext().setInput(input);
 		controller.run();
