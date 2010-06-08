@@ -14,11 +14,11 @@ import org.codehaus.waffle.menu.Menu;
 import org.codehaus.waffle.menu.MenuAwareController;
 import org.jbehave.core.configuration.PropertyBasedStoryConfiguration;
 import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.model.Keywords;
 import org.jbehave.core.parsers.StoryParser;
 import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.reporters.TxtOutput;
-import org.jbehave.core.runner.StoryRunner;
 import org.jbehave.core.steps.CandidateSteps;
 
 public class StoryController extends MenuAwareController {

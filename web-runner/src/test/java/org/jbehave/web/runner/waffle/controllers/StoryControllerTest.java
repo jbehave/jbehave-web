@@ -11,9 +11,9 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
 import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.parsers.StoryParser;
-import org.jbehave.core.runner.StoryRunner;
 import org.jbehave.core.steps.Steps;
 import org.junit.Test;
 

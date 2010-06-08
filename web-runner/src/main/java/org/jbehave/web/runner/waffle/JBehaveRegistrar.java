@@ -1,5 +1,12 @@
 package org.jbehave.web.runner.waffle;
 
+import static java.util.Arrays.asList;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.codehaus.waffle.io.RequestFileUploader;
 import org.codehaus.waffle.menu.Menu;
@@ -8,7 +15,7 @@ import org.codehaus.waffle.registrar.AbstractRegistrar;
 import org.codehaus.waffle.registrar.Registrar;
 import org.codehaus.waffle.view.ViewResolver;
 import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
-import org.jbehave.core.runner.StoryRunner;
+import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.steps.DefaultStepdocGenerator;
 import org.jbehave.core.steps.Steps;
@@ -20,13 +27,6 @@ import org.jbehave.web.runner.waffle.controllers.FileUploadController;
 import org.jbehave.web.runner.waffle.controllers.FilesController;
 import org.jbehave.web.runner.waffle.controllers.StepdocController;
 import org.jbehave.web.runner.waffle.controllers.StoryController;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static java.util.Arrays.asList;
 
 public class JBehaveRegistrar extends AbstractRegistrar {
 
