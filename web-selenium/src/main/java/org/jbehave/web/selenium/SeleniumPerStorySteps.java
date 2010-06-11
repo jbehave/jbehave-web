@@ -1,9 +1,10 @@
 package org.jbehave.web.selenium;
 
-import com.thoughtworks.selenium.Selenium;
 import org.jbehave.core.annotations.AfterStory;
 import org.jbehave.core.annotations.BeforeStory;
-import org.jbehave.core.steps.StepsConfiguration;
+import org.jbehave.core.configuration.StoryConfiguration;
+
+import com.thoughtworks.selenium.Selenium;
 
 /**
  * Steps implementation that can be used in Selenium-based scenarios. It
@@ -19,7 +20,7 @@ public abstract class SeleniumPerStorySteps extends AbstractSeleniumSteps {
     public SeleniumPerStorySteps() {
     }
 
-    public SeleniumPerStorySteps(StepsConfiguration configuration) {
+    public SeleniumPerStorySteps(StoryConfiguration configuration) {
         super(configuration);
     }
 
@@ -27,7 +28,7 @@ public abstract class SeleniumPerStorySteps extends AbstractSeleniumSteps {
         super(selenium);
     }
 
-    public SeleniumPerStorySteps(SeleniumStepsConfiguration configuration) {
+    public SeleniumPerStorySteps(SeleniumConfiguration configuration) {
         super(configuration);
     }
 

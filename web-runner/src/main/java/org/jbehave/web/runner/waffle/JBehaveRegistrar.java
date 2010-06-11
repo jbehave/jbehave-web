@@ -96,7 +96,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	}
 
 	protected void registerSteps() {
-		register(Steps.class);
+		registerInstance(new Steps());
 	}
 
 	protected void registerStepdocGenerator() {

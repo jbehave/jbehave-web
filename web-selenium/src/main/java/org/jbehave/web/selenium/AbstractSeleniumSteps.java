@@ -1,14 +1,15 @@
 package org.jbehave.web.selenium;
 
+import java.util.concurrent.TimeUnit;
+
+import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
+import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.steps.Steps;
+
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 import com.thoughtworks.selenium.condition.JUnitConditionRunner;
-import org.jbehave.core.steps.MostUsefulStepsConfiguration;
-import org.jbehave.core.steps.Steps;
-import org.jbehave.core.steps.StepsConfiguration;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Steps implementation that can be used in Selenium-based scenarios. It does not start,
@@ -25,20 +26,20 @@ public class AbstractSeleniumSteps extends Steps {
     protected final ConditionRunner runner;
 
     public AbstractSeleniumSteps() {
-        this(new MostUsefulStepsConfiguration());
+        this(new MostUsefulStoryConfiguration());
     }
 
-    public AbstractSeleniumSteps(StepsConfiguration configuration){
+    public AbstractSeleniumSteps(StoryConfiguration configuration){
         super(configuration);
         this.selenium = createSelenium();
         this.runner = createConditionRunner(selenium);
     }
 
     public AbstractSeleniumSteps(Selenium selenium) {
-        this(new SeleniumStepsConfiguration(selenium, new SeleniumContext()));
+        this(new SeleniumConfiguration(selenium, new SeleniumContext()));
     }
 
-    public AbstractSeleniumSteps(SeleniumStepsConfiguration configuration){
+    public AbstractSeleniumSteps(SeleniumConfiguration configuration){
         super(configuration);
         this.selenium = configuration.getSelenium();
         this.runner = createConditionRunner(selenium);

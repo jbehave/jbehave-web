@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import com.thoughtworks.selenium.Selenium;
 
 @RunWith(JMock.class)
-public class SeleniumStepsConfigurationTest {
+public class SeleniumConfigurationTest {
 
 	private Mockery mockery = new Mockery();
 
@@ -30,9 +30,9 @@ public class SeleniumStepsConfigurationTest {
 			one(selenium).setContext(context);
 			one(stepMonitor).performing(step, dryRun);
 		}});
-		SeleniumStepsConfiguration configuration = new SeleniumStepsConfiguration(selenium, seleniumContext, stepMonitor);
+		SeleniumConfiguration configuration = new SeleniumConfiguration(selenium, seleniumContext, stepMonitor);
 		seleniumContext.setCurrentScenario(currentScenario);
-		configuration.monitor().performing(step, dryRun);		
+		configuration.stepMonitor().performing(step, dryRun);		
 	}
 
 	@Test
