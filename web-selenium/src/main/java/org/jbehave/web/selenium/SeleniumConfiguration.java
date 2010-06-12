@@ -1,12 +1,12 @@
 package org.jbehave.web.selenium;
 
-import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.core.steps.StepMonitor;
 
 import com.thoughtworks.selenium.Selenium;
 
-public class SeleniumConfiguration extends StoryConfiguration {
+public class SeleniumConfiguration extends Configuration {
 
 	private final Selenium selenium;
 

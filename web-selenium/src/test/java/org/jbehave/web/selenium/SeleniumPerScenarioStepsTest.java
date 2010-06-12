@@ -5,8 +5,8 @@ import static java.util.Arrays.asList;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
-import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.parsers.StoryParser;
@@ -24,7 +24,7 @@ public class SeleniumPerScenarioStepsTest {
 
 	private static final String NL = "\n";
 
-	private final StoryConfiguration configuration = new MostUsefulStoryConfiguration();
+	private final Configuration configuration = new MostUsefulConfiguration();
 	private final StoryParser parser = new RegexStoryParser();
 	private final StoryRunner runner = new StoryRunner();
 	private final Selenium selenium = mockery.mock(Selenium.class);

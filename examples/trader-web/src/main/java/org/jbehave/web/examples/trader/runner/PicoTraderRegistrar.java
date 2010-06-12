@@ -1,7 +1,7 @@
 package org.jbehave.web.examples.trader.runner;
 
 import org.codehaus.waffle.registrar.Registrar;
-import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.pico.PicoStepsFactory;
 import org.jbehave.web.examples.trader.scenarios.StockExchangeSteps;
@@ -29,7 +29,7 @@ public class PicoTraderRegistrar extends TraderRegistrar {
 
     protected CandidateSteps[] createSteps() {
         PicoContainer parent = createPicoContainer();
-        return new PicoStepsFactory(new MostUsefulStoryConfiguration(), parent).createCandidateSteps();
+        return new PicoStepsFactory(new MostUsefulConfiguration(), parent).createCandidateSteps();
     }
 
     private PicoContainer createPicoContainer() {

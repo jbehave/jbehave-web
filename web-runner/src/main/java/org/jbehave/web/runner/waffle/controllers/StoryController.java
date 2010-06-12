@@ -12,12 +12,10 @@ import org.codehaus.waffle.action.annotation.ActionMethod;
 import org.codehaus.waffle.action.annotation.PRG;
 import org.codehaus.waffle.menu.Menu;
 import org.codehaus.waffle.menu.MenuAwareController;
-import org.jbehave.core.configuration.PropertyBasedStoryConfiguration;
-import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.configuration.Keywords;
 import org.jbehave.core.embedder.StoryRunner;
-import org.jbehave.core.model.Keywords;
 import org.jbehave.core.parsers.StoryParser;
-import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.reporters.TxtOutput;
 import org.jbehave.core.steps.CandidateSteps;
 
@@ -28,10 +26,10 @@ public class StoryController extends MenuAwareController {
 	private final List<CandidateSteps> steps;
 
 	private ByteArrayOutputStream outputStream;
-	private StoryConfiguration configuration;
+	private Configuration configuration;
 	private StoryContext storyContext;
 
-    public StoryController(Menu menu, StoryConfiguration configuration,
+	public StoryController(Menu menu, Configuration configuration,
 			StoryParser storyParser, StoryRunner storyRunner,
 			CandidateSteps... steps) {
 		super(menu);
@@ -39,21 +37,18 @@ public class StoryController extends MenuAwareController {
 		this.storyRunner = storyRunner;
 		this.steps = asList(steps);
 		this.outputStream = new ByteArrayOutputStream();
-        final Properties outputPatterns = new Properties();
-        outputPatterns.setProperty("beforeStory", "{0}\n");
-        final Keywords keywords = configuration.keywords();
-        final boolean reportFailureTrace = false;
-		this.configuration = new PropertyBasedStoryConfiguration(configuration) {
-			@Override
-			public StoryReporter storyReporter() {
-				return new TxtOutput(new PrintStream(
-						outputStream), outputPatterns, keywords, reportFailureTrace);
-			}
-		};
+		final Properties outputPatterns = new Properties();
+		outputPatterns.setProperty("beforeStory", "{0}\n");
+		final Keywords keywords = configuration.keywords();
+		final boolean reportFailureTrace = false;
+		this.configuration = configuration
+				.useDefaultStoryReporter(new TxtOutput(new PrintStream(
+						outputStream), outputPatterns, keywords,
+						reportFailureTrace));
 		this.storyContext = new StoryContext();
 	}
 
-    @ActionMethod(asDefault = true)
+	@ActionMethod(asDefault = true)
 	public void show() {
 		// no-op
 	}
@@ -65,7 +60,8 @@ public class StoryController extends MenuAwareController {
 			try {
 				outputStream.reset();
 				storyContext.clearFailureCause();
-                storyRunner.run(configuration, steps, storyParser.parseStory(storyContext.getInput()));
+				storyRunner.run(configuration, steps, storyParser
+						.parseStory(storyContext.getInput()));
 			} catch (Throwable e) {
 				storyContext.runFailedFor(e);
 			}
@@ -73,7 +69,7 @@ public class StoryController extends MenuAwareController {
 		}
 	}
 
-    public StoryContext getStoryContext() {
+	public StoryContext getStoryContext() {
 		return storyContext;
 	}
 

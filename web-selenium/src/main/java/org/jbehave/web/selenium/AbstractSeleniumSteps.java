@@ -2,8 +2,8 @@ package org.jbehave.web.selenium;
 
 import java.util.concurrent.TimeUnit;
 
-import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
-import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.steps.Steps;
 
 import com.thoughtworks.selenium.DefaultSelenium;
@@ -26,10 +26,10 @@ public class AbstractSeleniumSteps extends Steps {
     protected final ConditionRunner runner;
 
     public AbstractSeleniumSteps() {
-        this(new MostUsefulStoryConfiguration());
+        this(new MostUsefulConfiguration());
     }
 
-    public AbstractSeleniumSteps(StoryConfiguration configuration){
+    public AbstractSeleniumSteps(Configuration configuration){
         super(configuration);
         this.selenium = createSelenium();
         this.runner = createConditionRunner(selenium);

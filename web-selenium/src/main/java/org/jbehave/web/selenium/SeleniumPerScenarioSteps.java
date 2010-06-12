@@ -2,7 +2,7 @@ package org.jbehave.web.selenium;
 
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeScenario;
-import org.jbehave.core.configuration.StoryConfiguration;
+import org.jbehave.core.configuration.Configuration;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -20,7 +20,7 @@ public abstract class SeleniumPerScenarioSteps extends AbstractSeleniumSteps {
     public SeleniumPerScenarioSteps() {
     }
 
-    public SeleniumPerScenarioSteps(StoryConfiguration configuration) {
+    public SeleniumPerScenarioSteps(Configuration configuration) {
         super(configuration);
     }
 

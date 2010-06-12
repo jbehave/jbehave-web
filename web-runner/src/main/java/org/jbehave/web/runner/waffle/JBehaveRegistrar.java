@@ -14,7 +14,7 @@ import org.codehaus.waffle.menu.MenuAwareController;
 import org.codehaus.waffle.registrar.AbstractRegistrar;
 import org.codehaus.waffle.registrar.Registrar;
 import org.codehaus.waffle.view.ViewResolver;
-import org.jbehave.core.configuration.MostUsefulStoryConfiguration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.steps.DefaultStepdocGenerator;
@@ -84,7 +84,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	}
 
 	protected void registerConfiguration() {
-		register(MostUsefulStoryConfiguration.class);
+		register(MostUsefulConfiguration.class);
 	}
 
 	protected void registerStoryParser() {
