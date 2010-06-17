@@ -1,7 +1,9 @@
 package org.jbehave.web.runner.waffle.controllers;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -9,11 +11,9 @@ import org.codehaus.waffle.menu.Menu;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryRunner;
-import org.jbehave.core.parsers.RegexStoryParser;
-import org.jbehave.core.parsers.StoryParser;
 import org.jbehave.core.steps.Steps;
 import org.junit.Test;
 
@@ -24,12 +24,11 @@ public class StoryControllerTest {
 
 	private final Menu MENU = new Menu();
 	private final Configuration configuration = new MostUsefulConfiguration();
-	private final StoryParser parser = new RegexStoryParser();
 	private final StoryRunner runner = new StoryRunner();
 
 	@Test
 	public void canRunSuccessfulStory(){
-		StoryController controller = new StoryController(MENU, configuration, parser, runner, new MySteps());
+		StoryController controller = new StoryController(MENU, runner, configuration, new MySteps());
 		String input = "Scenario: A simple test" + NL
 						+ NL
 						+ "Given a test" + NL
@@ -42,13 +41,13 @@ public class StoryControllerTest {
 		controller.getStoryContext().setInput(input);
 		controller.run();
 		assertLinesMatch(output, controller.getStoryContext().getOutput().trim());
-		assertEquals(0, controller.getStoryContext().getFailureMessages().size());
-		assertEquals("", controller.getStoryContext().getFailureStackTrace());
+		assertThat(controller.getStoryContext().getFailureMessages().size(), equalTo(0));
+		assertThat(controller.getStoryContext().getFailureStackTrace(), equalTo(""));
 	}
 
 	@Test
 	public void canRunFailingStory(){
-		StoryController controller = new StoryController(MENU, configuration, parser, runner, new MySteps());
+		StoryController controller = new StoryController(MENU, runner, configuration, new MySteps());
 		String input = "Scenario: A simple test" + NL
 						+ "Given a test" + NL
 						+ "When a test fails" + NL
@@ -61,19 +60,19 @@ public class StoryControllerTest {
 		controller.getStoryContext().setInput(input);
 		controller.run();
 		assertLinesMatch(output, controller.getStoryContext().getOutput().trim());
-		assertTrue(controller.getStoryContext().getFailureMessages().contains("Test failed"));
-		assertTrue(controller.getStoryContext().getFailureStackTrace().contains("java.lang.RuntimeException: Test failed"));
+		assertThat(controller.getStoryContext().getFailureMessages().contains("Test failed"), is(true));
+		assertThat(controller.getStoryContext().getFailureStackTrace().contains("java.lang.RuntimeException: Test failed"), is(true));
 	}
 
     @Test
     public void canChangeStoryContextMethod(){
-        StoryController controller = new StoryController(MENU, configuration, parser, runner, new MySteps());
+        StoryController controller = new StoryController(MENU, runner, configuration, new MySteps());
         StoryContext storyContext = controller.getStoryContext();
         List<String> methods = storyContext.getMethods();
-        assertEquals(methods.get(0), storyContext.getMethod());
+        assertThat(storyContext.getMethod(), equalTo(methods.get(0)));
         storyContext.setMethod(methods.get(1));
         controller.show();
-        assertEquals(methods.get(1), storyContext.getMethod());
+        assertThat(storyContext.getMethod(), equalTo(methods.get(1)));
     }	
 	
 	private void assertLinesMatch(String expected, String actual) {
@@ -81,7 +80,7 @@ public class StoryControllerTest {
 		String[] actualLines = actual.split(NL);
 		assertEquals(expectedLines.length, actualLines.length);
 		for (int i = 0; i < expectedLines.length; i++ ){ 
-			assertEquals(expectedLines[i].trim(), actualLines[i].trim());
+			assertThat(actualLines[i].trim(), equalTo(expectedLines[i].trim()));
 		}
 		
 	}

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <head>
-    <title><@i.messageFor "storyRunner" "Story Runner"/></title>
+    <title><@i.messageFor "Stepdoc" "Stepdoc"/></title>
 </head>
 <#include "/ftl/navigation.ftl" parse="true">
 <div id="content">

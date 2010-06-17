@@ -16,8 +16,6 @@ import org.codehaus.waffle.registrar.Registrar;
 import org.codehaus.waffle.view.ViewResolver;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryRunner;
-import org.jbehave.core.parsers.RegexStoryParser;
-import org.jbehave.core.steps.DefaultStepdocGenerator;
 import org.jbehave.core.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
 import org.jbehave.web.io.SilentFileMonitor;
@@ -38,10 +36,8 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 	public void application() {
 		registerMenu();
 		registerConfiguration();
-		registerStoryParser();
 		registerStoryRunner();
 		registerSteps();
-		registerStepdocGenerator();
 		registerFileMonitor();
 		registerFileManager();
 		register("data/file", FileController.class);
@@ -87,20 +83,12 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 		register(MostUsefulConfiguration.class);
 	}
 
-	protected void registerStoryParser() {
-		register(RegexStoryParser.class);
-	}
-
 	protected void registerStoryRunner() {
 		register(StoryRunner.class);
 	}
 
 	protected void registerSteps() {
 		registerInstance(new Steps());
-	}
-
-	protected void registerStepdocGenerator() {
-		register(DefaultStepdocGenerator.class);
 	}
 
 	protected void registerFileMonitor() {

@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Properties;
@@ -21,31 +22,32 @@ import org.jbehave.core.steps.CandidateSteps;
 
 public class StoryController extends MenuAwareController {
 
-	private final StoryParser storyParser;
 	private final StoryRunner storyRunner;
+	private final Configuration configuration;
 	private final List<CandidateSteps> steps;
 
 	private ByteArrayOutputStream outputStream;
-	private Configuration configuration;
 	private StoryContext storyContext;
 
-	public StoryController(Menu menu, Configuration configuration,
-			StoryParser storyParser, StoryRunner storyRunner,
-			CandidateSteps... steps) {
+	public StoryController(Menu menu, StoryRunner storyRunner,
+			Configuration configuration, CandidateSteps... steps) {
 		super(menu);
-		this.storyParser = storyParser;
 		this.storyRunner = storyRunner;
 		this.steps = asList(steps);
 		this.outputStream = new ByteArrayOutputStream();
+		this.configuration = withOutputTo(configuration, this.outputStream);
+		this.storyContext = new StoryContext();
+	}
+
+	private Configuration withOutputTo(Configuration configuration,
+			OutputStream ouputStream) {
 		final Properties outputPatterns = new Properties();
 		outputPatterns.setProperty("beforeStory", "{0}\n");
 		final Keywords keywords = configuration.keywords();
 		final boolean reportFailureTrace = false;
-		this.configuration = configuration
-				.useDefaultStoryReporter(new TxtOutput(new PrintStream(
-						outputStream), outputPatterns, keywords,
-						reportFailureTrace));
-		this.storyContext = new StoryContext();
+		return configuration.useDefaultStoryReporter(new TxtOutput(
+				new PrintStream(outputStream), outputPatterns, keywords,
+				reportFailureTrace));
 	}
 
 	@ActionMethod(asDefault = true)
@@ -60,6 +62,7 @@ public class StoryController extends MenuAwareController {
 			try {
 				outputStream.reset();
 				storyContext.clearFailureCause();
+				StoryParser storyParser = configuration.storyParser();
 				storyRunner.run(configuration, steps, storyParser
 						.parseStory(storyContext.getInput()));
 			} catch (Throwable e) {
