@@ -11,7 +11,6 @@
 
 		<#assign stepdocs = stepdocContext.stepdocs />		
 		<#assign view = stepdocContext.view />
-        <#if (stepdocs.size() > 0) >
         <div id="stepdocs">  
 	 		 <fieldset>
 	             <legend><@i.messageFor "findSteps" "Find Steps"/></legend>
@@ -33,7 +32,6 @@
                 </p>
 	         </fieldset>           
          </div>
-		</#if>	
          
     </form>
 </div>
