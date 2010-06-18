@@ -11,6 +11,7 @@ import org.codehaus.waffle.menu.MenuAwareController;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.StepFinder;
+import org.jbehave.core.steps.Stepdoc;
 
 public class StepdocController extends MenuAwareController {
 
@@ -18,13 +19,16 @@ public class StepdocController extends MenuAwareController {
 	private final StepFinder stepFinder;
 
 	private StepdocContext stepdocContext;
+	private List<Stepdoc> stepdocs;
 
 	public StepdocController(Menu menu, Configuration configuration,
 			CandidateSteps... steps) {
 		super(menu);
 		this.steps = asList(steps);
 		this.stepFinder = configuration.stepFinder();
+		this.stepdocs = stepFinder.stepdocs(this.steps);
 		this.stepdocContext = new StepdocContext();
+		this.stepdocContext.addStepsInstances(stepFinder.stepsInstances(this.steps));
 	}
 
 	@ActionMethod(asDefault = true)
@@ -34,7 +38,7 @@ public class StepdocController extends MenuAwareController {
 		if (isNotBlank(matchingStep)) {
 			stepdocContext.addStepdocs(stepFinder.findMatching(matchingStep, steps));
 		} else {
-			stepdocContext.addStepdocs(stepFinder.stepdocs(steps));
+			stepdocContext.addStepdocs(stepdocs);
 		}
 	}
 

@@ -15,6 +15,7 @@ public class StepdocContext {
 	private List<Stepdoc> stepdocs = new ArrayList<Stepdoc>();
 	private View view = View.PATTERNS;
 	private String matchingStep = "";
+	private List<Object> stepsInstances;
 	
 	public StepdocContext() {	
 	}
@@ -30,7 +31,15 @@ public class StepdocContext {
 	public void clearStepdocs(){
 		this.stepdocs.clear();
 	}
-	
+
+	public void addStepsInstances(List<Object> stepsInstances) {
+		this.stepsInstances = stepsInstances;
+	}	
+
+	public List<Object> getStepsInstances() {
+		return stepsInstances;
+	}
+
 	public List<View> getViews(){
 		return asList(View.values());
 	}

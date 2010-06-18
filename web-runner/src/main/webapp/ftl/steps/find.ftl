@@ -10,6 +10,7 @@
     <form action="${base}/steps/find.action">
 
 		<#assign stepdocs = stepdocContext.stepdocs />		
+        <#assign stepsInstances = stepdocContext.stepsInstances />      
 		<#assign view = stepdocContext.view />
         <div id="stepdocs">  
 	 		 <fieldset>
@@ -28,6 +29,14 @@
 	   		 		            ${stepdoc.methodSignature}
 	    		            </#if>
 	            		</#list>
+                    </pre>
+                </p>
+                <p><@i.messageFor "usingStepsInstances" "Using steps instances"/></p>
+                <p>
+                    <pre class="brush: plain">
+                        <#list stepsInstances as instance>
+                            ${instance.class.name}
+                        </#list>
                     </pre>
                 </p>
 	         </fieldset>           
