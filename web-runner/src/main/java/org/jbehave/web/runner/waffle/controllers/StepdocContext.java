@@ -10,10 +10,10 @@ import static java.util.Arrays.asList;
 
 public class StepdocContext {
 
-	public enum View { SIMPLE, METHODS }
+	public enum View { PATTERNS, WITH_METHODS }
 	
 	private List<Stepdoc> stepdocs = new ArrayList<Stepdoc>();
-	private View view = View.SIMPLE;
+	private View view = View.PATTERNS;
 	private String matchingStep = "";
 	
 	public StepdocContext() {	

@@ -7,7 +7,7 @@
 </head>
 <#include "/ftl/navigation.ftl" parse="true">
 <div id="content">
-    <form action="${base}/story/story.action" method="${storyContext.method!"POST"}">
+    <form action="${base}/story/run.action" method="${storyContext.method!"POST"}">
     
         <#include "/ftl/errors.ftl" parse="true">
         <div id="storyInput">

@@ -47,8 +47,8 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 
 	@Override
 	public void session() {
-		register("story/story", StoryController.class);
-		register("story/stepdoc", StepdocController.class);
+		register("story/run", StoryController.class);
+		register("steps/find", StepdocController.class);
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 
 	protected Menu createMenu() {
 		Map<String, List<String>> content = new HashMap<String, List<String>>();
-		content.put("Menu", asList("Home:home", "Data Files:data/files", "Data Upload:data/upload", "Run Story:story/story", "Stepdoc:story/stepdoc"));
+		content.put("Menu", asList("Home:home", "Data Files:data/files", "Data Upload:data/upload", "Run Story:story/run", "Find Steps:steps/find"));
 		return new Menu(content);
 	}
 
@@ -75,8 +75,8 @@ public class JBehaveRegistrar extends AbstractRegistrar {
 		viewResolver.configureView("data/file", "ftl/data/file");
 		viewResolver.configureView("data/files", "ftl/data/files");
 		viewResolver.configureView("data/upload", "ftl/data/upload");
-		viewResolver.configureView("story/story", "ftl/story/story");
-		viewResolver.configureView("story/stepdoc", "ftl/story/stepdoc");
+		viewResolver.configureView("story/run", "ftl/story/run");
+		viewResolver.configureView("steps/find", "ftl/steps/find");
 	}
 
 	protected void registerConfiguration() {
