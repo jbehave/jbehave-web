@@ -3,6 +3,8 @@ package org.jbehave.web.examples.trader.scenarios;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.jbehave.core.annotations.Alias;
+import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -19,6 +21,7 @@ public class TraderSteps extends Steps {
     }
 
     @Given("a threshold of $threshold")
+    @Alias("a limit of $threshold")
     public void aThreshold(double threshold) {
         stock = service.newStock(threshold);
     }
@@ -34,6 +37,7 @@ public class TraderSteps extends Steps {
     }
 
     @Then("the trader sells all stocks")
+    @Aliases(values={"the trader liquidates stocks"})
     public void theTraderSellsAllStocks() {
         trader.sellAllStocks();
         assertThat(trader.getStocks().size(), equalTo(0));

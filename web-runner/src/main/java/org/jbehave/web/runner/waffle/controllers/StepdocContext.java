@@ -14,6 +14,7 @@ public class StepdocContext {
 	
 	private List<Stepdoc> stepdocs = new ArrayList<Stepdoc>();
 	private View view = View.SIMPLE;
+	private String matchingStep = "";
 	
 	public StepdocContext() {	
 	}
@@ -40,6 +41,14 @@ public class StepdocContext {
 
 	public void setView(View view) {
 		this.view = view;
+	}
+
+	public String getMatchingStep() {
+		return matchingStep;
+	}
+
+	public void setMatchingStep(String matchingStep) {
+		this.matchingStep = matchingStep;
 	}
 
 	@Override
