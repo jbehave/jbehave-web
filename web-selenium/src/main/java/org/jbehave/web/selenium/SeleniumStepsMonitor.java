@@ -40,28 +40,28 @@ public class SeleniumStepsMonitor implements StepMonitor {
 		delegate.stepMatchesPattern(step, matches, pattern, method, stepsInstance);		
 	}
 
-	public void foundArg(String arg, int position) {
-		delegate.foundArg(arg, position);		
+	public void foundParameter(String parameter, int position) {
+		delegate.foundParameter(parameter, position);		
 	}
 
-	public void usingAnnotatedNameForArg(String name, int position) {
-		delegate.usingAnnotatedNameForArg(name, position);
+	public void usingAnnotatedNameForParameter(String name, int position) {
+		delegate.usingAnnotatedNameForParameter(name, position);
 	}
 
-	public void usingNaturalOrderForArg(int position) {
-		delegate.usingNaturalOrderForArg(position);
+	public void usingNaturalOrderForParameter(int position) {
+		delegate.usingNaturalOrderForParameter(position);
 	}
 
-	public void usingParameterNameForArg(String name, int position) {
-		delegate.usingParameterNameForArg(name, position);
+	public void usingParameterNameForParameter(String name, int position) {
+		delegate.usingParameterNameForParameter(name, position);
 	}
 
-	public void usingTableAnnotatedNameForArg(String name, int position) {
-		delegate.usingTableAnnotatedNameForArg(name, position);
+	public void usingTableAnnotatedNameForParameter(String name, int position) {
+		delegate.usingTableAnnotatedNameForParameter(name, position);
 	}
 
-	public void usingTableParameterNameForArg(String name, int position) {
-		delegate.usingTableParameterNameForArg(name, position);
+	public void usingTableParameterNameForParameter(String name, int position) {
+		delegate.usingTableParameterNameForParameter(name, position);
 	}
 
 }
