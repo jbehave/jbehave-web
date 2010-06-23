@@ -1,4 +1,4 @@
-package org.jbehave.web.examples.trader.scenarios;
+package org.jbehave.web.examples.trader.steps;
 
 import static java.util.Arrays.asList;
 

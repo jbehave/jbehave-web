@@ -1,11 +1,17 @@
 package org.jbehave.web.examples.trader.runner;
 
+import static java.util.Arrays.asList;
+
 import java.io.File;
+import java.util.List;
 
 import org.codehaus.waffle.registrar.Registrar;
-import org.jbehave.web.examples.trader.scenarios.StockExchangeSteps;
-import org.jbehave.web.examples.trader.scenarios.TraderSteps;
-import org.jbehave.web.examples.trader.scenarios.TradingService;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.steps.CandidateSteps;
+import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.web.examples.trader.steps.StockExchangeSteps;
+import org.jbehave.web.examples.trader.steps.TraderSteps;
+import org.jbehave.web.examples.trader.steps.TradingService;
 import org.jbehave.web.io.PrintStreamFileMonitor;
 import org.jbehave.web.runner.waffle.JBehaveRegistrar;
 
@@ -17,8 +23,11 @@ public class TraderRegistrar extends JBehaveRegistrar {
 
     @Override
     protected void registerSteps() {
-        registerInstance(new TraderSteps(new TradingService()));
-        registerInstance(new StockExchangeSteps());
+        List<Object> stepsInstances = asList(new TraderSteps(new TradingService()), new StockExchangeSteps());
+        List<CandidateSteps> candidateSteps = new InstanceStepsFactory(new MostUsefulConfiguration(), stepsInstances).createCandidateSteps();
+        for (CandidateSteps candidate : candidateSteps) {
+            registerInstance(candidate);
+        }
     }
 
     @Override

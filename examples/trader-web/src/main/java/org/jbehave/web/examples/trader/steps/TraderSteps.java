@@ -1,4 +1,4 @@
-package org.jbehave.web.examples.trader.scenarios;
+package org.jbehave.web.examples.trader.steps;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,9 +8,8 @@ import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.steps.Steps;
 
-public class TraderSteps extends Steps {
+public class TraderSteps {
 
     private Stock stock;
     private Trader trader;

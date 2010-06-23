@@ -1,4 +1,4 @@
-package org.jbehave.web.examples.trader.scenarios;
+package org.jbehave.web.examples.trader.steps;
 
 public class TradingService {
 
