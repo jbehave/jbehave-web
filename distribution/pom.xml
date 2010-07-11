@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
   <name>JBehave Web Distribution</name>
   <properties>
-      <jbehave.site.version>2.0.2</jbehave.site.version>
+      <jbehave.site.version>3.0-SNAPSHOT</jbehave.site.version>
   </properties>
   <dependencies>
     <dependency>
@@ -38,7 +38,7 @@
           <sourceDirectoryPath>${basedir}/src/main/site/</sourceDirectoryPath>
           <sitemapPath>content/sitemap.xml</sitemapPath>
           <templatesDirectoryPath>${project.build.directory}/templates</templatesDirectoryPath>
-          <skinPath>skin.html</skinPath>
+          <skinPath>xsite-skin.html</skinPath>
           <resourcePaths>resources</resourcePaths>
           <outputDirectoryPath>${project.build.directory}/site</outputDirectoryPath>
           <publishedVersion>${pom.version}</publishedVersion>
@@ -130,6 +130,7 @@
                   <groupId>org.jbehave.site</groupId>
                   <artifactId>jbehave-site-resources</artifactId>
                   <version>${jbehave.site.version}</version>
+                  <type>zip</type>
                   <outputDirectory>${project.build.directory}/site</outputDirectory>
                 </artifactItem>
               </artifactItems>
@@ -149,6 +150,7 @@
                   <groupId>org.jbehave.site</groupId>
                   <artifactId>jbehave-site-templates</artifactId>
                   <version>${jbehave.site.version}</version>
+                  <type>zip</type>
                   <outputDirectory>${project.build.directory}/templates</outputDirectory>
                 </artifactItem>
               </artifactItems>
