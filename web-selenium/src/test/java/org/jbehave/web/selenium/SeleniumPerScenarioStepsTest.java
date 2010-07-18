@@ -57,7 +57,7 @@ public class SeleniumPerScenarioStepsTest {
 			}
 			
 		};
-        runner.run(configuration, asList(steps), parser.parseStory(input, path), false);
+        runner.run(configuration, asList(steps), parser.parseStory(input, path));
 	}
 
 
