@@ -12,12 +12,13 @@ import com.thoughtworks.selenium.Selenium;
  *
  * @author Mauro Talevi
  */
-public abstract class SeleniumPerStorySteps extends AbstractSeleniumSteps {
+public abstract class PerStorySeleniumSteps extends SeleniumSteps {
 
-    public SeleniumPerStorySteps() {
+    public PerStorySeleniumSteps() {
+        super();
     }
 
-    public SeleniumPerStorySteps(Selenium selenium) {
+    public PerStorySeleniumSteps(Selenium selenium) {
         super(selenium);
     }
 

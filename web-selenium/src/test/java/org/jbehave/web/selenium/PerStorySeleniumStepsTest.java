@@ -15,9 +15,8 @@ import org.jmock.Mockery;
 import org.junit.Test;
 
 import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.condition.ConditionRunner;
 
-public class SeleniumPerStoryStepsTest {
+public class PerStorySeleniumStepsTest {
 
     private Mockery mockery = new Mockery();
 
@@ -27,13 +26,14 @@ public class SeleniumPerStoryStepsTest {
     private final StoryParser parser = new RegexStoryParser();
     private final StoryRunner runner = new StoryRunner();
     private final Selenium selenium = mockery.mock(Selenium.class);
-    private final ConditionRunner conditionRunner = mockery.mock(ConditionRunner.class);
 
     @Test
     public void canRunSuccessfulStory() throws Throwable {
-        String input = "Story: A simple web test" + NL + NL + "Given a test" + NL + "When a test is executed" + NL
-                + "Then a tester is a happy hopper";
-        String path = "/path/to/input";
+        String story = "Scenario: A simple web scenario" + NL 
+            + "Given a test" + NL 
+            + "When a test is executed" + NL
+            + "Then a tester is a happy hopper";
+        String path = "/path/to/story";
         mockery.checking(new Expectations() {
             {
                 exactly(3).of(selenium).setContext(with(any(String.class)));
@@ -42,19 +42,12 @@ public class SeleniumPerStoryStepsTest {
                 one(selenium).stop();
             }
         });
-        MySteps steps = new MySteps(selenium) {
-
-            @Override
-            protected ConditionRunner createConditionRunner(Selenium selenium) {
-                return conditionRunner;
-            }
-
-        };
+        MySteps steps = new MySteps(selenium);
         InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps);
-        runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(input, path));
+        runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(story, path));
     }
 
-    public static class MySteps extends SeleniumPerStorySteps {
+    public static class MySteps extends PerStorySeleniumSteps {
 
         public MySteps() {
         }

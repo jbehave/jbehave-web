@@ -13,16 +13,16 @@ import com.thoughtworks.selenium.condition.JUnitConditionRunner;
  * while the ConditionRunner is can be specified by overriding implementation of
  * {@link #createConditionRunner(Selenium)}.
  */
-public class AbstractSeleniumSteps {
+public class SeleniumSteps {
 
     protected final Selenium selenium;
     protected final ConditionRunner runner;
 
-    public AbstractSeleniumSteps() {
+    public SeleniumSteps() {
         this(SeleniumConfiguration.defaultSelenium());
     }
 
-    public AbstractSeleniumSteps(Selenium selenium) {
+    public SeleniumSteps(Selenium selenium) {
         this.selenium = selenium;
         this.runner = createConditionRunner(selenium);
     }
