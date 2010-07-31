@@ -2,11 +2,6 @@ package org.jbehave.web.selenium;
 
 import java.util.concurrent.TimeUnit;
 
-import org.jbehave.core.configuration.MostUsefulConfiguration;
-import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.steps.Steps;
-
-import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 import com.thoughtworks.selenium.condition.JUnitConditionRunner;
@@ -14,25 +9,17 @@ import com.thoughtworks.selenium.condition.JUnitConditionRunner;
 /**
  * Steps implementation that can be used in Selenium-based scenarios. It does not start,
  * stop or close Selenium at all.
- * It can also provides defaults for Selenium and ConditionRunner
+ * It only provides instances of Selenium and ConditionRunner
  * dependencies, which may be overridden by user when providing the
  * implementation of scenario steps.
- *
- * @author Mauro Talevi
  */
-public class AbstractSeleniumSteps extends Steps {
+public class AbstractSeleniumSteps {
 
     protected final Selenium selenium;
     protected final ConditionRunner runner;
 
     public AbstractSeleniumSteps() {
-        this(new MostUsefulConfiguration());
-    }
-
-    public AbstractSeleniumSteps(Configuration configuration){
-        super(configuration);
-        this.selenium = createSelenium();
-        this.runner = createConditionRunner(selenium);
+        this(new SeleniumConfiguration());
     }
 
     public AbstractSeleniumSteps(Selenium selenium) {
@@ -40,24 +27,8 @@ public class AbstractSeleniumSteps extends Steps {
     }
 
     public AbstractSeleniumSteps(SeleniumConfiguration configuration){
-        super(configuration);
         this.selenium = configuration.getSelenium();
         this.runner = createConditionRunner(selenium);
-    }
-
-    /**
-     * Creates Selenium used by the Steps, by default {@link com.thoughtworks.selenium.DefaultSelenium}
-     * using "*firefox" as browser on localhost.
-     *
-     * Users may override this method to provide their own custom instance of
-     * Selenium.
-     *
-     * @return A Selenium instance
-     * @deprecated Use second constructor instead
-     */
-    protected Selenium createSelenium() {
-        return new DefaultSelenium("localhost", 4444, "*firefox",
-                "http://localhost:8080");
     }
 
     /**

@@ -1,16 +1,15 @@
 package org.jbehave.web.selenium;
 
-import static java.util.Arrays.asList;
-
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.parsers.StoryParser;
-import org.jbehave.core.steps.CandidateSteps;
+import org.jbehave.core.steps.InjectableStepsFactory;
+import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
@@ -45,19 +44,15 @@ public class SeleniumPerScenarioStepsTest {
 			one(selenium).close();
 			one(selenium).stop();
 		}});
-		CandidateSteps steps = new MySteps(selenium){
+		MySteps steps = new MySteps(selenium){
 			@Override
 			protected ConditionRunner createConditionRunner(Selenium selenium) {
 				return conditionRunner;
 			}
-
-			@Override
-			protected Selenium createSelenium() {
-				return selenium;
-			}
 			
 		};
-        runner.run(configuration, asList(steps), parser.parseStory(input, path));
+		InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps);
+        runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(input, path));
 	}
 
 
