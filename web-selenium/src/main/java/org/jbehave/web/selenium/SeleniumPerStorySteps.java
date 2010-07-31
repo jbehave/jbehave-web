@@ -6,11 +6,9 @@ import org.jbehave.core.annotations.BeforeStory;
 import com.thoughtworks.selenium.Selenium;
 
 /**
- * Steps implementation that can be used in Selenium-based scenarios. It
+ * Steps implementation that can be used in Selenium-based stories. It
  * provides annotated methods to start and stop Selenium before and after
- * stories. It can also provides defaults for Selenium and ConditionRunner
- * dependencies, which may be overridden by user when providing the
- * implementation of scenario steps.
+ * stories. 
  *
  * @author Mauro Talevi
  */
@@ -21,10 +19,6 @@ public abstract class SeleniumPerStorySteps extends AbstractSeleniumSteps {
 
     public SeleniumPerStorySteps(Selenium selenium) {
         super(selenium);
-    }
-
-    public SeleniumPerStorySteps(SeleniumConfiguration configuration) {
-        super(configuration);
     }
 
     @BeforeStory

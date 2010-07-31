@@ -7,11 +7,11 @@ import com.thoughtworks.selenium.condition.ConditionRunner;
 import com.thoughtworks.selenium.condition.JUnitConditionRunner;
 
 /**
- * Steps implementation that can be used in Selenium-based scenarios. It does not start,
- * stop or close Selenium at all.
- * It only provides instances of Selenium and ConditionRunner
- * dependencies, which may be overridden by user when providing the
- * implementation of scenario steps.
+ * Base steps class that can be used in Selenium-based scenarios. It provides
+ * instances of {@link Selenium} and {@link ConditionRunner} to subclasses. The
+ * Selenium instance is injected (defaulting to {@link #defaultSelenium()}),
+ * while the ConditionRunner is can be specified by overriding implementation of
+ * {@link #createConditionRunner(Selenium)}.
  */
 public class AbstractSeleniumSteps {
 
@@ -19,26 +19,23 @@ public class AbstractSeleniumSteps {
     protected final ConditionRunner runner;
 
     public AbstractSeleniumSteps() {
-        this(new SeleniumConfiguration());
+        this(SeleniumConfiguration.defaultSelenium());
     }
 
     public AbstractSeleniumSteps(Selenium selenium) {
-        this(new SeleniumConfiguration(selenium, new SeleniumContext()));
-    }
-
-    public AbstractSeleniumSteps(SeleniumConfiguration configuration){
-        this.selenium = configuration.getSelenium();
+        this.selenium = selenium;
         this.runner = createConditionRunner(selenium);
     }
 
     /**
-     * Creates ConditionRunner used by the Steps, by default
-     * {@link com.thoughtworks.selenium.condition.JUnitConditionRunner}.
-     *
+     * Creates a ConditionRunner, by default {@link
+     * JUnitConditionRunner(selenium, 10, 100, 1000)}.
+     * 
      * Users may override this method to provide their own custom instance of
      * ConditionRunner.
-     *
-     * @param selenium the Selenium instance
+     * 
+     * @param selenium
+     *            the Selenium instance
      * @return A ConditionRunner
      */
     protected ConditionRunner createConditionRunner(Selenium selenium) {
@@ -47,8 +44,9 @@ public class AbstractSeleniumSteps {
 
     /**
      * Waits for a number of seconds
-     *
-     * @param seconds the number of seconds to sleep
+     * 
+     * @param seconds
+     *            the number of seconds to sleep
      */
     protected void waitFor(int seconds) {
         try {

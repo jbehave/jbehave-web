@@ -16,11 +16,7 @@ public class SeleniumConfiguration extends Configuration {
     private final Selenium selenium;
 
     public SeleniumConfiguration() {
-        this(defaultSelenium(), new SeleniumContext());
-    }
-
-    public SeleniumConfiguration(Selenium selenium, SeleniumContext seleniumContext) {
-        this(selenium, seleniumContext, new SilentStepMonitor());
+        this(defaultSelenium(), new SeleniumContext(), new SilentStepMonitor());
     }
 
     public SeleniumConfiguration(Selenium selenium, SeleniumContext seleniumContext, StepMonitor stepMonitor) {
