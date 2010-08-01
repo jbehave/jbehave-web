@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
@@ -19,19 +18,30 @@ import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.pages.PageFactory;
-import org.jbehave.web.selenium.PerStorySeleniumSteps;
+import org.jbehave.web.selenium.PerStoriesSeleniumSteps;
 import org.jbehave.web.selenium.SeleniumConfiguration;
+import org.jbehave.web.selenium.SeleniumContext;
+import org.jbehave.web.selenium.SeleniumStepMonitor;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 
 public class TraderWebStories extends JUnitStories {
 
+    private Selenium selenium = SeleniumConfiguration.defaultSelenium();
+    private ConditionRunner conditionRunner = SeleniumConfiguration.defaultConditionRunner(selenium);
+    private PageFactory pageFactory = new PageFactory(selenium, conditionRunner);
+    private SeleniumContext seleniumContext = new SeleniumContext();
+
     @Override
     public Configuration configuration() {
         Class<? extends Embeddable> embeddableClass = this.getClass();
-        return new MostUsefulConfiguration()
+        return new SeleniumConfiguration()
+            .useSelenium(selenium) 
+            .useSeleniumContext(seleniumContext)
+            .useStepMonitor(new SeleniumStepMonitor(selenium, seleniumContext, new SilentStepMonitor()))
             .useStoryLoader(new LoadFromClasspath(embeddableClass))
             .useStoryReporterBuilder(new StoryReporterBuilder()
                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
@@ -41,10 +51,7 @@ public class TraderWebStories extends JUnitStories {
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        Selenium selenium = SeleniumConfiguration.defaultSelenium();
-        ConditionRunner conditionRunner = SeleniumConfiguration.defaultConditionRunner(selenium);
-        PageFactory pageFactory = new PageFactory(selenium, conditionRunner);
-        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new PerStorySeleniumSteps(selenium))
+        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new PerStoriesSeleniumSteps(selenium))
                 .createCandidateSteps();
     }
     

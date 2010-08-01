@@ -16,7 +16,7 @@
                 <p>
                 	<@w.textarea "storyContext.input" "${storyContext.input}" "rows='25' cols='100'"/>
                 </p>
- 				<p><a href="javascript:fireActionMethod('run');"><@i.messageFor "runStory" "Run Story"/></a> (Method 
+ 				<p><a id="runStory" href="javascript:fireActionMethod('run');"><@i.messageFor "runStory" "Run Story"/></a> (Method 
  				   <@w.selectSingle "storyContext.method" w.asNameableValues(storyContext.getMethods(),"name()","name()") storyContext.getMethod() 
                    "onchange=\"fireActionMethod('show');\"" />)				
  				</p> 

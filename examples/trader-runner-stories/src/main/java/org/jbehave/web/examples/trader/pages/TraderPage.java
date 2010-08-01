@@ -19,4 +19,8 @@ public class TraderPage extends SeleniumPage {
         selenium.click("link="+link);
     }
 
+    public void clickId(String id) {
+        selenium.click("id="+id);
+    }
+
 }

@@ -17,7 +17,7 @@
 	             <legend><@i.messageFor "findSteps" "Find Steps"/></legend>
                  <p><@i.messageFor "stepdocsDescription" "Patterns and methods matching the textual step (if blank all are shown)"/></p>
                  <p><@w.textarea "stepdocContext.matchingStep" "${stepdocContext.matchingStep}" "rows='4' cols='100'"/></p>
-                 <p><a href="javascript:fireActionMethod('find');"><@i.messageFor "find" "Find"/></a> 
+                 <p><a id="find" href="javascript:fireActionMethod('find');"><@i.messageFor "find" "Find"/></a> 
                      <@w.selectSingle "stepdocContext.view" w.asNameableValues(stepdocContext.getViews(),"name()","name()") stepdocContext.getView() 
                    "onchange=\"fireActionMethod('toggle');\"" />
                  </p>

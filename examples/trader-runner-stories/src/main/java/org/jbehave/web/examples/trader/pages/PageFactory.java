@@ -16,5 +16,9 @@ public class PageFactory {
     public Home home(){
         return new Home(selenium, conditionRunner);
     }
+
+    public FindSteps findSteps() {
+        return new FindSteps(selenium, conditionRunner);
+    }
     
 }
