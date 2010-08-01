@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jbehave.web</groupId>
@@ -11,15 +12,21 @@
   <name>JBehave Web Examples</name>
 
   <modules>
-      <module>trader-web</module>
+    <module>trader-web</module>
+    <module>trader-web-stories</module>
   </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.jbehave</groupId>
-            <artifactId>jbehave-pico</artifactId>
-            <version>${jbehave.core.version}</version>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.jbehave</groupId>
+      <artifactId>jbehave-pico</artifactId>
+      <version>${.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jbehave.web</groupId>
+      <artifactId>jbehave-web-selenium</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>

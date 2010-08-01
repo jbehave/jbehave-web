@@ -6,17 +6,22 @@
     <artifactId>jbehave-web-examples</artifactId>
     <version>3.0-SNAPSHOT</version>
   </parent>
-  <artifactId>jbehave-trader-webapp</artifactId>
+  <artifactId>jbehave-web-trader-runner</artifactId>
   <packaging>war</packaging>
-  <name>JBehave Trader Webapp</name>
+  <name>JBehave Web Trader Runner</name>
   <properties>
     <webapp.name>jbehave-trader</webapp.name>
   </properties>
   <dependencies>
     <dependency>
+      <groupId>org.jbehave</groupId>
+      <artifactId>jbehave-pico</artifactId>
+      <version>${jbehave.core.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-runner</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -40,7 +45,7 @@
                 <artifactItem>
                   <groupId>org.jbehave.web</groupId>
                   <artifactId>jbehave-web-runner</artifactId>
-                  <version>${pom.version}</version>
+                  <version>${project.version}</version>
                 </artifactItem>
               </artifactItems>
             </configuration>
