@@ -1,11 +1,21 @@
 package org.jbehave.web.examples.trader;
 
-import org.jbehave.core.annotations.When;
+import org.jbehave.core.annotations.Given;
+import org.jbehave.web.examples.trader.pages.Home;
+import org.jbehave.web.examples.trader.pages.PageFactory;
 
 public class TraderWebSteps {
 
-    @When("user looks for step: \"$step\"")
-    public void whenStepsIsSeached(String step){
-        System.out.println("Looking for: "+step);
+    private final PageFactory pageFactory;
+
+    public TraderWebSteps(PageFactory pageFactory) {
+        this.pageFactory = pageFactory;
     }
+
+    @Given("user is on home page")
+    public void userIsOnHomePage(){        
+        Home home = pageFactory.home();
+        home.open();        
+    }
+
 }

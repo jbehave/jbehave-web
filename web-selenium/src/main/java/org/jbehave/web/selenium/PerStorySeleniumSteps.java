@@ -12,7 +12,7 @@ import com.thoughtworks.selenium.Selenium;
  *
  * @author Mauro Talevi
  */
-public abstract class PerStorySeleniumSteps extends SeleniumSteps {
+public class PerStorySeleniumSteps extends SeleniumSteps {
 
     public PerStorySeleniumSteps() {
         super();
@@ -32,6 +32,5 @@ public abstract class PerStorySeleniumSteps extends SeleniumSteps {
         selenium.close();
         selenium.stop();
     }
-
 
 }

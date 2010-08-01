@@ -1,5 +1,7 @@
 package org.jbehave.web.selenium;
 
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+
 import java.util.concurrent.TimeUnit;
 
 import com.thoughtworks.selenium.Selenium;
@@ -57,11 +59,11 @@ public abstract class SeleniumPage {
 
         @Override
         public boolean isTrue(Context context) {
-            String text = "";
+            String text = null;
             if (super.isTrue(context)) {
                 text = context.getSelenium().getText(locator);
             }
-            return !text.equals("");
+            return isNotBlank(text);
         }
     }
 

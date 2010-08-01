@@ -19,6 +19,12 @@ import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.web.examples.trader.pages.PageFactory;
+import org.jbehave.web.selenium.PerStorySeleniumSteps;
+import org.jbehave.web.selenium.SeleniumConfiguration;
+
+import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.condition.ConditionRunner;
 
 public class TraderWebStories extends JUnitStories {
 
@@ -35,7 +41,10 @@ public class TraderWebStories extends JUnitStories {
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TraderWebSteps())
+        Selenium selenium = SeleniumConfiguration.defaultSelenium();
+        ConditionRunner conditionRunner = SeleniumConfiguration.defaultConditionRunner(selenium);
+        PageFactory pageFactory = new PageFactory(selenium, conditionRunner);
+        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new PerStorySeleniumSteps(selenium))
                 .createCandidateSteps();
     }
     

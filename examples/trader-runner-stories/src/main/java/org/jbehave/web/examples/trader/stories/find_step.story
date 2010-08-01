@@ -1,1 +1,3 @@
-When user looks for step: "When I do something"
+Scenario: User searches for steps
+
+Given user is on home page

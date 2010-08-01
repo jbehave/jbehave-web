@@ -11,7 +11,7 @@ import com.thoughtworks.selenium.Selenium;
  * 
  * @author Mauro Talevi
  */
-public abstract class PerScenarioSeleniumSteps extends SeleniumSteps {
+public class PerScenarioSeleniumSteps extends SeleniumSteps {
 
     public PerScenarioSeleniumSteps() {
         super();
