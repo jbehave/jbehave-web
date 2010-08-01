@@ -10,11 +10,11 @@ public class Home extends TraderPage {
     }
 
     public void open() {
-        selenium.open("/trader-web/");
+        selenium.open("/trader-runner/");
     }
 
     public FindSteps findSteps(PageFactory factory){
-        selenium.open("/jbehave-trader/steps/find.action");
+        selenium.open("/trader-runner/steps/find.action");
         //clickId("find");
         return factory.findSteps();
     }

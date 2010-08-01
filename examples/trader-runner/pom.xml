@@ -10,7 +10,7 @@
   <packaging>war</packaging>
   <name>JBehave Web Trader Runner</name>
   <properties>
-    <webapp.name>jbehave-trader</webapp.name>
+    <webapp.name>trader-runner</webapp.name>
   </properties>
   <dependencies>
     <dependency>

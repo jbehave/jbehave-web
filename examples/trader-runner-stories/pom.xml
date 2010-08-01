@@ -52,7 +52,7 @@
         <configuration>
           <webApp>${project.build.directory}/jbehave-trader-webapp.war</webApp>
           <webAppConfig>
-            <contextPath>/trader-web</contextPath>
+            <contextPath>/trader-runner</contextPath>
           </webAppConfig>
           <connectors>
             <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
