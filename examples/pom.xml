@@ -12,8 +12,8 @@
   <name>JBehave Web Examples</name>
 
   <modules>
-    <module>trader-web</module>
-    <module>trader-web-stories</module>
+    <module>trader-runner</module>
+    <module>trader-runner-stories</module>
   </modules>
 
   <dependencies>
