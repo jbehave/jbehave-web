@@ -8,12 +8,13 @@ import org.jbehave.core.steps.StepType;
 
 import com.thoughtworks.selenium.Selenium;
 
-public class SeleniumStepsMonitor implements StepMonitor {
-	private final Selenium selenium;
+public class SeleniumStepMonitor implements StepMonitor {
+
+    private final Selenium selenium;
 	private final SeleniumContext seleniumContext;
 	private final StepMonitor delegate;
 
-	public SeleniumStepsMonitor(Selenium selenium,
+	public SeleniumStepMonitor(Selenium selenium,
 			SeleniumContext seleniumContext, StepMonitor delegate) {
 		this.selenium = selenium;
 		this.seleniumContext = seleniumContext;
@@ -21,7 +22,7 @@ public class SeleniumStepsMonitor implements StepMonitor {
 	}
 
 	public void performing(String step, boolean dryRun){
-		String context = seleniumContext.getCurrentScenario() + "<br>" + step;
+		String context = seleniumContext.getCurrentScenario() + "<br/>" + step;
 		selenium.setContext(context);
 		delegate.performing(step, dryRun);
 	}
