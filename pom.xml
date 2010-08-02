@@ -20,7 +20,7 @@
   </modules>
 
   <properties>
-    <jbehave.core.version>3.0-SNAPSHOT</jbehave.core.version>
+    <jbehave.core.version>3.0-rc2</jbehave.core.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
   </properties>
 

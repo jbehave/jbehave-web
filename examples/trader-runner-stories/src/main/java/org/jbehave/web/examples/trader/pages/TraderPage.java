@@ -23,4 +23,12 @@ public class TraderPage extends SeleniumPage {
         selenium.click("id="+id);
     }
 
+    protected void typeId(String id, String value) {
+        selenium.type("id="+id, value);
+    }
+
+    protected String valueId(String id) {
+        return selenium.getValue("id="+id);
+    }
+
 }

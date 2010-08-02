@@ -21,18 +21,18 @@
                      <@w.selectSingle "stepdocContext.view" w.asNameableValues(stepdocContext.getViews(),"name()","name()") stepdocContext.getView() 
                    "onchange=\"fireActionMethod('toggle');\"" />
                  </p>
-                 <p>
+                 <p id="stepdocsFound">
                     <pre class="brush: plain">
 			            <#list stepdocs as stepdoc>
 	    		            ${stepdoc.startingWord} ${stepdoc.pattern}
 							<#if (view == 'WITH_METHODS') >
 	   		 		            ${stepdoc.methodSignature}
 	    		            </#if>
-	            		</#list>
+	            		</#list>	            		
                     </pre>
                 </p>
                 <p><@i.messageFor "usingStepsInstances" "Using steps instances"/></p>
-                <p>
+                <p id="stepsInstances">
                     <pre class="brush: plain">
                         <#list stepsInstances as instance>
                             ${instance.class.name}

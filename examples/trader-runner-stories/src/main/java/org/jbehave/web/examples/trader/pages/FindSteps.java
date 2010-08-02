@@ -11,9 +11,13 @@ public class FindSteps extends TraderPage {
     }
 
     public void find(String step) {
-        System.out.println("Looking for "+step);
         waitFor(new Presence("id=find"));
-        clickId("find");       
+        typeId("stepdocContext.matchingStep", step);
+        clickId("find");               
+    }
+
+    public void found(String stepdocs) {
+        textIsVisible(stepdocs);       
     }
 
 }

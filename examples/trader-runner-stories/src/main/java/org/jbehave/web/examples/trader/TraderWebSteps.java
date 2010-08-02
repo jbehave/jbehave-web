@@ -1,6 +1,7 @@
 package org.jbehave.web.examples.trader;
 
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.web.examples.trader.pages.FindSteps;
 import org.jbehave.web.examples.trader.pages.Home;
@@ -32,4 +33,9 @@ public class TraderWebSteps {
         findSteps.find(step);
     }
     
+    @Then("search returns: \"$result\"")
+    public void searchReturns(String result){   
+        findSteps.found(result);
+    }
+
 }
