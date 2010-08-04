@@ -1,10 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.jbehave</groupId>
-    <artifactId>jbehave</artifactId>
-    <version>3.0-SNAPSHOT</version>
-  </parent>
   <groupId>org.jbehave.web</groupId>
   <artifactId>jbehave-web</artifactId>
   <version>3.0-SNAPSHOT</version>
@@ -19,10 +15,16 @@
     <module>web-runner</module>
   </modules>
 
-  <properties>
-    <jbehave.core.version>3.0-rc2</jbehave.core.version>
-    <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
-  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>1.8.5</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -31,12 +33,15 @@
       <version>${jbehave.core.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.jmock</groupId>
-      <artifactId>jmock-junit4</artifactId>
-      <version>2.4.0</version>
-      <scope>test</scope>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
     </dependency>
   </dependencies>
+
+  <properties>
+    <jbehave.core.version>3.0-rc2</jbehave.core.version>
+    <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
+  </properties>
 
   <build>
     <resources>

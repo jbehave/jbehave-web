@@ -1,5 +1,8 @@
 package org.jbehave.web.selenium;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -10,22 +13,18 @@ import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.parsers.StoryParser;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
-import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.junit.Test;
 
 import com.thoughtworks.selenium.Selenium;
 
 public class PerStorySeleniumStepsTest {
 
-    private Mockery mockery = new Mockery();
-
     private static final String NL = "\n";
 
     private final Configuration configuration = new MostUsefulConfiguration();
     private final StoryParser parser = new RegexStoryParser();
     private final StoryRunner runner = new StoryRunner();
-    private final Selenium selenium = mockery.mock(Selenium.class);
+    private final Selenium selenium = mock(Selenium.class);
 
     @Test
     public void canRunSuccessfulStory() throws Throwable {
@@ -34,17 +33,12 @@ public class PerStorySeleniumStepsTest {
             + "When a test is executed" + NL
             + "Then a tester is a happy hopper";
         String path = "/path/to/story";
-        mockery.checking(new Expectations() {
-            {
-                exactly(3).of(selenium).setContext(with(any(String.class)));
-                one(selenium).start();
-                one(selenium).close();
-                one(selenium).stop();
-            }
-        });
         MySteps steps = new MySteps(selenium);
         InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps);
         runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(story, path));
+        verify(selenium).start();
+        verify(selenium).close();
+        verify(selenium).stop();
     }
 
     public static class MySteps extends PerStorySeleniumSteps {
@@ -67,11 +61,6 @@ public class PerStorySeleniumStepsTest {
         @When("a test fails")
         public void aTestFails() {
             throw new RuntimeException("Test failed");
-        }
-
-        @When("a wait is requested")
-        public void aWaitIsRequested() {
-            waitFor(1);
         }
 
         @Then("a tester is a happy hopper")

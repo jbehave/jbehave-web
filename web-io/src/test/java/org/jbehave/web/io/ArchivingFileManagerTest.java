@@ -1,16 +1,17 @@
 package org.jbehave.web.io;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.io.IOUtils;
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,13 +19,14 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-@RunWith(JMock.class)
 public class ArchivingFileManagerTest {
 
-	private Mockery mockery = new Mockery();
 	private FileManager manager;
 	private File upload;
 	private File dir1;
@@ -77,18 +79,12 @@ public class ArchivingFileManagerTest {
 	@Test
 	public void canWriteFileItems() throws Exception {
 		List<String> errors = new ArrayList<String>();
-		final FileItem file2FileItem = mockery.mock(FileItem.class, "file2");
-		final FileItem zipFileItem = mockery.mock(FileItem.class, "zip");
-		mockery.checking(new Expectations() {
-			{
-				allowing(zipFileItem).getName();
-				will(returnValue(zip.getName()));
-				one(zipFileItem).write(zip);
-				allowing(file2FileItem).getName();
-				will(returnValue(file2.getName()));
-				one(file2FileItem).write(file2);
-			}
-		});
+		FileItem file2FileItem = mock(FileItem.class, "file2");
+		FileItem zipFileItem = mock(FileItem.class, "zip");
+		when(zipFileItem.getName()).thenReturn(zip.getName());		
+        doNothing().when(zipFileItem).write(zip);
+        when(file2FileItem.getName()).thenReturn(file2.getName());      
+        doNothing().when(file2FileItem).write(file2);
 		// ensure files do not exists
 		file2.delete();
 		dir1.delete();
@@ -99,19 +95,13 @@ public class ArchivingFileManagerTest {
 	@Test
 	public void cannotUnarchiveMissingFile() throws Exception {
 		List<String> errors = new ArrayList<String>();
-		final FileItem file2FileItem = mockery.mock(FileItem.class, "file2");
-		final FileItem zipFileItem = mockery.mock(FileItem.class, "zip");
-		mockery.checking(new Expectations() {
-			{
-				allowing(zipFileItem).getName();
-				will(returnValue(zip.getName()));
-				one(zipFileItem).write(zip);
-				allowing(file2FileItem).getName();
-				will(returnValue(file2.getName()));
-				one(file2FileItem).write(file2);
-			}
-		});
-		// ensure files do not exists
+        FileItem file2FileItem = mock(FileItem.class, "file2");
+        FileItem zipFileItem = mock(FileItem.class, "zip");
+        when(zipFileItem.getName()).thenReturn(zip.getName());      
+        doNothing().when(zipFileItem).write(zip);
+        when(file2FileItem.getName()).thenReturn(file2.getName());      
+        doNothing().when(file2FileItem).write(file2);
+        // ensure files do not exists
 		file2.delete();
 		dir1.delete();
 		// remove zip
@@ -123,16 +113,10 @@ public class ArchivingFileManagerTest {
 	@Test
 	public void canIgnoreWritingFileItemsWithBlankNames() throws Exception {
 		List<String> errors = new ArrayList<String>();
-		final FileItem file2FileItem = mockery.mock(FileItem.class, "file2");
-		final FileItem zipFileItem = mockery.mock(FileItem.class, "zip");
-		mockery.checking(new Expectations() {
-			{
-				allowing(zipFileItem).getName();
-				will(returnValue(""));
-				allowing(file2FileItem).getName();
-				will(returnValue(""));
-			}
-		});
+        FileItem file2FileItem = mock(FileItem.class, "file2");
+        FileItem zipFileItem = mock(FileItem.class, "zip");
+        when(zipFileItem.getName()).thenReturn("");      
+        when(file2FileItem.getName()).thenReturn("");      		
 		manager.upload(asList(file2FileItem, zipFileItem), errors);
 		assertEquals(0, errors.size());
 	}
@@ -140,20 +124,12 @@ public class ArchivingFileManagerTest {
 	@Test
 	public void cannotWriteFileItemsThatFail() throws Exception {
 		List<String> errors = new ArrayList<String>();
-		final FileItem file2FileItem = mockery.mock(FileItem.class, "file2");
-		final FileItem zipFileItem = mockery.mock(FileItem.class, "zip");
-		mockery.checking(new Expectations() {
-			{
-				allowing(zipFileItem).getName();
-				will(returnValue(zip.getName()));
-				one(zipFileItem).write(zip);
-				will(throwException(new IOException("zip write failed")));
-				allowing(file2FileItem).getName();
-				will(returnValue(file2.getName()));
-				one(file2FileItem).write(file2);
-				will(throwException(new IOException("file2 write failed")));
-			}
-		});
+        FileItem file2FileItem = mock(FileItem.class, "file2");
+        FileItem zipFileItem = mock(FileItem.class, "zip");
+        when(zipFileItem.getName()).thenReturn(zip.getName());      
+        doThrow(new IOException("zip write failed")).when(zipFileItem).write(zip);
+        when(file2FileItem.getName()).thenReturn(file2.getName());      
+        doThrow(new IOException("file2 write failed")).when(file2FileItem).write(file2);		
 		// ensure files do not exists
 		file2.delete();
 		zip.delete();
