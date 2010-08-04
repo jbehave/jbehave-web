@@ -11,24 +11,4 @@ public class TraderPage extends SeleniumPage {
         super(selenium, conditionRunner);
     }
 
-    public void clickButton(String name) {
-        selenium.click("//input[@value='"+name+"']");
-    }
-
-    public void clickLink(String link) {
-        selenium.click("link="+link);
-    }
-
-    public void clickId(String id) {
-        selenium.click("id="+id);
-    }
-
-    protected void typeId(String id, String value) {
-        selenium.type("id="+id, value);
-    }
-
-    protected String valueId(String id) {
-        return selenium.getValue("id="+id);
-    }
-
 }

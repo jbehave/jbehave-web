@@ -13,8 +13,8 @@ import com.thoughtworks.selenium.condition.Text;
 import com.thoughtworks.selenium.condition.ConditionRunner.Context;
 
 /**
- * Abstract base class for all Selenium-based pages. It contains methods common
- * to all pages, with a view to implement the <a
+ * Abstract base class for all Selenium-based pages. It contains common page
+ * methods, with a view to implement the <a
  * href="http://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>
  * pattern.
  */
@@ -28,6 +28,34 @@ public abstract class SeleniumPage {
         this.conditionRunner = conditionRunner;
     }
 
+    public void open(String url) {
+        selenium.open(url);
+    }
+
+    public void click(String locator) {
+        selenium.click(locator);
+    }
+
+    public void clickButton(String name) {
+        click("//input[@value='" + name + "']");
+    }
+
+    public void clickLink(String name) {
+        click("link=" + name + "");
+    }
+
+    public void type(String locator, String value) {
+        selenium.type(locator, value);
+    }
+
+    public String text(String locator) {
+        return selenium.getText(locator);
+    }
+
+    public String value(String locator) {
+        return selenium.getValue(locator);
+    }
+
     public void textIsVisible(String text) {
         waitFor(new Text(text));
     }
@@ -38,7 +66,15 @@ public abstract class SeleniumPage {
 
     public void waitFor(Condition condition) {
         conditionRunner.waitFor(condition);
-        waitFor(1);
+    }
+
+    public void waitForPageToLoad() {
+        waitForPageToLoad(30);
+    }
+
+    public void waitForPageToLoad(int seconds) {
+        String timeout = String.valueOf(seconds * 1000);
+        selenium.waitForPageToLoad(timeout);
     }
 
     public static void waitFor(int seconds) {

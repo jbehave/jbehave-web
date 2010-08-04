@@ -10,12 +10,12 @@ public class Home extends TraderPage {
     }
 
     public void open() {
-        selenium.open("/trader-runner/");
+        open("/trader-runner/");
     }
 
     public FindSteps findSteps(PageFactory factory){
-        selenium.open("/trader-runner/steps/find.action");
-        //clickId("find");
+        click("link=Find Steps");
+        waitForPageToLoad();
         return factory.findSteps();
     }
     

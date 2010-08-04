@@ -32,7 +32,12 @@ public class TraderWebSteps {
     public void userSearchesForSteps(String step){        
         findSteps.find(step);
     }
-    
+
+    @Then("text is shown: \"$text\"")
+    public void textIsPresent(String text){   
+        findSteps.textIsVisible(text);
+    }
+
     @Then("search returns: \"$result\"")
     public void searchReturns(String result){   
         findSteps.found(result);
