@@ -5,6 +5,7 @@
     <page>license.html</page>
     <page>download.html</page>
     <page>javadoc.html</page>
+    <page>source-repository.html</page>
   </section>
   <section>
     <name>Web Runner</name>
@@ -13,6 +14,6 @@
   </section>
   <section>
     <name>Selenium</name>
-    <page>selenium-steps.html</page>
+    <page>using-selenium.html</page>
   </section>  
 </sitemap>

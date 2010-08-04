@@ -6,31 +6,31 @@
 
 <body>
 
-<h2>Running generic scenarios via a web-based interface</h2>
+<h2>Running generic stories via a web-based interface</h2>
 
 <p>The Web Runner provides a simple web-based interface to running
-generic scenarios. A typical use case is for BAs, QAs or stakeholders to
-be able to access the results of scenario running without needing access
+generic stories. A typical use case is for BAs, QAs or stakeholders to
+be able to access the results of story running without needing access
 to developer resources.</p>
 
 <p>A fully functional example webapp is provided in <a
-    href="https://svn.codehaus.org/jbehave/trunk/web/examples/trader-web">trader
-web example</a>. We'll be using this example to illustrate the use of Web
+    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner">trader
+runner example</a>. We'll be using this example to illustrate the use of Web
 Runner:</p>
 
 <ul>
     <li><a href="customising-web-runner.html">Customise Web
     Runner</a></li>
     <li>Deploy webapp to your favourite webapp container</li>
-    <li>Open page <b>http://localhost:8080/jbehave-trader</b>
+    <li>Open page <b>http://localhost:8080/trader-runner</b>
     (assuming normal port conventions)</li>
-    <li>On Menu, click on <b>Run Scenario</b>, which will take you
-    to a page where you can enter your textual scenario.</li>
-    <li>Input textual scenario in textarea (e.g you can cut &amp;
-    paste the one found in the <a
-        href="https://svn.codehaus.org/jbehave/trunk/web/examples/trader-web/src/main/resources/trader.scenario">trader
-    scenario</a>) and click on <b>Run Scenario</b> link.</li>
-    <li>Upon execution, the output of the scenario is shown below.
+    <li>On Menu, click on <b>Run Story</b>, which will take you
+    to a page where you can enter your textual story.</li>
+    <li>Input textual story in textarea (e.g you can cut &amp;
+    paste the scenario found in the <a
+        href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/resources/trader.scenario">trader
+    scenario</a>) and click on <b>Run Story</b> link.</li>
+    <li>Upon execution, the output of the story is shown below.
     By default the same output is shown as the one you would see when
     running JBehave via a command-line interface. This includes any
     details of failed and pending steps. If any failures occur, the user

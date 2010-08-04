@@ -8,39 +8,69 @@
 
 <h2>Stable releases</h2>
 
-<p>The stable releases of JBehave Web can be found on the <a
-    href="http://repository.codehaus.org/org/jbehave/web">Codehaus
-Repository</a>:</p>
+<p>Stable releases can be found on the <a
+    href="http://mvnrepository.com/artifact/org.jbehave.web">Codehaus
+Nexus Repository Manager</a> (which is synched with the <a
+    href="http://repo1.maven.org/maven2/org/jbehave/web">Central Maven
+Repository</a>).</p>
 
-<ul>
-    <li><a
-        href="http://repository.codehaus.org/org/jbehave/web/jbehave-web-distribution/2.1.6/jbehave-web-distribution-2.1.6-bin.zip">2.1.6
-    bin distribution</a></li>
-    <li><a
-        href="http://repository.codehaus.org/org/jbehave/web/jbehave-web-distribution/2.1.6/jbehave-web-distribution-2.1.6-src.zip">2.1.6
-    src distribution</a></li>
-</ul>
+<h2 id="snapshot">Latest Snapshots</h2>
 
-<h2 id="snapshot">Latest Snapshot</h2>
-
-<p>The snapshot builds of JBehave Web can be found on the <a
-    href="http://snapshots.repository.codehaus.org/org/jbehave/web/jbehave-web-distribution/">Codehaus
-Snapshots Repository</a>. Be sure to choose the snapshot with the latest 2.x
+<p>The snapshot builds of JBehave can be found on the <a
+    href="https://nexus.codehaus.org/content/repositories/snapshots/org/jbehave/web">Codehaus
+Nexus Repository Manager</a>. Be sure to choose the snapshot with the latest
 version and the filename with the latest timestamp.</p>
 
-<h2 id="maven">Using Maven Artifacts</h2>
+<h2 id="maven">POM Artifacts</h2>
 
-<p>If you use Maven as the build system (or one that is compatible
-with the Maven Repository, such as Ivy), you can declare JBehave Web
-dependencies as</p>
-<pre class="brush: xml">
+<p>JBehave Web provides the following artifacts, defined as POM artifacts</p>
+
+<table class="bodyTable">
+<tr class="a"><th>Group Id</th><th>Artifact Id</th><th>Versions</th></tr>
+<tr class="b"><td>org.jbehave.web</td><td>jbehave-web-io</td><td><a href="http://mvnrepository.com/artifact/org.jbehave.web/jbehave-web-io">lookup</a></td></tr>
+<tr class="a"><td>org.jbehave.web</td><td>jbehave-web-resources</td><td><a href="http://mvnrepository.com/artifact/org.jbehave.web/jbehave-web-resources">lookup</a></td></tr>
+<tr class="b"><td>org.jbehave.web</td><td>jbehave-web-runner</td><td><a href="http://mvnrepository.com/artifact/org.jbehave.web/jbehave-web-runner">lookup</a></td></tr>
+<tr class="a"><td>org.jbehave.web</td><td>jbehave-web-selenium</td><td><a href="http://mvnrepository.com/artifact/org.jbehave.web/jbehave-web-selenium">lookup</a></td></tr>
+<tr class="b"><td>org.jbehave.web</td><td>jbehave-distribution</td><td><a href="http://mvnrepository.com/artifact/org.jbehave.web/jbehave-web-distribution">lookup</a></td></tr>
+</table>
+
+<p>A POM artifact can be declared as dependency using different build systems:</p>
+
+<h3>Apache Maven</h3>
+
+<p>Using <a href="http://maven.apache.org">Apache Maven</a>:</p>
+
+<script type="syntaxhighlighter" class="brush: xml">
+<![CDATA[
   <dependency> 
-    <groupId>org.jbehave.web</groupId>
-    <artifactId>jbehave-web-runner</artifactId>
+    <groupId>[groupId]</groupId>
+    <artifactId>[artifactId]</artifactId>
     <version>[version]</version>
   </dependency>
-</pre>
-<p>specifying the correct version.</p>
+]]>
+</script>
+
+<h3>Apache Ivy</h3>
+
+<p>Using <a href="http://ant.apache.org/ivy/">Apache Ivy</a>:</p>
+
+<script type="syntaxhighlighter" class="brush: xml">
+<![CDATA[
+<dependency org="[groupId]" name="[artifactId]" rev="[version]"/>
+]]>
+</script>
+
+<h3>Groovy Grape</h3>
+
+<p>Using <a href="http://groovy.codehaus.org/grape">Groovy Grape</a>:</p>
+
+<script type="syntaxhighlighter" class="brush: xml">
+<![CDATA[
+@Grapes(
+    @Grab(group='[groupId]', module='[artifactId]', version='[version]')
+)
+]]>
+</script>
 
 <div class="clear">
 <hr />

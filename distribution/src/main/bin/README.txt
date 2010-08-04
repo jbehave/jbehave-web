@@ -1,7 +1,7 @@
 Deploy script of JBehave Webapp
 
 1. Edit /webapp/WEB-INF/web.xml and configure the class name of the JBehaveRegistrar that registers the 
-Steps instance used by the webapp.  E.g. if your Steps class is called MyOwnSteps, then the corresponding 
+Steps instance used by the webapp.  E.g. if your Steps classes are called MyOwnSteps and MyOtherSteps, then the corresponding 
 MyOwnRegistrar will look like 
 
 public class MyOwnRegistrar extends JBehaveRegistrar {
@@ -12,7 +12,11 @@ public class MyOwnRegistrar extends JBehaveRegistrar {
 
 	@Override
 	protected void registerSteps() {
-		registerInstance(new MyOwnSteps());
+        List<Object> stepsInstances = asList(new MyOwnSteps(), new MyOtherSteps());
+        List<CandidateSteps> candidateSteps = new InstanceStepsFactory(new MostUsefulConfiguration(), stepsInstances).createCandidateSteps();
+        for (CandidateSteps candidate : candidateSteps) {
+            registerInstance(candidate);
+        }
 	}
 	
 }

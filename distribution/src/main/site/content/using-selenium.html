@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Using Selenium</title>
+</head>
+
+<body>
+
+<h2>Running Stories with Selenium</h2>
+
+<p><a href="http://seleniumhq.org">Selenium</a> is a powerful
+open-source tool for automated web testing.</p>
+
+<p>Let's see how we can easily use Selenium to run web-based
+stories.</p>
+
+<pre class="brush: bdd">Scenario: User searches for steps
+
+Given user is on home page
+When user clicks on Find Steps
+Then text is shown: "Patterns and methods matching the textual step"
+When user searches for "Given a threshold of 10.0"
+Then search returns: "Given a threshold of $threshold"
+</pre>
+
+<p>The objective in creating a DSL is to represent the
+business-domain functionality whilst abstracting away the details of the
+implementation, in this case the access to the web layer via a specific
+testing tool, such as Selenium. The same DSL should be re-usable with
+different testing tools.</p>
+<p>The TraderWebSteps class is where all the Selenium magic happens:</p>
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class TraderWebSteps {
+
+    private final PageFactory pageFactory;
+    private Home home;
+    private FindSteps findSteps;
+
+    public TraderWebSteps(PageFactory pageFactory) {
+        this.pageFactory = pageFactory;
+    }
+
+    @Given("user is on home page")
+    public void userIsOnHomePage(){        
+        home = pageFactory.home();
+        home.open();        
+    }
+
+    @When("user clicks on Find Steps")
+    public void userClicksOnFindSteps(){        
+        findSteps = home.findSteps(pageFactory);
+    }
+
+    @When("user searches for \"$step\"")
+    public void userSearchesForSteps(String step){        
+        findSteps.find(step);
+    }
+
+    @Then("text is shown: \"$text\"")
+    public void textIsPresent(String text){   
+        findSteps.textIsVisible(text);
+    }
+
+    @Then("search returns: \"$result\"")
+    public void searchReturns(String result){   
+        findSteps.found(result);
+    }
+
+}
+]]>
+</script>
+<p>Here we are using <a href="http://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a> to 
+abstract the Selenium behaviour behind pages that specify the user interaction in more meaningful ways.</p>
+<p>As always, we configure the use of TraderWebSteps in an embeddable runnable class, e.g.the JUnit-runnable
+TraderWebStories:</p>
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class TraderWebStories extends JUnitStories {
+
+    private Selenium selenium = SeleniumConfiguration.defaultSelenium();
+    private ConditionRunner conditionRunner = SeleniumConfiguration.defaultConditionRunner(selenium);
+    private PageFactory pageFactory = new PageFactory(selenium, conditionRunner);
+    private SeleniumContext seleniumContext = new SeleniumContext();
+
+    @Override
+    public Configuration configuration() {
+        Class<? extends Embeddable> embeddableClass = this.getClass();
+        return new SeleniumConfiguration()
+            .useSelenium(selenium) 
+            .useSeleniumContext(seleniumContext)
+            .useStepMonitor(new SeleniumStepMonitor(selenium, seleniumContext, new SilentStepMonitor()))
+            .useStoryLoader(new LoadFromClasspath(embeddableClass))
+            .useStoryReporterBuilder(new StoryReporterBuilder()
+                .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+                .withDefaultFormats()
+                .withFormats(CONSOLE, TXT, HTML, XML));
+    }
+
+    @Override
+    public List<CandidateSteps> candidateSteps() {
+        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new PerStoriesSeleniumSteps(selenium))
+                .createCandidateSteps();
+    }
+    
+
+    @Override
+    protected List<String> storyPaths() {
+        return new StoryFinder()
+                .findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/*.story"), null);
+    }
+
+}
+]]>
+</script>
+
+<p>The <b>@BeforeStories</b> and <b>@AfterStories</b> annotations
+in the PerStoriesSeleniumSteps methods allow to start and stop the selenium server
+before and after stories are run. Users can of course override the default
+behaviour, but generally don't need to bother for most use cases.  
+There are also a PerStory and PerScenario implementation.</p>
+
+<p><strong>NOTE</strong>: To get the Selenium based tests running in
+an automated way, you need to run both a webapp server (e.g. Jetty) and
+the Selenium server. See the <a
+    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner-stories">trader runner stories examples</a> for a way to do this using <a
+    href="http://maven.apache.org">Maven</a>.</p>
+
+</body>
+</html>

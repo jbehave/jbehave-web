@@ -15,17 +15,17 @@
     <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-io</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-selenium</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-runner</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -48,7 +48,7 @@
                 <artifactItem>
                   <groupId>${pom.groupId}</groupId>
                   <artifactId>jbehave-web-io</artifactId>
-                  <version>${pom.version}</version>
+                  <version>${project.version}</version>
                   <classifier>javadoc</classifier>
                 </artifactItem>
               </artifactItems>
@@ -68,7 +68,7 @@
                 <artifactItem>
                   <groupId>${pom.groupId}</groupId>
                   <artifactId>jbehave-web-selenium</artifactId>
-                  <version>${pom.version}</version>
+                  <version>${project.version}</version>
                   <classifier>javadoc</classifier>
                 </artifactItem>
               </artifactItems>
@@ -88,7 +88,7 @@
                 <artifactItem>
                   <groupId>${pom.groupId}</groupId>
                   <artifactId>jbehave-web-runner</artifactId>
-                  <version>${pom.version}</version>
+                  <version>${project.version}</version>
                   <classifier>javadoc</classifier>
                 </artifactItem>
               </artifactItems>
@@ -147,7 +147,7 @@
           <skinPath>xsite-skin.html</skinPath>
           <resourcePaths>resources</resourcePaths>
           <outputDirectoryPath>${project.build.directory}/site</outputDirectoryPath>
-          <publishedVersion>${pom.version}</publishedVersion>
+          <publishedVersion>${project.version}</publishedVersion>
         </configuration>
         <executions>
           <execution>
@@ -172,7 +172,7 @@
               <descriptors>
                 <descriptor>${basedir}/src/main/assembly/assembly-bin.xml</descriptor>
               </descriptors>
-              <finalName>jbehave-web-${pom.version}</finalName>
+              <finalName>jbehave-web-${project.version}</finalName>
               <workDirectory>${project.build.directory}/assembly/bin</workDirectory>
             </configuration>
           </execution>
@@ -186,7 +186,7 @@
               <descriptors>
                 <descriptor>${basedir}/src/main/assembly/assembly-src.xml</descriptor>
               </descriptors>
-              <finalName>jbehave-web-${pom.version}</finalName>
+              <finalName>jbehave-web-${project.version}</finalName>
               <workDirectory>${project.build.directory}/assembly/src</workDirectory>
             </configuration>
           </execution>
