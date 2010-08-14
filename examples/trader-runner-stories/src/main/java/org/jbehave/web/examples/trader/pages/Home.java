@@ -14,7 +14,7 @@ public class Home extends TraderPage {
     }
 
     public FindSteps findSteps(PageFactory factory){
-        click("link=Find Steps");
+        clickLink("Find Steps");
         waitForPageToLoad();
         return factory.findSteps();
     }

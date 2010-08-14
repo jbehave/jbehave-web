@@ -11,7 +11,7 @@ public class FindSteps extends TraderPage {
 
     public void find(String step) {
         type("stepdocContext.matchingStep", step);
-        click("find");
+        clickLink("Find");
         waitForPageToLoad();
     }
 
