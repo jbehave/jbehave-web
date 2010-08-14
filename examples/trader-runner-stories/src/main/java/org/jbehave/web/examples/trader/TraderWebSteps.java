@@ -1,5 +1,7 @@
 package org.jbehave.web.examples.trader;
 
+import java.util.List;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -41,6 +43,13 @@ public class TraderWebSteps {
     @Then("search returns: \"$result\"")
     public void searchReturns(String result){   
         findSteps.found(result);
+    }
+
+    @Then("steps instances include: \"$instanceNames\"")
+    public void stepsInstancesInclude(List<String> instanceNames){   
+        for (String name : instanceNames) {
+            findSteps.found(name);            
+        }
     }
 
 }
