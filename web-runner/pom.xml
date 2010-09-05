@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jbehave.web</groupId>
@@ -6,14 +7,56 @@
     <version>3.0-SNAPSHOT</version>
   </parent>
   <artifactId>jbehave-web-runner</artifactId>
-  <packaging>jar</packaging> <!-- NOTE: Change to war to run with jetty -->
+  <packaging>${packaging}</packaging>
   <name>JBehave Web Runner</name>
 
+  <properties>
+    <packaging>jar</packaging>
+    <wicket.version>1.4.10</wicket.version>
+  </properties>
+  
   <dependencies>
     <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-io</artifactId>
-      <version>${pom.version}</version>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket</artifactId>
+      <version>${wicket.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-extensions</artifactId>
+      <version>${wicket.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-guice</artifactId>
+      <version>${wicket.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.4.2</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>${jetty.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>${jetty.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.codehaus.waffle</groupId>
@@ -73,7 +116,7 @@
                 <artifactItem>
                   <groupId>org.jbehave.web</groupId>
                   <artifactId>jbehave-web-resources</artifactId>
-                  <version>${pom.version}</version>
+                  <version>${project.version}</version>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -82,4 +125,33 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>war</id>
+      <properties>
+        <packaging>war</packaging>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+              <webResources>
+                <resource>
+                  <directory>${project.build.directory}/resources</directory>
+                </resource>
+              </webResources>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+
+    </profile>
+  </profiles>
 </project>

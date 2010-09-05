@@ -3,13 +3,15 @@ package org.jbehave.web.runner.waffle.controllers;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class StoryContext {
+@SuppressWarnings("serial")
+public class StoryContext implements Serializable {
 
     private static final String POST = "post";
     private static final String GET = "get";

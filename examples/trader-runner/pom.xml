@@ -10,7 +10,7 @@
   <packaging>war</packaging>
   <name>JBehave Web Trader Runner</name>
   <properties>
-    <webapp.name>trader-runner</webapp.name>
+    <jbehave.webapp.name>trader-runner</jbehave.webapp.name>
   </properties>
   <dependencies>
     <dependency>
@@ -31,13 +31,13 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>unpack-webapp-resources</id>
+            <id>unpack-resources</id>
             <phase>process-resources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/webapp-resources</outputDirectory>
+              <outputDirectory>${project.build.directory}/resources</outputDirectory>
               <overWriteReleases>true</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
               <excludes>**/*.class</excludes>
@@ -63,7 +63,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/webapp-resources</outputDirectory>
+              <outputDirectory>${project.build.directory}/resources</outputDirectory>
               <overwrite>true</overwrite>
               <resources>
                 <resource>
@@ -77,29 +77,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <warName>${webapp.name}</warName>
-          <webResources>
-            <resource>
-              <directory>${project.build.directory}/webapp-resources</directory>
-            </resource>
-          </webResources>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
-        <artifactId>maven-jetty-plugin</artifactId>
-        <configuration>
-          <contextPath>/${webapp.name}</contextPath>
-          <webApp>${project.build.directory}/${webapp.name}.war</webApp>
-          <connectors>
-            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-              <port>8080</port>
-              <maxIdleTime>3600000</maxIdleTime>
-            </connector>
-          </connectors>
-          <scanIntervalSeconds>5</scanIntervalSeconds>
-        </configuration>
+        <artifactId>jetty-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
