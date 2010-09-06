@@ -10,8 +10,8 @@ public class FindSteps extends TraderPage {
     }
 
     public void find(String step) {
-        type("stepdocContext.matchingStep", step);
-        clickLink("Find");
+        type("matchingStep", step);
+        clickButton("Find");
         waitForPageToLoad();
     }
 

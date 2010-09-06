@@ -31,7 +31,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>org.jbehave.web.examples</groupId>
-                  <artifactId>jbehave-trader-webapp</artifactId>
+                  <artifactId>jbehave-web-trader-runner</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
                 </artifactItem>
@@ -44,7 +44,7 @@
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <configuration>
-          <webApp>${project.build.directory}/jbehave-trader-webapp.war</webApp>
+          <webApp>${project.build.directory}/jbehave-web-trader-runner.war</webApp>
           <webAppConfig>
             <contextPath>/trader-runner</contextPath>
           </webAppConfig>

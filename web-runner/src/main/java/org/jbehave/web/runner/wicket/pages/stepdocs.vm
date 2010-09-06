@@ -1,0 +1,3 @@
+#foreach( $stepdoc in $stepdocs )
+${stepdoc.startingWord} ${stepdoc.pattern}
+#end

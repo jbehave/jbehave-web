@@ -1,0 +1,3 @@
+#foreach( $instance in $stepsInstances )
+${instance.class.name}
+#end
