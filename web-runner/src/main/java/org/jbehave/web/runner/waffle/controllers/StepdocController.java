@@ -12,6 +12,7 @@ import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
+import org.jbehave.web.runner.context.StepdocContext;
 
 public class StepdocController extends MenuAwareController {
 

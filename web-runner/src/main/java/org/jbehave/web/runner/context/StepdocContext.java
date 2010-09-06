@@ -1,4 +1,4 @@
-package org.jbehave.web.runner.waffle.controllers;
+package org.jbehave.web.runner.context;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jbehave.core.steps.Stepdoc;

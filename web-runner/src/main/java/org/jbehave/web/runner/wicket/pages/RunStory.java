@@ -20,7 +20,7 @@ import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.parsers.StoryParser;
 import org.jbehave.core.reporters.TxtOutput;
 import org.jbehave.core.steps.CandidateSteps;
-import org.jbehave.web.runner.waffle.controllers.StoryContext;
+import org.jbehave.web.runner.context.StoryContext;
 
 import com.google.inject.Inject;
 

@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.codehaus.waffle.menu.Menu;
 import org.jbehave.web.io.FileManager;
+import org.jbehave.web.runner.context.FilesContext;
 import org.junit.Test;
 
 public class FilesControllerTest {

@@ -15,6 +15,7 @@ import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.steps.Steps;
+import org.jbehave.web.runner.context.StoryContext;
 import org.junit.Test;
 
 
