@@ -46,7 +46,6 @@ public class FindSteps extends Template {
     @SuppressWarnings("serial")
     public final class StepsForm extends Form<ValueMap> {
         public StepsForm(final String id) {
-            // Construct form with no validation listener
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
             setMarkupId("stepsForm");
             add(new TextArea<String>("matchingStep").setType(String.class));
@@ -81,22 +80,16 @@ public class FindSteps extends Template {
             stepdocContext.setMatchingStep(matchingStep);
             run();
             VelocityPanel stepdocs = (VelocityPanel)get("stepdocs");
-            stepdocs.setDefaultModel(stepdocsModel(stepdocContext.getStepdocs()));
+            stepdocs.setDefaultModel(listModel("stepdocs", stepdocContext.getStepdocs()));
             VelocityPanel stepsInstances = (VelocityPanel)get("stepsInstances");
-            stepsInstances.setDefaultModel(stepsInstancesModel(stepdocContext.getStepsInstances()));
+            stepsInstances.setDefaultModel(listModel("stepsInstances", stepdocContext.getStepsInstances()));
         }
     }
 
-    private IModel<?> stepdocsModel(List<Stepdoc> stepdocs) {
-        Map<String, List<Stepdoc>> map = new HashMap<String, List<Stepdoc>>();
-        map.put("stepdocs", stepdocs);
-        return new MapModel<String, List<Stepdoc>>(map);
-    }
-
-    private IModel<?> stepsInstancesModel(List<Object> stepsInstances) {
-        Map<String, List<Object>> map = new HashMap<String, List<Object>>();
-        map.put("stepsInstances", stepsInstances);
-        return new MapModel<String, List<Object>>(map);
+    private <T> IModel<?> listModel(String id, List<T> list) {
+        Map<String, List<T>> map = new HashMap<String, List<T>>();
+        map.put(id, list);
+        return new MapModel<String, List<T>>(map);
     }
 
     public void run() {

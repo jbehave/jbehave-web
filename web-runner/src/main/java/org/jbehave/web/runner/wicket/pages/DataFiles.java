@@ -38,11 +38,6 @@ public class DataFiles extends Template {
 
         public FilesContainer(String id, List<File> files) {
             super(id);
-
-            // generate a markup-id so the contents can be
-            // updated through an AJAX call.
-            setOutputMarkupId(true);
-
             add(new ListView<File>("file", files) {
 
                 @Override
