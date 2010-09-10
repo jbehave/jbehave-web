@@ -48,7 +48,7 @@ public class FindSteps extends Template {
         public StepsForm(final String id) {
             // Construct form with no validation listener
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
-            setMarkupId("storyForm");
+            setMarkupId("stepsForm");
             add(new TextArea<String>("matchingStep").setType(String.class));
             add(new VelocityPanel("stepdocs", new MapModel<String, List<Stepdoc>>(new HashMap<String, List<Stepdoc>>())) {
                 @Override

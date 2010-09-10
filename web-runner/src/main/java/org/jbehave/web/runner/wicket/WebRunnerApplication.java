@@ -11,8 +11,12 @@ import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.Steps;
+import org.jbehave.web.io.ArchivingFileManager;
+import org.jbehave.web.io.FileManager;
 import org.jbehave.web.io.FileMonitor;
 import org.jbehave.web.io.SilentFileMonitor;
+import org.jbehave.web.io.ZipFileArchiver;
+import org.jbehave.web.runner.wicket.pages.DataFiles;
 import org.jbehave.web.runner.wicket.pages.FindSteps;
 import org.jbehave.web.runner.wicket.pages.Home;
 import org.jbehave.web.runner.wicket.pages.RunStory;
@@ -30,6 +34,7 @@ public class WebRunnerApplication extends WebApplication {
         mountBookmarkablePage("/home", Home.class);
         mountBookmarkablePage("/steps/find", FindSteps.class);
         mountBookmarkablePage("/story/run", RunStory.class);
+        mountBookmarkablePage("/data/files", DataFiles.class);
     }
 
     private Module[] modules() {
@@ -43,6 +48,7 @@ public class WebRunnerApplication extends WebApplication {
             bind(Configuration.class).toInstance(configuration());
             bind(StoryRunner.class).toInstance(storyRunner());
             bind(new TypeLiteral<List<CandidateSteps>>(){}).toInstance(candidateSteps());
+            bind(FileManager.class).toInstance(fileManager());
         }
 
     }
@@ -64,7 +70,15 @@ public class WebRunnerApplication extends WebApplication {
     }
 
     protected File uploadDirectory() {
-        return new File(System.getProperty("java.io.tmpdir"), "upload");
+        return new File("/tmp", "upload");
+    }
+
+    protected ZipFileArchiver fileArchiver() {
+        return new ZipFileArchiver();
+    }
+
+    protected FileManager fileManager() {
+        return new ArchivingFileManager(fileArchiver(), fileMonitor(), uploadDirectory());
     }
 
     public Class<Home> getHomePage() {

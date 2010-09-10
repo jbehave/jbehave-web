@@ -1,0 +1,34 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+    <title>Data Files</title>
+</head>
+<body>
+<wicket:extend>
+    <div id="files">
+        <fieldset>
+            <legend>Data Files</legend>
+            <div wicket:id="files">
+                <table>
+                    <tr wicket:id="file">
+                        <td><span wicket:id=path>file path</span></td>
+                        <td><a href="#" wicket:id="show">Show</a></td>
+                        <td><a href="#" wicket:id="delete">Delete</a></td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    </div>
+    
+    <form wicket:id="uploadForm">
+     <fieldset>
+      <legend>Upload</legend>
+        <p>
+        <div wicket:id="fileInput" class="mfuex"/>
+        </p>
+        <input type="submit" value="Upload"/>
+     </fieldset>
+    </form>
+    
+</wicket:extend>
+</body>
+</html>

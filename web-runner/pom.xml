@@ -157,7 +157,7 @@
               <webAppConfig>
                 <contextPath>/${jbehave.webapp.name}</contextPath>
               </webAppConfig>
-              <webApp>${project.build.directory}/${jbehave.webapp.name}.war</webApp>              
+              <webApp>${project.build.directory}/${jbehave.webapp.name}.war</webApp>
             </configuration>
           </plugin>
         </plugins>

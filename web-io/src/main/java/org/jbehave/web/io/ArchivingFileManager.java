@@ -134,6 +134,10 @@ public class ArchivingFileManager implements FileManager {
         return FilenameUtils.getName(item.getName());
     }
 
+    public File getUploadDirectory() {
+        return uploadDirectory;
+    }
+
 	@SuppressWarnings("serial")
 	public static final class FileItemNameMissingException extends
 			RuntimeException {
