@@ -6,4 +6,4 @@ target/
 *.iml
 *.ipr
 *.iws
-velocity.log
+velocity.log*
