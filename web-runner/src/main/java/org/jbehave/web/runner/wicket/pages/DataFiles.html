@@ -4,30 +4,44 @@
 </head>
 <body>
 <wicket:extend>
-    <div id="files">
+    <form wicket:id="listForm">
         <fieldset>
             <legend>Data Files</legend>
             <div wicket:id="files">
+            </div>
+	       <p>
+	           <input wicket:id="showContentButton" type="submit" value="Show Content" />
+               <input wicket:id="hideContentButton" type="submit" value="Hide Content" />
+               <input wicket:id="deleteButton" type="submit" value="Delete" />
+	       </p>
+	   </fieldset>
+    </form>
+    
+    <div id="contentContainer">
+        <fieldset>
+            <legend>Content</legend>
+            <div wicket:id="contentContainer">
                 <table>
                     <tr wicket:id="file">
+                        <td><a href="#" wicket:id="view">View</a></td>
                         <td><span wicket:id=path>file path</span></td>
-                        <td><a href="#" wicket:id="show">Show</a></td>
-                        <td><a href="#" wicket:id="delete">Delete</a></td>
                     </tr>
                 </table>
             </div>
         </fieldset>
     </div>
-    
+
     <form wicket:id="uploadForm">
      <fieldset>
       <legend>Upload</legend>
         <p>
-        <div wicket:id="fileInput" class="mfuex"/>
+        <div wicket:id="uploadInput" class="upload"/>
         </p>
-        <input type="submit" value="Upload"/>
+        <input wicket:id="ajaxSubmit" type="button" value="Upload"/>
      </fieldset>
     </form>
+
+    <div wicket:id="feedback"></div>
     
 </wicket:extend>
 </body>

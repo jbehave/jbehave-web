@@ -1,23 +1,32 @@
 package org.jbehave.web.runner.wicket.pages;
 
-import static java.util.Arrays.asList;
+import static org.jbehave.web.runner.context.FilesContext.View.RELATIVE_PATH;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.MultiFileUploadField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.file.Files;
 import org.jbehave.web.io.FileManager;
+import org.jbehave.web.runner.context.FilesContext;
 
 import com.google.inject.Inject;
 
@@ -26,17 +35,57 @@ public class DataFiles extends Template {
     @Inject
     private FileManager manager;
 
+    private final FilesContext filesContext = new FilesContext();
+    
     public DataFiles() {
         setPageTitle("Data Files");
-        add(new FilesContainer("files", manager.list()));
+        setDefaultModel(new CompoundPropertyModel<FilesContext>(filesContext));
+        filesContext.setFiles(new ArrayList<File>(manager.list()));
+        showContent();
+        add(new FileListForm("listForm", filesContext.getFiles()));
+        add(new FileContentContainer("contentContainer", filesContext.getContentFilesAsList()));
         add(new FileUploadForm("uploadForm"));
+        add(new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true));
+    }
+
+    protected Component pageCompoment(String id) {
+        return get(id);
+    }
+
+    @SuppressWarnings("serial")
+    private class FileListForm extends Form<Void> {
+        public FileListForm(String id, List<File> files) {
+            super(id);
+            add(new CheckBoxMultipleChoice<File>("files", files));
+            add(new Button("showContentButton") {
+                @Override
+                public final void onSubmit() {
+                    filesContext.setContentVisible(true);
+                    setResponsePage(DataFiles.this);
+                }
+            });
+            add(new Button("hideContentButton") {
+                @Override
+                public final void onSubmit() {
+                    filesContext.setContentVisible(false);
+                    setResponsePage(DataFiles.this);
+                }
+            });
+            add(new Button("deleteButton") {
+                @Override
+                public final void onSubmit() {
+                    delete();
+                    setResponsePage(DataFiles.this);
+                }
+            });
+        }
 
     }
 
     @SuppressWarnings("serial")
-    public class FilesContainer extends WebMarkupContainer {
+    public class FileContentContainer extends WebMarkupContainer {
 
-        public FilesContainer(String id, List<File> files) {
+        public FileContentContainer(String id, List<File> files) {
             super(id);
             add(new ListView<File>("file", files) {
 
@@ -45,37 +94,51 @@ public class DataFiles extends Template {
                     final File file = (File) item.getModelObject();
                     // display the file path
                     item.add(new Label("path", new PropertyModel<File>(item.getDefaultModel(), "path")));
-                    item.add(new Link<File>("show") {
+                    item.add(new Link<File>("view") {
                         @Override
                         public void onClick() {
-                            setResponsePage(new ShowFile(file));
+                            setResponsePage(new ViewFileContent(file));
                         }
                     });
-                    item.add(new Link<File>("delete") {
-                        @Override
-                        public void onClick() {
-                            manager.delete(asList(file.getPath()));
-                            setResponsePage(DataFiles.class);
-                        }
-                    });
-
                 }
             });
         }
+        
+        @Override
+        public boolean isVisible() {
+            return filesContext.getContentVisible();
+        }
+        
     }
 
     @SuppressWarnings("serial")
     private class FileUploadForm extends Form<Void> {
         private final Collection<FileUpload> uploads = new ArrayList<FileUpload>();
 
-        public FileUploadForm(String name) {
-            super(name);
+        public FileUploadForm(String id) {
+            super(id);
 
             // multi-part uploads
             setMultiPart(true);
 
             // multi-file upload field
-            add(new MultiFileUploadField("fileInput", new PropertyModel<Collection<FileUpload>>(this, "uploads"), 5));
+            add(new MultiFileUploadField("uploadInput", new PropertyModel<Collection<FileUpload>>(this, "uploads"), 5));
+
+            // create the ajax button used to submit the form
+            add(new AjaxButton("ajaxSubmit") {
+                @Override
+                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                    // ajax-update the feedback panel
+                    target.addComponent(pageCompoment("feedbackPanel"));
+                }
+
+                @Override
+                protected void onError(AjaxRequestTarget target, Form<?> form) {
+                    // update feedback to display errors
+                    target.addComponent(pageCompoment("feedbackPanel"));
+                }
+
+            });
 
         }
 
@@ -102,6 +165,22 @@ public class DataFiles extends Template {
                 throw new IllegalStateException("Failed to write file " + file);
             }
         }
+    }
+
+    public void showContent() {
+        Map<String, List<File>> contentFiles = filesContext.getContentFiles();
+        contentFiles.clear();
+        boolean relativePaths = filesContext.getView() == RELATIVE_PATH ? true : false;
+        for (File file : filesContext.getFiles()) {
+            List<File> content = manager.listContent(file.getPath(), relativePaths);
+            if (content.size() > 0) {
+                contentFiles.put(content.get(0).getPath(), content);
+            }
+        }        
+    }
+
+    public void delete() {
+        manager.delete(filesContext.getPaths());
     }
 
 }

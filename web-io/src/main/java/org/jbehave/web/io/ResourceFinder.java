@@ -19,12 +19,17 @@ import java.io.InputStream;
  */
 public class ResourceFinder {
 
-	public static final String DEFAULT_CLASSPATH_PREFIX = "classpath:";
+    public static final String DEFAULT_ROOT_DIRECTORY = "";
+    public static final String DEFAULT_CLASSPATH_PREFIX = "classpath:";
 	private final ClassLoader classLoader;
 	private final String classpathPrefix;
 	private String rootDirectory;
 
-	public ResourceFinder(String rootDirectory) {
+    public ResourceFinder() {
+        this(DEFAULT_ROOT_DIRECTORY);
+    }
+
+    public ResourceFinder(String rootDirectory) {
 		this(Thread.currentThread().getContextClassLoader(), rootDirectory,
 				DEFAULT_CLASSPATH_PREFIX);
 	}
