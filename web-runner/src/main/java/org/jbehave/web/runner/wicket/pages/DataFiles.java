@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -15,6 +18,7 @@ import org.apache.wicket.markup.html.form.upload.MultiFileUploadField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.file.Files;
 import org.jbehave.web.io.FileManager;
@@ -26,10 +30,14 @@ public class DataFiles extends Template {
     @Inject
     private FileManager manager;
 
+    final Component feedbackPanel;
+    
     public DataFiles() {
         setPageTitle("Data Files");
         add(new FilesContainer("files", manager.list()));
         add(new FileUploadForm("uploadForm"));
+        feedbackPanel = new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true);
+        add(feedbackPanel);
 
     }
 
@@ -68,14 +76,33 @@ public class DataFiles extends Template {
     private class FileUploadForm extends Form<Void> {
         private final Collection<FileUpload> uploads = new ArrayList<FileUpload>();
 
-        public FileUploadForm(String name) {
-            super(name);
+        public FileUploadForm(String id) {
+            super(id);
 
             // multi-part uploads
             setMultiPart(true);
 
             // multi-file upload field
-            add(new MultiFileUploadField("fileInput", new PropertyModel<Collection<FileUpload>>(this, "uploads"), 5));
+            add(new MultiFileUploadField("uploadInput", new PropertyModel<Collection<FileUpload>>(this, "uploads"), 5));
+            
+            // create the ajax button used to submit the form
+            add(new AjaxButton("ajaxSubmit")
+            {
+                @Override
+                protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+                {
+                    // ajax-update the feedback panel
+                    target.addComponent(feedbackPanel);
+                }
+
+                @Override
+                protected void onError(AjaxRequestTarget target, Form<?> form)
+                {
+                    // update feedback to display errors
+                    target.addComponent(feedbackPanel);
+                }
+
+            });
 
         }
 

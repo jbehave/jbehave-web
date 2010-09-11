@@ -23,11 +23,13 @@
      <fieldset>
       <legend>Upload</legend>
         <p>
-        <div wicket:id="fileInput" class="mfuex"/>
+        <div wicket:id="uploadInput" class="upload"/>
         </p>
-        <input type="submit" value="Upload"/>
+        <input wicket:id="ajaxSubmit" type="button" value="Upload"/>
      </fieldset>
     </form>
+
+    <div wicket:id="feedback"></div>
     
 </wicket:extend>
 </body>
