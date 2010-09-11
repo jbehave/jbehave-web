@@ -21,9 +21,6 @@ public class Template extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
         add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
-        // add(new
-        // Navigation(Strings.afterLast(getClass().getPackage().getName(), '.'),
-        // this));
         explain();
     }
 

@@ -45,9 +45,7 @@ public class RunStory extends Template {
     @SuppressWarnings("serial")
     public final class StoryForm extends Form<ValueMap> {
         public StoryForm(final String id) {
-            // Construct form with no validation listener
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
-            setMarkupId("storyForm");
             add(new TextArea<String>("input").setType(String.class));
             add(new MultiLineLabel("output", ""));
             add(new Button("runButton"));
