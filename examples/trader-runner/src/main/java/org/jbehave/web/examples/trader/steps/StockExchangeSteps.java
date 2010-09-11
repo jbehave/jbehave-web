@@ -3,7 +3,6 @@ package org.jbehave.web.examples.trader.steps;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.codehaus.waffle.Startable;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Given;
@@ -11,7 +10,7 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.web.io.ResourceFinder;
 
-public class StockExchangeSteps implements Startable {
+public class StockExchangeSteps {
 
 	private ResourceFinder resourceFinder = new ResourceFinder("classpath:org/jbehave/web/examples/trader/steps");
 	
