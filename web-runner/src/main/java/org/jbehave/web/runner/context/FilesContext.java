@@ -12,57 +12,103 @@ import static java.util.Arrays.asList;
 
 public class FilesContext {
 
-	public enum View {
-		RELATIVE_PATH, FULL_PATH
-	}
+    public enum View {
+        RELATIVE_PATH, FULL_PATH
+    }
 
-	private List<File> files = new ArrayList<File>();
-	private List<String> selectedPaths = new ArrayList<String>();
-	private Map<String, List<File>> contentFiles = new HashMap<String, List<File>>();
-	private View view = View.RELATIVE_PATH;
+    private List<File> files = new ArrayList<File>();
+    private List<String> selectedPaths = new ArrayList<String>();
+    private boolean contentVisible = false;
+    private Map<String, List<File>> contentFiles = new HashMap<String, List<File>>();
+    private View view = View.RELATIVE_PATH;
 
-	public FilesContext() {
-	}
+    public FilesContext() {
+    }
 
-	public List<File> getFiles() {
-		return files;
-	}
+    public List<File> getFiles() {
+        return files;
+    }
 
-	public void setFiles(List<File> files) {
-		this.files = files;
-	}
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
 
-	public List<String> getSelectedPaths() {
-		return selectedPaths;
-	}
+    public List<String> getPaths() {
+        List<String> paths = new ArrayList<String>();
+        for ( File file : files ){
+            paths.add(file.getPath());
+        }
+        return paths;
+    }
 
-	public void setSelectedPaths(List<String> selectedPaths) {
-		this.selectedPaths = selectedPaths;
-	}
+    public List<String> getSelectedPaths() {
+        return selectedPaths;
+    }
 
-	public Map<String, List<File>> getContentFiles() {
-		return contentFiles;
-	}
+    public void setSelectedPaths(List<String> selectedPaths) {
+        this.selectedPaths = selectedPaths;
+    }
 
-	public void setContentFiles(Map<String, List<File>> contentFiles) {
-		this.contentFiles = contentFiles;
-	}
+    public List<File> getContentFilesAsList() {  
+        List<File> list = new ArrayList<File>();
+        for ( String directoryPath : contentFiles.keySet() ){
+            for ( File file : contentFiles.get(directoryPath) ){
+                if ( isViewable(file) ){
+                    list.add(new File(viewablePath(directoryPath, file)));                    
+                }
+            }
+        }
+        return list;
+    }
 
-	public List<View> getViews() {
-		return asList(View.values());
-	}
+    private String viewablePath(String directoryPath, File file) {
+        String path = file.getPath();
+        if ( view == View.RELATIVE_PATH && !file.getPath().equals(directoryPath) ){
+            path = directoryPath+"/"+file.getPath();
+        }   
+        return unixPath(path);
+    }
 
-	public View getView() {
-		return view;
-	}
+    private String unixPath(String path) {
+        return path.replace("\\","/");
+    }
 
-	public void setView(View view) {
-		this.view = view;
-	}
+    private boolean isViewable(File file) {
+       return file.getPath().matches(".*\\.[A-Za-z]+");
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+    public boolean getContentVisible() {
+        return contentVisible;
+    }
+
+    public void setContentVisible(boolean contentVisible) {
+        this.contentVisible = contentVisible;
+    }
+    
+    public Map<String, List<File>> getContentFiles() {
+        return contentFiles;
+    }
+
+    public void setContentFiles(Map<String, List<File>> contentFiles) {
+        this.contentFiles = contentFiles;
+    }
+
+    public List<View> getViews() {
+        return asList(View.values());
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
 
 }
