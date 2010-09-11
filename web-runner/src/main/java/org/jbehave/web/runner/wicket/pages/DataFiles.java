@@ -30,15 +30,14 @@ public class DataFiles extends Template {
     @Inject
     private FileManager manager;
 
-    final Component feedbackPanel;
-    
+    private Component feedbackPanel;
+
     public DataFiles() {
         setPageTitle("Data Files");
         add(new FilesContainer("files", manager.list()));
         add(new FileUploadForm("uploadForm"));
         feedbackPanel = new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true);
         add(feedbackPanel);
-
     }
 
     @SuppressWarnings("serial")
@@ -53,10 +52,10 @@ public class DataFiles extends Template {
                     final File file = (File) item.getModelObject();
                     // display the file path
                     item.add(new Label("path", new PropertyModel<File>(item.getDefaultModel(), "path")));
-                    item.add(new Link<File>("show") {
+                    item.add(new Link<File>("view") {
                         @Override
                         public void onClick() {
-                            setResponsePage(new ShowFile(file));
+                            setResponsePage(new ViewFileContent(file));
                         }
                     });
                     item.add(new Link<File>("delete") {
@@ -84,20 +83,17 @@ public class DataFiles extends Template {
 
             // multi-file upload field
             add(new MultiFileUploadField("uploadInput", new PropertyModel<Collection<FileUpload>>(this, "uploads"), 5));
-            
+
             // create the ajax button used to submit the form
-            add(new AjaxButton("ajaxSubmit")
-            {
+            add(new AjaxButton("ajaxSubmit") {
                 @Override
-                protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-                {
+                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                     // ajax-update the feedback panel
                     target.addComponent(feedbackPanel);
                 }
 
                 @Override
-                protected void onError(AjaxRequestTarget target, Form<?> form)
-                {
+                protected void onError(AjaxRequestTarget target, Form<?> form) {
                     // update feedback to display errors
                     target.addComponent(feedbackPanel);
                 }
