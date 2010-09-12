@@ -162,7 +162,7 @@ public class DataFiles extends Template {
         contentFiles.clear();
         boolean relativePaths = filesContext.getView() == RELATIVE_PATH ? true : false;
         for (File file : filesContext.getFiles()) {
-            List<File> content = manager.listContent(file.getPath(), relativePaths);
+            List<File> content = manager.listContent(file, relativePaths);
             if (content.size() > 0) {
                 contentFiles.put(content.get(0).getPath(), content);
             }
@@ -170,7 +170,7 @@ public class DataFiles extends Template {
     }
 
     public void delete() {
-        manager.delete(filesContext.getPaths());
+        manager.delete(filesContext.getFiles());
     }
 
 }

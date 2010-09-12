@@ -42,25 +42,24 @@ public class ArchivingFileManager implements FileManager {
         uploadDirectory.mkdirs();
         return uploadDirectory;
     }
-
-    public List<File> listContent(String path, boolean relativePaths) {
-        File file = new File(path);
+    
+    public List<File> listContent(File file, boolean relativePaths) {
         if ( !archiver.isArchive(file) ){
             return asList(file);
         }
-        File directory = new File(uploadDirectory, archiver.directoryOf(file).getPath());
+        File directory = new File(uploadDirectory, archiver.directoryOf(new File(file.getName())).getPath());
         List<File> content = new ArrayList<File>();
         for (File archiveFile : archiver.listContent(directory)) {
             File contentFile = (relativePaths ? archiver.relativeTo(archiveFile, directory) : archiveFile);
             content.add(contentFile);
         }
-        monitor.contentListed(path, directory, relativePaths, content);
+        monitor.contentListed(file.getPath(), directory, relativePaths, content);
         return content;
     }
 
-    public void delete(List<String> paths) {
-        for (String path : paths) {
-            deleteFile(new File(path));
+    public void delete(List<File> files) {
+        for (File file: files) {
+            deleteFile(file);
         }
     }
 

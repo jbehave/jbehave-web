@@ -1,6 +1,6 @@
 package org.jbehave.web.runner.context;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import static java.util.Arrays.asList;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Arrays.asList;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class FilesContext {
 
@@ -20,8 +20,8 @@ public class FilesContext {
     private List<String> selectedPaths = new ArrayList<String>();
     private boolean contentVisible = false;
     private Map<String, List<File>> contentFiles = new HashMap<String, List<File>>();
-    private View view = View.RELATIVE_PATH;
     private List<String> errors = new ArrayList<String>();
+    private View view = View.FULL_PATH;
 
     public FilesContext() {
     }
@@ -55,15 +55,11 @@ public class FilesContext {
         for ( String directoryPath : contentFiles.keySet() ){
             for ( File file : contentFiles.get(directoryPath) ){
                 if ( isViewable(file) ){
-                    list.add(new File(viewablePath(directoryPath, file)));                    
+                    list.add(new File(unixPath(file.getPath())));                    
                 }
             }
         }
         return list;
-    }
-
-    private String viewablePath(String directoryPath, File file) {
-        return unixPath(file.getPath());
     }
 
     private String unixPath(String path) {

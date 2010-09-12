@@ -70,9 +70,9 @@ public class ArchivingFileManagerTest {
 	@Test
 	public void canDeleteFilesAndDirectories() throws IOException {
 		assertEquals(asList(zip, file1, file2), listFiles());
-		manager.delete(asList(file1.getAbsolutePath()));
+		manager.delete(asList(file1));
 		assertEquals(asList(zip, file2), listFiles());
-		manager.delete(asList(zip.getAbsolutePath()));
+		manager.delete(asList(zip));
 		assertEquals(asList(file2), listFiles());
 	}
 
