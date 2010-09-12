@@ -10,6 +10,7 @@
   <section>
     <name>Web Runner</name>
     <page>customising-web-runner.html</page>
+    <page>migrating-from-2.x.html</page>
     <page>using-web-runner.html</page>
   </section>
   <section>

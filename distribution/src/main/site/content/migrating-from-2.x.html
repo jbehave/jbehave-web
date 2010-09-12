@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Migration from 2.x</title>
+</head>
+
+<body>
+
+<h2>Wicket Application</h2>
+
+<p>The 3.x Web Runner is a webapp build on <a
+	href="http://wicket.apache.org">Wicket</a>, while the 2.x Web Runner
+was built on <a href="http://waffle.codehaus.org">Waffle</a>.</p>
+
+<p>Wicket and Waffle share a similar philosophy (embeddable, pure
+Java, no XML), but Wicket offers more functionality and is supported by
+a much wider community base.</p>
+
+<p>Just like in Waffle the application was configured by extending a
+Registrar class, in Wicket users need to extend an Application class.
+The Web Runner provides a base application class, <a
+	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
+which only requires the specification of the CandidateSteps for the
+story running (cf. <a
+	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/java/org/jbehave/web/examples/trader/runner/TraderRunnerApplication.java">TraderRunnerApplication</a>
+for an example). The user can optionaly override any of the protected
+methods which return instances of the configurable components of the Web
+Runner.</p>
+
+</body>
+</html>
