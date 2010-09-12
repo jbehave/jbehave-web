@@ -106,7 +106,8 @@ public class ArchivingFileManagerTest {
 		dir1.delete();
 		// remove zip
 		zip.delete();
-		manager.upload(asList(file2FileItem, zipFileItem), errors);
+		List<File> files = manager.upload(asList(file2FileItem, zipFileItem), errors);
+		manager.unarchiveFiles(files, errors);
 		assertEquals(2, errors.size());
 	}
 

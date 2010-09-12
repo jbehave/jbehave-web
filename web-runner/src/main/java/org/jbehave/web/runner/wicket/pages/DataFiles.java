@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -21,7 +19,6 @@ import org.apache.wicket.markup.html.form.upload.MultiFileUploadField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.file.Files;
@@ -36,7 +33,7 @@ public class DataFiles extends Template {
     private FileManager manager;
 
     private final FilesContext filesContext = new FilesContext();
-    
+
     public DataFiles() {
         setPageTitle("Data Files");
         setDefaultModel(new CompoundPropertyModel<FilesContext>(filesContext));
@@ -45,7 +42,6 @@ public class DataFiles extends Template {
         add(new FileListForm("listForm", filesContext.getFiles()));
         add(new FileContentContainer("contentContainer", filesContext.getContentFilesAsList()));
         add(new FileUploadForm("uploadForm"));
-        add(new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true));
     }
 
     protected Component pageCompoment(String id) {
@@ -75,7 +71,7 @@ public class DataFiles extends Template {
                 @Override
                 public final void onSubmit() {
                     delete();
-                    setResponsePage(DataFiles.this);
+                    setResponsePage(DataFiles.class);
                 }
             });
         }
@@ -103,12 +99,12 @@ public class DataFiles extends Template {
                 }
             });
         }
-        
+
         @Override
         public boolean isVisible() {
             return filesContext.getContentVisible();
         }
-        
+
     }
 
     @SuppressWarnings("serial")
@@ -124,47 +120,41 @@ public class DataFiles extends Template {
             // multi-file upload field
             add(new MultiFileUploadField("uploadInput", new PropertyModel<Collection<FileUpload>>(this, "uploads"), 5));
 
-            // create the ajax button used to submit the form
-            add(new AjaxButton("ajaxSubmit") {
-                @Override
-                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    // ajax-update the feedback panel
-                    target.addComponent(pageCompoment("feedbackPanel"));
-                }
-
-                @Override
-                protected void onError(AjaxRequestTarget target, Form<?> form) {
-                    // update feedback to display errors
-                    target.addComponent(pageCompoment("feedbackPanel"));
+            // create button used to submit the form
+            add(new Button("uploadButton") {
+                public void onSubmit() {
+                    List<String> errors = filesContext.getErrors();
+                    List<File> files = uploadFiles(uploads, errors);
+                    manager.unarchiveFiles(files, errors);
+                    setResponsePage(DataFiles.class);
                 }
 
             });
 
         }
 
-        protected void onSubmit() {
+        private List<File> uploadFiles(Collection<FileUpload> uploads, List<String> errors) {
+            List<File> files = new ArrayList<File>();
             for (FileUpload upload : uploads) {
-                uploadFile(upload);
-            }
-            setResponsePage(DataFiles.class);
-        }
+                File file = new File(manager.getUploadDirectory(), upload.getClientFileName());
 
-        private void uploadFile(FileUpload upload) {
-            File file = new File(manager.getUploadDirectory(), upload.getClientFileName());
-
-            if (file.exists()) {
-                // Try to delete the existing file
-                if (!Files.remove(file)) {
-                    throw new IllegalStateException("Failed to overwrite file " + file);
+                if (file.exists()) {
+                    // Try to delete the existing file
+                    if (!Files.remove(file)) {
+                        errors.add("Failed to overwrite file " + file);
+                    }
+                }
+                try {
+                    file.createNewFile();
+                    upload.writeTo(file);
+                    files.add(file);
+                } catch (Exception e) {
+                    errors.add("Failed to write file " + file);
                 }
             }
-            try {
-                file.createNewFile();
-                upload.writeTo(file);
-            } catch (Exception e) {
-                throw new IllegalStateException("Failed to write file " + file);
-            }
+            return files;
         }
+
     }
 
     public void showContent() {
@@ -176,7 +166,7 @@ public class DataFiles extends Template {
             if (content.size() > 0) {
                 contentFiles.put(content.get(0).getPath(), content);
             }
-        }        
+        }
     }
 
     public void delete() {

@@ -7,7 +7,7 @@ import org.apache.commons.fileupload.FileItem;
 
 /**
  * Manages data files, allowing the upload, list and delete. If a file is any
- * archive, the contents is unarchived to the directory with the corresponding
+ * archive, the contents can be unarchived to the directory with the corresponding
  * name af the archive (e.g. for archive path "/path/to/archive.zip", the output
  * directory path will be "/path/to/archive". The manager also allows to list
  * the content of a uploaded and unarchived file paths, e.g. the content of
@@ -23,6 +23,8 @@ public interface FileManager {
 
 	List<File> upload(List<FileItem> fileItems, List<String> errors);
 
-	File getUploadDirectory();
+    void unarchiveFiles(List<File> files, List<String> errors);
+
+    File getUploadDirectory();
 	
 }

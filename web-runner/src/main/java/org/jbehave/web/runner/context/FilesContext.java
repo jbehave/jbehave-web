@@ -21,6 +21,7 @@ public class FilesContext {
     private boolean contentVisible = false;
     private Map<String, List<File>> contentFiles = new HashMap<String, List<File>>();
     private View view = View.RELATIVE_PATH;
+    private List<String> errors = new ArrayList<String>();
 
     public FilesContext() {
     }
@@ -62,11 +63,7 @@ public class FilesContext {
     }
 
     private String viewablePath(String directoryPath, File file) {
-        String path = file.getPath();
-        if ( view == View.RELATIVE_PATH && !file.getPath().equals(directoryPath) ){
-            path = directoryPath+"/"+file.getPath();
-        }   
-        return unixPath(path);
+        return unixPath(file.getPath());
     }
 
     private String unixPath(String path) {
@@ -103,6 +100,10 @@ public class FilesContext {
 
     public void setView(View view) {
         this.view = view;
+    }
+
+    public List<String> getErrors() {
+        return errors;
     }
 
     @Override
