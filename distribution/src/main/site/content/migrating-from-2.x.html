@@ -21,11 +21,53 @@ Registrar class, in Wicket users need to extend an Application class.
 The Web Runner provides a base application class, <a
 	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
 which only requires the specification of the CandidateSteps for the
-story running (cf. <a
-	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/java/org/jbehave/web/examples/trader/runner/TraderRunnerApplication.java">TraderRunnerApplication</a>
-for an example). The user can optionaly override any of the protected
-methods which return instances of the configurable components of the Web
-Runner.</p>
+story running, e.g.:</p>
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class TraderRunnerApplication extends WebRunnerApplication {
+
+    protected List<CandidateSteps> candidateSteps() {
+        return new InstanceStepsFactory(configuration(), new TraderSteps(new TradingService()),
+                new StockExchangeSteps()).createCandidateSteps();
+    }
+
+}
+]]>
+</script>
+<p>The user can optionaly override any of the protected methods of <a
+	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
+which return instances of the configurable components of the Web Runner.</p>
+
+<p>The application class name then needs to be configured in the <b>WicketFilter</b> in your <b>web.xml</b>:</p>
+
+<script type="syntaxhighlighter" class="brush: xml">
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  version="2.5">
+
+  <display-name>JBehave Web Runner</display-name>
+  <filter>
+    <filter-name>application</filter-name>
+    <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+    <init-param>
+      <param-name>applicationClassName</param-name>
+      <param-value>org.jbehave.web.examples.trader.runner.TraderRunnerApplication</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>application</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+  </filter-mapping>
+
+</web-app>
+]]>
+</script>
 
 </body>
 </html>
