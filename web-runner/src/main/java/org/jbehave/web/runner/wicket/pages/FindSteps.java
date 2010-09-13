@@ -2,15 +2,16 @@ package org.jbehave.web.runner.wicket.pages;
 
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.util.MapModel;
 import org.apache.wicket.util.resource.IStringResourceStream;
 import org.apache.wicket.util.resource.PackageResourceStream;
@@ -21,6 +22,7 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
 import org.jbehave.web.runner.context.StepdocContext;
+import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
 
@@ -54,22 +56,37 @@ public class FindSteps extends Template {
                 protected IStringResourceStream getTemplateResource() {
                     return new PackageResourceStream(FindSteps.class, "stepdocs.vm");
                 }
-            
+
                 @Override
                 protected boolean parseGeneratedMarkup() {
                     return true;
                 }
             });
-            add(new VelocityPanel("stepsInstances", new MapModel<String, List<Object>>(new HashMap<String, List<Object>>())) {
+            add(new VelocityPanel("stepsInstances", new MapModel<String, List<Object>>(
+                    new HashMap<String, List<Object>>())) {
                 @Override
                 protected IStringResourceStream getTemplateResource() {
                     return new PackageResourceStream(FindSteps.class, "stepsInstances.vm");
                 }
-            
+
                 @Override
                 protected boolean parseGeneratedMarkup() {
                     return true;
                 }
+            });
+            add(new DropDownChoice<View>("viewSelect", Arrays.asList(View.values())) {
+
+                @Override
+                protected void onSelectionChanged(View newSelection) {
+                    stepdocContext.setView(newSelection);
+                    updatePanels();
+                    setResponsePage(FindSteps.this);
+                }
+
+                protected boolean wantOnSelectionChangedNotifications() {
+                    return true;
+                }
+
             });
             add(new Button("findButton"));
         }
@@ -79,17 +96,29 @@ public class FindSteps extends Template {
             String matchingStep = (String) getModelObject().get("matchingStep");
             stepdocContext.setMatchingStep(matchingStep);
             run();
-            VelocityPanel stepdocs = (VelocityPanel)get("stepdocs");
-            stepdocs.setDefaultModel(listModel("stepdocs", stepdocContext.getStepdocs()));
-            VelocityPanel stepsInstances = (VelocityPanel)get("stepsInstances");
-            stepsInstances.setDefaultModel(listModel("stepsInstances", stepdocContext.getStepsInstances()));
+            updatePanels();
         }
-    }
 
-    private <T> IModel<?> listModel(String id, List<T> list) {
-        Map<String, List<T>> map = new HashMap<String, List<T>>();
-        map.put(id, list);
-        return new MapModel<String, List<T>>(map);
+        private void updatePanels() {
+            updateStepdocsPanel();
+            updateStepsInstancesPanel();
+        }
+
+        private void updateStepdocsPanel() {
+            VelocityPanel panel = (VelocityPanel) get("stepdocs");
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("stepdocs", stepdocContext.getStepdocs());
+            map.put("view", stepdocContext.getView());
+            panel.setDefaultModel(new MapModel<String, Object>(map));
+        }
+
+        private void updateStepsInstancesPanel() {
+            VelocityPanel panel = (VelocityPanel) get("stepsInstances");
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("stepsInstances", stepdocContext.getStepsInstances());
+            panel.setDefaultModel(new MapModel<String, Object>(map));
+        }
+
     }
 
     public void run() {

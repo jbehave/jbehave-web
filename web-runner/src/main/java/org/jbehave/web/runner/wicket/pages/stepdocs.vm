@@ -1,3 +1,6 @@
 #foreach( $stepdoc in $stepdocs )
 ${stepdoc.startingWord} ${stepdoc.pattern}
+#if ( "$view" == 'WITH_METHODS' )
+[${stepdoc.methodSignature}]
+#end
 #end
