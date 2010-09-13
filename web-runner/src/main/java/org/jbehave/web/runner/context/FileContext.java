@@ -1,7 +1,5 @@
 package org.jbehave.web.runner.context;
 
-import static java.util.Arrays.asList;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,20 +8,14 @@ import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class FilesContext {
-
-    public enum View {
-        RELATIVE_PATH, FULL_PATH
-    }
+public class FileContext {
 
     private List<File> files = new ArrayList<File>();
-    private List<String> selectedPaths = new ArrayList<String>();
-    private boolean contentVisible = false;
     private Map<String, List<File>> contentFiles = new HashMap<String, List<File>>();
+    private boolean contentVisible = false;
     private List<String> errors = new ArrayList<String>();
-    private View view = View.FULL_PATH;
 
-    public FilesContext() {
+    public FileContext() {
     }
 
     public List<File> getFiles() {
@@ -34,6 +26,14 @@ public class FilesContext {
         this.files = toViewables(files);
     }
     
+    public List<File> getContentFilesAsList() {  
+        List<File> list = new ArrayList<File>();
+        for ( String directoryPath : contentFiles.keySet() ){
+            list.addAll(toViewables(contentFiles.get(directoryPath)));
+        }
+        return list;
+    }
+
     private List<File> toViewables(List<File> files) {
         List<File> viewableFiles = new ArrayList<File>();
         for (File file : files) {
@@ -43,30 +43,6 @@ public class FilesContext {
             }
         }
         return viewableFiles;
-    }
-
-    public List<String> getPaths() {
-        List<String> paths = new ArrayList<String>();
-        for ( File file : files ){
-            paths.add(file.getPath());
-        }
-        return paths;
-    }
-
-    public List<String> getSelectedPaths() {
-        return selectedPaths;
-    }
-
-    public void setSelectedPaths(List<String> selectedPaths) {
-        this.selectedPaths = selectedPaths;
-    }
-
-    public List<File> getContentFilesAsList() {  
-        List<File> list = new ArrayList<File>();
-        for ( String directoryPath : contentFiles.keySet() ){
-            list.addAll(toViewables(contentFiles.get(directoryPath)));
-        }
-        return list;
     }
 
     public boolean getContentVisible() {
@@ -85,20 +61,12 @@ public class FilesContext {
         this.contentFiles = contentFiles;
     }
 
-    public List<View> getViews() {
-        return asList(View.values());
-    }
-
-    public View getView() {
-        return view;
-    }
-
-    public void setView(View view) {
-        this.view = view;
-    }
-
     public List<String> getErrors() {
         return errors;
+    }
+    
+    public void setErrors(List<String> errors){
+        this.errors = errors;
     }
 
     @Override

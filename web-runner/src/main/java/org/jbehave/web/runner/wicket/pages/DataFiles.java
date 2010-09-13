@@ -1,7 +1,5 @@
 package org.jbehave.web.runner.wicket.pages;
 
-import static org.jbehave.web.runner.context.FilesContext.View.RELATIVE_PATH;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +26,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.jbehave.web.io.FileManager;
-import org.jbehave.web.runner.context.FilesContext;
+import org.jbehave.web.runner.context.FileContext;
 
 import com.google.inject.Inject;
 
@@ -37,15 +35,15 @@ public class DataFiles extends Template {
     @Inject
     private FileManager manager;
 
-    private final FilesContext filesContext = new FilesContext();
+    private final FileContext fileContext = new FileContext();
 
     public DataFiles() {
         setPageTitle("Data Files");
-        setDefaultModel(new CompoundPropertyModel<FilesContext>(filesContext));
-        filesContext.setFiles(new ArrayList<File>(manager.list()));
+        setDefaultModel(new CompoundPropertyModel<FileContext>(fileContext));
+        fileContext.setFiles(new ArrayList<File>(manager.list()));
         showContent();
-        add(new FileListForm("listForm", filesContext.getFiles()));
-        add(new FileContentContainer("contentContainer", filesContext.getContentFilesAsList()));
+        add(new FileListForm("listForm", fileContext.getFiles()));
+        add(new FileContentContainer("contentContainer", fileContext.getContentFilesAsList()));
         add(new FileUploadForm("uploadForm"));
     }
 
@@ -61,14 +59,14 @@ public class DataFiles extends Template {
             add(new Button("showContentButton") {
                 @Override
                 public final void onSubmit() {
-                    filesContext.setContentVisible(true);
+                    fileContext.setContentVisible(true);
                     setResponsePage(DataFiles.this);
                 }
             });
             add(new Button("hideContentButton") {
                 @Override
                 public final void onSubmit() {
-                    filesContext.setContentVisible(false);
+                    fileContext.setContentVisible(false);
                     setResponsePage(DataFiles.this);
                 }
             });
@@ -84,11 +82,10 @@ public class DataFiles extends Template {
     }
     
     public void showContent() {
-        Map<String, List<File>> contentFiles = filesContext.getContentFiles();
+        Map<String, List<File>> contentFiles = fileContext.getContentFiles();
         contentFiles.clear();
-        boolean relativePaths = filesContext.getView() == RELATIVE_PATH ? true : false;
-        for (File file : filesContext.getFiles()) {
-            List<File> content = manager.listContent(file, relativePaths);
+        for (File file : fileContext.getFiles()) {
+            List<File> content = manager.listContent(file, false);
             if (content.size() > 0) {
                 contentFiles.put(content.get(0).getPath(), content);
             }
@@ -96,7 +93,7 @@ public class DataFiles extends Template {
     }
 
     public void delete() {
-        manager.delete(filesContext.getFiles());
+        manager.delete(fileContext.getFiles());
     }
 
     @SuppressWarnings("serial")
@@ -123,7 +120,7 @@ public class DataFiles extends Template {
 
         @Override
         public boolean isVisible() {
-            return filesContext.getContentVisible();
+            return fileContext.getContentVisible();
         }
 
     }
@@ -144,7 +141,7 @@ public class DataFiles extends Template {
             // create button used to submit the form
             add(new Button("uploadButton") {
                 public void onSubmit() {
-                    List<String> errors = filesContext.getErrors();
+                    List<String> errors = fileContext.getErrors();
                     List<File> files = manager.upload(fileItems(uploads), errors);
                     manager.unarchiveFiles(files, errors);
                     setResponsePage(DataFiles.class);

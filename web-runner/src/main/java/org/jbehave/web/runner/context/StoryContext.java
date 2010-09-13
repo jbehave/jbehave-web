@@ -1,55 +1,26 @@
 package org.jbehave.web.runner.context;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 @SuppressWarnings("serial")
 public class StoryContext implements Serializable {
 
-    private static final String POST = "post";
-    private static final String GET = "get";
     private static final String EMPTY = "";
-    private static final List<String> METHODS = asList(POST, GET);
-	private static final List<String> EMPTY_LIST = asList();
+	private String input = EMPTY;
+	private String output = EMPTY;
+	private List<String> messages = new ArrayList<String>();
+	private Throwable cause = null;
 
-    private String method = POST;
-	private String input;
-	private String output;
-	private List<String> messages;
-	private Throwable cause;
-
-	public StoryContext() {
-		this(POST, EMPTY, EMPTY, EMPTY_LIST);
-	}
-
-	public StoryContext(String method, String input, String output, List<String> messages) {
-		this.method = method;
-        this.input = input;
-		this.output = output;
-		this.messages = new ArrayList<String>();
-		this.messages.addAll(messages);
-	}
-
-    public List<String> getMethods(){
-	    return METHODS;
+	public StoryContext(){    
 	}
 	
-	public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public String getInput() {
+	public String getInput() {
 		return input;
 	}
 
