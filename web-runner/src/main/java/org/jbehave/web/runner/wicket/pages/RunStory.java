@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.value.ValueMap;
+import org.codehaus.plexus.util.StringUtils;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.Keywords;
 import org.jbehave.core.embedder.StoryRunner;
@@ -48,6 +49,7 @@ public class RunStory extends Template {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
             add(new TextArea<String>("input").setType(String.class));
             add(new MultiLineLabel("output", ""));
+            add(new MultiLineLabel("failure", ""));
             add(new Button("runButton"));
         }
 
@@ -58,6 +60,11 @@ public class RunStory extends Template {
             run();
             MultiLineLabel output = (MultiLineLabel) get("output");
             output.setDefaultModelObject(storyContext.getOutput());
+            MultiLineLabel failure = (MultiLineLabel) get("failure");
+            failure.setDefaultModelObject(storyContext.getFailureStackTrace());
+            if ( StringUtils.isBlank(storyContext.getFailureStackTrace()) ){
+                failure.setVisible(true);
+            }
         }
     }
 

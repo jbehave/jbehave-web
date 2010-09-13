@@ -12,10 +12,6 @@
       <param-name>applicationClassName</param-name>
       <param-value>org.jbehave.web.examples.trader.runner.TraderRunnerApplication</param-value>
     </init-param>
-    <init-param>
-      <param-name>debug</param-name>
-      <param-value>2</param-value>
-    </init-param>
   </filter>
 
   <filter-mapping>

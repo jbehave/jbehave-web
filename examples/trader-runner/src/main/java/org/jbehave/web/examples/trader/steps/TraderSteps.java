@@ -30,6 +30,11 @@ public class TraderSteps {
         stock.tradeAt(price);
     }
 
+    @When("a trading step fails")
+    public void theTradingStepFails(){
+        throw new RuntimeException("I failed ... such is life");
+    }
+    
     @Then("the alert status should be $status")
     public void theAlertStatusShouldBe(String status) {
         assertThat(stock.getStatus().name(), equalTo(status));
