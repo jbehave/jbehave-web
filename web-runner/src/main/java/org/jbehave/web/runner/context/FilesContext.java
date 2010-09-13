@@ -31,7 +31,18 @@ public class FilesContext {
     }
 
     public void setFiles(List<File> files) {
-        this.files = files;
+        this.files = toViewables(files);
+    }
+    
+    private List<File> toViewables(List<File> files) {
+        List<File> viewableFiles = new ArrayList<File>();
+        for (File file : files) {
+            ViewableFile viewableFile = new ViewableFile(file);
+            if ( viewableFile.isViewable() ){
+                viewableFiles.add(viewableFile);
+            }
+        }
+        return viewableFiles;
     }
 
     public List<String> getPaths() {
@@ -53,21 +64,9 @@ public class FilesContext {
     public List<File> getContentFilesAsList() {  
         List<File> list = new ArrayList<File>();
         for ( String directoryPath : contentFiles.keySet() ){
-            for ( File file : contentFiles.get(directoryPath) ){
-                if ( isViewable(file) ){
-                    list.add(new File(unixPath(file.getPath())));                    
-                }
-            }
+            list.addAll(toViewables(contentFiles.get(directoryPath)));
         }
         return list;
-    }
-
-    private String unixPath(String path) {
-        return path.replace("\\","/");
-    }
-
-    private boolean isViewable(File file) {
-       return file.getPath().matches(".*\\.[A-Za-z]+");
     }
 
     public boolean getContentVisible() {
@@ -105,6 +104,27 @@ public class FilesContext {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    @SuppressWarnings("serial")
+    public static class ViewableFile extends File {
+
+        public ViewableFile(File file) {
+            super(file.getPath());
+        }
+        
+        public String getPath(){
+            return unixPath(super.getPath());
+        }
+        
+        private String unixPath(String path) {
+            return path.replace("\\","/");
+        }
+        
+        public boolean isViewable() {
+            return getPath().matches(".*\\.[A-Za-z]+");
+        }
+
     }
 
 
