@@ -1,28 +1,9 @@
-Deploy script of JBehave Webapp
+Deploy script of JBehave Web Runner
 
-1. Edit /webapp/WEB-INF/web.xml and configure the class name of the JBehaveRegistrar that registers the 
-Steps instance used by the webapp.  E.g. if your Steps classes are called MyOwnSteps and MyOtherSteps, then the corresponding 
-MyOwnRegistrar will look like 
+1. Edit /webapp/WEB-INF/web.xml and configure the applicationClassName of your WebRunnerApplication.  
+Refer to docs/customising-web-runner.html.
 
-public class MyOwnRegistrar extends JBehaveRegistrar {
-
-	public TraderRegistrar(Registrar delegate) {
-		super(delegate);
-	}
-
-	@Override
-	protected void registerSteps() {
-        List<Object> stepsInstances = asList(new MyOwnSteps(), new MyOtherSteps());
-        List<CandidateSteps> candidateSteps = new InstanceStepsFactory(new MostUsefulConfiguration(), stepsInstances).createCandidateSteps();
-        for (CandidateSteps candidate : candidateSteps) {
-            registerInstance(candidate);
-        }
-	}
-	
-}
-
-
-2. Copy to /webapp/WEB-INF/lib any jars required by the user-defined MyOwnRegistrar
+2. Copy to /webapp/WEB-INF/lib any jars required by the user-defined WebRunnerApplication.
 
 3. Run deploy Ant script: 
 

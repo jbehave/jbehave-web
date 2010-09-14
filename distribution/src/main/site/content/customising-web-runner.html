@@ -6,12 +6,63 @@
 
 <body>
 
-<h2>Registering your Steps in the Web Runner</h2>
+<h2>Configuring Steps in the Web Runner</h2>
 
 <p>The Web Runner is a webapp that allows users to run any generic
-textual scenario. In order to do this, the appropriate JBehave Steps
-instances required to match the textual steps need to be registered with
+textual story. In order to do this, the appropriate JBehave Steps
+instances required to match the textual steps need to be configured in
 the application.</p>
+
+<p>The Web Runner is a Wicket-based application and provides a base application class, <a
+    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
+which only requires the specification of the CandidateSteps for the
+story running, e.g.:</p>
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class TraderRunnerApplication extends WebRunnerApplication {
+
+    protected List<CandidateSteps> candidateSteps() {
+        return new InstanceStepsFactory(configuration(), new TraderSteps(new TradingService()),
+                new StockExchangeSteps()).createCandidateSteps();
+    }
+
+}
+]]>
+</script>
+<p>The user can optionaly override any of the protected methods of <a
+    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
+which return instances of the configurable components of the Web Runner.</p>
+
+<p>The application class name then needs to be configured in the <b>WicketFilter</b> in your <b>web.xml</b>:</p>
+
+<script type="syntaxhighlighter" class="brush: xml">
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  version="2.5">
+
+  <display-name>JBehave Web Runner</display-name>
+  <filter>
+    <filter-name>application</filter-name>
+    <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+    <init-param>
+      <param-name>applicationClassName</param-name>
+      <param-value>org.jbehave.web.examples.trader.runner.TraderRunnerApplication</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>application</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+  </filter-mapping>
+
+</web-app>
+]]>
+</script>
 
 <p>Maven users can model their own module on the <a
     href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner">trader
@@ -30,7 +81,7 @@ runner example</a></p>
         href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/java/org/jbehave/web/examples/trader/runner/TraderRunnerApplication.java">TraderRunnerApplication</a>
     for an example of how easy it is. The minimal requirement is to
     specify the one or more instances of Steps that you need to run the
-    scenarios.</li>
+    stories.</li>
     <li>In <b>bin/</b> dir execute: <b>ant -f deploy.xml
     deploy:webapp</b>, which will deploy a new jbehave-web.war to your local
     Jetty installation (provided you have <b>$JETTY_HOME</b> defined).

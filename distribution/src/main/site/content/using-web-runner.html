@@ -10,31 +10,81 @@
 
 <p>The Web Runner provides a simple web-based interface to running
 generic stories. A typical use case is for BAs, QAs or stakeholders to
-be able to access the results of story running without needing access
-to developer resources.</p>
+be able to access the results of story running without needing access to
+developer resources, e.g. source control or build systems.</p>
 
 <p>A fully functional example webapp is provided in <a
-    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner">trader
+	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner">trader
 runner example</a>. We'll be using this example to illustrate the use of Web
 Runner:</p>
 
 <ul>
-    <li><a href="customising-web-runner.html">Customise Web
-    Runner</a></li>
-    <li>Deploy webapp to your favourite webapp container</li>
-    <li>Open page <b>http://localhost:8080/trader-runner</b>
-    (assuming normal port conventions)</li>
-    <li>On Menu, click on <b>Run Story</b>, which will take you
-    to a page where you can enter your textual story.</li>
-    <li>Input textual story in textarea (e.g you can cut &amp;
-    paste the scenario found in the <a
-        href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/resources/trader.scenario">trader
-    scenario</a>) and click on <b>Run Story</b> link.</li>
-    <li>Upon execution, the output of the story is shown below.
-    By default the same output is shown as the one you would see when
-    running JBehave via a command-line interface. This includes any
-    details of failed and pending steps. If any failures occur, the user
-    has be option to expand the stack trace.</li>
+	<li><a href="customising-web-runner.html">Customise Web Runner</a></li>
+	<li>Deploy webapp to your favourite webapp container</li>
+	<li>Open page <b>http://localhost:8080/trader-runner</b> (assuming
+	normal port conventions)</li>
+</ul>
+
+<h2>Run Story</h2>
+
+<p>The Run Story page allows the user to run any textual story and
+to display the result in the same page.</p>
+
+<ul>
+	<li>From Menu, click on <b>Run Story</b>, which will take you to a
+	page where you can enter your textual story.</li>
+	<li>Input textual story in textarea (e.g you can cut &amp; paste
+	a scenario found in the <a
+		href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/resources/trader.scenario">trader
+	scenario</a>) and click on <b>Run</b> button.</li>
+	<li>Upon execution, the output of the story is shown below. By
+	default the same output is shown as the one you would see when running
+	JBehave via a command-line interface. This includes any details of
+	failed and pending steps. If any failures occur, the user has the stack
+	trace in an expandable section below.</li>
+</ul>
+
+<h2>Find Steps</h2>
+
+<p>The Find Steps page allows the user to find steps (i.e. methods
+in steps instances classes) and to display the patterns and the
+associated methods.</p>
+
+<ul>
+	<li>From Menu, click on <b>Find Steps</b>, which will take you to
+	a page where you can enter your textual step.</li>
+	<li>Input textual step in textarea (e.g you can cut &amp; paste a
+	step from the scenario found in the <a
+		href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/resources/trader.scenario">trader
+	scenario</a>) and click on <b>Find</b> button.</li>
+	<li>A blank input will simply show all the steps that are
+	configured.</li>
+	<li>Upon execution, the steps found are shown below. By default,
+	only the patterns are shown, but you can choose to also display
+	associated methods.</li>
+	<li>The final section shows the steps instances that were
+	configured and were used to find steps.</li>
+</ul>
+
+<h2>Data Files</h2>
+
+<p>The Data Files page allows the user to upload and view any data
+file that may be used during the execution of the story. Data files can
+be either single text files or zip archives. If archives, these are
+automatically unzipped when upload to the server.</p>
+
+<ul>
+	<li>From Menu, click on <b>Data Files</b>, which will take you to
+	a page where you can view the files already uploaded to the upload
+	directory (defaults to "/tmp/upload" but is configurable via the <a
+		href="javadoc/web-runner/org/jbehave/web/runner/wicket/WebRunnerApplication.html#uploadDirectory()">WebRunnerApplication#uploadDirectory()</a>).</li>
+	<li>Use the <b>Browse</b> and <b>Upload</b> buttons to upload any
+	file to the upload directory.</li>
+	<li>Use the <b>Show Content</b> and <b>Hide Content</b> buttons to
+	toggle display of uploaded file content.</li>
+	<li>Click on <b>View</b> link next to the files to view their
+	content.</li>
+	<li>Use the <b>Delete</b> button to delete any selected files.</li>
 </ul>
 
 </body>

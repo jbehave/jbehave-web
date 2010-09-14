@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>Migration from 2.x</title>
+<title>Migrating from 2.x</title>
 </head>
 
 <body>
@@ -13,61 +13,27 @@
 was built on <a href="http://waffle.codehaus.org">Waffle</a>.</p>
 
 <p>Wicket and Waffle share a similar philosophy (embeddable, pure
-Java, no XML), but Wicket offers more functionality and is supported by
-a much wider community base.</p>
+Java, no XML aside from the webapp web.xml), but Wicket offers a
+component-oriented approach (as opposed to a pure MVC one) that makes
+Java-driven rich web functionality easier and is supported by a much
+wider community base.</p>
 
 <p>Just like in Waffle the application was configured by extending a
 Registrar class, in Wicket users need to extend an Application class.
-The Web Runner provides a base application class, <a
-	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
-which only requires the specification of the CandidateSteps for the
-story running, e.g.:</p>
-<script type="syntaxhighlighter" class="brush: java">
-<![CDATA[
-public class TraderRunnerApplication extends WebRunnerApplication {
+The Registrar and Application classes serve functionally the same scope
+and migrating from one to the other is quite straightforward. The <a
+	href="customising-web-runner.html">customising web runner</a> page
+details the configuration of the application.</p>
 
-    protected List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TraderSteps(new TradingService()),
-                new StockExchangeSteps()).createCandidateSteps();
-    }
+<p>The main different between the <b>JBehaveRegistrar</b> and the <a
+	href="javadoc/web-runner/org/jbehave/web/runner/wicket/WebRunnerApplication.html">WebRunnerApplication</a>
+is that in the WebRunnerApplication instances of components need to be
+returned, while in the JBehaveRegistrar we had void void registering
+methods that invoked parent registering methods.</p>
 
-}
-]]>
-</script>
-<p>The user can optionaly override any of the protected methods of <a
-	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
-which return instances of the configurable components of the Web Runner.</p>
-
-<p>The application class name then needs to be configured in the <b>WicketFilter</b> in your <b>web.xml</b>:</p>
-
-<script type="syntaxhighlighter" class="brush: xml">
-<![CDATA[
-<?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-  version="2.5">
-
-  <display-name>JBehave Web Runner</display-name>
-  <filter>
-    <filter-name>application</filter-name>
-    <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
-    <init-param>
-      <param-name>applicationClassName</param-name>
-      <param-value>org.jbehave.web.examples.trader.runner.TraderRunnerApplication</param-value>
-    </init-param>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>application</filter-name>
-    <url-pattern>/*</url-pattern>
-    <dispatcher>REQUEST</dispatcher>
-    <dispatcher>INCLUDE</dispatcher>
-  </filter-mapping>
-
-</web-app>
-]]>
-</script>
+<p>The <a
+	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner">trader
+runner example</a> provides a fully-functional example.</p>
 
 </body>
 </html>

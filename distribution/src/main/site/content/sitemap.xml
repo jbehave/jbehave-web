@@ -5,13 +5,14 @@
     <page>license.html</page>
     <page>download.html</page>
     <page>javadoc.html</page>
+    <page>release-notes.html</page>
     <page>source-repository.html</page>
   </section>
   <section>
     <name>Web Runner</name>
     <page>customising-web-runner.html</page>
-    <page>migrating-from-2.x.html</page>
     <page>using-web-runner.html</page>
+    <page>migrating-from-2.x.html</page>
   </section>
   <section>
     <name>Selenium</name>
