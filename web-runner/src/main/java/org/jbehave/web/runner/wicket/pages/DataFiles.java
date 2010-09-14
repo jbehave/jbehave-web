@@ -12,7 +12,6 @@ import java.util.Map;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang.NotImplementedException;
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -45,10 +44,6 @@ public class DataFiles extends Template {
         add(new FileListForm("listForm", fileContext.getFiles()));
         add(new FileContentContainer("contentContainer", fileContext.getContentFilesAsList()));
         add(new FileUploadForm("uploadForm"));
-    }
-
-    protected Component pageCompoment(String id) {
-        return get(id);
     }
 
     @SuppressWarnings("serial")

@@ -1,5 +1,6 @@
 package org.jbehave.web.runner.wicket.pages;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -17,6 +18,14 @@ public class Template extends WebPage {
         super(pageParameters);
     }
 
+    public final String getPageTitle() {
+        return pageTitle;
+    }
+
+    public final void setPageTitle(String title) {
+        pageTitle = title;
+    }
+
     @Override
     protected void onInitialize() {
         super.onInitialize();
@@ -27,11 +36,8 @@ public class Template extends WebPage {
     protected void explain() {
     }
 
-    public final String getPageTitle() {
-        return pageTitle;
+    protected Component pageCompoment(String id) {
+        return get(id);
     }
 
-    public final void setPageTitle(String title) {
-        pageTitle = title;
-    }
 }
