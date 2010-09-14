@@ -36,7 +36,7 @@ public class Template extends WebPage {
     protected void explain() {
     }
 
-    protected Component pageCompoment(String id) {
+    protected Component pageComponent(String id) {
         return get(id);
     }
 
