@@ -61,6 +61,11 @@ public class FindSteps extends Template {
                 protected boolean parseGeneratedMarkup() {
                     return true;
                 }
+
+                @Override
+                protected boolean escapeHtml() {
+                    return true;
+                }
             });
             add(new VelocityPanel("stepsInstances", new MapModel<String, List<Object>>(
                     new HashMap<String, List<Object>>())) {
@@ -71,6 +76,11 @@ public class FindSteps extends Template {
 
                 @Override
                 protected boolean parseGeneratedMarkup() {
+                    return true;
+                }
+
+                @Override
+                protected boolean escapeHtml() {
                     return true;
                 }
             });
