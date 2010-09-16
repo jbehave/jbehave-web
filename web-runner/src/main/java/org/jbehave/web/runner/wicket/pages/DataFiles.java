@@ -106,7 +106,7 @@ public class DataFiles extends Template {
                     item.add(new Link<File>("view") {
                         @Override
                         public void onClick() {
-                            setResponsePage(new ViewFileContent(file));
+                            setResponsePage(new FileContent(file));
                         }
                     });
                 }

@@ -5,20 +5,21 @@ import java.io.File;
 import org.apache.commons.lang.StringUtils;
 import org.jbehave.web.io.ResourceFinder;
 
-public class ViewFileContent extends Template {
+public class FileContent extends Template {
 
-	public ViewFileContent(File file) {
+	public FileContent(File file) {
 		String path = file.getPath();		
 		String type = typeOf(path);
         add(new SyntaxHighlighterLabel("fileContent", new ResourceFinder().resourceAsString(path), "brush: "+type));
 	}
 
     private String typeOf(String path) {
+        // add more brushes
         String ext = StringUtils.substringAfterLast(path, ".");
-        if ( ext.equals("txt") ){
-            return "plain";
-        } else {
+        if ( ext.equals("java") || ext.equals("xml") ){
             return ext;
+        } else {
+            return "plain";
         }
     }
 
