@@ -1,7 +1,7 @@
 Scenario:
 
 Given a stock exchange EXCH1
-Given a resource root directory classpath:org/jbehave/web/examples/trader/scenarios/data
+Given a resource root directory classpath:org/jbehave/web/examples/trader/steps/data
 When the stock exchange is opened
 Then the stock exchanges opened are as contained in STOCK-EXCHANGES.txt
 
