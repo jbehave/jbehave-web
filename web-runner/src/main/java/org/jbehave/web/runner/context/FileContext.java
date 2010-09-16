@@ -1,6 +1,7 @@
 package org.jbehave.web.runner.context;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class FileContext {
+@SuppressWarnings("serial")
+public class FileContext implements Serializable {
 
     private List<File> files = new ArrayList<File>();
     private Map<String, List<File>> contentFiles = new HashMap<String, List<File>>();
@@ -74,7 +76,6 @@ public class FileContext {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    @SuppressWarnings("serial")
     public static class ViewableFile extends File {
 
         public ViewableFile(File file) {

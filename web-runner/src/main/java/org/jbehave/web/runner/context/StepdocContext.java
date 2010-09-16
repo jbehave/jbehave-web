@@ -2,13 +2,16 @@ package org.jbehave.web.runner.context;
 
 import static java.util.Arrays.asList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jbehave.core.steps.Stepdoc;
 
-public class StepdocContext {
+@SuppressWarnings("serial")
+public class StepdocContext implements Serializable {
+
     public enum View {
         PATTERNS, WITH_METHODS
     }
@@ -17,6 +20,7 @@ public class StepdocContext {
         BY_POSITION, BY_PATTERN
     }
 
+    private List<Stepdoc> allStepdocs = new ArrayList<Stepdoc>();
     private List<Stepdoc> stepdocs = new ArrayList<Stepdoc>();
     private View view = View.PATTERNS;
     private Sorting sorting = Sorting.BY_POSITION;
@@ -24,6 +28,14 @@ public class StepdocContext {
     private List<Object> stepsInstances;
 
     public StepdocContext() {
+    }
+
+    public List<Stepdoc> getAllStepdocs() {
+        return allStepdocs;
+    }
+
+    public void setAllStepdocs(List<Stepdoc> stepdocs) {
+        this.allStepdocs = stepdocs;
     }
 
     public List<Stepdoc> getStepdocs() {
@@ -48,6 +60,14 @@ public class StepdocContext {
 
     public List<Object> getStepsInstances() {
         return stepsInstances;
+    }
+
+    public List<Class<?>> getStepsClasses() {
+        List<Class<?>> classes = new ArrayList<Class<?>>();
+        for (Object instance : stepsInstances) {
+            classes.add(instance.getClass());
+        }
+        return classes;
     }
 
     public List<View> getViews() {
@@ -86,5 +106,6 @@ public class StepdocContext {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
 
 }

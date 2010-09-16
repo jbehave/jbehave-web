@@ -21,7 +21,6 @@ import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.velocity.markup.html.VelocityPanel;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.steps.CandidateSteps;
-import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
 import org.jbehave.web.runner.context.StepdocContext;
 import org.jbehave.web.runner.context.StepdocContext.Sorting;
@@ -37,15 +36,12 @@ public class FindSteps extends Template {
     private List<CandidateSteps> steps;
 
     private StepdocContext stepdocContext = new StepdocContext();
-    private StepFinder stepFinder;
-    private List<Stepdoc> stepdocs;
 
     public FindSteps() {
-        this.stepFinder = configuration.stepFinder();
-        this.stepdocs = stepFinder.stepdocs(this.steps);
         setPageTitle("Find Steps");
         add(new StepsForm("stepsForm"));
-        this.stepdocContext.addStepsInstances(stepFinder.stepsInstances(this.steps));
+        stepdocContext.setAllStepdocs(configuration.stepFinder().stepdocs(this.steps));
+        stepdocContext.addStepsInstances(configuration.stepFinder().stepsInstances(this.steps));
     }
 
     @SuppressWarnings("serial")
@@ -70,8 +66,8 @@ public class FindSteps extends Template {
                     return true;
                 }
             });
-            add(new VelocityPanel("stepsInstances", new MapModel<String, List<Object>>(
-                    new HashMap<String, List<Object>>())) {
+            add(new VelocityPanel("stepsInstances", new MapModel<String, List<Class<?>>>(
+                    new HashMap<String, List<Class<?>>>())) {
                 @Override
                 protected IStringResourceStream getTemplateResource() {
                     return new PackageResourceStream(FindSteps.class, "stepsInstances.vm");
@@ -106,7 +102,7 @@ public class FindSteps extends Template {
                 @Override
                 protected void onSelectionChanged(Sorting newSelection) {
                     stepdocContext.setSorting(newSelection);
-                    switch ( stepdocContext.getSorting() ){
+                    switch (stepdocContext.getSorting()) {
                     case BY_POSITION:
                         run();
                         break;
@@ -152,7 +148,7 @@ public class FindSteps extends Template {
         private void updateStepsInstancesPanel() {
             VelocityPanel panel = (VelocityPanel) get("stepsInstances");
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("stepsInstances", stepdocContext.getStepsInstances());
+            map.put("stepsClasses", stepdocContext.getStepsClasses());
             panel.setDefaultModel(new MapModel<String, Object>(map));
         }
 
@@ -162,9 +158,9 @@ public class FindSteps extends Template {
         stepdocContext.clearStepdocs();
         String matchingStep = stepdocContext.getMatchingStep();
         if (isNotBlank(matchingStep)) {
-            stepdocContext.addStepdocs(stepFinder.findMatching(matchingStep, steps));
+            stepdocContext.addStepdocs(configuration.stepFinder().findMatching(matchingStep, steps));
         } else {
-            stepdocContext.addStepdocs(stepdocs);
+            stepdocContext.addStepdocs(stepdocContext.getAllStepdocs());
         }
     }
 

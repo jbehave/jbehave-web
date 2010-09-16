@@ -2,7 +2,6 @@ package org.jbehave.web.runner.wicket.pages;
 
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
-import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -18,10 +17,11 @@ import org.codehaus.plexus.util.StringUtils;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.Keywords;
 import org.jbehave.core.embedder.StoryRunner;
-import org.jbehave.core.parsers.StoryParser;
+import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.TxtOutput;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.web.runner.context.StoryContext;
+import org.jbehave.web.runner.context.StoryOutputStream;
 
 import com.google.inject.Inject;
 
@@ -34,11 +34,11 @@ public class RunStory extends Template {
     @Inject
     private List<CandidateSteps> steps;
 
-    private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    private StoryOutputStream outputStream = new StoryOutputStream();
     private StoryContext storyContext = new StoryContext();
 
     public RunStory() {
-        this.configuration = withOutputTo(configuration, this.outputStream);
+        reportTo(outputStream);
         setPageTitle("Run Story");
         add(new StoryForm("storyForm"));
     }
@@ -68,12 +68,12 @@ public class RunStory extends Template {
         }
     }
 
-    private Configuration withOutputTo(Configuration configuration, OutputStream ouputStream) {
+    private void reportTo(OutputStream ouputStream) {
         final Properties outputPatterns = new Properties();
         outputPatterns.setProperty("beforeStory", "{0}\n");
         final Keywords keywords = configuration.keywords();
         final boolean reportFailureTrace = false;
-        return configuration.useDefaultStoryReporter(new TxtOutput(new PrintStream(outputStream), outputPatterns,
+        configuration.useDefaultStoryReporter(new TxtOutput(new PrintStream(outputStream), outputPatterns,
                 keywords, reportFailureTrace));
     }
 
@@ -82,13 +82,16 @@ public class RunStory extends Template {
             try {
                 outputStream.reset();
                 storyContext.clearFailureCause();
-                StoryParser storyParser = configuration.storyParser();
-                storyRunner.run(configuration, steps, storyParser.parseStory(storyContext.getInput()));
+                storyRunner.run(configuration, steps, parseStory(storyContext.getInput()));
             } catch (Throwable e) {
                 storyContext.runFailedFor(e);
             }
             storyContext.setOutput(outputStream.toString());
         }
+    }
+
+    private Story parseStory(String storyInput) {
+        return configuration.storyParser().parseStory(storyInput);
     }
 
 }
