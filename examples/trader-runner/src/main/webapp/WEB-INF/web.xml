@@ -13,6 +13,11 @@
       <param-name>applicationClassName</param-name>
       <param-value>org.jbehave.web.examples.trader.runner.TraderRunnerApplication</param-value>
     </init-param>
+    <init-param>
+      <!-- Use system property "wicket.configuration" to override to "development" when needed -->
+      <param-name>configuration</param-name>
+      <param-value>deployment</param-value>
+    </init-param>
   </servlet>
 
   <servlet-mapping>

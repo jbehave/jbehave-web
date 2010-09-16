@@ -1,18 +1,24 @@
 package org.jbehave.web.io;
 
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
+import static org.apache.commons.lang.StringUtils.remove;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.io.IOUtils;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
-import static org.apache.commons.lang.StringUtils.remove;
-import static org.apache.commons.lang.StringUtils.removeEnd;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * File archiver for zip files
@@ -20,17 +26,20 @@ import static org.apache.commons.lang.StringUtils.removeEnd;
 public class ZipFileArchiver implements FileArchiver {
 
 	private static final String UNIX_SEPARATOR = "/";
-	private static final String ZIP = "zip";
-	private static final String ZIP_EXT = ".zip";
+	private static final String ARCHIVER_NAME = "zip";
 	private ArchiveStreamFactory factory = new ArchiveStreamFactory();
 
 	public boolean isArchive(File file) {
-		return file.getName().endsWith(ZIP_EXT);
+		return fileExtension(file).equalsIgnoreCase("zip");
 	}
+
+    private String fileExtension(File file) {
+        return StringUtils.substringAfterLast(file.getName(), ".");
+    }
 
 	public void archive(File archive, File directory) {
 		try {
-			ArchiveOutputStream out = factory.createArchiveOutputStream(ZIP,
+			ArchiveOutputStream out = factory.createArchiveOutputStream(ARCHIVER_NAME,
 					new FileOutputStream(archive));
 			List<File> files = listContent(directory);
 			for (File file : files) {
@@ -65,15 +74,19 @@ public class ZipFileArchiver implements FileArchiver {
 	}
 
 	public File directoryOf(File archive) {
-		return new File(removeEnd(archive.getPath(), ZIP_EXT));
+		return new File(pathWithoutExtension(archive));
 	}
+
+    private String pathWithoutExtension(File file) {
+        return StringUtils.substringBeforeLast(file.getPath(), ".");
+    }
 
 	public void unarchive(File archive, File directory) {
 		InputStream is = null;
 		ArchiveInputStream in = null;
 		try {
 			is = new FileInputStream(archive);
-			in = factory.createArchiveInputStream(ZIP, is);
+			in = factory.createArchiveInputStream(ARCHIVER_NAME, is);
 			ZipArchiveEntry entry = null;
 			while ((entry = (ZipArchiveEntry) in.getNextEntry()) != null) {
 				unzipEntry(entry, in, directory);

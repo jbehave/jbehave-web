@@ -51,6 +51,11 @@ which return instances of the configurable components of the Web Runner.</p>
       <param-name>applicationClassName</param-name>
       <param-value>org.jbehave.web.examples.trader.runner.TraderRunnerApplication</param-value>
     </init-param>
+    <init-param>
+      <!-- Use system property "wicket.configuration" to override to "development" when needed -->
+      <param-name>configuration</param-name>
+      <param-value>deployment</param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>
@@ -64,9 +69,48 @@ which return instances of the configurable components of the Web Runner.</p>
 ]]>
 </script>
 
+<p>Note that some webapp containers may not handle filters properly.  In this case, you can equally use a servlet to configure
+ the Wicket application:</p>
+
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  version="2.5">
+
+  <display-name>JBehave Web Runner</display-name>
+
+  <servlet>
+    <servlet-name>wicket</servlet-name>
+    <servlet-class>org.apache.wicket.protocol.http.WicketServlet</servlet-class>
+    <init-param>
+      <param-name>applicationClassName</param-name>
+      <param-value>org.jbehave.web.examples.trader.runner.TraderRunnerApplication</param-value>
+    </init-param>
+    <init-param>
+      <!-- Use system property "wicket.configuration" to override to "development" when needed -->
+      <param-name>configuration</param-name>
+      <param-value>deployment</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>wicket</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+
+</web-app>
+]]>
+</script>
+
+<h2>Running with Maven</h2>
+
 <p>Maven users can model their own module on the <a
     href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner">trader
 runner example</a></p>
+
+<h2>Running with Ant</h2>
 
 <p>Ant users can download the web distribution from <a
     href="download.html">download page</a></p>
