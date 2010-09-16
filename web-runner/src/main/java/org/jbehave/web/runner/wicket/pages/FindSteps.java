@@ -2,7 +2,9 @@ package org.jbehave.web.runner.wicket.pages;
 
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
 import org.jbehave.web.runner.context.StepdocContext;
+import org.jbehave.web.runner.context.StepdocContext.Sorting;
 import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
@@ -89,6 +92,30 @@ public class FindSteps extends Template {
                 @Override
                 protected void onSelectionChanged(View newSelection) {
                     stepdocContext.setView(newSelection);
+                    updatePanels();
+                    setResponsePage(FindSteps.this);
+                }
+
+                protected boolean wantOnSelectionChangedNotifications() {
+                    return true;
+                }
+
+            });
+            add(new DropDownChoice<Sorting>("sortingSelect", Arrays.asList(Sorting.values())) {
+
+                @Override
+                protected void onSelectionChanged(Sorting newSelection) {
+                    stepdocContext.setSorting(newSelection);
+                    switch ( stepdocContext.getSorting() ){
+                    case BY_POSITION:
+                        run();
+                        break;
+                    case BY_PATTERN:
+                        List<Stepdoc> sorted = new ArrayList<Stepdoc>(stepdocContext.getStepdocs());
+                        Collections.sort(sorted);
+                        stepdocContext.setStepdocs(sorted);
+                        break;
+                    }
                     updatePanels();
                     setResponsePage(FindSteps.this);
                 }
