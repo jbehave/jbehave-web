@@ -46,7 +46,12 @@ public class TraderWebSteps {
     public void userSearchesAllSteps(){        
         findSteps.find("");
     }
-    
+
+    @When("user views with methods")
+    public void userViewWithMethods(){
+        findSteps.viewWithMethods();
+    }
+
     @When("user sorts by pattern")
     public void userSortsByPattern(){
         findSteps.sortByPattern();

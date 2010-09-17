@@ -30,6 +30,11 @@ public class FindSteps extends TraderPage {
         MatcherAssert.assertThat(text, Matchers.equalTo(text("stepdocs")));
     }
 
+    public void viewWithMethods() {
+        selectByLabel("viewSelect", "WITH_METHODS");
+        waitForPageToLoad();        
+    }
+
     public void sortByPattern() {
         selectByLabel("sortingSelect", "BY_PATTERN");
         waitForPageToLoad();        
