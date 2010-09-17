@@ -1,3 +1,3 @@
-#foreach( $class in $stepsClasses )
+#foreach( $class in $stepsInstances )
 ${class.name}
 #end

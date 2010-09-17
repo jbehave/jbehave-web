@@ -2,9 +2,7 @@ package org.jbehave.web.runner.wicket.pages;
 
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +39,7 @@ public class FindSteps extends Template {
         setPageTitle("Find Steps");
         add(new StepsForm("stepsForm"));
         stepdocContext.setAllStepdocs(configuration.stepFinder().stepdocs(this.steps));
-        stepdocContext.addStepsInstances(configuration.stepFinder().stepsInstances(this.steps));
+        stepdocContext.setStepsInstances(configuration.stepFinder().stepsInstances(this.steps));
     }
 
     @SuppressWarnings("serial")
@@ -107,9 +105,7 @@ public class FindSteps extends Template {
                         run();
                         break;
                     case BY_PATTERN:
-                        List<Stepdoc> sorted = new ArrayList<Stepdoc>(stepdocContext.getStepdocs());
-                        Collections.sort(sorted);
-                        stepdocContext.setStepdocs(sorted);
+                        stepdocContext.sortStepdocs();
                         break;
                     }
                     updatePanels();
@@ -148,7 +144,7 @@ public class FindSteps extends Template {
         private void updateStepsInstancesPanel() {
             VelocityPanel panel = (VelocityPanel) get("stepsInstances");
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("stepsClasses", stepdocContext.getStepsClasses());
+            map.put("stepsInstances", stepdocContext.getStepsClasses());
             panel.setDefaultModel(new MapModel<String, Object>(map));
         }
 
@@ -160,7 +156,7 @@ public class FindSteps extends Template {
         if (isNotBlank(matchingStep)) {
             stepdocContext.addStepdocs(configuration.stepFinder().findMatching(matchingStep, steps));
         } else {
-            stepdocContext.addStepdocs(stepdocContext.getAllStepdocs());
+            stepdocContext.addAllStepdocs();
         }
     }
 
