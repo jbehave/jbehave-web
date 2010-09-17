@@ -19,4 +19,9 @@ public class Home extends TraderPage {
         return factory.findSteps();
     }
     
+    public RunStory runStory(PageFactory factory){
+        clickLink("Run Story");
+        waitForPageToLoad();
+        return factory.runStory();
+    }
 }

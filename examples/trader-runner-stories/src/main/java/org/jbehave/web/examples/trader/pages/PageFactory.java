@@ -20,5 +20,9 @@ public class PageFactory {
     public FindSteps findSteps() {
         return new FindSteps(selenium, conditionRunner);
     }
+
+    public RunStory runStory() {
+        return new RunStory(selenium, conditionRunner);
+    }
     
 }

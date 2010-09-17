@@ -8,12 +8,14 @@ import org.jbehave.core.annotations.When;
 import org.jbehave.web.examples.trader.pages.FindSteps;
 import org.jbehave.web.examples.trader.pages.Home;
 import org.jbehave.web.examples.trader.pages.PageFactory;
+import org.jbehave.web.examples.trader.pages.RunStory;
 
 public class TraderWebSteps {
 
     private final PageFactory pageFactory;
     private Home home;
     private FindSteps findSteps;
+    private RunStory runStory;
 
     public TraderWebSteps(PageFactory pageFactory) {
         this.pageFactory = pageFactory;
@@ -28,6 +30,11 @@ public class TraderWebSteps {
     @When("user clicks on Find Steps")
     public void userClicksOnFindSteps(){        
         findSteps = home.findSteps(pageFactory);
+    }
+
+    @When("user clicks on Run Story")
+    public void userClicksOnRunStory(){        
+        runStory = home.runStory(pageFactory);
     }
 
     @When("user searches for \"$step\"")
@@ -45,6 +52,16 @@ public class TraderWebSteps {
         findSteps.sortByPattern();
     }
 
+    @When("user runs story \"$story\"")
+    public void userRunsStory(String story){        
+        runStory.run(story);
+    }
+
+    @Then("run is successful")
+    public void runIsSuccessful(){        
+        runStory.runIsSuccessful();
+    }
+
     @Then("text is shown: \"$text\"")
     public void textIsPresent(String text){   
         findSteps.textIsVisible(text);
@@ -55,9 +72,9 @@ public class TraderWebSteps {
         findSteps.found(steps);
     }
 
-    @Then("steps instances include: \"$instanceNames\"")
-    public void stepsInstancesInclude(List<String> instanceNames){   
-        for (String name : instanceNames) {
+    @Then("steps instances include: \"$names\"")
+    public void stepsInstancesInclude(List<String> names){   
+        for (String name : names) {
             findSteps.found(name);            
         }
     }
