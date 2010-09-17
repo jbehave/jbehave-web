@@ -10,5 +10,5 @@ public class TraderPage extends SeleniumPage {
     public TraderPage(Selenium selenium, ConditionRunner conditionRunner) {
         super(selenium, conditionRunner);
     }
-
+    
 }

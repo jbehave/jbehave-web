@@ -35,14 +35,24 @@ public class TraderWebSteps {
         findSteps.find(step);
     }
 
+    @When("user searches for all steps")
+    public void userSearchesAllSteps(){        
+        findSteps.find("");
+    }
+    
+    @When("user sorts by pattern")
+    public void userSortsByPattern(){
+        findSteps.sortByPattern();
+    }
+
     @Then("text is shown: \"$text\"")
     public void textIsPresent(String text){   
         findSteps.textIsVisible(text);
     }
 
-    @Then("search returns: \"$result\"")
-    public void searchReturns(String result){   
-        findSteps.found(result);
+    @Then("search returns: \"$steps\"")
+    public void stepsFound(List<String> steps){   
+        findSteps.found(steps);
     }
 
     @Then("steps instances include: \"$instanceNames\"")

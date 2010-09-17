@@ -3,6 +3,7 @@ package org.jbehave.web.runner.wicket.pages;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class FindStepsTest extends TemplateTest {
     }
 
     @Test
-    public void shouldFindStepdocs() {
+    public void shouldFindASingleStep() {
         // Given
         tester.startPage(pageClass);
         FormTester formTester = tester.newFormTester("stepsForm");
@@ -42,7 +43,32 @@ public class FindStepsTest extends TemplateTest {
     }
 
     @Test
-    public void shouldFindStepsClasses() {
+    public void shouldFindAndSortSteps() {
+        // Given
+        tester.startPage(pageClass);
+        FormTester formTester = tester.newFormTester("stepsForm");
+        // When
+        formTester.submit("findButton");
+        // Then
+        List<SerializableStepdoc> stepdocs = modelObject(formTester, "stepdocs");
+        assertThat(stepdocs.size(), equalTo(6));
+
+        formTester = tester.newFormTester("stepsForm");
+        // When
+        formTester.select("sortingSelect", 1);
+        formTester.submit("findButton");
+        // Then
+        List<SerializableStepdoc> sorted = modelObject(formTester, "stepdocs");
+        assertThat(sorted.size(), equalTo(6));
+        // sort original stepdocs and compare with actual
+        Collections.sort(stepdocs);
+        for ( int i = 0; i < sorted.size(); i++ ){
+            assertThat(sorted.get(i).getPattern(), equalTo(stepdocs.get(i).getPattern()));
+        }
+    }
+    
+    @Test
+    public void shouldFindStepsInstances() {
         //Given
         tester.startPage(pageClass);
         FormTester formTester = tester.newFormTester("stepsForm");
@@ -50,8 +76,9 @@ public class FindStepsTest extends TemplateTest {
         formTester.submit("findButton");
         // Then
         List<Class<?>> stepsClasses = modelObject(formTester, "stepsInstances");
-        assertThat(stepsClasses.size(), equalTo(1));
+        assertThat(stepsClasses.size(), equalTo(2));
         assertThat(stepsClasses.get(0).getName(), equalTo(TestSteps.class.getName()));
+        assertThat(stepsClasses.get(1).getName(), equalTo(OtherTestSteps.class.getName()));
     }
 
     @SuppressWarnings("unchecked")

@@ -44,6 +44,18 @@ public abstract class SeleniumPage {
         click("link=" + name + "");
     }
 
+    public void select(String locator, String option) {
+        selenium.select(locator, option);        
+    }
+
+    public void selectByLabel(String locator, String label) {
+        select(locator, "label="+label);        
+    }
+
+    public void selectByValue(String locator, String value) {
+        select(locator, "value="+value);        
+    }
+
     public void type(String locator, String value) {
         selenium.type(locator, value);
     }

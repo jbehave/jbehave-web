@@ -22,7 +22,7 @@ public abstract class TemplateTest {
 
             @Override
             protected List<CandidateSteps> candidateSteps() {
-                return Arrays.<CandidateSteps>asList(new TestSteps());
+                return Arrays.<CandidateSteps>asList(new TestSteps(), new OtherTestSteps());
             }            
         });
     }
@@ -44,4 +44,23 @@ public abstract class TemplateTest {
             
         }
     }
+
+    public static class OtherTestSteps extends Steps {
+        
+        @Given("another step")
+        public void givenAnotherStep(){
+            
+        }
+
+        @When("the other step is executed")
+        public void whenOtherStepIsExecuted(){
+            
+        }
+
+        @Then("other step is successful")
+        public void thenOtherStepIsSuccessful(){
+            
+        }
+    }
+
 }
