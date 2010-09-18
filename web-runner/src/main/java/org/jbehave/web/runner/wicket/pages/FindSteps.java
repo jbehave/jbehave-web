@@ -13,7 +13,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.util.MapModel;
-import org.apache.wicket.util.resource.IStringResourceStream;
 import org.apache.wicket.util.resource.PackageResourceStream;
 import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.velocity.markup.html.VelocityPanel;
@@ -48,39 +47,12 @@ public class FindSteps extends Template {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
             setMarkupId("stepsForm");
             add(new TextArea<String>("matchingStep").setType(String.class));
-            add(new VelocityPanel("stepdocs", new MapModel<String, List<Stepdoc>>(new HashMap<String, List<Stepdoc>>())) {
-                @Override
-                protected IStringResourceStream getTemplateResource() {
-                    return new PackageResourceStream(FindSteps.class, "stepdocs.vm");
-                }
-
-                @Override
-                protected boolean parseGeneratedMarkup() {
-                    return true;
-                }
-
-                @Override
-                protected boolean escapeHtml() {
-                    return true;
-                }
-            });
-            add(new VelocityPanel("stepsInstances", new MapModel<String, List<Class<?>>>(
-                    new HashMap<String, List<Class<?>>>())) {
-                @Override
-                protected IStringResourceStream getTemplateResource() {
-                    return new PackageResourceStream(FindSteps.class, "stepsInstances.vm");
-                }
-
-                @Override
-                protected boolean parseGeneratedMarkup() {
-                    return true;
-                }
-
-                @Override
-                protected boolean escapeHtml() {
-                    return true;
-                }
-            });
+            add(new HtmlEscapingVelocityPanel("stepdocs", new MapModel<String, List<Stepdoc>>(
+                    new HashMap<String, List<Stepdoc>>()), new PackageResourceStream(FindSteps.class, "stepdocs.vm"),
+                    "brush: plain"));
+            add(new HtmlEscapingVelocityPanel("stepsInstances", new MapModel<String, List<Stepdoc>>(
+                    new HashMap<String, List<Stepdoc>>()), new PackageResourceStream(FindSteps.class,
+                    "stepsInstances.vm"), "brush: java"));
             add(new DropDownChoice<View>("viewSelect", Arrays.asList(View.values())) {
 
                 @Override

@@ -10,7 +10,7 @@ public class FileContent extends Template {
 	public FileContent(File file) {
 		String path = file.getPath();		
 		String type = typeOf(path);
-        add(new SyntaxHighlighterLabel("fileContent", new ResourceFinder().resourceAsString(path), "brush: "+type));
+        add(new NoMarkupMultiLineLabel("fileContent", new ResourceFinder().resourceAsString(path), "brush: "+type));
 	}
 
     private String typeOf(String path) {

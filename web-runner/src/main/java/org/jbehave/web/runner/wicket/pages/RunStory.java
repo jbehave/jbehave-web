@@ -48,8 +48,8 @@ public class RunStory extends Template {
         public StoryForm(final String id) {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
             add(new TextArea<String>("input").setType(String.class));
-            add(new SyntaxHighlighterLabel("output", "", "brush: plain"));
-            add(new SyntaxHighlighterLabel("failure", "", "brush: java; gutter: false; collapse: true"));
+            add(new NoMarkupMultiLineLabel("output", "", "brush: plain"));
+            add(new NoMarkupMultiLineLabel("failure", "", "brush: java; gutter: false; collapse: true"));
             add(new Button("runButton"));
         }
 
