@@ -3,8 +3,6 @@ package org.jbehave.web.examples.trader.pages;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
@@ -27,7 +25,7 @@ public class FindSteps extends TraderPage {
 
     public void found(List<String> steps) {
         String text = StringUtils.join(steps, "\n");
-        MatcherAssert.assertThat(text, Matchers.equalTo(text("stepdocs")));
+        textIsVisible(text, "stepdocs");
     }
 
     public void viewWithMethods() {

@@ -69,11 +69,19 @@ public abstract class SeleniumPage {
     }
 
     public void textIsVisible(String text) {
-        waitFor(new Text(text));
+        textIsVisible(text, null);
+    }
+
+    public void textIsVisible(String text, String locator) {
+        waitFor(new Text(text, locator));
     }
 
     public void textIsNotVisible(String text) {
-        waitFor(new Not(new Text(text)));
+        textIsNotVisible(text, null);
+    }
+
+    public void textIsNotVisible(String text, String locator) {
+        waitFor(new Not(new Text(text, locator)));
     }
 
     public void waitFor(Condition condition) {

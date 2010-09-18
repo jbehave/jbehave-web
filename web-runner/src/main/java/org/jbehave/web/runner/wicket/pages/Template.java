@@ -52,7 +52,7 @@ public class Template extends WebPage {
                 IStringResourceStream templateResource, String classAttribute) {
             super(id, model);
             this.templateResource = templateResource;
-            //FIXME:  the attribute modifier invalidates the Selenium content lookup by id
+            //FIXME:  the attribute modifier invalidates the Selenium text locator
             //add(new AttributeModifier("class", true, new Model<String>(classAttribute)));
         }
 
