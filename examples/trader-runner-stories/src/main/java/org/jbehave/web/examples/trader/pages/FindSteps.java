@@ -2,8 +2,6 @@ package org.jbehave.web.examples.trader.pages;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 
@@ -24,8 +22,9 @@ public class FindSteps extends TraderPage {
     }
 
     public void found(List<String> steps) {
-        String text = StringUtils.join(steps, "\n");
-        textIsVisible(text, "stepdocs");
+        for ( String step : steps ){
+            textIsVisible(step);
+        }
     }
 
     public void viewWithMethods() {
