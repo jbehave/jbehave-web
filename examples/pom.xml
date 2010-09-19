@@ -18,11 +18,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.jbehave</groupId>
-      <artifactId>jbehave-pico</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-selenium</artifactId>
       <version>${project.version}</version>
