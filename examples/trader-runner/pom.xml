@@ -10,6 +10,12 @@
   <artifactId>jbehave-web-trader-runner</artifactId>
   <packaging>war</packaging>
   <name>JBehave Web Trader Runner</name>
+  <description>
+	Trader/Trading example launching with JBehaveWeb for interactive testing of stories
+	
+	Run mvn jetty:run 
+	Then go to http://localhost:8080 to play with it.	
+	</description>
   <properties>
     <jbehave.webapp.name>trader-runner</jbehave.webapp.name>
   </properties>
