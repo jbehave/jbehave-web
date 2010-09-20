@@ -69,19 +69,17 @@ public class TraderWebSteps {
 
     @Then("text is shown: \"$text\"")
     public void textIsPresent(String text){   
-        findSteps.textIsVisible(text);
+        findSteps.found(text);
     }
 
-    @Then("search returns: \"$steps\"")
-    public void stepsFound(List<String> steps){   
-        findSteps.found(steps);
+    @Then("search returns: \"$stepsOrMethods\"")
+    public void stepsFound(List<String> stepsOrMethods){   
+        findSteps.found(stepsOrMethods);
     }
 
     @Then("steps instances include: \"$names\"")
-    public void stepsInstancesInclude(List<String> names){   
-        for (String name : names) {
-            findSteps.found(name);            
-        }
+    public void stepsInstancesFound(List<String> names){   
+        findSteps.found(names);
     }
 
 }
