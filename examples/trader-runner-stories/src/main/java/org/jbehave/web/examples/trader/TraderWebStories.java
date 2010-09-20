@@ -15,6 +15,8 @@ import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.reporters.ConsoleOutput;
+import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
@@ -42,7 +44,24 @@ public class TraderWebStories extends JUnitStories {
             .useSeleniumContext(seleniumContext)
             .useStepMonitor(new SeleniumStepMonitor(selenium, seleniumContext, new SilentStepMonitor()))
             .useStoryLoader(new LoadFromClasspath(embeddableClass))
-            .useStoryReporterBuilder(new StoryReporterBuilder()
+            .useStoryReporterBuilder(new StoryReporterBuilder(){
+
+                    @Override
+                    public StoryReporter reporterFor(String storyPath, Format format) {
+                        if ( format == CONSOLE ){
+                            return new ConsoleOutput(){
+                                @Override
+                                public void beforeScenario(String title) {
+                                    seleniumContext.setCurrentScenario(title);
+                                    super.beforeScenario(title);
+                                }                                
+                            };
+                        } else { 
+                            return super.reporterFor(storyPath, format);
+                        }
+                    }
+                
+                }
                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
                 .withDefaultFormats()
                 .withFormats(CONSOLE, TXT, HTML, XML));
