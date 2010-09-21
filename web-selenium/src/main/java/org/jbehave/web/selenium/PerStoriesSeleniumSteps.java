@@ -22,12 +22,12 @@ public class PerStoriesSeleniumSteps extends SeleniumSteps {
     }
 
     @BeforeStories
-    public void beforeScenario() throws Exception {
+    public void beforeStories() throws Exception {
         selenium.start();
     }
 
     @AfterStories    
-    public void afterScenario() throws Exception {
+    public void afterStories() throws Exception {
         selenium.close();
         selenium.stop();
     }

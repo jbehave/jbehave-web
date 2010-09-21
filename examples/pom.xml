@@ -13,14 +13,15 @@
 
   <modules>
     <module>trader-runner</module>
-    <module>trader-runner-stories</module>
+    <module>trader-runner-selenium</module>
+    <module>trader-runner-webdriver</module>
   </modules>
 
   <dependencies>
     <dependency>
-      <groupId>org.jbehave.web</groupId>
-      <artifactId>jbehave-web-selenium</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.jbehave</groupId>
+      <artifactId>jbehave-core</artifactId>
+      <version>${jbehave.core.version}</version>
     </dependency>
   </dependencies>
 

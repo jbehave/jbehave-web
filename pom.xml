@@ -17,6 +17,7 @@
     <module>web-io</module>
     <module>web-resources</module>
     <module>web-selenium</module>
+    <module>web-webdriver</module>
     <module>web-runner</module>
   </modules>
 
