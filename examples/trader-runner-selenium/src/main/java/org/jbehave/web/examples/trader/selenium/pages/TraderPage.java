@@ -1,4 +1,4 @@
-package org.jbehave.web.examples.trader.webdriver.pages;
+package org.jbehave.web.examples.trader.selenium.pages;
 
 import org.jbehave.web.selenium.SeleniumPage;
 
