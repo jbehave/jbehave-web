@@ -22,10 +22,6 @@ public class Home extends TraderPage {
     }
     
     public RunStory runStory(PageFactory factory){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-        }
         findElement(By.linkText("Run Story")).click();
         return factory.runStory();
     }

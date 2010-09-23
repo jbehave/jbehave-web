@@ -23,7 +23,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.StoryReporterBuilder.Format.CONSOLE;
+import static org.jbehave.core.reporters.StoryReporterBuilder.Format.IDE_CONSOLE;
 import static org.jbehave.core.reporters.StoryReporterBuilder.Format.HTML;
 import static org.jbehave.core.reporters.StoryReporterBuilder.Format.TXT;
 import static org.jbehave.core.reporters.StoryReporterBuilder.Format.XML;
@@ -47,7 +47,7 @@ public class TraderWebStories extends JUnitStories {
 
                     @Override
                     public StoryReporter reporterFor(String storyPath, Format format) {
-                        if ( format == CONSOLE ){
+                        if ( format == IDE_CONSOLE ){
                             return new ConsoleOutput(){
                                 @Override
                                 public void beforeScenario(String title) {
@@ -63,7 +63,7 @@ public class TraderWebStories extends JUnitStories {
                 }
                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
                 .withDefaultFormats()
-                .withFormats(CONSOLE, TXT, HTML, XML));
+                .withFormats(IDE_CONSOLE, TXT, HTML, XML));
     }
 
     @Override
