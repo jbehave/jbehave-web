@@ -12,7 +12,7 @@ public class Home extends TraderPage {
     }
 
     public void open() {
-        get("http://localhost:8080/trader-runner");
+        get("http://localhost:8080/trader-runner/");
         manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -22,6 +22,10 @@ public class Home extends TraderPage {
     }
     
     public RunStory runStory(PageFactory factory){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
         findElement(By.linkText("Run Story")).click();
         return factory.runStory();
     }
