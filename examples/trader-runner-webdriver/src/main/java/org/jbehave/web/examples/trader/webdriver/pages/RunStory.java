@@ -13,7 +13,7 @@ public class RunStory extends TraderPage {
     }
 
     public void run(String story) {
-        findElement(By.id("input")).sendKeys(story);
+        findElement(By.name("input")).sendKeys(story);
         findElement(By.linkText("Run")).click();
     }
 

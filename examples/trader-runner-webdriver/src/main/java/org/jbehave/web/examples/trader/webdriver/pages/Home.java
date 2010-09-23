@@ -3,6 +3,8 @@ package org.jbehave.web.examples.trader.webdriver.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class Home extends TraderPage {
 
     public Home(WebDriver driver) {
@@ -10,7 +12,8 @@ public class Home extends TraderPage {
     }
 
     public void open() {
-        get("http://localhost/flight");
+        get("http://localhost:8080/trader-runner");
+        manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     public FindSteps findSteps(PageFactory factory){
