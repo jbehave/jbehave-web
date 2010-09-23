@@ -13,12 +13,12 @@ public class RunStory extends TraderPage {
     }
 
     public void run(String story) {
-        driver.findElement(By.id("input")).sendKeys(story);
-        driver.findElement(By.linkText("Run")).click();
+        findElement(By.id("input")).sendKeys(story);
+        findElement(By.linkText("Run")).click();
     }
 
     public void runIsSuccessful() {
-        String page = driver.getPageSource();
+        String page = getPageSource();
         assertTrue(page.contains("Scenario"));
         assertFalse(page.contains("FAILED"));
         assertFalse(page.contains("PENDING"));

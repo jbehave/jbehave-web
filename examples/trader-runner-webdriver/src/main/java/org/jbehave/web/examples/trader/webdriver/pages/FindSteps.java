@@ -13,29 +13,29 @@ public class FindSteps extends TraderPage {
     }
 
     public void find(String step) {
-        driver.findElement(By.id("matchingStep")).sendKeys(step);
-        driver.findElement(By.linkText("Find")).click();
+        findElement(By.id("matchingStep")).sendKeys(step);
+        findElement(By.linkText("Find")).click();
     }
 
     public void found(String step) {
-        driver.getPageSource().contains(step);
+        getPageSource().contains(step);
     }
 
     public void found(List<String> steps) {
-        String pageSource = driver.getPageSource();
+        String pageSource = getPageSource();
         for ( String step : steps ){
             pageSource.contains(step);
         }
     }
 
     public void viewWithMethods() {
-        WebElement element = driver.findElement(By.id("viewSelect"));
+        WebElement element = findElement(By.id("viewSelect"));
         element.setSelected(); // "WITH_METHODS"
         // ?
     }
 
     public void sortByPattern() {
-        WebElement element = driver.findElement(By.id("sortingSelect"));
+        WebElement element = findElement(By.id("sortingSelect"));
         element.setSelected(); // "BY_PATTERN"
     }
 

@@ -10,16 +10,16 @@ public class Home extends TraderPage {
     }
 
     public void open() {
-        driver.get("http://localhost/flight");        
+        get("http://localhost/flight");
     }
 
     public FindSteps findSteps(PageFactory factory){
-        driver.findElement(By.linkText("Find Steps")).click();
+        findElement(By.linkText("Find Steps")).click();
         return factory.findSteps();
     }
     
     public RunStory runStory(PageFactory factory){
-        driver.findElement(By.linkText("Run Story")).click();
+        findElement(By.linkText("Run Story")).click();
         return factory.runStory();
     }
 }
