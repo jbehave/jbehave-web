@@ -4,17 +4,14 @@ import org.openqa.selenium.WebDriver;
 
 public class WebDriverSteps {
 
-    protected WebDriver driver;
+    protected WebDriverProxy driverProxy;
 
-    public WebDriverSteps(WebDriver driver) {
-        this.driver = driver;
-    }
-
-    public void setDriver(WebDriver driver) {
-        ((WebDriverProxy) this.driver).setProxy(driver);
+    public WebDriverSteps(WebDriverProxy driverProxy) {
+        this.driverProxy = driverProxy;
     }
 
     public WebDriver getDriver() {
-        return driver;
+        return driverProxy;
     }
+
 }

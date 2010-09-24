@@ -3,6 +3,7 @@ package org.jbehave.web.webdriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.List;
 import java.util.Set;
@@ -10,10 +11,6 @@ import java.util.Set;
 public class WebDriverProxy implements WebDriver {
 
     private WebDriver proxy;
-
-    public void setProxy(WebDriver proxy) {
-        this.proxy = proxy;
-    }
 
     public void get(String s) {
         proxy.get(s);
@@ -66,4 +63,13 @@ public class WebDriverProxy implements WebDriver {
     public Options manage() {
         return proxy.manage();
     }
+    
+    public final void newWebDriver() {
+        this.proxy = makeWebDriver();
+    }
+
+    protected WebDriver makeWebDriver() {
+        return new FirefoxDriver();
+    }
+
 }

@@ -6,7 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverConfiguration extends Configuration {
 
-    private WebDriver driver = defaultWebDriver();
+    private WebDriver driver;
     private WebDriverContext webDriverContext = new WebDriverContext();
 
     public WebDriverConfiguration() {
@@ -30,10 +30,8 @@ public class WebDriverConfiguration extends Configuration {
         return this;
     }
 
-    public static WebDriver defaultWebDriver() {
-        
+    public WebDriver makeWebDriver() {
         return new FirefoxDriver();
     }
-
 
 }

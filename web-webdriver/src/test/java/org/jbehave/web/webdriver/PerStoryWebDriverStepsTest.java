@@ -25,7 +25,12 @@ public class PerStoryWebDriverStepsTest {
     private final StoryParser parser = new RegexStoryParser();
     private final StoryRunner runner = new StoryRunner();
     private final WebDriver driver = mock(WebDriver.class);
-	private final WebDriver proxyDriver = new WebDriverProxy();
+	private final WebDriverProxy proxyDriver = new WebDriverProxy() {
+        @Override
+        protected WebDriver makeWebDriver() {
+            return driver;
+        }
+    };
 
     @Ignore    
     @Test
@@ -47,10 +52,6 @@ public class PerStoryWebDriverStepsTest {
             super(proxyDriver);
         }
 
-        @Override
-        public void beforeStory() throws Exception {
-            setDriver(driver);
-        }
 
         @Given("a test")
         public void aTest() {

@@ -2,9 +2,7 @@ package org.jbehave.web.webdriver;
 
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeScenario;
-import org.openqa.selenium.WebDriver;
 
-import static org.jbehave.web.webdriver.WebDriverConfiguration.defaultWebDriver;
 
 /**
  * Steps implementation that can be used in WebDriver-based stories. It provides
@@ -13,19 +11,18 @@ import static org.jbehave.web.webdriver.WebDriverConfiguration.defaultWebDriver;
  * @author Mauro Talevi
  */
 public class PerScenarioWebDriverSteps extends WebDriverSteps {
-    public PerScenarioWebDriverSteps(WebDriver driver) {
-        super(driver);
+    public PerScenarioWebDriverSteps(WebDriverProxy driverProxy) {
+        super(driverProxy);
     }
 
     @BeforeScenario
     public void beforeScenario() throws Exception {
-        setDriver(defaultWebDriver());
+        driverProxy.newWebDriver();
     }
 
     @AfterScenario
     public void afterScenario() throws Exception {
-        getDriver().close();
-        setDriver(null);
+        getDriver().quit();
     }
 
 }

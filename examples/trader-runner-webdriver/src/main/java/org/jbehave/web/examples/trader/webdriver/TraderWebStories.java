@@ -17,20 +17,19 @@ import org.jbehave.web.webdriver.WebDriverConfiguration;
 import org.jbehave.web.webdriver.WebDriverContext;
 import org.jbehave.web.webdriver.WebDriverProxy;
 import org.jbehave.web.webdriver.WebDriverStepMonitor;
-import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.StoryReporterBuilder.Format.IDE_CONSOLE;
 import static org.jbehave.core.reporters.StoryReporterBuilder.Format.HTML;
+import static org.jbehave.core.reporters.StoryReporterBuilder.Format.IDE_CONSOLE;
 import static org.jbehave.core.reporters.StoryReporterBuilder.Format.TXT;
 import static org.jbehave.core.reporters.StoryReporterBuilder.Format.XML;
 
 public class TraderWebStories extends JUnitStories {
 
-    private WebDriver driver = new WebDriverProxy();
+    private WebDriverProxy driver = new WebDriverProxy();
 
     private PageFactory pageFactory = new PageFactory(driver);
     private WebDriverContext webDriverContext = new WebDriverContext();

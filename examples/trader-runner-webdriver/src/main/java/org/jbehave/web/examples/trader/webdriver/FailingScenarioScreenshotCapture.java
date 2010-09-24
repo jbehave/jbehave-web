@@ -3,12 +3,12 @@ package org.jbehave.web.examples.trader.webdriver;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterScenario.Outcome;
 import org.jbehave.web.webdriver.PerScenarioWebDriverSteps;
-import org.openqa.selenium.WebDriver;
+import org.jbehave.web.webdriver.WebDriverProxy;
 
 public class FailingScenarioScreenshotCapture extends PerScenarioWebDriverSteps {
 
-    public FailingScenarioScreenshotCapture(WebDriver driver) {
-        super(driver);
+    public FailingScenarioScreenshotCapture(WebDriverProxy driverProxy) {
+        super(driverProxy);
     }
 
     @AfterScenario(uponOutcome = Outcome.FAILURE)
