@@ -32,7 +32,6 @@ public class PerScenarioWebDriverStepsTest {
         }
     };
 
-    @Ignore
 	@Test
 	public void canRunSuccessfulStory() throws Throwable{
         String story = "Scenario: A simple web scenario" + NL 
@@ -43,7 +42,7 @@ public class PerScenarioWebDriverStepsTest {
 		MySteps steps = new MySteps();
 		InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps);
         runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(story, path));
-        verify(driver).close();
+        verify(driver).quit();
 
 	}
 
