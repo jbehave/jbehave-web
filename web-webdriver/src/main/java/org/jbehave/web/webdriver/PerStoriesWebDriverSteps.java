@@ -12,18 +12,18 @@ import org.jbehave.core.annotations.BeforeStories;
  */
 public class PerStoriesWebDriverSteps extends WebDriverSteps {
 
-    public PerStoriesWebDriverSteps(WebDriverProxy proxyDriver) {
-        super(proxyDriver);
+    public PerStoriesWebDriverSteps(WebDriverFactory driverFactory) {
+        super(driverFactory);
     }
 
     @BeforeStories
     public void beforeStories() throws Exception {
-        driverProxy.newWebDriver();
+        driverFactory.initialize();
     }
 
     @AfterStories    
     public void afterStories() throws Exception {
-        getDriver().quit();
+        getDriverFactory().get().quit();
     }
 
 }

@@ -1,15 +1,15 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
+import org.jbehave.web.webdriver.WebDriverFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;
 
 public class RunStory extends TraderPage {
 
-    public RunStory(WebDriver driver) {
-        super(driver);
+    public RunStory(WebDriverFactory driverFactory) {
+        super(driverFactory);
     }
 
     public void run(String story) {

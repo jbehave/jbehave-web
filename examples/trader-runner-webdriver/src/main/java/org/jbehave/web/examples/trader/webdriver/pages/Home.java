@@ -1,14 +1,14 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
+import org.jbehave.web.webdriver.WebDriverFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
 public class Home extends TraderPage {
 
-    public Home(WebDriver driver) {
-        super(driver);
+    public Home(WebDriverFactory driverFactory) {
+        super(driverFactory);
     }
 
     public void open() {

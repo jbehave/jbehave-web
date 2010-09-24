@@ -1,14 +1,14 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
+import org.jbehave.web.webdriver.WebDriverFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
 public class FindSteps extends TraderPage {
 
-    public FindSteps(WebDriver driver) {
+    public FindSteps(WebDriverFactory driver) {
         super(driver);
     }
 

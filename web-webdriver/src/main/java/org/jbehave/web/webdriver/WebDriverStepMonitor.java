@@ -2,7 +2,6 @@ package org.jbehave.web.webdriver;
 
 import org.jbehave.core.steps.StepMonitor;
 import org.jbehave.core.steps.StepType;
-import org.openqa.selenium.WebDriver;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -11,18 +10,18 @@ public class WebDriverStepMonitor implements StepMonitor {
 
 	private final WebDriverContext webDriverContext;
 	private final StepMonitor delegate;
-    private WebDriver driver;
+    private WebDriverFactory driverFactory;
 
-    public WebDriverStepMonitor(WebDriver driver,
+    public WebDriverStepMonitor(WebDriverFactory driverFactory,
 			WebDriverContext webDriverContext, StepMonitor delegate) {
-		this.driver = driver;
+		this.driverFactory = driverFactory;
 		this.webDriverContext = webDriverContext;
 		this.delegate = delegate;
 	}
 
 	public void performing(String step, boolean dryRun){
 		String message = webDriverContext.getCurrentScenario() + "\n" + step;
-        //driver.chrome().notify(message); // Future WebDriver functionality
+        //driverFactory.get().chrome().notify(message); // Future WebDriver functionality
 		delegate.performing(step, dryRun);
 	}
 
