@@ -21,7 +21,8 @@ public class WebDriverStepMonitor implements StepMonitor {
 	}
 
 	public void performing(String step, boolean dryRun){
-		String context = webDriverContext.getCurrentScenario() + "<br/>" + step;
+		String message = webDriverContext.getCurrentScenario() + "\n" + step;
+        //driver.chrome().notify(message); // Future WebDriver functionality
 		delegate.performing(step, dryRun);
 	}
 
