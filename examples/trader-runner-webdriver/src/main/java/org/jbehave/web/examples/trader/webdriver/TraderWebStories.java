@@ -15,7 +15,8 @@ import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
 import org.jbehave.web.webdriver.WebDriverConfiguration;
 import org.jbehave.web.webdriver.WebDriverContext;
-import org.jbehave.web.webdriver.WebDriverProxy;
+import org.jbehave.web.webdriver.WebDriverFactory;
+import org.jbehave.web.webdriver.WebDriverFactoryImpl;
 import org.jbehave.web.webdriver.WebDriverStepMonitor;
 
 import java.util.List;
@@ -29,18 +30,18 @@ import static org.jbehave.core.reporters.StoryReporterBuilder.Format.XML;
 
 public class TraderWebStories extends JUnitStories {
 
-    private WebDriverProxy driver = new WebDriverProxy();
+    private WebDriverFactory driverFactory = new WebDriverFactoryImpl();
 
-    private PageFactory pageFactory = new PageFactory(driver);
+    private PageFactory pageFactory = new PageFactory(driverFactory);
     private WebDriverContext webDriverContext = new WebDriverContext();
 
     @Override
     public Configuration configuration() {
         Class<? extends Embeddable> embeddableClass = this.getClass();
         return new WebDriverConfiguration()
-            .useWebDriver(driver)
+            .useWebDriverFactory(driverFactory)
             .useWebDriverContext(webDriverContext)
-            .useStepMonitor(new WebDriverStepMonitor(driver, webDriverContext, new SilentStepMonitor()))
+            .useStepMonitor(new WebDriverStepMonitor(driverFactory, webDriverContext, new SilentStepMonitor()))
             .useStoryLoader(new LoadFromClasspath(embeddableClass))
             .useStoryReporterBuilder(new StoryReporterBuilder(){
 
@@ -67,7 +68,7 @@ public class TraderWebStories extends JUnitStories {
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new FailingScenarioScreenshotCapture(driver))
+        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new FailingScenarioScreenshotCapture(driverFactory))
                 .createCandidateSteps();
     }
     

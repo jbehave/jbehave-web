@@ -3,7 +3,6 @@ package org.jbehave.web.webdriver;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.steps.StepMonitor;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
 import java.lang.reflect.Method;
 
@@ -12,7 +11,7 @@ import static org.mockito.Mockito.verify;
 
 public class WebDriverConfigurationTest {
     
-    private WebDriver driver = mock(WebDriver.class);
+    private WebDriverFactory driver = mock(WebDriverFactory.class);
     private StepMonitor stepMonitor = mock(StepMonitor.class);
 
     @Test
@@ -22,7 +21,7 @@ public class WebDriverConfigurationTest {
         String step = "a step";
         String context = currentScenario + "<br/>" + step;
         boolean dryRun = false;
-        Configuration configuration = new WebDriverConfiguration().useWebDriver(driver).useWebDriverContext(
+        Configuration configuration = new WebDriverConfiguration().useWebDriverFactory(driver).useWebDriverContext(
                 webDriverContext).useStepMonitor(new WebDriverStepMonitor(driver, webDriverContext, stepMonitor));
         webDriverContext.setCurrentScenario(currentScenario);
         configuration.stepMonitor().performing(step, dryRun);

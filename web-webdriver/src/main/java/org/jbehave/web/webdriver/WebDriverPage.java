@@ -9,61 +9,61 @@ import java.util.Set;
 
 public abstract class WebDriverPage implements WebDriver {
 
-    private final WebDriver driver;
+    private final WebDriverFactory driverFactory;
 
-    public WebDriverPage(WebDriver driver) {
-        this.driver = driver;
+    public WebDriverPage(WebDriverFactory driverFactory) {
+        this.driverFactory = driverFactory;
     }
 
     public void get(String s) {
-        driver.get(s);
+        driverFactory.get().get(s);
     }
 
     public String getCurrentUrl() {
-        return driver.getCurrentUrl();
+        return driverFactory.get().getCurrentUrl();
     }
 
     public String getTitle() {
-        return driver.getTitle();
+        return driverFactory.get().getTitle();
     }
 
     public List<WebElement> findElements(By by) {
-        return driver.findElements(by);
+        return driverFactory.get().findElements(by);
     }
 
     public WebElement findElement(By by) {
-        return driver.findElement(by);
+        return driverFactory.get().findElement(by);
     }
 
     public String getPageSource() {
-        return driver.getPageSource();
+        return driverFactory.get().getPageSource();
     }
 
     public void close() {
-        driver.close();
+        driverFactory.get().close();
     }
 
     public void quit() {
-        driver.quit();
+        driverFactory.get().quit();
     }
 
     public Set<String> getWindowHandles() {
-        return driver.getWindowHandles();
+        return driverFactory.get().getWindowHandles();
     }
 
     public String getWindowHandle() {
-        return driver.getCurrentUrl();
+        return driverFactory.get().getCurrentUrl();
     }
 
     public TargetLocator switchTo() {
-        return driver.switchTo();
+        return driverFactory.get().switchTo();
     }
 
     public Navigation navigate() {
-        return driver.navigate();
+        return driverFactory.get().navigate();
     }
 
     public Options manage() {
-        return driver.manage();
+        return driverFactory.get().manage();
     }
 }
