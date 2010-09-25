@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class FindSteps extends TraderPage {
 
@@ -20,24 +20,32 @@ public class FindSteps extends TraderPage {
     }
 
     public void found(String step) {
-        getPageSource().contains(step);
+        found(getPageSource(), step);
     }
 
     public void found(List<String> steps) {
         String pageSource = getPageSource();
-        for ( String step : steps ){
-            assertTrue(pageSource.contains(step));
+        for (String step : steps) {
+            found(pageSource, step);
         }
     }
 
+    private void found(String pageSource, String step) {
+        if (!pageSource.contains(escapeToHtml(step))) {
+            fail("Step:**" + step + "** not found in page **" + pageSource + "**");
+        }
+    }
+
+    private String escapeToHtml(String step) {
+        return step.replace("<", "&lt;").replace(">", "&gt;");
+    }
+
     public void viewWithMethods() {
-        Select dropDown = new Select(findElement(By.name("viewSelect")));
-        dropDown.selectByVisibleText("WITH_METHODS");
+        new Select(findElement(By.name("viewSelect"))).selectByVisibleText("WITH_METHODS");
     }
 
     public void sortByPattern() {
-        Select dropDown = new Select(findElement(By.name("sortingSelect")));
-        dropDown.selectByVisibleText("BY_PATTERN");
+        new Select(findElement(By.name("sortingSelect"))).selectByVisibleText("BY_PATTERN");
     }
 
 }
