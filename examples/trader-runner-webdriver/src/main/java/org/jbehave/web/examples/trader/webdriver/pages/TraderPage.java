@@ -1,7 +1,7 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
-import org.jbehave.web.webdriver.WebDriverFactory;
-import org.jbehave.web.webdriver.WebDriverPage;
+import org.jbehave.web.selenium.WebDriverFactory;
+import org.jbehave.web.selenium.WebDriverPage;
 
 public class TraderPage extends WebDriverPage {
 

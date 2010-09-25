@@ -1,4 +1,4 @@
-package org.jbehave.web.webdriver;
+package org.jbehave.web.selenium;
 
 import org.jbehave.core.annotations.AfterStory;
 import org.jbehave.core.annotations.BeforeStory;

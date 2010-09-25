@@ -13,12 +13,12 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
-import org.jbehave.web.webdriver.LocalSwingNotifier;
-import org.jbehave.web.webdriver.WebDriverConfiguration;
-import org.jbehave.web.webdriver.WebDriverContext;
-import org.jbehave.web.webdriver.WebDriverFactory;
-import org.jbehave.web.webdriver.WebDriverFactoryImpl;
-import org.jbehave.web.webdriver.WebDriverStepMonitor;
+import org.jbehave.web.selenium.LocalSwingNotifier;
+import org.jbehave.web.selenium.WebDriverConfiguration;
+import org.jbehave.web.selenium.WebDriverContext;
+import org.jbehave.web.selenium.WebDriverFactory;
+import org.jbehave.web.selenium.WebDriverFactoryImpl;
+import org.jbehave.web.selenium.WebDriverStepMonitor;
 
 import java.util.List;
 

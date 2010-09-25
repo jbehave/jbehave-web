@@ -1,6 +1,6 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
-import org.jbehave.web.webdriver.WebDriverFactory;
+import org.jbehave.web.selenium.WebDriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 

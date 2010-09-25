@@ -1,4 +1,4 @@
-package org.jbehave.web.webdriver;
+package org.jbehave.web.selenium;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -16,15 +16,15 @@ import org.openqa.selenium.WebDriver;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class PerScenarioWebDriverStepsTest {
+public class PerStoryWebDriverStepsTest {
 
-	private static final String NL = "\n";
+    private static final String NL = "\n";
 
-	private final Configuration configuration = new MostUsefulConfiguration();
-	private final StoryParser parser = new RegexStoryParser();
-	private final StoryRunner runner = new StoryRunner();
+    private final Configuration configuration = new MostUsefulConfiguration();
+    private final StoryParser parser = new RegexStoryParser();
+    private final StoryRunner runner = new StoryRunner();
     private final WebDriver driver = mock(WebDriver.class);
-	private final WebDriverFactory driverFactory = new WebDriverFactory() {
+    private final WebDriverFactory driverFactory = new WebDriverFactory() {
         public WebDriver get() {
             return driver;
         }
@@ -32,42 +32,42 @@ public class PerScenarioWebDriverStepsTest {
         }
     };
 
-	@Test
-	public void canRunSuccessfulStory() throws Throwable{
+    @Test
+    public void canRunSuccessfulStory() throws Throwable {
         String story = "Scenario: A simple web scenario" + NL 
             + "Given a test" + NL 
             + "When a test is executed" + NL
             + "Then a tester is a happy hopper";
         String path = "/path/to/story";
-		MySteps steps = new MySteps();
-		InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps);
+        MySteps steps = new MySteps();
+        InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps);
         runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(story, path));
         verify(driver).quit();
+    }
 
-	}
-
-	public class MySteps extends PerStoryWebDriverSteps {
+    public class MySteps extends PerStoryWebDriverSteps {
 
         public MySteps() {
-            super(PerScenarioWebDriverStepsTest.this.driverFactory);
+            super(PerStoryWebDriverStepsTest.this.driverFactory);
         }
 
+
         @Given("a test")
-		public void aTest() {
-		}
+        public void aTest() {
+        }
 
-		@When("a test is executed")
-		public void aTestIsExecuted() {
-		}
+        @When("a test is executed")
+        public void aTestIsExecuted() {
+        }
 
-		@When("a test fails")
-		public void aTestFails() {
-			throw new RuntimeException("Test failed");
-		}
+        @When("a test fails")
+        public void aTestFails() {
+            throw new RuntimeException("Test failed");
+        }
 
-		@Then("a tester is a happy hopper")
-		public void aTesterIsHappy() {
-		}
-	};
+        @Then("a tester is a happy hopper")
+        public void aTesterIsHappy() {
+        }
+    };
 
 }

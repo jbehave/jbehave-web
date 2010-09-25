@@ -1,4 +1,4 @@
-package org.jbehave.web.webdriver;
+package org.jbehave.web.selenium;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;

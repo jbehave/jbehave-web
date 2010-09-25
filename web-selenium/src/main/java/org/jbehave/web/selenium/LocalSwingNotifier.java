@@ -1,4 +1,4 @@
-package org.jbehave.web.webdriver;
+package org.jbehave.web.selenium;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
