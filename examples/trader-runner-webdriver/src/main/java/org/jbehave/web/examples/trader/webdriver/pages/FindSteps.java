@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class FindSteps extends TraderPage {
 
@@ -25,8 +25,10 @@ public class FindSteps extends TraderPage {
 
     public void found(List<String> steps) {
         String pageSource = getPageSource();
-        for ( String step : steps ){
-            assertTrue(pageSource.contains(step));
+        for (String step : steps) {
+            if (!pageSource.contains(step.replace("<", "&lt;").replace(">", "&gt;"))) {
+                fail("Step:**" + step + "** not found in page **" + pageSource + "**");
+            }
         }
     }
 
