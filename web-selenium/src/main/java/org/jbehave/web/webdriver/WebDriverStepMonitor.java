@@ -11,11 +11,8 @@ public class WebDriverStepMonitor implements StepMonitor {
 	private final WebDriverContext webDriverContext;
 	private final StepMonitor delegate;
     private final Notifier notifier;
-    private WebDriverFactory driverFactory;
 
-    public WebDriverStepMonitor(WebDriverFactory driverFactory,
-			WebDriverContext webDriverContext, StepMonitor delegate, Notifier notifier) {
-		this.driverFactory = driverFactory;
+    public WebDriverStepMonitor(WebDriverContext webDriverContext, StepMonitor delegate, Notifier notifier) {
 		this.webDriverContext = webDriverContext;
 		this.delegate = delegate;
         this.notifier = notifier;

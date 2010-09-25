@@ -22,8 +22,10 @@ public class WebDriverConfigurationTest {
         String step = "a step";
         String context = currentScenario + "<br/>" + step;
         boolean dryRun = false;
-        Configuration configuration = new WebDriverConfiguration().useWebDriverFactory(driver).useWebDriverContext(
-                webDriverContext).useStepMonitor(new WebDriverStepMonitor(driver, webDriverContext, stepMonitor, notifier));
+        Configuration configuration = new WebDriverConfiguration()
+                .useWebDriverFactory(driver)
+                .useWebDriverContext(webDriverContext)
+                .useStepMonitor(new WebDriverStepMonitor(webDriverContext, stepMonitor, notifier));
         webDriverContext.setCurrentScenario(currentScenario);
         configuration.stepMonitor().performing(step, dryRun);
         verify(notifier).notify(context);
@@ -41,7 +43,7 @@ public class WebDriverConfigurationTest {
         boolean matches = true;
         Method method = null;
         Object stepsInstance = new Object();
-        WebDriverStepMonitor monitor = new WebDriverStepMonitor(driver, new WebDriverContext(), stepMonitor, notifier);
+        WebDriverStepMonitor monitor = new WebDriverStepMonitor(new WebDriverContext(), stepMonitor, notifier);
         monitor.convertedValueOfType(value, type, converted, converterClass);
         monitor.stepMatchesPattern(step, matches, pattern, method, stepsInstance);
         verify(stepMonitor).convertedValueOfType(value, type, converted, converterClass);

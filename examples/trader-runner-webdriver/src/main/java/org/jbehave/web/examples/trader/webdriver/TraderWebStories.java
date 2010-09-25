@@ -32,39 +32,45 @@ import static org.jbehave.core.reporters.StoryReporterBuilder.Format.XML;
 public class TraderWebStories extends JUnitStories {
 
     private WebDriverFactory driverFactory = new WebDriverFactoryImpl();
-
     private PageFactory pageFactory = new PageFactory(driverFactory);
-    private WebDriverContext webDriverContext = new WebDriverContext();
+    private WebDriverContext context = new WebDriverContext();
+    private LocalSwingNotifier notifier = new LocalSwingNotifier();
 
     @Override
     public Configuration configuration() {
         Class<? extends Embeddable> embeddableClass = this.getClass();
         return new WebDriverConfiguration()
-            .useWebDriverFactory(driverFactory)
-            .useWebDriverContext(webDriverContext)
-            .useStepMonitor(new WebDriverStepMonitor(driverFactory, webDriverContext, new SilentStepMonitor(), new LocalSwingNotifier()))
-            .useStoryLoader(new LoadFromClasspath(embeddableClass))
-            .useStoryReporterBuilder(new StoryReporterBuilder(){
+                .useWebDriverFactory(driverFactory)
+                .useWebDriverContext(context)
+                .useStepMonitor(new WebDriverStepMonitor(context, new SilentStepMonitor(), notifier))
+                .useStoryLoader(new LoadFromClasspath(embeddableClass))
+                .useStoryReporterBuilder(new StoryReporterBuilder() {
 
                     @Override
                     public StoryReporter reporterFor(String storyPath, Format format) {
-                        if ( format == IDE_CONSOLE ){
-                            return new ConsoleOutput(){
+                        if (format == IDE_CONSOLE) {
+                            return new ConsoleOutput() {
                                 @Override
-                                public void beforeScenario(String title) {
-                                    webDriverContext.setCurrentScenario(title);
-                                    super.beforeScenario(title);
-                                }                                
+                                public void beforeScenario(String scenarioTitle) {
+                                    context.setCurrentScenario(scenarioTitle);
+                                    super.beforeScenario(scenarioTitle);
+                                }
+
+                                @Override
+                                public void afterStory(boolean givenStory) {
+                                    notifier.close();
+                                    super.afterStory(givenStory);
+                                }
                             };
-                        } else { 
+                        } else {
                             return super.reporterFor(storyPath, format);
                         }
                     }
-                
+
                 }
-                .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
-                .withDefaultFormats()
-                .withFormats(IDE_CONSOLE, TXT, HTML, XML));
+                        .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+                        .withDefaultFormats()
+                        .withFormats(IDE_CONSOLE, TXT, HTML, XML));
     }
 
     @Override
@@ -72,7 +78,7 @@ public class TraderWebStories extends JUnitStories {
         return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new FailingScenarioScreenshotCapture(driverFactory))
                 .createCandidateSteps();
     }
-    
+
 
     @Override
     protected List<String> storyPaths() {
