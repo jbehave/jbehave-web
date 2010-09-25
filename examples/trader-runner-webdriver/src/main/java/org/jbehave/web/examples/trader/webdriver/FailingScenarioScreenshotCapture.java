@@ -16,15 +16,20 @@ public class FailingScenarioScreenshotCapture extends PerScenarioWebDriverSteps 
         super(driverFactory);
     }
 
+    @Override
     @AfterScenario(uponOutcome = Outcome.FAILURE)
-    public void takeScreenshotOfFailedScenario() throws Exception {
+    public void afterScenario() throws Exception {
+
         String home = System.getenv("HOME");
         // home+"/failedScenario.png"
         WebDriver webDriver = driverFactory.get();
         if (webDriver instanceof TakesScreenshot) {
             File sShot = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-            System.out.println("ScreenShot at: " + sShot.getAbsolutePath());
+            System.out.println("Screenshot at: " + sShot.getAbsolutePath());
+        } else {
+            System.out.println("Screenshot cannot be taken: driver " + webDriver.getClass().getName() + " does not support Screenshotting");
         }
+        super.afterScenario();
     }
 
 }
