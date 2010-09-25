@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
           <groupId>org.jbehave.web</groupId>
-          <artifactId>jbehave-web-webdriver</artifactId>
+          <artifactId>jbehave-web-selenium</artifactId>
           <version>${project.version}</version>
         </dependency>        
     </dependencies>
