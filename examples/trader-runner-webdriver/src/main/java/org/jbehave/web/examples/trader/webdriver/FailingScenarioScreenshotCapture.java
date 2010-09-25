@@ -8,7 +8,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
-import java.io.File;
+import java.io.FileOutputStream;
 
 public class FailingScenarioScreenshotCapture extends PerScenarioWebDriverSteps {
 
@@ -19,13 +19,15 @@ public class FailingScenarioScreenshotCapture extends PerScenarioWebDriverSteps 
     @Override
     @AfterScenario(uponOutcome = Outcome.FAILURE)
     public void afterScenario() throws Exception {
-
         String home = System.getenv("HOME");
-        // home+"/failedScenario.png"
         WebDriver webDriver = driverFactory.get();
         if (webDriver instanceof TakesScreenshot) {
-            File sShot = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-            System.out.println("Screenshot at: " + sShot.getAbsolutePath());
+            byte[] bytes = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+            String locn = home + "/failed-scenario-" + System.currentTimeMillis() + ".png";
+            FileOutputStream fos = new FileOutputStream(locn);
+            fos.write(bytes);
+            fos.close();
+            System.out.println("Screenshot at: " + locn);
         } else {
             System.out.println("Screenshot cannot be taken: driver " + webDriver.getClass().getName() + " does not support Screenshotting");
         }
