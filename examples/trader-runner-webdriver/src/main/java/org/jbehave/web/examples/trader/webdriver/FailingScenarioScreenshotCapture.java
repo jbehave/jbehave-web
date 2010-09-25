@@ -16,9 +16,8 @@ public class FailingScenarioScreenshotCapture extends PerScenarioWebDriverSteps 
         super(driverFactory);
     }
 
-    @Override
     @AfterScenario(uponOutcome = Outcome.FAILURE)
-    public void afterScenario() throws Exception {
+    public void afterScenarioFailure() throws Exception {
         String home = System.getenv("HOME");
         WebDriver webDriver = driverFactory.get();
         if (webDriver instanceof TakesScreenshot) {
@@ -33,5 +32,12 @@ public class FailingScenarioScreenshotCapture extends PerScenarioWebDriverSteps 
         }
         super.afterScenario();
     }
+
+    @Override
+    @AfterScenario(uponOutcome = Outcome.SUCCESS)
+    public void afterScenario() throws Exception {
+        super.afterScenario();
+    }
+
 
 }

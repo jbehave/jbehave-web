@@ -10,18 +10,19 @@ public class WebDriverStepMonitor implements StepMonitor {
 
 	private final WebDriverContext webDriverContext;
 	private final StepMonitor delegate;
+    private final Notifier notifier;
     private WebDriverFactory driverFactory;
 
     public WebDriverStepMonitor(WebDriverFactory driverFactory,
-			WebDriverContext webDriverContext, StepMonitor delegate) {
+			WebDriverContext webDriverContext, StepMonitor delegate, Notifier notifier) {
 		this.driverFactory = driverFactory;
 		this.webDriverContext = webDriverContext;
 		this.delegate = delegate;
-	}
+        this.notifier = notifier;
+    }
 
 	public void performing(String step, boolean dryRun){
-		String message = webDriverContext.getCurrentScenario() + "\n" + step;
-        //driverFactory.get().chrome().notify(message); // Future WebDriver functionality
+        notifier.notify("<b>" + webDriverContext.getCurrentScenario() + "</b><br>" + step);
 		delegate.performing(step, dryRun);
 	}
 

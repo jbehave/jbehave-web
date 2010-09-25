@@ -13,6 +13,7 @@ public class WebDriverConfigurationTest {
     
     private WebDriverFactory driver = mock(WebDriverFactory.class);
     private StepMonitor stepMonitor = mock(StepMonitor.class);
+    private Notifier notifier = mock(Notifier.class);
 
     @Test
     public void canConfigureWebDriverContextToShowCurrentScenario() throws Throwable {
@@ -22,11 +23,10 @@ public class WebDriverConfigurationTest {
         String context = currentScenario + "<br/>" + step;
         boolean dryRun = false;
         Configuration configuration = new WebDriverConfiguration().useWebDriverFactory(driver).useWebDriverContext(
-                webDriverContext).useStepMonitor(new WebDriverStepMonitor(driver, webDriverContext, stepMonitor));
+                webDriverContext).useStepMonitor(new WebDriverStepMonitor(driver, webDriverContext, stepMonitor, notifier));
         webDriverContext.setCurrentScenario(currentScenario);
         configuration.stepMonitor().performing(step, dryRun);
-        
-//        verify(driver).setContext(context);
+        verify(notifier).notify(context);
         verify(stepMonitor).performing(step, dryRun);
     }
 
@@ -41,7 +41,7 @@ public class WebDriverConfigurationTest {
         boolean matches = true;
         Method method = null;
         Object stepsInstance = new Object();
-        WebDriverStepMonitor monitor = new WebDriverStepMonitor(driver, new WebDriverContext(), stepMonitor);
+        WebDriverStepMonitor monitor = new WebDriverStepMonitor(driver, new WebDriverContext(), stepMonitor, notifier);
         monitor.convertedValueOfType(value, type, converted, converterClass);
         monitor.stepMatchesPattern(step, matches, pattern, method, stepsInstance);
         verify(stepMonitor).convertedValueOfType(value, type, converted, converterClass);

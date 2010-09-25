@@ -13,6 +13,7 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
+import org.jbehave.web.webdriver.LocalSwingNotifier;
 import org.jbehave.web.webdriver.WebDriverConfiguration;
 import org.jbehave.web.webdriver.WebDriverContext;
 import org.jbehave.web.webdriver.WebDriverFactory;
@@ -41,7 +42,7 @@ public class TraderWebStories extends JUnitStories {
         return new WebDriverConfiguration()
             .useWebDriverFactory(driverFactory)
             .useWebDriverContext(webDriverContext)
-            .useStepMonitor(new WebDriverStepMonitor(driverFactory, webDriverContext, new SilentStepMonitor()))
+            .useStepMonitor(new WebDriverStepMonitor(driverFactory, webDriverContext, new SilentStepMonitor(), new LocalSwingNotifier()))
             .useStoryLoader(new LoadFromClasspath(embeddableClass))
             .useStoryReporterBuilder(new StoryReporterBuilder(){
 
