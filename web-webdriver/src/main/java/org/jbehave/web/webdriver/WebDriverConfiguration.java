@@ -1,23 +1,21 @@
 package org.jbehave.web.webdriver;
 
 import org.jbehave.core.configuration.Configuration;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverConfiguration extends Configuration {
 
-    private WebDriver driver = defaultWebDriver();
+    private WebDriverFactory driverFactory;
     private WebDriverContext webDriverContext = new WebDriverContext();
 
     public WebDriverConfiguration() {
     }
 
-    public WebDriver webDriver() {
-        return driver;
+    public WebDriverFactory webDriverFactory() {
+        return driverFactory;
     }
 
-    public WebDriverConfiguration useWebDriver(WebDriver webDriver){
-        this.driver = webDriver;
+    public WebDriverConfiguration useWebDriverFactory(WebDriverFactory webDriver){
+        this.driverFactory = webDriver;
         return this;
     }
 
@@ -29,11 +27,5 @@ public class WebDriverConfiguration extends Configuration {
         this.webDriverContext = webDriverContext;
         return this;
     }
-
-    public static WebDriver defaultWebDriver() {
-        
-        return new FirefoxDriver();
-    }
-
 
 }

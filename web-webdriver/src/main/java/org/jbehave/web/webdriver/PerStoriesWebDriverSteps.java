@@ -2,9 +2,7 @@ package org.jbehave.web.webdriver;
 
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
-import org.openqa.selenium.WebDriver;
 
-import static org.jbehave.web.webdriver.WebDriverConfiguration.defaultWebDriver;
 
 /**
  * Steps implementation that can be used in WebDriver-based stories. It provides
@@ -14,19 +12,18 @@ import static org.jbehave.web.webdriver.WebDriverConfiguration.defaultWebDriver;
  */
 public class PerStoriesWebDriverSteps extends WebDriverSteps {
 
-    public PerStoriesWebDriverSteps(WebDriver proxyDriver) {
-        super(proxyDriver);
+    public PerStoriesWebDriverSteps(WebDriverFactory driverFactory) {
+        super(driverFactory);
     }
 
     @BeforeStories
     public void beforeStories() throws Exception {
-        setDriver(defaultWebDriver());
+        driverFactory.initialize();
     }
 
     @AfterStories    
     public void afterStories() throws Exception {
-        getDriver().close();
-        setDriver(null);
+        getDriverFactory().get().quit();
     }
 
 }

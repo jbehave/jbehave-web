@@ -1,20 +1,15 @@
 package org.jbehave.web.webdriver;
 
-import org.openqa.selenium.WebDriver;
-
 public class WebDriverSteps {
 
-    protected WebDriver driver;
+    protected WebDriverFactory driverFactory;
 
-    public WebDriverSteps(WebDriver driver) {
-        this.driver = driver;
+    public WebDriverSteps(WebDriverFactory driverFactory) {
+        this.driverFactory = driverFactory;
     }
 
-    public void setDriver(WebDriver driver) {
-        ((WebDriverProxy) this.driver).setProxy(driver);
+    public WebDriverFactory getDriverFactory() {
+        return driverFactory;
     }
 
-    public WebDriver getDriver() {
-        return driver;
-    }
 }

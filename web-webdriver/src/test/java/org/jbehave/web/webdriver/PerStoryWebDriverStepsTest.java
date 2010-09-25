@@ -10,7 +10,6 @@ import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.parsers.StoryParser;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
@@ -25,9 +24,14 @@ public class PerStoryWebDriverStepsTest {
     private final StoryParser parser = new RegexStoryParser();
     private final StoryRunner runner = new StoryRunner();
     private final WebDriver driver = mock(WebDriver.class);
-	private final WebDriver proxyDriver = new WebDriverProxy();
+    private final WebDriverFactory driverFactory = new WebDriverFactory() {
+        public WebDriver get() {
+            return driver;
+        }
+        public void initialize() {
+        }
+    };
 
-    @Ignore    
     @Test
     public void canRunSuccessfulStory() throws Throwable {
         String story = "Scenario: A simple web scenario" + NL 
@@ -38,19 +42,15 @@ public class PerStoryWebDriverStepsTest {
         MySteps steps = new MySteps();
         InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps);
         runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(story, path));
-        verify(driver).close();
+        verify(driver).quit();
     }
 
     public class MySteps extends PerStoryWebDriverSteps {
 
         public MySteps() {
-            super(proxyDriver);
+            super(PerStoryWebDriverStepsTest.this.driverFactory);
         }
 
-        @Override
-        public void beforeStory() throws Exception {
-            setDriver(driver);
-        }
 
         @Given("a test")
         public void aTest() {
