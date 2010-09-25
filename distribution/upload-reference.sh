@@ -1,11 +1,16 @@
 
 VERSION=$1
+QUALIFIER=$2
 
-if [ "$VERSION" == "" ]; then
-  echo "usage: upload-reference.sh <version>"
+if [ "$VERSION" == "" ] || [ "$QUALIFIER" == "" ]; then
+  echo "usage: upload-reference.sh <version> <qualifier>"
   exit;
 fi
 
-scp target/jbehave-web-$VERSION-bin.zip jbehave.org:
+ARTIFACT="jbehave-web-$VERSION"
+REFERENCE="/var/www/jbehave.org/reference/web"
 
-ssh jbehave.org "rm -r jbehave-web-$VERSION; unzip jbehave-web-$VERSION-bin.zip; rm -r /var/www/jbehave.org/reference/web/$VERSION;  mv jbehave-web-$VERSION/docs/ /var/www/jbehave.org/reference/web/$VERSION"
+VERSIONED="$REFERENCE/$VERSION"
+
+scp target/$ARTIFACT-bin.zip jbehave.org:
+ssh jbehave.org "rm -r $ARTIFACT; unzip $ARTIFACT-bin.zip; rm -r $VERSIONED; mv $ARTIFACT/docs/ $VERSIONED; cd $REFERENCE; rm $QUALIFIER; ln -s $VERSION $QUALIFIER"
