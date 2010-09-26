@@ -9,7 +9,7 @@
   </parent>
   <artifactId>jbehave-web-trader-selenium</artifactId>
   <name>JBehave Web Trader Selenium Stories</name>
-  <description>Uses JBehaveWeb-Selenium of the JBehaveWeb that is running as part of the the sibling jbehave-trader project.</description>
+  <description>Stories verifying behaviour of jbehave-web-trader-runner example application, using the Selenium API of Selenium 2.s</description>
   <packaging>jar</packaging>
   <properties>
     <jbehave.webapp.name>trader-runner</jbehave.webapp.name>

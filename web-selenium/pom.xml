@@ -7,8 +7,8 @@
   </parent>
   <artifactId>jbehave-web-selenium</artifactId>
   <packaging>jar</packaging>
-  <name>JBehave Web - Selenium and WebDriver bindings</name>
-  <description>Selenium 1.0 and Selenium 2.0 (WebDriver) bindings for JBehave</description>
+  <name>JBehave Web Selenium</name>
+  <description>Selenium and WebDriver API bindings for JBehave</description>
   <dependencies>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>

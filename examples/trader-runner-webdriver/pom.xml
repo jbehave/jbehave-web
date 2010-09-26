@@ -9,7 +9,7 @@
   </parent>
   <artifactId>jbehave-web-trader-webdriver</artifactId>
   <name>JBehave Web Trader WebDriver Stories</name>
-  <description>Uses JBehaveWeb-WebDriver of the JBehaveWeb that is running as part of the the sibling jbehave-trader project.</description>
+  <description>Stories verifying behaviour of jbehave-web-trader-runner example application, using the WebDriver API of Selenium 2.s</description>
   <packaging>jar</packaging>
   <properties>
     <jbehave.webapp.name>trader-runner</jbehave.webapp.name>
