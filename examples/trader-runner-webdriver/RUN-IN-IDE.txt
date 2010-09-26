@@ -4,8 +4,4 @@ To run in IDE:
 
 ./jetty-server.sh
 
-- open terminal window and run 
-
-./selenium-server.sh
-
 - run stories in IDE

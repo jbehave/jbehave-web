@@ -9,18 +9,18 @@
   </parent>
   <artifactId>jbehave-web-trader-webdriver</artifactId>
   <name>JBehave Web Trader WebDriver Stories</name>
-  <description>Stories verifying behaviour of jbehave-web-trader-runner example application, using the WebDriver API of Selenium 2.s</description>
+  <description>Stories verifying behaviour of jbehave-web-trader-runner example application, using the WebDriver API of Selenium 2.</description>
   <packaging>jar</packaging>
   <properties>
     <jbehave.webapp.name>trader-runner</jbehave.webapp.name>
   </properties>
-    <dependencies>
-        <dependency>
-          <groupId>org.jbehave.web</groupId>
-          <artifactId>jbehave-web-selenium</artifactId>
-          <version>${project.version}</version>
-        </dependency>        
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.jbehave.web</groupId>
+      <artifactId>jbehave-web-selenium</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
@@ -46,6 +46,34 @@
               </artifactItems>
             </configuration>
           </execution>
+          <execution>
+            <id>unpack-report-resources</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.jbehave.site</groupId>
+                  <artifactId>jbehave-site-resources</artifactId>
+                  <version>3.0</version>
+                  <type>zip</type>
+                  <outputDirectory>${project.build.directory}/jbehave-reports/view</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.jbehave</groupId>
+                  <artifactId>jbehave-core</artifactId>
+                  <version>${jbehave.core.version}</version>
+                  <classifier>resources</classifier>
+                  <type>zip</type>
+                  <outputDirectory>${project.build.directory}/jbehave-reports/view</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -56,7 +84,7 @@
           <webAppConfig>
             <contextPath>/trader-runner</contextPath>
           </webAppConfig>
-        </configuration>        
+        </configuration>
         <executions>
           <execution>
             <id>start-jetty</id>
@@ -78,28 +106,6 @@
             <configuration>
               <stopKey>stopJetty</stopKey>
               <stopPort>9966</stopPort>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <!--
-            Skip the normal tests, we'll run them in the
-            integration-test phase
-          -->
-          <skip>true</skip>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <configuration>
-              <skip>false</skip>
             </configuration>
           </execution>
         </executions>
