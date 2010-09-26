@@ -1,25 +1,25 @@
 package org.jbehave.web.selenium;
 
-import org.jbehave.core.steps.StepMonitor;
-import org.jbehave.core.steps.StepType;
-
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
+import org.jbehave.core.steps.StepMonitor;
+import org.jbehave.core.steps.StepType;
+
 public class WebDriverStepMonitor implements StepMonitor {
 
-	private final WebDriverContext webDriverContext;
+	private final SeleniumContext context;
 	private final StepMonitor delegate;
     private final Notifier notifier;
 
-    public WebDriverStepMonitor(WebDriverContext webDriverContext, StepMonitor delegate, Notifier notifier) {
-		this.webDriverContext = webDriverContext;
+    public WebDriverStepMonitor(SeleniumContext context, StepMonitor delegate, Notifier notifier) {
+		this.context = context;
 		this.delegate = delegate;
         this.notifier = notifier;
     }
 
 	public void performing(String step, boolean dryRun){
-        notifier.notify("<b>" + webDriverContext.getCurrentScenario() + "</b><br>" + step);
+        notifier.notify("<b>" + context.getCurrentScenario() + "</b><br>" + step);
 		delegate.performing(step, dryRun);
 	}
 

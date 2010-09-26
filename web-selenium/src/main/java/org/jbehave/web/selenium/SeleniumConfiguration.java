@@ -7,10 +7,15 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 import com.thoughtworks.selenium.condition.JUnitConditionRunner;
 
+/**
+ * Extends Configuration to provide Selenium-based components. 
+ * It can be used for both Selenium and WebDriver APIs.
+ */
 public class SeleniumConfiguration extends Configuration {
 
     private Selenium selenium = defaultSelenium();
     private SeleniumContext seleniumContext = new SeleniumContext();
+    private WebDriverFactory driverFactory;
 
     public SeleniumConfiguration() {
     }
@@ -30,6 +35,15 @@ public class SeleniumConfiguration extends Configuration {
 
     public SeleniumConfiguration useSeleniumContext(SeleniumContext seleniumContext) {
         this.seleniumContext = seleniumContext;
+        return this;
+    }
+    
+    public WebDriverFactory webDriverFactory() {
+        return driverFactory;
+    }
+
+    public SeleniumConfiguration useWebDriverFactory(WebDriverFactory webDriverFactory){
+        this.driverFactory = webDriverFactory;
         return this;
     }
     
@@ -54,5 +68,6 @@ public class SeleniumConfiguration extends Configuration {
     public static ConditionRunner defaultConditionRunner(Selenium selenium) {
         return new JUnitConditionRunner(selenium, 10, 100, 1000);
     }
+    
 
 }
