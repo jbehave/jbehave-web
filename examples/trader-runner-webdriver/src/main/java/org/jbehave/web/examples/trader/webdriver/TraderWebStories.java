@@ -22,19 +22,20 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
-import org.jbehave.web.selenium.LocalSwingNotifier;
+import org.jbehave.web.selenium.ContextView;
+import org.jbehave.web.selenium.DefaultWebDriverFactory;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
+import org.jbehave.web.selenium.SwingContextView;
 import org.jbehave.web.selenium.WebDriverFactory;
-import org.jbehave.web.selenium.WebDriverFactoryImpl;
 import org.jbehave.web.selenium.WebDriverStepMonitor;
 
 public class TraderWebStories extends JUnitStories {
 
-    private WebDriverFactory driverFactory = new WebDriverFactoryImpl();
+    private WebDriverFactory driverFactory = new DefaultWebDriverFactory();
     private PageFactory pageFactory = new PageFactory(driverFactory);
     private SeleniumContext context = new SeleniumContext();
-    private LocalSwingNotifier notifier = new LocalSwingNotifier();
+    private ContextView contextView = new SwingContextView().sized(500, 100);
 
     @Override
     public Configuration configuration() {
@@ -42,7 +43,7 @@ public class TraderWebStories extends JUnitStories {
         return new SeleniumConfiguration()
                 .useSeleniumContext(context)
                 .useWebDriverFactory(driverFactory)
-                .useStepMonitor(new WebDriverStepMonitor(context, new SilentStepMonitor(), notifier))
+                .useStepMonitor(new WebDriverStepMonitor(contextView, context, new SilentStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(embeddableClass))
                 .useStoryReporterBuilder(new StoryReporterBuilder() {
 
@@ -58,7 +59,7 @@ public class TraderWebStories extends JUnitStories {
 
                                 @Override
                                 public void afterStory(boolean givenStory) {
-                                    notifier.close();
+                                    contextView.close();
                                     super.afterStory(givenStory);
                                 }
                             };

@@ -43,7 +43,7 @@ public class SeleniumConfigurationTest {
         boolean matches = true;
         Method method = null;
         Object stepsInstance = new Object();
-        SeleniumStepMonitor monitor = new SeleniumStepMonitor(selenium, new SeleniumContext(), stepMonitor);
+        DelegatingStepMonitor monitor = new SeleniumStepMonitor(selenium, new SeleniumContext(), stepMonitor);
         monitor.convertedValueOfType(value, type, converted, converterClass);
         monitor.stepMatchesPattern(step, matches, pattern, method, stepsInstance);
         verify(stepMonitor).convertedValueOfType(value, type, converted, converterClass);

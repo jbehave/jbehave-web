@@ -9,7 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-public class LocalSwingNotifier implements Notifier {
+public class SwingContextView implements ContextView {
 
     private JFrame frame;
     private JLabel label;
@@ -19,35 +19,51 @@ public class LocalSwingNotifier implements Notifier {
     private int y;
 
     /**
-     * Builder-style way to set the preferred size for the notification frame
+     * New view frame of default size - (380 x 85)
+     */
+    public SwingContextView() {
+        sized(380, 85);
+        located(0, 0); // origin by default
+    }
+
+    /**
+     * Builder-style way to set the preferred size for the frame
      * @param width width
      * @param height height
-     * @return the notifier
+     * @return The SwingContextView
      */
-    public LocalSwingNotifier sized(final int width, final int height) {
+    public SwingContextView sized(final int width, final int height) {
         this.width = width;
         this.height = height;
         return this;
     }
 
     /**
-     * Builder-style way to set the preferred location for the notification frame
+     * Builder-style way to set the preferred location for the frame
      * @param x x position on screen
      * @param y y position on screen
-     * @return the notifier
+     * @return The SwingContextView
      */
-    public LocalSwingNotifier located(final int x, final int y) {
+    public SwingContextView located(final int x, final int y) {
         this.x = x;
         this.y = y;
         return this;
     }
 
-    /**
-     * New Notifier frame of default size - 380 * 85
-     */
-    public LocalSwingNotifier() {
-        sized(380, 85);
-        located(0, 0); // origin by default
+    public synchronized void show(String message) {
+        if (frame == null) {
+            initialize();
+        }
+        label.setText("<html>" + message + "</html>");
+    }
+
+    public synchronized void close() {
+        if (frame != null) {
+            frame.setVisible(false);
+            frame.dispose();
+            frame = null;
+            label = null;
+        }
     }
 
     private void initialize() {
@@ -88,19 +104,4 @@ public class LocalSwingNotifier implements Notifier {
         frame.setVisible(true);
     }
 
-    public synchronized void notify(String message) {
-        if (frame == null) {
-            initialize();
-        }
-        label.setText("<html>" + message + "</html>");
-    }
-
-    public synchronized void close() {
-        if (frame != null) {
-            frame.setVisible(false);
-            frame.dispose();
-            frame = null;
-            label = null;
-        }
-    }
 }
