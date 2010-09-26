@@ -9,7 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-public class SwingContextView implements ContextView {
+public class LocalFrameContextView implements ContextView {
 
     private JFrame frame;
     private JLabel label;
@@ -19,9 +19,9 @@ public class SwingContextView implements ContextView {
     private int y;
 
     /**
-     * New view frame of default size - (380 x 85)
+     * Creates view frame of default size - (380 x 85)
      */
-    public SwingContextView() {
+    public LocalFrameContextView() {
         sized(380, 85);
         located(0, 0); // origin by default
     }
@@ -32,7 +32,7 @@ public class SwingContextView implements ContextView {
      * @param height height
      * @return The SwingContextView
      */
-    public SwingContextView sized(final int width, final int height) {
+    public LocalFrameContextView sized(final int width, final int height) {
         this.width = width;
         this.height = height;
         return this;
@@ -44,7 +44,7 @@ public class SwingContextView implements ContextView {
      * @param y y position on screen
      * @return The SwingContextView
      */
-    public SwingContextView located(final int x, final int y) {
+    public LocalFrameContextView located(final int x, final int y) {
         this.x = x;
         this.y = y;
         return this;

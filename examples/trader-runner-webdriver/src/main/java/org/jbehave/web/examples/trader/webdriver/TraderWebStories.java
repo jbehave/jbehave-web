@@ -27,7 +27,7 @@ import org.jbehave.web.selenium.DefaultWebDriverFactory;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
-import org.jbehave.web.selenium.SwingContextView;
+import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.WebDriverFactory;
 
 public class TraderWebStories extends JUnitStories {
@@ -35,7 +35,7 @@ public class TraderWebStories extends JUnitStories {
     private WebDriverFactory driverFactory = new DefaultWebDriverFactory();
     private PageFactory pageFactory = new PageFactory(driverFactory);
     private SeleniumContext context = new SeleniumContext();
-    private ContextView contextView = new SwingContextView().sized(500, 100);
+    private ContextView contextView = new LocalFrameContextView().sized(500, 100);
 
     @Override
     public Configuration configuration() {
