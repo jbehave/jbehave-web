@@ -4,14 +4,13 @@ import org.jbehave.core.annotations.AfterStory;
 import org.jbehave.core.annotations.BeforeStory;
 
 /**
- * Steps implementation that can be used in WebDriver-based stories. It
- * provides annotated methods to start and stop WebDriver before and after
- * stories. 
- *
- * @author Mauro Talevi
+ * Steps implementation that can be used in WebDriver-based stories. It provides
+ * annotated methods to initialise and quit WebDriver before and after stories.
+ * 
+ * @author Paul Hammant
  */
 public class PerStoryWebDriverSteps extends WebDriverSteps {
-        
+
     public PerStoryWebDriverSteps(WebDriverFactory driverFactory) {
         super(driverFactory);
     }
@@ -23,7 +22,7 @@ public class PerStoryWebDriverSteps extends WebDriverSteps {
 
     @AfterStory
     public void afterStory() throws Exception {
-        getDriverFactory().get().quit();
+        driverFactory.get().quit();
     }
 
 }
