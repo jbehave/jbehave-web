@@ -26,9 +26,9 @@ import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.DefaultWebDriverFactory;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
+import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.SwingContextView;
 import org.jbehave.web.selenium.WebDriverFactory;
-import org.jbehave.web.selenium.WebDriverStepMonitor;
 
 public class TraderWebStories extends JUnitStories {
 
@@ -43,7 +43,7 @@ public class TraderWebStories extends JUnitStories {
         return new SeleniumConfiguration()
                 .useSeleniumContext(context)
                 .useWebDriverFactory(driverFactory)
-                .useStepMonitor(new WebDriverStepMonitor(contextView, context, new SilentStepMonitor()))
+                .useStepMonitor(new SeleniumStepMonitor(contextView, context, new SilentStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(embeddableClass))
                 .useStoryReporterBuilder(new StoryReporterBuilder() {
 

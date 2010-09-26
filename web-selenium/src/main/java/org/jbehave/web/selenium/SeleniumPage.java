@@ -13,8 +13,8 @@ import com.thoughtworks.selenium.condition.Text;
 import com.thoughtworks.selenium.condition.ConditionRunner.Context;
 
 /**
- * Abstract base class for all Selenium-based pages. It contains common page
- * methods, with a view to implement the <a
+ * Abstract base class for pages that use the Selenium API. It contains common
+ * page methods, with a view to implement the <a
  * href="http://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>
  * pattern.
  */

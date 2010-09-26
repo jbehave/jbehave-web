@@ -4,10 +4,11 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 
 /**
- * Base steps class that can be used in Selenium-based scenarios. It provides
- * instances of {@link Selenium} and {@link ConditionRunner} to subclasses. The
- * instances are injected, defaulting to {@link SeleniumConfiguration#defaultSelenium()}
- * and {@link SeleniumConfiguration#defaultConditionRunner(Selenium)}.
+ * Base steps class that can be used in scenarios that use the Selenium API. It
+ * provides instances of {@link Selenium} and {@link ConditionRunner} to
+ * subclasses. The instances are injected, defaulting to
+ * {@link SeleniumConfiguration#defaultSelenium()} and
+ * {@link SeleniumConfiguration#defaultConditionRunner(Selenium)}.
  */
 public class SeleniumSteps {
 
@@ -26,5 +27,5 @@ public class SeleniumSteps {
         this.selenium = selenium;
         this.runner = runner;
     }
-    
+
 }

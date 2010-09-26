@@ -7,6 +7,12 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Abstract base class for pages that use the WebDriver API. It contains common
+ * page methods, with a view to implement the <a
+ * href="http://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>
+ * pattern.
+ */
 public abstract class WebDriverPage implements WebDriver {
 
     private final WebDriverFactory driverFactory;
