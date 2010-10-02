@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static junit.framework.Assert.assertFalse;
 
-public class RunStory extends TraderPage {
+public class RunStory extends AbstractPage {
 
     public RunStory(WebDriverProvider driverProvider) {
         super(driverProvider);

@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 
 import java.util.concurrent.TimeUnit;
 
-public class Home extends TraderPage {
+public class Home extends AbstractPage {
 
     public Home(WebDriverProvider driverProvider) {
         super(driverProvider);

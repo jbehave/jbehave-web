@@ -3,9 +3,9 @@ package org.jbehave.web.examples.trader.webdriver.pages;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverPage;
 
-public class TraderPage extends WebDriverPage {
+public abstract class AbstractPage extends WebDriverPage {
 
-    public TraderPage(WebDriverProvider driverProvider) {
+    public AbstractPage(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
     

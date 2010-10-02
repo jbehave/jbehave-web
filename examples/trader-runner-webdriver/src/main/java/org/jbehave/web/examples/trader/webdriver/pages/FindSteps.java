@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.fail;
 
-public class FindSteps extends TraderPage {
+public class FindSteps extends AbstractPage {
 
     public FindSteps(WebDriverProvider driverProvider) {
         super(driverProvider);
