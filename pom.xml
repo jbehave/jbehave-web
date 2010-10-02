@@ -21,7 +21,7 @@
   </modules>
 
   <properties>
-    <jbehave.core.version>3.0.2</jbehave.core.version>
+    <jbehave.core.version>3.0.3</jbehave.core.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
     <jetty.version>7.1.6.v20100715</jetty.version>
   </properties>
