@@ -13,8 +13,6 @@
 
   <modules>
     <module>trader-runner</module>
-    <module>trader-runner-selenium</module>
-    <module>trader-runner-webdriver</module>
   </modules>
 
   <dependencies>
@@ -25,4 +23,24 @@
     </dependency>
   </dependencies>
 
+  <profiles>
+    <profile>
+      <id>selenium</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <modules>
+        <module>trader-runner-selenium</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>webdriver</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>trader-runner-webdriver</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>
