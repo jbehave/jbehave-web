@@ -24,7 +24,7 @@ public class PerScenarioWebDriverStepsTest {
 	private final StoryParser parser = new RegexStoryParser();
 	private final StoryRunner runner = new StoryRunner();
     private final WebDriver driver = mock(WebDriver.class);
-	private final WebDriverFactory driverFactory = new WebDriverFactory() {
+	private final WebDriverProvider driverProvider = new WebDriverProvider() {
         public WebDriver get() {
             return driver;
         }
@@ -49,7 +49,7 @@ public class PerScenarioWebDriverStepsTest {
 	public class MySteps extends PerStoryWebDriverSteps {
 
         public MySteps() {
-            super(PerScenarioWebDriverStepsTest.this.driverFactory);
+            super(PerScenarioWebDriverStepsTest.this.driverProvider);
         }
 
         @Given("a test")

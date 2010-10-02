@@ -1,25 +1,25 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
-import org.jbehave.web.selenium.WebDriverFactory;
+import org.jbehave.web.selenium.WebDriverProvider;
 
 public class PageFactory {
 
-    private final WebDriverFactory driverFactory;
+    private final WebDriverProvider driverProvider;
 
-    public PageFactory(WebDriverFactory driverFactory) {
-        this.driverFactory = driverFactory;
+    public PageFactory(WebDriverProvider driverProvider) {
+        this.driverProvider = driverProvider;
     }
 
     public Home home(){
-        return new Home(driverFactory);
+        return new Home(driverProvider);
     }
 
     public FindSteps findSteps() {
-        return new FindSteps(driverFactory);
+        return new FindSteps(driverProvider);
     }
 
     public RunStory runStory() {
-        return new RunStory(driverFactory);
+        return new RunStory(driverProvider);
     }
     
 }

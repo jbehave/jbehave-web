@@ -15,7 +15,7 @@ public class SeleniumConfiguration extends Configuration {
 
     private Selenium selenium = defaultSelenium();
     private SeleniumContext seleniumContext = new SeleniumContext();
-    private WebDriverFactory driverFactory;
+    private WebDriverProvider driverProvider;
 
     public SeleniumConfiguration() {
     }
@@ -38,12 +38,12 @@ public class SeleniumConfiguration extends Configuration {
         return this;
     }
     
-    public WebDriverFactory webDriverFactory() {
-        return driverFactory;
+    public WebDriverProvider webDriverProvider() {
+        return driverProvider;
     }
 
-    public SeleniumConfiguration useWebDriverFactory(WebDriverFactory webDriverFactory){
-        this.driverFactory = webDriverFactory;
+    public SeleniumConfiguration useWebDriverProvider(WebDriverProvider webDriverProvider){
+        this.driverProvider = webDriverProvider;
         return this;
     }
     

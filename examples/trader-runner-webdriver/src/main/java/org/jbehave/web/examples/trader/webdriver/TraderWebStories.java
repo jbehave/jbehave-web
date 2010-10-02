@@ -23,17 +23,17 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
 import org.jbehave.web.selenium.ContextView;
-import org.jbehave.web.selenium.DefaultWebDriverFactory;
+import org.jbehave.web.selenium.DefaultWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.LocalFrameContextView;
-import org.jbehave.web.selenium.WebDriverFactory;
+import org.jbehave.web.selenium.WebDriverProvider;
 
 public class TraderWebStories extends JUnitStories {
 
-    private WebDriverFactory driverFactory = new DefaultWebDriverFactory();
-    private PageFactory pageFactory = new PageFactory(driverFactory);
+    private WebDriverProvider driverProvider = new DefaultWebDriverProvider();
+    private PageFactory pageFactory = new PageFactory(driverProvider);
     private SeleniumContext context = new SeleniumContext();
     private ContextView contextView = new LocalFrameContextView().sized(500, 100);
 
@@ -42,7 +42,7 @@ public class TraderWebStories extends JUnitStories {
         Class<? extends Embeddable> embeddableClass = this.getClass();
         return new SeleniumConfiguration()
                 .useSeleniumContext(context)
-                .useWebDriverFactory(driverFactory)
+                .useWebDriverProvider(driverProvider)
                 .useStepMonitor(new SeleniumStepMonitor(contextView, context, new SilentStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(embeddableClass))
                 .useStoryReporterBuilder(new StoryReporterBuilder() {
@@ -76,7 +76,7 @@ public class TraderWebStories extends JUnitStories {
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new FailingScenarioScreenshotCapture(driverFactory))
+        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new FailingScenarioScreenshotCapture(driverProvider))
                 .createCandidateSteps();
     }
 

@@ -1,6 +1,6 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
-import org.jbehave.web.selenium.WebDriverFactory;
+import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -8,8 +8,8 @@ import static junit.framework.Assert.assertFalse;
 
 public class RunStory extends TraderPage {
 
-    public RunStory(WebDriverFactory driverFactory) {
-        super(driverFactory);
+    public RunStory(WebDriverProvider driverProvider) {
+        super(driverProvider);
     }
 
     public void run(String story) {

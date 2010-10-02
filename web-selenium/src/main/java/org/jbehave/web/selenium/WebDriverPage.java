@@ -15,61 +15,61 @@ import java.util.Set;
  */
 public abstract class WebDriverPage implements WebDriver {
 
-    private final WebDriverFactory driverFactory;
+    private final WebDriverProvider driverProvider;
 
-    public WebDriverPage(WebDriverFactory driverFactory) {
-        this.driverFactory = driverFactory;
+    public WebDriverPage(WebDriverProvider driverProvider) {
+        this.driverProvider = driverProvider;
     }
 
     public void get(String s) {
-        driverFactory.get().get(s);
+        driverProvider.get().get(s);
     }
 
     public String getCurrentUrl() {
-        return driverFactory.get().getCurrentUrl();
+        return driverProvider.get().getCurrentUrl();
     }
 
     public String getTitle() {
-        return driverFactory.get().getTitle();
+        return driverProvider.get().getTitle();
     }
 
     public List<WebElement> findElements(By by) {
-        return driverFactory.get().findElements(by);
+        return driverProvider.get().findElements(by);
     }
 
     public WebElement findElement(By by) {
-        return driverFactory.get().findElement(by);
+        return driverProvider.get().findElement(by);
     }
 
     public String getPageSource() {
-        return driverFactory.get().getPageSource();
+        return driverProvider.get().getPageSource();
     }
 
     public void close() {
-        driverFactory.get().close();
+        driverProvider.get().close();
     }
 
     public void quit() {
-        driverFactory.get().quit();
+        driverProvider.get().quit();
     }
 
     public Set<String> getWindowHandles() {
-        return driverFactory.get().getWindowHandles();
+        return driverProvider.get().getWindowHandles();
     }
 
     public String getWindowHandle() {
-        return driverFactory.get().getCurrentUrl();
+        return driverProvider.get().getCurrentUrl();
     }
 
     public TargetLocator switchTo() {
-        return driverFactory.get().switchTo();
+        return driverProvider.get().switchTo();
     }
 
     public Navigation navigate() {
-        return driverFactory.get().navigate();
+        return driverProvider.get().navigate();
     }
 
     public Options manage() {
-        return driverFactory.get().manage();
+        return driverProvider.get().manage();
     }
 }

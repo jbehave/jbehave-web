@@ -7,7 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * Makes WebDriver instances as needed.
  * These can be per-story, per-scenario, or one for all stories.
  */
-public class DefaultWebDriverFactory extends DelegatingWebDriverFactory {
+public class DefaultWebDriverProvider extends DelegatingWebDriverProvider {
 
     private Class<? extends WebDriver> driver;
 
@@ -15,14 +15,14 @@ public class DefaultWebDriverFactory extends DelegatingWebDriverFactory {
      * Provides instances of a supplied type
      * @param driver the WebDriver type to instantiate.
      */
-    public DefaultWebDriverFactory(Class<? extends WebDriver> driver) {
+    public DefaultWebDriverProvider(Class<? extends WebDriver> driver) {
         this.driver = driver;
     }
 
     /**
      * Provides instances of {@link FirefoxDriver}s.
      */
-    public DefaultWebDriverFactory() {
+    public DefaultWebDriverProvider() {
         this.driver = FirefoxDriver.class;
     }
 

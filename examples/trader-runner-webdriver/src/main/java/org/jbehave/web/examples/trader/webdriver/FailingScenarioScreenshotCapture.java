@@ -6,20 +6,20 @@ import org.apache.commons.io.IOUtils;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterScenario.Outcome;
 import org.jbehave.web.selenium.PerScenarioWebDriverSteps;
-import org.jbehave.web.selenium.WebDriverFactory;
+import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class FailingScenarioScreenshotCapture extends PerScenarioWebDriverSteps {
 
-    public FailingScenarioScreenshotCapture(WebDriverFactory driverFactory) {
-        super(driverFactory);
+    public FailingScenarioScreenshotCapture(WebDriverProvider driverProvider) {
+        super(driverProvider);
     }
 
     @AfterScenario(uponOutcome = Outcome.FAILURE)
     public void afterScenarioFailure() throws Exception {
-        WebDriver webDriver = driverFactory.get();
+        WebDriver webDriver = driverProvider.get();
         if (webDriver instanceof TakesScreenshot) {
             byte[] bytes = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
             String path = System.getenv("HOME") + "/failed-scenario-" + System.currentTimeMillis() + ".png";

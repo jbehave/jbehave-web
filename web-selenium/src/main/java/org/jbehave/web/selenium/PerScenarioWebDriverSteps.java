@@ -11,18 +11,18 @@ import org.jbehave.core.annotations.BeforeScenario;
  * @author Paul Hammant
  */
 public class PerScenarioWebDriverSteps extends WebDriverSteps {
-    public PerScenarioWebDriverSteps(WebDriverFactory driverProvider) {
+    public PerScenarioWebDriverSteps(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
 
     @BeforeScenario
     public void beforeScenario() throws Exception {
-        driverFactory.initialize();
+        driverProvider.initialize();
     }
 
     @AfterScenario
     public void afterScenario() throws Exception {
-        driverFactory.get().quit();
+        driverProvider.get().quit();
     }
 
 }

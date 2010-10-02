@@ -5,14 +5,14 @@ package org.jbehave.web.selenium;
  */
 public class WebDriverSteps {
 
-    protected WebDriverFactory driverFactory;
+    protected WebDriverProvider driverProvider;
 
-    public WebDriverSteps(WebDriverFactory driverFactory) {
-        this.driverFactory = driverFactory;
+    public WebDriverSteps(WebDriverProvider driverProvider) {
+        this.driverProvider = driverProvider;
     }
 
-    public WebDriverFactory getDriverFactory() {
-        return driverFactory;
+    public WebDriverProvider getDriverProvider() {
+        return driverProvider;
     }
 
 }

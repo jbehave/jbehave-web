@@ -1,6 +1,6 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
-import org.jbehave.web.selenium.WebDriverFactory;
+import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
@@ -10,8 +10,8 @@ import static org.junit.Assert.fail;
 
 public class FindSteps extends TraderPage {
 
-    public FindSteps(WebDriverFactory driver) {
-        super(driver);
+    public FindSteps(WebDriverProvider driverProvider) {
+        super(driverProvider);
     }
 
     public void find(String step) {
