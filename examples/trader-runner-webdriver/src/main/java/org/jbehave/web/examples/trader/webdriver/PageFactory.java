@@ -1,5 +1,6 @@
 package org.jbehave.web.examples.trader.webdriver;
 
+import org.jbehave.web.examples.trader.webdriver.pages.DataFiles;
 import org.jbehave.web.examples.trader.webdriver.pages.FindSteps;
 import org.jbehave.web.examples.trader.webdriver.pages.Home;
 import org.jbehave.web.examples.trader.webdriver.pages.RunStory;
@@ -9,6 +10,7 @@ public class PageFactory {
 
     private final WebDriverProvider driverProvider;
     private Home home;
+    private DataFiles dataFiles;
     private FindSteps findSteps;
     private RunStory runStory;
 
@@ -21,6 +23,13 @@ public class PageFactory {
             home = new Home(driverProvider);
         }
         return home;
+    }
+    
+    public DataFiles dataFiles() {
+        if ( dataFiles == null ){
+            dataFiles = new DataFiles(driverProvider);
+        }
+        return dataFiles;
     }
 
     public FindSteps findSteps() {
@@ -36,5 +45,6 @@ public class PageFactory {
         }
         return runStory;
     }
+
     
 }

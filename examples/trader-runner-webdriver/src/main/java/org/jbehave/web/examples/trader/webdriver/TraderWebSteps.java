@@ -19,15 +19,40 @@ public class TraderWebSteps {
         pageFactory.home().open();        
     }
 
+    @When("user opens Data Files page")
+    public void userClicksOnDataFiles(){        
+        pageFactory.dataFiles().open();
+    }
+
+    @Then("Data Files page is shown")
+    public void dataFilesPageIsShown(){
+        pageFactory.dataFiles().pageIsShown();
+    }
+
     @When("user opens Find Steps page")
     public void userClicksOnFindSteps(){        
         pageFactory.findSteps().open();
+    }
+
+    @Then("Find Steps page is shown")
+    public void findStepsPageIsShown(){
+        pageFactory.findSteps().pageIsShown();
     }
 
     @When("user opens Run Story page")
     public void userClicksOnRunStory(){        
         pageFactory.runStory().open();
     }
+    
+    @Then("Run Story page is shown")
+    public void runStoryPageIsShown(){
+        pageFactory.runStory().pageIsShown();
+    }
+    
+    @When("user uploads file $path")
+    public void userUploadsFile(String path){        
+        pageFactory.dataFiles().uploadFile(path);
+    }    
 
     @When("user searches for \"$step\"")
     public void userSearchesForSteps(String step){        
@@ -54,19 +79,9 @@ public class TraderWebSteps {
         pageFactory.runStory().run(story);
     }
     
-    @Then("Run Story page is shown")
-    public void runStoryPageIsShown(){
-        pageFactory.runStory().pageIsShown();
-    }
-
     @Then("run is successful")
     public void runIsSuccessful(){        
         pageFactory.runStory().runIsSuccessful();
-    }
-
-    @Then("Find Steps page is shown")
-    public void findStepsPageIsShown(){
-        pageFactory.findSteps().pageIsShown();
     }
 
     @Then("search returns: \"$stepsOrMethods\"")
