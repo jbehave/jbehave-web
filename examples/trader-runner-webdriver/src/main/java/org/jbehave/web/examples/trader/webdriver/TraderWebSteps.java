@@ -11,29 +11,29 @@ import org.jbehave.web.examples.trader.webdriver.pages.RunStory;
 
 public class TraderWebSteps {
 
-    private final PageFactory pageFactory;
     private Home home;
     private FindSteps findSteps;
     private RunStory runStory;
 
     public TraderWebSteps(PageFactory pageFactory) {
-        this.pageFactory = pageFactory;
+        home = pageFactory.home();
+        findSteps = pageFactory.findSteps();
+        runStory = pageFactory.runStory();
     }
 
     @Given("user is on home page")
     public void userIsOnHomePage(){        
-        home = pageFactory.home();
         home.open();        
     }
 
     @When("user clicks on Find Steps")
     public void userClicksOnFindSteps(){        
-        findSteps = home.findSteps(pageFactory);
+        home.openFindSteps();
     }
 
     @When("user clicks on Run Story")
     public void userClicksOnRunStory(){        
-        runStory = home.runStory(pageFactory);
+        home.openRunStory();
     }
 
     @When("user searches for \"$step\"")
@@ -60,15 +60,20 @@ public class TraderWebSteps {
     public void userRunsStory(String story){        
         runStory.run(story);
     }
+    
+    @Then("Run Story page is shown")
+    public void runStoryPageIsShown(){
+        runStory.pageIsShown();
+    }
 
     @Then("run is successful")
     public void runIsSuccessful(){        
         runStory.runIsSuccessful();
     }
 
-    @Then("text is shown: \"$text\"")
-    public void textIsPresent(String text){   
-        findSteps.found(text);
+    @Then("Find Steps page is shown")
+    public void findStepsPageIsShown(){
+        findSteps.pageIsShown();
     }
 
     @Then("search returns: \"$stepsOrMethods\"")

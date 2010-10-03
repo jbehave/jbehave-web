@@ -1,10 +1,9 @@
 package org.jbehave.web.examples.trader.webdriver.pages;
 
-import org.jbehave.web.examples.trader.webdriver.PageFactory;
+import java.util.concurrent.TimeUnit;
+
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
-
-import java.util.concurrent.TimeUnit;
 
 public class Home extends AbstractPage {
 
@@ -17,13 +16,12 @@ public class Home extends AbstractPage {
         manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    public FindSteps findSteps(PageFactory factory){
+    public void openFindSteps(){
         findElement(By.linkText("Find Steps")).click();
-        return factory.findSteps();
     }
     
-    public RunStory runStory(PageFactory factory){
+    public void openRunStory(){
         findElement(By.linkText("Run Story")).click();
-        return factory.runStory();
     }
+    
 }
