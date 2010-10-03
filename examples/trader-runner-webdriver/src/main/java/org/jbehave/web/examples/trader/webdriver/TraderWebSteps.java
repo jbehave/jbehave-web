@@ -47,7 +47,7 @@ public class TraderWebSteps {
     }
 
     @When("user views with methods")
-    public void userViewWithMethods(){
+    public void userViewsWithMethods(){
         findSteps.viewWithMethods();
     }
 
