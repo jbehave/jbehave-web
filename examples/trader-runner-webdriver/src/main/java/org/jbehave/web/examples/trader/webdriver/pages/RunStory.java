@@ -9,6 +9,10 @@ public class RunStory extends AbstractPage {
         super(driverProvider);
     }
     
+    public void open(){
+        findElement(By.linkText("Run Story")).click();
+    }
+    
     public void pageIsShown() {
         found("Story Input");
     }

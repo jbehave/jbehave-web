@@ -1,7 +1,7 @@
 Scenario: User searches for a single step
 
-Given user is on home page
-When user clicks on Find Steps
+Given user is on Home page
+When user opens Find Steps page
 Then Find Steps page is shown
 When user searches for "Given a threshold of 10.0"
 Then search returns: "Given a threshold of $threshold"
@@ -12,8 +12,8 @@ And steps instances include: "TraderSteps,StockExchangeSteps"
 
 Scenario: User searches and sorts all steps
 
-Given user is on home page
-When user clicks on Find Steps
+Given user is on Home page
+When user opens Find Steps page
 Then Find Steps page is shown
 When user searches for all steps
 Then search returns: "Given a threshold of $threshold,

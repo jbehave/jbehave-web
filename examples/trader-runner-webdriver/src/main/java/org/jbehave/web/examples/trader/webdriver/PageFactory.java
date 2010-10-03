@@ -8,21 +8,33 @@ import org.jbehave.web.selenium.WebDriverProvider;
 public class PageFactory {
 
     private final WebDriverProvider driverProvider;
+    private Home home;
+    private FindSteps findSteps;
+    private RunStory runStory;
 
     public PageFactory(WebDriverProvider driverProvider) {
         this.driverProvider = driverProvider;
     }
 
     public Home home(){
-        return new Home(driverProvider);
+        if ( home == null ){
+            home = new Home(driverProvider);
+        }
+        return home;
     }
 
     public FindSteps findSteps() {
-        return new FindSteps(driverProvider);
+        if ( findSteps == null ){
+            findSteps = new FindSteps(driverProvider);
+        }
+        return findSteps;
     }
 
     public RunStory runStory() {
-        return new RunStory(driverProvider);
+        if ( runStory == null ){
+            runStory = new RunStory(driverProvider);
+        }
+        return runStory;
     }
     
 }

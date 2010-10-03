@@ -9,6 +9,10 @@ public class FindSteps extends AbstractPage {
     public FindSteps(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
+    
+    public void open(){
+        findElement(By.linkText("Find Steps")).click();
+    }
 
     public void pageIsShown() {
         found("Patterns and methods matching the textual step");
