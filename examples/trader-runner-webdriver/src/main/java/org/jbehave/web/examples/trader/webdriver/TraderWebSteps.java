@@ -7,7 +7,6 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.web.examples.trader.webdriver.pages.FindSteps;
 import org.jbehave.web.examples.trader.webdriver.pages.Home;
-import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
 import org.jbehave.web.examples.trader.webdriver.pages.RunStory;
 
 public class TraderWebSteps {

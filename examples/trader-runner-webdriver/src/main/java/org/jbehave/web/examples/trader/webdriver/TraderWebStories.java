@@ -21,7 +21,6 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
-import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.DefaultWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
@@ -46,38 +45,38 @@ public class TraderWebStories extends JUnitStories {
                 .useStepMonitor(new SeleniumStepMonitor(contextView, context, new SilentStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(embeddableClass))
                 .useStoryReporterBuilder(new StoryReporterBuilder() {
+                            @Override
+                            public StoryReporter reporterFor(String storyPath, Format format) {
+                                if (format == IDE_CONSOLE) {
+                                    return new ConsoleOutput() {
+                                        @Override
+                                        public void beforeScenario(String scenarioTitle) {
+                                            context.setCurrentScenario(scenarioTitle);
+                                            super.beforeScenario(scenarioTitle);
+                                        }
 
-                    @Override
-                    public StoryReporter reporterFor(String storyPath, Format format) {
-                        if (format == IDE_CONSOLE) {
-                            return new ConsoleOutput() {
-                                @Override
-                                public void beforeScenario(String scenarioTitle) {
-                                    context.setCurrentScenario(scenarioTitle);
-                                    super.beforeScenario(scenarioTitle);
+                                        @Override
+                                        public void afterStory(boolean givenStory) {
+                                            contextView.close();
+                                            super.afterStory(givenStory);
+                                        }
+                                    };
+                                } else {
+                                    return super.reporterFor(storyPath, format);
                                 }
+                            }
 
-                                @Override
-                                public void afterStory(boolean givenStory) {
-                                    contextView.close();
-                                    super.afterStory(givenStory);
-                                }
-                            };
-                        } else {
-                            return super.reporterFor(storyPath, format);
                         }
-                    }
-
-                }
-                        .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
-                        .withDefaultFormats()
-                        .withFormats(IDE_CONSOLE, TXT, HTML, XML));
+                    .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+                    .withDefaultFormats()
+                    .withFormats(IDE_CONSOLE, TXT, HTML, XML));
     }
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new FailingScenarioScreenshotCapture(driverProvider))
-                .createCandidateSteps();
+        return new InstanceStepsFactory(configuration(), 
+                new TraderWebSteps(pageFactory),
+                new FailingScenarioScreenshotCapture(driverProvider)).createCandidateSteps();
     }
 
 
