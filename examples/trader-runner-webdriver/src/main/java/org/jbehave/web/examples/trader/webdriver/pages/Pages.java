@@ -2,7 +2,7 @@ package org.jbehave.web.examples.trader.webdriver.pages;
 
 import org.jbehave.web.selenium.WebDriverProvider;
 
-public class PageFactory {
+public class Pages {
 
     private final WebDriverProvider driverProvider;
     private Home home;
@@ -10,7 +10,7 @@ public class PageFactory {
     private FindSteps findSteps;
     private RunStory runStory;
 
-    public PageFactory(WebDriverProvider driverProvider) {
+    public Pages(WebDriverProvider driverProvider) {
         this.driverProvider = driverProvider;
     }
 

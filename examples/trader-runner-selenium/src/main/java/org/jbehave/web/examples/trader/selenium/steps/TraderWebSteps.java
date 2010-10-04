@@ -5,74 +5,74 @@ import java.util.List;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.web.examples.trader.selenium.pages.PageFactory;
+import org.jbehave.web.examples.trader.selenium.pages.Pages;
 
 public class TraderWebSteps {
 
-    private final PageFactory pageFactory;
+    private final Pages pages;
 
-    public TraderWebSteps(PageFactory pageFactory) {
-        this.pageFactory = pageFactory;
+    public TraderWebSteps(Pages pages) {
+        this.pages = pages;
     }
 
     @Given("user is on home page")
     public void userIsOnHomePage(){        
-        pageFactory.home().open();
+        pages.home().open();
     }
 
     @When("user clicks on Find Steps")
     public void userClicksOnFindSteps(){        
-        pageFactory.findSteps().open();
+        pages.findSteps().open();
     }
 
     @When("user clicks on Run Story")
     public void userClicksOnRunStory(){       
-        pageFactory.runStory().open();
+        pages.runStory().open();
     }
 
     @When("user searches for \"$step\"")
     public void userSearchesForSteps(String step){        
-        pageFactory.findSteps().find(step);
+        pages.findSteps().find(step);
     }
 
     @When("user searches for all steps")
     public void userSearchesAllSteps(){        
-        pageFactory.findSteps().find("");
+        pages.findSteps().find("");
     }
 
     @When("user views with methods")
     public void userViewWithMethods(){
-        pageFactory.findSteps().viewWithMethods();
+        pages.findSteps().viewWithMethods();
     }
 
     @When("user sorts by pattern")
     public void userSortsByPattern(){
-        pageFactory.findSteps().sortByPattern();
+        pages.findSteps().sortByPattern();
     }
 
     @When("user runs story \"$story\"")
     public void userRunsStory(String story){        
-        pageFactory.runStory().run(story);
+        pages.runStory().run(story);
     }
 
     @Then("run is successful")
     public void runIsSuccessful(){        
-        pageFactory.runStory().runIsSuccessful();
+        pages.runStory().runIsSuccessful();
     }
 
     @Then("text is shown: \"$text\"")
     public void textIsPresent(String text){   
-        pageFactory.findSteps().found(text);
+        pages.findSteps().found(text);
     }
 
     @Then("search returns: \"$stepsOrMethods\"")
     public void stepsFound(List<String> stepsOrMethods){   
-        pageFactory.findSteps().found(stepsOrMethods);
+        pages.findSteps().found(stepsOrMethods);
     }
 
     @Then("steps instances include: \"$names\"")
     public void stepsInstancesFound(List<String> names){   
-        pageFactory.findSteps().found(names);
+        pages.findSteps().found(names);
     }
 
 }

@@ -21,7 +21,7 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
-import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
+import org.jbehave.web.examples.trader.webdriver.pages.Pages;
 import org.jbehave.web.examples.trader.webdriver.steps.FailingScenarioScreenshotCapture;
 import org.jbehave.web.examples.trader.webdriver.steps.TraderWebSteps;
 import org.jbehave.web.selenium.ContextView;
@@ -35,7 +35,7 @@ import org.jbehave.web.selenium.WebDriverProvider;
 public class TraderWebStories extends JUnitStories {
 
     private WebDriverProvider driverProvider = new DefaultWebDriverProvider();
-    private PageFactory pageFactory = new PageFactory(driverProvider);
+    private Pages pages = new Pages(driverProvider);
     private SeleniumContext context = new SeleniumContext();
     private ContextView contextView = new LocalFrameContextView().sized(500, 100);
 
@@ -78,7 +78,7 @@ public class TraderWebStories extends JUnitStories {
     @Override
     public List<CandidateSteps> candidateSteps() {
         return new InstanceStepsFactory(configuration(), 
-                new TraderWebSteps(pageFactory),
+                new TraderWebSteps(pages),
                 new FailingScenarioScreenshotCapture(driverProvider)).createCandidateSteps();
     }
 
