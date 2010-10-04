@@ -5,3 +5,12 @@ To run in IDE:
 ./jetty-server.sh
 
 - run stories in IDE
+
+NOTE:  On some platforms, you may need to update your /etc/hosts to include the entries
+
+127.0.2.1   localhost
+127.0.2.2   localhost
+127.0.2.3   localhost
+127.0.2.4   localhost
+
+for some WebDriver implementations to find the webapp under test.
