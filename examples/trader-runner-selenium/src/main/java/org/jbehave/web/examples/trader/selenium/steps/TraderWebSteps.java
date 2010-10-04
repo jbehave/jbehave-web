@@ -8,28 +8,37 @@ import org.jbehave.core.annotations.When;
 import org.jbehave.web.examples.trader.selenium.pages.Pages;
 
 public class TraderWebSteps {
-
     private final Pages pages;
 
     public TraderWebSteps(Pages pages) {
         this.pages = pages;
     }
 
-    @Given("user is on home page")
+    @Given("user is on Home page")
     public void userIsOnHomePage(){        
-        pages.home().open();
+        pages.home().open();        
     }
 
-    @When("user clicks on Find Steps")
+    @When("user opens Find Steps page")
     public void userClicksOnFindSteps(){        
         pages.findSteps().open();
     }
 
-    @When("user clicks on Run Story")
-    public void userClicksOnRunStory(){       
-        pages.runStory().open();
+    @Then("Find Steps page is shown")
+    public void findStepsPageIsShown(){
+        pages.findSteps().pageIsShown();
     }
 
+    @When("user opens Run Story page")
+    public void userClicksOnRunStory(){        
+        pages.runStory().open();
+    }
+    
+    @Then("Run Story page is shown")
+    public void runStoryPageIsShown(){
+        pages.runStory().pageIsShown();
+    }
+    
     @When("user searches for \"$step\"")
     public void userSearchesForSteps(String step){        
         pages.findSteps().find(step);
@@ -41,7 +50,7 @@ public class TraderWebSteps {
     }
 
     @When("user views with methods")
-    public void userViewWithMethods(){
+    public void userViewsWithMethods(){
         pages.findSteps().viewWithMethods();
     }
 
@@ -54,15 +63,10 @@ public class TraderWebSteps {
     public void userRunsStory(String story){        
         pages.runStory().run(story);
     }
-
+    
     @Then("run is successful")
     public void runIsSuccessful(){        
         pages.runStory().runIsSuccessful();
-    }
-
-    @Then("text is shown: \"$text\"")
-    public void textIsPresent(String text){   
-        pages.findSteps().found(text);
     }
 
     @Then("search returns: \"$stepsOrMethods\"")

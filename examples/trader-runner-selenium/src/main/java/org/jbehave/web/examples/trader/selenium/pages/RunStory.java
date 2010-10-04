@@ -14,6 +14,10 @@ public class RunStory extends AbstractPage {
         waitForPageToLoad();
     }
 
+    public void pageIsShown() {
+        found("Story Input");
+    }
+
     public void run(String story) {
         type("input", story);
         clickButton("Run");
@@ -21,9 +25,9 @@ public class RunStory extends AbstractPage {
     }
 
     public void runIsSuccessful() {
-        textIsVisible("Scenario");
-        textIsNotVisible("FAILED");       
-        textIsNotVisible("PENDING");       
+        found("Scenario");
+        notFound("FAILED");       
+        notFound("PENDING");       
     }
 
 }
