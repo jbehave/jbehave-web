@@ -164,7 +164,7 @@ cases. There are also a PerStory and PerScenario implementation.</p>
 <![CDATA[
 public class TraderWebStories extends JUnitStories {
   
-    private WebDriverProvider driverProvider = new DefaultWebDriverProvider();
+    private WebDriverProvider driverProvider = new PropertyWebDriverProvider();
     private Pages pages = new Pages(driverProvider);
     private SeleniumContext context = new SeleniumContext();
     private ContextView contextView = new LocalFrameContextView().sized(500, 100);
