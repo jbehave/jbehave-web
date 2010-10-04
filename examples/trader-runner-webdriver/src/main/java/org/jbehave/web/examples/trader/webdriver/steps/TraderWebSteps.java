@@ -1,10 +1,11 @@
-package org.jbehave.web.examples.trader.webdriver;
+package org.jbehave.web.examples.trader.webdriver.steps;
 
 import java.util.List;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.jbehave.web.examples.trader.webdriver.pages.PageFactory;
 
 public class TraderWebSteps {
 

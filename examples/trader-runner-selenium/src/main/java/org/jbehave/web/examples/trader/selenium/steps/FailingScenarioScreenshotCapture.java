@@ -1,4 +1,4 @@
-package org.jbehave.web.examples.trader.selenium;
+package org.jbehave.web.examples.trader.selenium.steps;
 
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterScenario.Outcome;

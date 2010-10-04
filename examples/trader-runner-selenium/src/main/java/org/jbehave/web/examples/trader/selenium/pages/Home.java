@@ -3,7 +3,7 @@ package org.jbehave.web.examples.trader.selenium.pages;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 
-public class Home extends TraderPage {
+public class Home extends AbstractPage {
 
     public Home(Selenium selenium, ConditionRunner conditionRunner) {
         super(selenium, conditionRunner);
@@ -13,15 +13,4 @@ public class Home extends TraderPage {
         open("/trader-runner/");
     }
 
-    public FindSteps findSteps(PageFactory factory){
-        clickLink("Find Steps");
-        waitForPageToLoad();
-        return factory.findSteps();
-    }
-    
-    public RunStory runStory(PageFactory factory){
-        clickLink("Run Story");
-        waitForPageToLoad();
-        return factory.runStory();
-    }
 }

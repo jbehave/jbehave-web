@@ -5,10 +5,15 @@ import java.util.List;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
 
-public class FindSteps extends TraderPage {
+public class FindSteps extends AbstractPage {
 
     public FindSteps(Selenium selenium, ConditionRunner conditionRunner) {
         super(selenium, conditionRunner);
+    }
+
+    public void open() {
+        clickLink("Find Steps");
+        waitForPageToLoad();
     }
 
     public void find(String step) {

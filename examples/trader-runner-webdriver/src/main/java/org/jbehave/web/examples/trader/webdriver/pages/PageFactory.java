@@ -1,9 +1,5 @@
-package org.jbehave.web.examples.trader.webdriver;
+package org.jbehave.web.examples.trader.webdriver.pages;
 
-import org.jbehave.web.examples.trader.webdriver.pages.DataFiles;
-import org.jbehave.web.examples.trader.webdriver.pages.FindSteps;
-import org.jbehave.web.examples.trader.webdriver.pages.Home;
-import org.jbehave.web.examples.trader.webdriver.pages.RunStory;
 import org.jbehave.web.selenium.WebDriverProvider;
 
 public class PageFactory {

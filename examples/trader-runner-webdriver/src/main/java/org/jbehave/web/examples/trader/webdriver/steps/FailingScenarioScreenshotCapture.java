@@ -1,4 +1,4 @@
-package org.jbehave.web.examples.trader.webdriver;
+package org.jbehave.web.examples.trader.webdriver.steps;
 
 import java.io.FileOutputStream;
 

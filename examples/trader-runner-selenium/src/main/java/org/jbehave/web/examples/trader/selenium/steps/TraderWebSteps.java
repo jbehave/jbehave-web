@@ -1,21 +1,15 @@
-package org.jbehave.web.examples.trader.selenium;
+package org.jbehave.web.examples.trader.selenium.steps;
 
 import java.util.List;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.web.examples.trader.selenium.pages.FindSteps;
-import org.jbehave.web.examples.trader.selenium.pages.Home;
 import org.jbehave.web.examples.trader.selenium.pages.PageFactory;
-import org.jbehave.web.examples.trader.selenium.pages.RunStory;
 
 public class TraderWebSteps {
 
     private final PageFactory pageFactory;
-    private Home home;
-    private FindSteps findSteps;
-    private RunStory runStory;
 
     public TraderWebSteps(PageFactory pageFactory) {
         this.pageFactory = pageFactory;
@@ -23,63 +17,62 @@ public class TraderWebSteps {
 
     @Given("user is on home page")
     public void userIsOnHomePage(){        
-        home = pageFactory.home();
-        home.open();        
+        pageFactory.home().open();
     }
 
     @When("user clicks on Find Steps")
     public void userClicksOnFindSteps(){        
-        findSteps = home.findSteps(pageFactory);
+        pageFactory.findSteps().open();
     }
 
     @When("user clicks on Run Story")
-    public void userClicksOnRunStory(){        
-        runStory = home.runStory(pageFactory);
+    public void userClicksOnRunStory(){       
+        pageFactory.runStory().open();
     }
 
     @When("user searches for \"$step\"")
     public void userSearchesForSteps(String step){        
-        findSteps.find(step);
+        pageFactory.findSteps().find(step);
     }
 
     @When("user searches for all steps")
     public void userSearchesAllSteps(){        
-        findSteps.find("");
+        pageFactory.findSteps().find("");
     }
 
     @When("user views with methods")
     public void userViewWithMethods(){
-        findSteps.viewWithMethods();
+        pageFactory.findSteps().viewWithMethods();
     }
 
     @When("user sorts by pattern")
     public void userSortsByPattern(){
-        findSteps.sortByPattern();
+        pageFactory.findSteps().sortByPattern();
     }
 
     @When("user runs story \"$story\"")
     public void userRunsStory(String story){        
-        runStory.run(story);
+        pageFactory.runStory().run(story);
     }
 
     @Then("run is successful")
     public void runIsSuccessful(){        
-        runStory.runIsSuccessful();
+        pageFactory.runStory().runIsSuccessful();
     }
 
     @Then("text is shown: \"$text\"")
     public void textIsPresent(String text){   
-        findSteps.found(text);
+        pageFactory.findSteps().found(text);
     }
 
     @Then("search returns: \"$stepsOrMethods\"")
     public void stepsFound(List<String> stepsOrMethods){   
-        findSteps.found(stepsOrMethods);
+        pageFactory.findSteps().found(stepsOrMethods);
     }
 
     @Then("steps instances include: \"$names\"")
     public void stepsInstancesFound(List<String> names){   
-        findSteps.found(names);
+        pageFactory.findSteps().found(names);
     }
 
 }
