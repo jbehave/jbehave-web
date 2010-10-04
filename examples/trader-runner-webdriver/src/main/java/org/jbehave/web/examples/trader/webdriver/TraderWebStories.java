@@ -25,16 +25,16 @@ import org.jbehave.web.examples.trader.webdriver.pages.Pages;
 import org.jbehave.web.examples.trader.webdriver.steps.FailingScenarioScreenshotCapture;
 import org.jbehave.web.examples.trader.webdriver.steps.TraderWebSteps;
 import org.jbehave.web.selenium.ContextView;
-import org.jbehave.web.selenium.DefaultWebDriverProvider;
+import org.jbehave.web.selenium.LocalFrameContextView;
+import org.jbehave.web.selenium.PropertyWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
-import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.WebDriverProvider;
 
 public class TraderWebStories extends JUnitStories {
 
-    private WebDriverProvider driverProvider = new DefaultWebDriverProvider();
+    private WebDriverProvider driverProvider = new PropertyWebDriverProvider();
     private Pages pages = new Pages(driverProvider);
     private SeleniumContext context = new SeleniumContext();
     private ContextView contextView = new LocalFrameContextView().sized(500, 100);
