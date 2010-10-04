@@ -20,9 +20,9 @@ public class DataFiles extends AbstractPage {
     }
 
     public void uploadFile(String path){
-        findElement(By.className("wicket-mfu-field")).sendKeys(new File("src/main/resources"+path).getAbsolutePath());
-        findElement(By.name("uploadButton")).submit();
-        switchTo().defaultContent();
+        String absolutePath = new File(path).getAbsolutePath();
+        findElement(By.className("wicket-mfu-field")).sendKeys(absolutePath);
+        findElement(By.name("uploadButton")).click();
     }
     
 }

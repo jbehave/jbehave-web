@@ -29,6 +29,16 @@ public class TraderWebSteps {
         pageFactory.dataFiles().pageIsShown();
     }
 
+    @When("user uploads file $path")
+    public void userUploadsFile(String path){        
+        pageFactory.dataFiles().uploadFile(path);
+    }    
+
+    @Then("file $name is uploaded")
+    public void fileIsUploaded(String name){        
+        pageFactory.dataFiles().found(name);
+    }        
+    
     @When("user opens Find Steps page")
     public void userClicksOnFindSteps(){        
         pageFactory.findSteps().open();
@@ -49,11 +59,6 @@ public class TraderWebSteps {
         pageFactory.runStory().pageIsShown();
     }
     
-    @When("user uploads file $path")
-    public void userUploadsFile(String path){        
-        pageFactory.dataFiles().uploadFile(path);
-    }    
-
     @When("user searches for \"$step\"")
     public void userSearchesForSteps(String step){        
         pageFactory.findSteps().find(step);
