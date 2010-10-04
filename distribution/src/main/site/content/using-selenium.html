@@ -9,78 +9,99 @@
 <h2>Running Stories with Selenium</h2>
 
 <p><a href="http://seleniumhq.org">Selenium</a> is a powerful
-open-source tool for automated web testing.</p>
+open-source framework for automated web testing. From 2.x, it offers two
+APIs: the Selenium API (backwards compatible with Selenium 1.x) and the
+new WebDriver API.  Both APIs are available from the same 2.x dependencies,
+so JBehave Web Selenium module supports both.  When we talk about Selenium,
+we usually intend the framework, while if we need to distinguish between the 
+APIs we'll specifically refer to the "Selenium API" and "WebDriver API".</p>
 
 <p>Let's see how we can easily use Selenium to run web-based
-stories.</p>
-
-<pre class="brush: bdd">Scenario: User searches for steps
-
-Given user is on home page
-When user clicks on Find Steps
-Then text is shown: "Patterns and methods matching the textual step"
-When user searches for "Given a threshold of 10.0"
-Then search returns: "Given a threshold of $threshold"
-</pre>
-
-<p>The objective in creating a DSL is to represent the
+stories. The objective in creating a DSL is to represent the
 business-domain functionality whilst abstracting away the details of the
 implementation, in this case the access to the web layer via a specific
 testing tool, such as Selenium. The same DSL should be re-usable with
 different testing tools.</p>
+
+<p>As usual, examples speak louder than words:</p>
+
+<pre class="brush: bdd">Scenario: User searches for a single step
+
+Given user is on Home page
+When user opens Find Steps page
+Then Find Steps page is shown
+When user searches for "Given a threshold of 10.0"
+Then search returns: "Given a threshold of $threshold"
+When user views with methods
+Then search returns: "Given a threshold of $threshold,
+    [org.jbehave.web.examples.trader.steps.TraderSteps.aThreshold(double)]"
+And steps instances include: "TraderSteps,StockExchangeSteps"
+</pre>
+
 <p>The TraderWebSteps class is where all the Selenium magic happens:</p>
 <script type="syntaxhighlighter" class="brush: java">
-<![CDATA[
+<![CDATA[   
 public class TraderWebSteps {
 
-    private final PageFactory pageFactory;
-    private Home home;
-    private FindSteps findSteps;
+    private final Pages pages;
 
-    public TraderWebSteps(PageFactory pageFactory) {
-        this.pageFactory = pageFactory;
+    public TraderWebSteps(Pages pages) {
+        this.pages = pages;
     }
 
-    @Given("user is on home page")
+    @Given("user is on Home page")
     public void userIsOnHomePage(){        
-        home = pageFactory.home();
-        home.open();        
+        pages.home().open();        
     }
 
-    @When("user clicks on Find Steps")
+    @When("user opens Find Steps page")
     public void userClicksOnFindSteps(){        
-        findSteps = home.findSteps(pageFactory);
+        pages.findSteps().open();
     }
 
+    @Then("Find Steps page is shown")
+    public void findStepsPageIsShown(){
+        pages.findSteps().pageIsShown();
+    }
+    
     @When("user searches for \"$step\"")
     public void userSearchesForSteps(String step){        
-        findSteps.find(step);
+        pages.findSteps().find(step);
     }
 
-    @Then("text is shown: \"$text\"")
-    public void textIsPresent(String text){   
-        findSteps.textIsVisible(text);
+    @Then("search returns: \"$stepsOrMethods\"")
+    public void stepsFound(List<String> stepsOrMethods){   
+        pages.findSteps().found(stepsOrMethods);
     }
 
-    @Then("search returns: \"$result\"")
-    public void searchReturns(String result){   
-        findSteps.found(result);
+    @Then("steps instances include: \"$names\"")
+    public void stepsInstancesFound(List<String> names){   
+        pages.findSteps().found(names);
     }
 
 }
 ]]>
 </script>
-<p>Here we are using <a href="http://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a> to 
-abstract the Selenium behaviour behind pages that specify the user interaction in more meaningful ways.</p>
-<p>As always, we configure the use of TraderWebSteps in an embeddable runnable class, e.g.the JUnit-runnable
-TraderWebStories:</p>
+
+<p>Here we are using <a
+    href="http://code.google.com/p/selenium/wiki/PageObjects">Page
+Objects</a> to abstract the Selenium behaviour behind pages that specify the
+user interaction in more meaningful ways.  Note that the use of pages have so far
+enabled us not to commit to a specific API, either Selenium or WebDriver API.</p>
+
+<p>As always, we configure the use of TraderWebSteps in an
+embeddable runnable class, e.g.the JUnit-runnable TraderWebStories.  This is 
+where the choice of API comes into play.</p>
+
+<h2>Using Selenium API</h2>
+
 <script type="syntaxhighlighter" class="brush: java">
 <![CDATA[
 public class TraderWebStories extends JUnitStories {
-
+  
     private Selenium selenium = SeleniumConfiguration.defaultSelenium();
     private ConditionRunner conditionRunner = SeleniumConfiguration.defaultConditionRunner(selenium);
-    private PageFactory pageFactory = new PageFactory(selenium, conditionRunner);
+    private Pages pages = new Pages(selenium, conditionRunner);
     private SeleniumContext seleniumContext = new SeleniumContext();
 
     @Override
@@ -91,7 +112,24 @@ public class TraderWebStories extends JUnitStories {
             .useSeleniumContext(seleniumContext)
             .useStepMonitor(new SeleniumStepMonitor(selenium, seleniumContext, new SilentStepMonitor()))
             .useStoryLoader(new LoadFromClasspath(embeddableClass))
-            .useStoryReporterBuilder(new StoryReporterBuilder()
+            .useStoryReporterBuilder(new StoryReporterBuilder(){
+
+                    @Override
+                    public StoryReporter reporterFor(String storyPath, Format format) {
+                        if ( format == CONSOLE ){
+                            return new ConsoleOutput(){
+                                @Override
+                                public void beforeScenario(String title) {
+                                    seleniumContext.setCurrentScenario(title);
+                                    super.beforeScenario(title);
+                                }                                
+                            };
+                        } else { 
+                            return super.reporterFor(storyPath, format);
+                        }
+                    }
+                
+                }
                 .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
                 .withDefaultFormats()
                 .withFormats(CONSOLE, TXT, HTML, XML));
@@ -99,7 +137,7 @@ public class TraderWebStories extends JUnitStories {
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pageFactory), new PerStoriesSeleniumSteps(selenium))
+        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pages), new FailingScenarioScreenshotCapture(selenium))
                 .createCandidateSteps();
     }
     
@@ -114,17 +152,93 @@ public class TraderWebStories extends JUnitStories {
 ]]>
 </script>
 
-<p>The <b>@BeforeStories</b> and <b>@AfterStories</b> annotations
-in the PerStoriesSeleniumSteps methods allow to start and stop the selenium server
-before and after stories are run. Users can of course override the default
-behaviour, but generally don't need to bother for most use cases.  
-There are also a PerStory and PerScenario implementation.</p>
+<p>The <b>@BeforeStories</b> and <b>@AfterStories</b> annotations in
+the PerStoriesSeleniumSteps methods allow to start and stop the selenium
+server before and after stories are run. Users can of course override
+the default behaviour, but generally don't need to bother for most use
+cases. There are also a PerStory and PerScenario implementation.</p>
+
+<h2>Using WebDriver API</h2>
+
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class TraderWebStories extends JUnitStories {
+  
+    private WebDriverProvider driverProvider = new DefaultWebDriverProvider();
+    private Pages pages = new Pages(driverProvider);
+    private SeleniumContext context = new SeleniumContext();
+    private ContextView contextView = new LocalFrameContextView().sized(500, 100);
+
+    @Override
+    public Configuration configuration() {
+        Class<? extends Embeddable> embeddableClass = this.getClass();
+        return new SeleniumConfiguration()
+                .useSeleniumContext(context)
+                .useWebDriverProvider(driverProvider)
+                .useStepMonitor(new SeleniumStepMonitor(contextView, context, new SilentStepMonitor()))
+                .useStoryLoader(new LoadFromClasspath(embeddableClass))
+                .useStoryReporterBuilder(new StoryReporterBuilder() {
+                            @Override
+                            public StoryReporter reporterFor(String storyPath, Format format) {
+                                if (format == IDE_CONSOLE) {
+                                    return new ConsoleOutput() {
+                                        @Override
+                                        public void beforeScenario(String scenarioTitle) {
+                                            context.setCurrentScenario(scenarioTitle);
+                                            super.beforeScenario(scenarioTitle);
+                                        }
+
+                                        @Override
+                                        public void afterStory(boolean givenStory) {
+                                            contextView.close();
+                                            super.afterStory(givenStory);
+                                        }
+                                    };
+                                } else {
+                                    return super.reporterFor(storyPath, format);
+                                }
+                            }
+
+                        }
+                    .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+                    .withDefaultFormats()
+                    .withFormats(IDE_CONSOLE, TXT, HTML, XML));
+    }
+
+    @Override
+    public List<CandidateSteps> candidateSteps() {
+        return new InstanceStepsFactory(configuration(), 
+                new TraderWebSteps(pages),
+                new FailingScenarioScreenshotCapture(driverProvider)).createCandidateSteps();
+    }
+
+
+    @Override
+    protected List<String> storyPaths() {
+        return new StoryFinder()
+                .findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/*.story"), null);
+    }
+
+}
+]]>
+</script>
+
+<p>The <b>@BeforeStories</b> and <b>@AfterStories</b> annotations in
+the PerStoriesWebDriverSteps methods allow to start and stop the WebDriver
+before and after stories are run. Users can of course override
+the default behaviour, but generally don't need to bother for most use
+cases. There are also a PerStory and PerScenario implementation.</p>
+
+<h2>Running in automated way</h2>
 
 <p><strong>NOTE</strong>: To get the Selenium based tests running in
-an automated way, you need to run both a webapp server (e.g. Jetty) and
-the Selenium server. See the <a
-    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner-stories">trader runner stories examples</a> for a way to do this using <a
-    href="http://maven.apache.org">Maven</a>.</p>
+an automated way, you need to run both a webapp server, e.g. Jetty, and
+the Selenium server (only for the Selenium API, as the WebDriver API does not need it). See the <a
+	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner-selenium">trader
+runner selenium example</a> and <a
+    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner-webdriver">trader
+runner webdriver example</a> for a way to do this using <a
+	href="http://maven.apache.org">Maven</a>.</p>
 
 </body>
 </html>
