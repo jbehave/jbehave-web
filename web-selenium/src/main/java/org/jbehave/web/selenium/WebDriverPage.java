@@ -58,7 +58,7 @@ public abstract class WebDriverPage implements WebDriver {
     }
 
     public String getWindowHandle() {
-        return driverProvider.get().getCurrentUrl();
+        return driverProvider.get().getWindowHandle();
     }
 
     public TargetLocator switchTo() {
