@@ -7,5 +7,7 @@ public interface WebDriverProvider {
     WebDriver get();
 
     void initialize();
+
+    void saveScreenshotTo(String path);
     
 }

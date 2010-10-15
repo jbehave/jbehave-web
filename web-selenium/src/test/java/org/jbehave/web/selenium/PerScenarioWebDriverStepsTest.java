@@ -1,5 +1,8 @@
 package org.jbehave.web.selenium;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -13,9 +16,6 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 public class PerScenarioWebDriverStepsTest {
 
 	private static final String NL = "\n";
@@ -24,11 +24,9 @@ public class PerScenarioWebDriverStepsTest {
 	private final StoryParser parser = new RegexStoryParser();
 	private final StoryRunner runner = new StoryRunner();
     private final WebDriver driver = mock(WebDriver.class);
-	private final WebDriverProvider driverProvider = new WebDriverProvider() {
+	private final WebDriverProvider driverProvider = new DefaultWebDriverProvider() {
         public WebDriver get() {
             return driver;
-        }
-        public void initialize() {
         }
     };
 

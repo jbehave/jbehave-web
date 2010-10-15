@@ -21,55 +21,60 @@ public abstract class WebDriverPage implements WebDriver {
         this.driverProvider = driverProvider;
     }
 
-    public void get(String s) {
-        driverProvider.get().get(s);
+    public void get(String url) {
+        webDriver().get(url);
     }
 
     public String getCurrentUrl() {
-        return driverProvider.get().getCurrentUrl();
+        return webDriver().getCurrentUrl();
     }
 
     public String getTitle() {
-        return driverProvider.get().getTitle();
+        return webDriver().getTitle();
     }
 
     public List<WebElement> findElements(By by) {
-        return driverProvider.get().findElements(by);
+        return webDriver().findElements(by);
     }
 
     public WebElement findElement(By by) {
-        return driverProvider.get().findElement(by);
+        return webDriver().findElement(by);
     }
 
     public String getPageSource() {
-        return driverProvider.get().getPageSource();
+        return webDriver().getPageSource();
     }
 
     public void close() {
-        driverProvider.get().close();
+        webDriver().close();
     }
 
     public void quit() {
-        driverProvider.get().quit();
+        webDriver().quit();
     }
 
     public Set<String> getWindowHandles() {
-        return driverProvider.get().getWindowHandles();
+        return webDriver().getWindowHandles();
     }
 
     public String getWindowHandle() {
-        return driverProvider.get().getWindowHandle();
+        return webDriver().getWindowHandle();
     }
 
     public TargetLocator switchTo() {
-        return driverProvider.get().switchTo();
+        return webDriver().switchTo();
     }
 
     public Navigation navigate() {
-        return driverProvider.get().navigate();
+        return webDriver().navigate();
     }
 
     public Options manage() {
-        return driverProvider.get().manage();
+        return webDriver().manage();
     }
+
+    protected WebDriver webDriver() {
+        return driverProvider.get();
+    }
+
 }
