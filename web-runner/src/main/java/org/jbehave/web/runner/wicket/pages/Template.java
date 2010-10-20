@@ -47,7 +47,7 @@ public class Template extends WebPage {
 
         private final IStringResourceStream templateResource;
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("rawtypes")
         public HtmlEscapingVelocityPanel(String id, IModel<? extends Map> model,
                 IStringResourceStream templateResource, String classAttribute) {
             super(id, model);
