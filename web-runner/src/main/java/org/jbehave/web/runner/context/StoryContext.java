@@ -13,6 +13,7 @@ public class StoryContext implements Serializable {
 
     private static final String EMPTY = "";
 	private String input = EMPTY;
+    private String metaFilter = EMPTY;	
 	private String output = EMPTY;
 	private List<String> messages = new ArrayList<String>();
 	private Throwable cause = null;
@@ -28,6 +29,14 @@ public class StoryContext implements Serializable {
 		this.input = input;
 	}
 
+    public String getMetaFilter() {
+        return metaFilter;
+    }
+
+    public void setMetaFilter(String metaFilter) {
+        this.metaFilter = metaFilter;
+    }	
+	
 	public String getOutput() {
 		return output;
 	}
