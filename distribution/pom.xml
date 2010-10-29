@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
   <name>JBehave Web Distribution</name>
   <properties>
-      <jbehave.site.version>3.0</jbehave.site.version>
+      <jbehave.site.version>3.1.1</jbehave.site.version>
   </properties>
   <dependencies>
     <dependency>
@@ -139,12 +139,12 @@
       <plugin>
         <groupId>org.codehaus.xsite</groupId>
         <artifactId>xsite-maven-plugin</artifactId>
-        <version>1.1.2</version>
+        <version>1.2</version>
         <configuration>
           <sourceDirectoryPath>${basedir}/src/main/site/</sourceDirectoryPath>
           <sitemapPath>content/sitemap.xml</sitemapPath>
           <templatesDirectoryPath>${project.build.directory}/templates</templatesDirectoryPath>
-          <skinPath>xsite-skin.html</skinPath>
+          <skinPath>xsite-skin.ftl</skinPath>
           <resourcePaths>resources</resourcePaths>
           <outputDirectoryPath>${project.build.directory}/site</outputDirectoryPath>
           <publishedVersion>${project.version}</publishedVersion>
