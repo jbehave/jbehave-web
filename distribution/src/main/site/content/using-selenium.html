@@ -6,15 +6,15 @@
 
 <body>
 
-<h2>Running Stories with Selenium</h2>
+<h2>Driving Web Behaviour</h2>
 
 <p><a href="http://seleniumhq.org">Selenium</a> is a powerful
 open-source framework for automated web testing. From 2.x, it offers two
-APIs: the Selenium API (backwards compatible with Selenium 1.x) and the
-new WebDriver API.  Both APIs are available from the same 2.x dependencies,
+APIs: the <b>Selenium API (backwards compatible with Selenium 1.x)</b> and the
+new <b>WebDriver API</b>.  Both APIs are available from the same 2.x dependencies,
 so JBehave Web Selenium module supports both.  When we talk about Selenium,
 we usually intend the framework, while if we need to distinguish between the 
-APIs we'll specifically refer to the "Selenium API" and "WebDriver API".</p>
+APIs we'll specifically refer to the <b>Selenium API</b> and <b>WebDriver API</b>.</p>
 
 <p>Let's see how we can easily use Selenium to run web-based
 stories. The objective in creating a DSL is to represent the
@@ -38,7 +38,7 @@ Then search returns: "Given a threshold of $threshold,
 And steps instances include: "TraderSteps,StockExchangeSteps"
 </pre>
 
-<p>The TraderWebSteps class is where all the Selenium magic happens:</p>
+<p>The TraderWebSteps class is just like any other JBehave steps class:</p>
 <script type="syntaxhighlighter" class="brush: java">
 <![CDATA[   
 public class TraderWebSteps {
@@ -83,17 +83,19 @@ public class TraderWebSteps {
 ]]>
 </script>
 
-<p>Here we are using <a
-    href="http://code.google.com/p/selenium/wiki/PageObjects">Page
+<p>The new element here is that we are using <a href="page-objects.html">Page
 Objects</a> to abstract the Selenium behaviour behind pages that specify the
-user interaction in more meaningful ways.  Note that the use of pages have so far
-enabled us not to commit to a specific API, either Selenium or WebDriver API.</p>
+user interaction in more meaningful ways.  The page objects is where
+the Selenium magic happens. Note that the use of pages have so far
+enabled us not to commit to a specific API, either Selenium API or WebDriver API.</p>
 
-<p>As always, we configure the use of TraderWebSteps in an
-embeddable runnable class, e.g.the JUnit-runnable TraderWebStories.  This is 
+<h2>Configuring JBehave to use Selenium</h2>
+
+<p>As always, we configure JBehave to several different ways.  One is to have 
+an embeddable runnable class, e.g.the JUnit-runnable TraderWebStories.  This is 
 where the choice of API comes into play.</p>
 
-<h2>Using Selenium API</h2>
+<h3>Using Selenium API</h3>
 
 <script type="syntaxhighlighter" class="brush: java">
 <![CDATA[
@@ -158,7 +160,7 @@ server before and after stories are run. Users can of course override
 the default behaviour, but generally don't need to bother for most use
 cases. There are also a PerStory and PerScenario implementation.</p>
 
-<h2>Using WebDriver API</h2>
+<h3>Using WebDriver API</h3>
 
 <script type="syntaxhighlighter" class="brush: java">
 <![CDATA[
@@ -229,7 +231,7 @@ before and after stories are run. Users can of course override
 the default behaviour, but generally don't need to bother for most use
 cases. There are also a PerStory and PerScenario implementation.</p>
 
-<h2>Running in automated way</h2>
+<h2>Running Selenium-based tests in an automated way</h2>
 
 <p><strong>NOTE</strong>: To get the Selenium based tests running in
 an automated way, you need to run both a webapp server, e.g. Jetty, and

@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Page Objects</title>
+</head>
+
+<body>
+
+<h2>Abstracting Web Page Interaction</h2>
+
+<p><a href="http://code.google.com/p/selenium/wiki/PageObjects">Page
+Objects</a> is the recommended pattern to abstract the Selenium behaviour
+behind pages that specify the user interaction in more meaningful ways.
+The page objects is where the Selenium magic happens and this is where
+we need to commit to specific API, either <b>Selenium API</b> or <b>WebDriver
+API</b>.</p>
+
+<p>The <a>Pages</a> object is typically a factory class that allows
+users to easily get hold of the objects for each web page, and can be
+injected into the JBehave Steps classes. The advantage of having a
+pages' factory class is that even as the number of page objects grow the
+dependencies at the Steps class level still remains the same. Typically,
+the implementation of a step requires interaction with more than one
+page.</p>
+
+<h2>Using Selenium API</h2>
+
+<p>The <b>Pages</b> object is injected with the Selenium
+API-specific objects:</p>
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class Pages {
+
+    private final Selenium selenium;
+    private final ConditionRunner conditionRunner;
+    private Home home;
+    private FindSteps findSteps;
+    // More pages as needed
+
+    public Pages(Selenium selenium, ConditionRunner conditionRunner) {
+        this.selenium = selenium;
+        this.conditionRunner = conditionRunner;
+    }
+
+    public Home home() {
+        if (home == null) {
+            home = new Home(selenium, conditionRunner);
+        }
+        return home;
+    }
+
+    public FindSteps findSteps() {
+        if (findSteps == null) {
+            findSteps = new FindSteps(selenium, conditionRunner);
+        }
+        return findSteps;
+    }
+}
+]]>
+</script>
+
+<p>Each page extends the <a
+	href="javadoc/web-selenium/org/jbehave/web/selenium/SeleniumPage">SeleniumPage</a>,
+which provides a facade to the Selenium API. E.g.:</p>
+
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class FindSteps extends AbstractPage {
+
+    public FindSteps(Selenium selenium, ConditionRunner conditionRunner) {
+        super(selenium, conditionRunner);
+    }
+
+    public void open() {
+        clickLink("Find Steps");
+        waitForPageToLoad();
+    }
+
+    public void pageIsShown() {
+        found("Patterns and methods matching the textual step");
+    }
+
+    public void find(String step) {
+        type("matchingStep", step);
+        clickButton("Find");
+        waitForPageToLoad();
+    }
+
+    public void viewWithMethods() {
+        selectByLabel("viewSelect", "WITH_METHODS");
+        waitForPageToLoad();        
+    }
+
+    public void sortByPattern() {
+        selectByLabel("sortingSelect", "BY_PATTERN");
+        waitForPageToLoad();        
+    }
+
+}
+]]>
+</script>
+
+<p>Here <b>AbstractPage</b> is actually the class extending <b>SeleniumPage</b> and providing
+some methods common to all pages.</p>
+
+<h2>Using WebDriver API</h2>
+
+<p>The <b>Pages</b> object is injected with the WebDriver
+API-specific objects:</p>
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class Pages {
+
+    private final WebDriverProvider driverProvider;
+    private Home home;
+    private FindSteps findSteps;
+    // More pages as needed
+
+    public Pages(WebDriverProvider driverProvider) {
+        this.driverProvider = driverProvider;
+    }
+
+    public Home home(){
+        if ( home == null ){
+            home = new Home(driverProvider);
+        }
+        return home;
+    }
+
+    public FindSteps findSteps() {
+        if ( findSteps == null ){
+            findSteps = new FindSteps(driverProvider);
+        }
+        return findSteps;
+    }
+    
+}
+]]>
+</script>
+
+<p>Note that we inject a <a
+	href="javadoc/web-selenium/org/jbehave/web/selenium/WebDriverProvider">WebDriverProvider</a>
+rather than a WebDriver instance. This allows the use to inject
+different strategies to provide WebDriver instances to the pages. For
+example, we have use a <a
+	href="javadoc/web-selenium/org/jbehave/web/selenium/DefaultWebDriverProvider">DefaultWebDriverProvider</a>,
+which provides vanilla FirefoxWebDrivers, or <a
+	href="javadoc/web-selenium/org/jbehave/web/selenium/PropertyWebDriverProvider">PropertyWebDriverProvider</a>,
+which provides WebDriver instances based on the system property <b>browser</b>,
+which must match (case-insensitively) one of the values of <a
+	href="javadoc/web-selenium/org/jbehave/web/selenium/PropertyWebDriverProvider.Browser">Browser</a>
+enum.</p>
+
+<p>Each page extends the <a
+    href="javadoc/web-selenium/org/jbehave/web/selenium/WebDriverPage">WebDriverPage</a>,
+which provides a facade to the WebDriver API.  E.g.:</p>
+
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+public class FindSteps extends AbstractPage {
+
+    public FindSteps(WebDriverProvider driverProvider) {
+        super(driverProvider);
+    }
+    
+    public void open(){
+        findElement(By.linkText("Find Steps")).click();
+    }
+
+    public void pageIsShown() {
+        found("Patterns and methods matching the textual step");
+    }
+
+    public void find(String step) {
+        findElement(By.name("matchingStep")).sendKeys(step);
+        findElement(By.name("findButton")).click();
+    }
+
+    public void viewWithMethods() {
+        new Select(findElement(By.name("viewSelect"))).selectByVisibleText("WITH_METHODS");
+    }
+
+    public void sortByPattern() {
+        new Select(findElement(By.name("sortingSelect"))).selectByVisibleText("BY_PATTERN");
+    }
+
+}
+]]>
+</script>
+
+<p>Here again <b>AbstractPage</b> is actually the class extending <b>WebDriverPage</b> and providing
+some methods common to all pages.</p>
+
+<script type="syntaxhighlighter" class="brush: java">
+<![CDATA[
+
+]]>
+</script>
+
+</body>
+</html>
