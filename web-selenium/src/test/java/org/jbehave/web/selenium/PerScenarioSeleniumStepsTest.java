@@ -42,7 +42,7 @@ public class PerScenarioSeleniumStepsTest {
 
 	}
 
-	public static class MySteps extends PerStorySeleniumSteps {
+	public static class MySteps extends PerScenarioSeleniumSteps {
 
         public MySteps() {
         }

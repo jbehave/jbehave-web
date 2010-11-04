@@ -25,6 +25,7 @@ import org.jbehave.web.examples.trader.webdriver.pages.Pages;
 import org.jbehave.web.examples.trader.webdriver.steps.FailingScenarioScreenshotCapture;
 import org.jbehave.web.examples.trader.webdriver.steps.TraderWebSteps;
 import org.jbehave.web.selenium.ContextView;
+import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
 import org.jbehave.web.selenium.LocalFrameContextView;
 import org.jbehave.web.selenium.PropertyWebDriverProvider;
 import org.jbehave.web.selenium.SeleniumConfiguration;
@@ -79,6 +80,7 @@ public class TraderWebStories extends JUnitStories {
     public List<CandidateSteps> candidateSteps() {
         return new InstanceStepsFactory(configuration(), 
                 new TraderWebSteps(pages),
+                new PerStoriesWebDriverSteps(driverProvider), // or PerStoryWebDriverSteps or PerScenarioWebDriverSteps
                 new FailingScenarioScreenshotCapture(driverProvider)).createCandidateSteps();
     }
 

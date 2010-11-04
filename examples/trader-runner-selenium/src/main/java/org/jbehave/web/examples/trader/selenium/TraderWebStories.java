@@ -24,6 +24,7 @@ import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.selenium.pages.Pages;
 import org.jbehave.web.examples.trader.selenium.steps.FailingScenarioScreenshotCapture;
 import org.jbehave.web.examples.trader.selenium.steps.TraderWebSteps;
+import org.jbehave.web.selenium.PerStoriesSeleniumSteps;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
@@ -71,7 +72,10 @@ public class TraderWebStories extends JUnitStories {
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pages), new FailingScenarioScreenshotCapture(selenium))
+        return new InstanceStepsFactory(configuration(),
+                new TraderWebSteps(pages),
+                new PerStoriesSeleniumSteps(selenium),
+                new FailingScenarioScreenshotCapture(selenium))
                 .createCandidateSteps();
     }
     
