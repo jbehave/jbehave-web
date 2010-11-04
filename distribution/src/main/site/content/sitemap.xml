@@ -12,10 +12,11 @@
     <name>Web Runner</name>
     <page>customising-web-runner.html</page>
     <page>using-web-runner.html</page>
-    <page>migrating-from-2.x.html</page>
+    <page>migration-paths.html</page>
   </section>
   <section>
     <name>Selenium</name>
     <page>using-selenium.html</page>
+    <page>page-objects.html</page>
   </section>  
 </sitemap>

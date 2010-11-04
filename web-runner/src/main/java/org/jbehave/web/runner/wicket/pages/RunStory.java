@@ -1,5 +1,6 @@
 package org.jbehave.web.runner.wicket.pages;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 import java.io.OutputStream;
@@ -13,9 +14,9 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.value.ValueMap;
-import org.codehaus.plexus.util.StringUtils;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.Keywords;
+import org.jbehave.core.embedder.MetaFilter;
 import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.TxtOutput;
@@ -42,12 +43,13 @@ public class RunStory extends Template {
         setPageTitle("Run Story");
         add(new StoryForm("storyForm"));
     }
-    
+
     @SuppressWarnings("serial")
     public final class StoryForm extends Form<ValueMap> {
         public StoryForm(final String id) {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
             add(new TextArea<String>("input").setType(String.class));
+            add(new TextArea<String>("metaFilter").setType(String.class));
             add(new NoMarkupMultiLineLabel("output", "", "brush: plain"));
             add(new NoMarkupMultiLineLabel("failure", "", "brush: java; gutter: false; collapse: true"));
             add(new Button("runButton"));
@@ -57,12 +59,14 @@ public class RunStory extends Template {
         public final void onSubmit() {
             String input = (String) getModelObject().get("input");
             storyContext.setInput(input);
+            String metaFilter = (String) getModelObject().get("metaFilter");
+            storyContext.setMetaFilter(metaFilter);
             run();
             MultiLineLabel output = (MultiLineLabel) get("output");
             output.setDefaultModelObject(storyContext.getOutput());
             MultiLineLabel failure = (MultiLineLabel) get("failure");
             failure.setDefaultModelObject(storyContext.getFailureStackTrace());
-            if ( StringUtils.isBlank(storyContext.getFailureStackTrace()) ){
+            if (isBlank(storyContext.getFailureStackTrace())) {
                 failure.setVisible(true);
             }
         }
@@ -73,8 +77,8 @@ public class RunStory extends Template {
         outputPatterns.setProperty("beforeStory", "{0}\n");
         final Keywords keywords = configuration.keywords();
         final boolean reportFailureTrace = false;
-        configuration.useDefaultStoryReporter(new TxtOutput(new PrintStream(outputStream), outputPatterns,
-                keywords, reportFailureTrace));
+        configuration.useDefaultStoryReporter(new TxtOutput(new PrintStream(outputStream), outputPatterns, keywords,
+                reportFailureTrace));
     }
 
     public void run() {
@@ -82,7 +86,12 @@ public class RunStory extends Template {
             try {
                 outputStream.reset();
                 storyContext.clearFailureCause();
-                storyRunner.run(configuration, steps, parseStory(storyContext.getInput()));
+                if (isNotBlank(storyContext.getMetaFilter())) {
+                    MetaFilter metaFilter = new MetaFilter(storyContext.getMetaFilter());
+                    storyRunner.run(configuration, steps, parseStory(storyContext.getInput()), metaFilter);
+                } else {
+                    storyRunner.run(configuration, steps, parseStory(storyContext.getInput()));
+                }
             } catch (Throwable e) {
                 storyContext.runFailedFor(e);
             }

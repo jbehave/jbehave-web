@@ -45,7 +45,7 @@ public class ResourceFinderTest {
     @Test
     public void canFindResourceInJarsInClasspath() {
         ResourceFinder finder = new ResourceFinder();
-        assertThat(finder.resourceAsString("ftl/jbehave-reports-index.ftl").length(), greaterThan(0));
+        assertThat(finder.resourceAsString("ftl/jbehave-reports.ftl").length(), greaterThan(0));
     }
 
     @Test(expected = ResourceNotFoundException.class)

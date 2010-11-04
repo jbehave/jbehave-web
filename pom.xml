@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.jbehave.web</groupId>
   <artifactId>jbehave-web</artifactId>
-  <version>3.1-SNAPSHOT</version>
+  <version>3.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBehave Web</name>
   <description>JBehave Web provides a web integration layer for Behaviour-Driven Development</description>
@@ -21,7 +21,7 @@
   </modules>
 
   <properties>
-    <jbehave.core.version>3.0.3</jbehave.core.version>
+    <jbehave.core.version>3.1</jbehave.core.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
     <jetty.version>7.1.6.v20100715</jetty.version>
   </properties>
