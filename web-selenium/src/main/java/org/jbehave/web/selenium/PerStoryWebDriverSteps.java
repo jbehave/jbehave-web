@@ -22,7 +22,7 @@ public class PerStoryWebDriverSteps extends WebDriverSteps {
 
     @AfterStory
     public void afterStory() throws Exception {
-        driverProvider.get().quit();
+        driverProvider.quit();
     }
 
 }

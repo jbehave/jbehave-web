@@ -20,5 +20,9 @@ public interface WebDriverProvider {
      * @param path the save-as path
      */
     void saveScreenshotTo(String path);
-    
+
+    /**
+     * Close browser frame
+     */
+    void quit();
 }

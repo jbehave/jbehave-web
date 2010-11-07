@@ -14,10 +14,17 @@ import org.openqa.selenium.WebDriver;
  */
 public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
 
-    protected WebDriver delegate;
+    private WebDriver delegate;
 
     public WebDriver get() {
+        if (delegate == null) {
+            throw new UnsupportedOperationException("no WebDriver initialized");
+        }
         return delegate;
+    }
+
+    public void setDelegate(WebDriver delegate) {
+        this.delegate = delegate;
     }
 
     public void saveScreenshotTo(String path) {
@@ -33,6 +40,10 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
                 throw new RuntimeException("Failed to save screenshot to " + file, e);
             }
         }
+    }
+
+    public void quit() {
+        get().quit();
     }
 
 }

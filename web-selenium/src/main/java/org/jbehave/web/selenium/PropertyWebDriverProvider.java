@@ -25,7 +25,7 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
     }
 
     public void initialize() {
-        delegate = createDriver(detectBrowser());
+        setDelegate(createDriver(detectBrowser()));
     }
 
     protected Browser detectBrowser() {
