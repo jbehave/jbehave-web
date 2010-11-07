@@ -5,9 +5,9 @@ import org.jbehave.core.annotations.AfterScenario.Outcome;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverSteps;
 
-public class FailingScenarioWebDriverScreenshotter extends WebDriverSteps {
+public class SaveScreenshotUponFailingScenarioWebDriverSteps extends WebDriverSteps {
 
-    public FailingScenarioWebDriverScreenshotter(WebDriverProvider driverProvider) {
+    public SaveScreenshotUponFailingScenarioWebDriverSteps(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
 
