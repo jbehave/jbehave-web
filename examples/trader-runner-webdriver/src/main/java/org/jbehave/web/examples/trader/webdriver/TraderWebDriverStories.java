@@ -33,7 +33,7 @@ import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.WebDriverProvider;
 
-public class TraderWebStories extends JUnitStories {
+public class TraderWebDriverStories extends JUnitStories {
 
     private WebDriverProvider driverProvider = new PropertyWebDriverProvider();
     private Pages pages = new Pages(driverProvider);
@@ -79,9 +79,10 @@ public class TraderWebStories extends JUnitStories {
     @Override
     public List<CandidateSteps> candidateSteps() {
         return new InstanceStepsFactory(configuration(), 
-                new TraderWebSteps(pages),
+                new TraderWebSteps(pages), // one ore more of our own steps classes
                 new PerStoriesWebDriverSteps(driverProvider), // or PerStoryWebDriverSteps or PerScenarioWebDriverSteps
-                new WebDriverScreenshotOnFailure(driverProvider)).createCandidateSteps();
+                new WebDriverScreenshotOnFailure(driverProvider) // of you could leave this out if you don't want screenshots
+        ).createCandidateSteps();
     }
 
 
