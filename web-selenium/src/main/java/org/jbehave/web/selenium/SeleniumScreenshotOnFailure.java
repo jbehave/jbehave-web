@@ -16,8 +16,15 @@ public class SeleniumScreenshotOnFailure extends SeleniumSteps {
 
     @AfterScenario(uponOutcome = Outcome.FAILURE)
     public void afterFailingScenario() throws Exception {
-        String screenshotPath = "target/screenshots/failed-scenario-" + System.currentTimeMillis() + ".png";
-        selenium.captureScreenshot(screenshotPath);
+        selenium.captureScreenshot(makeScreenShotFilePath());
     }
-    
+
+    /**
+     * Override this if you want to participate in the file-path of the screen shot
+     * @return the path
+     */
+    private String makeScreenShotFilePath() {
+        return "target/screenshots/failed-scenario-" + System.currentTimeMillis() + ".png";
+    }
+
 }

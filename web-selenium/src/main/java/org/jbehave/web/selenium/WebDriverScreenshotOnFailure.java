@@ -14,8 +14,15 @@ public class WebDriverScreenshotOnFailure extends WebDriverSteps {
 
     @AfterScenario(uponOutcome = Outcome.FAILURE)
     public void afterScenarioFailure() throws Exception {
-        String screenshotPath = "target/screenshots/failed-scenario-" + System.currentTimeMillis() + ".png";
-        driverProvider.saveScreenshotTo(screenshotPath);        
+        driverProvider.saveScreenshotTo(makeScreenShotFilePath());
+    }
+
+    /**
+     * Override this if you want to participate in the file-path of the screen shot
+     * @return the path
+     */
+    protected String makeScreenShotFilePath() {
+        return "target/screenshots/failed-scenario-" + System.currentTimeMillis() + ".png";
     }
 
 }
