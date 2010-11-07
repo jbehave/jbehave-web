@@ -1,13 +1,13 @@
-package org.jbehave.web.examples.trader.webdriver.steps;
+package org.jbehave.web.selenium;
 
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterScenario.Outcome;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverSteps;
 
-public class FailingScenarioScreenshotCapture extends WebDriverSteps {
+public class FailingScenarioWebDriverScreenshotter extends WebDriverSteps {
 
-    public FailingScenarioScreenshotCapture(WebDriverProvider driverProvider) {
+    public FailingScenarioWebDriverScreenshotter(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
 
