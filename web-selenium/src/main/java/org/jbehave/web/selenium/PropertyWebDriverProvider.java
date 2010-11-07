@@ -8,6 +8,15 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 /**
  * Provides WebDriver instances based on system property "browser".
+ * WebDrivers are created based on the following browser values:
+ * <ul>
+ * <li>"firefox": {@link FirefoxDriver}</li>
+ * <li>"ie": {@link InternetExplorerDriver}</li>
+ * <li>"chrome": {@link ChromeDriver}</li>
+ * <li>"html": {@link HtmlUnitDriver}</li>
+ * </ul>
+ * Browser property values are case-insensitive and defaults to "firefox" if
+ * no "browser" system property is found.
  */
 public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
 
