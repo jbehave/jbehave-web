@@ -24,12 +24,6 @@ public class PerScenarioWebDriverStepsTest {
 	private final StoryParser parser = new RegexStoryParser();
 	private final StoryRunner runner = new StoryRunner();
     private final WebDriver driver = mock(WebDriver.class);
-	private final WebDriverProvider driverProvider = new DefaultWebDriverProvider() {
-        public WebDriver get() {
-            return driver;
-        }
-    };
-
 	@Test
 	public void canRunSuccessfulStory() throws Throwable{
         String story = "Scenario: A simple web scenario" + NL 
@@ -37,17 +31,18 @@ public class PerScenarioWebDriverStepsTest {
             + "When a test is executed" + NL
             + "Then a tester is a happy hopper";
         String path = "/path/to/story";
-		MySteps steps = new MySteps();
+        WebDriverProvider provider = mock(WebDriverProvider.class);
+		MySteps steps = new MySteps(provider);
 		InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps);
         runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(story, path));
-        verify(driver).quit();
+        verify(provider).quit();
 
 	}
 
 	public class MySteps extends PerStoryWebDriverSteps {
 
-        public MySteps() {
-            super(PerScenarioWebDriverStepsTest.this.driverProvider);
+        public MySteps(WebDriverProvider provider) {
+            super(provider);
         }
 
         @Given("a test")
