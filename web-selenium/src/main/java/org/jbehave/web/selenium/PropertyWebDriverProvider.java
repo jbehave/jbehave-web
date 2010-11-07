@@ -3,6 +3,7 @@ package org.jbehave.web.selenium;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 /**
@@ -11,7 +12,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
 
     public enum Browser {
-        FIREFOX, IE, CHROME
+        FIREFOX, IE, CHROME, HTML
     }
 
     public void initialize() {
@@ -28,6 +29,8 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
             return new InternetExplorerDriver();
         case CHROME:
             return new ChromeDriver();
+        case HTML:
+            return new HtmlUnitDriver();
         }
     }
 
