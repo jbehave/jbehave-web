@@ -2,12 +2,13 @@ package org.jbehave.web.selenium;
 
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterScenario.Outcome;
-import org.jbehave.web.selenium.WebDriverProvider;
-import org.jbehave.web.selenium.WebDriverSteps;
 
-public class SaveScreenshotUponFailingScenarioWebDriverSteps extends WebDriverSteps {
+/**
+ * WebDriverSteps that save screenshot upon failure in a scenario outcome.
+ */
+public class WebDriverScreenshotOnFailure extends WebDriverSteps {
 
-    public SaveScreenshotUponFailingScenarioWebDriverSteps(WebDriverProvider driverProvider) {
+    public WebDriverScreenshotOnFailure(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
 
@@ -16,10 +17,5 @@ public class SaveScreenshotUponFailingScenarioWebDriverSteps extends WebDriverSt
         String screenshotPath = "target/screenshots/failed-scenario-" + System.currentTimeMillis() + ".png";
         driverProvider.saveScreenshotTo(screenshotPath);        
     }
-
-    @AfterScenario(uponOutcome = Outcome.SUCCESS)
-    public void afterScenario() throws Exception {
-    }
-
 
 }

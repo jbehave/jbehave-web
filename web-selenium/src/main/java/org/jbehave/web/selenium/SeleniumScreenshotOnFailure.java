@@ -5,9 +5,12 @@ import org.jbehave.core.annotations.AfterScenario.Outcome;
 
 import com.thoughtworks.selenium.Selenium;
 
-public class CaptureScreenshotUponFailingScenarioSeleniumSteps extends PerScenarioSeleniumSteps {
+/**
+ * SeleniumSteps that capture screenshot upon failure in a scenario outcome.
+ */
+public class SeleniumScreenshotOnFailure extends SeleniumSteps {
 
-    public CaptureScreenshotUponFailingScenarioSeleniumSteps(Selenium selenium) {
+    public SeleniumScreenshotOnFailure(Selenium selenium) {
         super(selenium);
     }
 
@@ -16,5 +19,5 @@ public class CaptureScreenshotUponFailingScenarioSeleniumSteps extends PerScenar
         String screenshotPath = "target/screenshots/failed-scenario-" + System.currentTimeMillis() + ".png";
         selenium.captureScreenshot(screenshotPath);
     }
-
+    
 }

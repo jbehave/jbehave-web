@@ -22,7 +22,7 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.webdriver.pages.Pages;
-import org.jbehave.web.selenium.SaveScreenshotUponFailingScenarioWebDriverSteps;
+import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.jbehave.web.examples.trader.webdriver.steps.TraderWebSteps;
 import org.jbehave.web.selenium.ContextView;
 import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
@@ -81,7 +81,7 @@ public class TraderWebStories extends JUnitStories {
         return new InstanceStepsFactory(configuration(), 
                 new TraderWebSteps(pages),
                 new PerStoriesWebDriverSteps(driverProvider), // or PerStoryWebDriverSteps or PerScenarioWebDriverSteps
-                new SaveScreenshotUponFailingScenarioWebDriverSteps(driverProvider)).createCandidateSteps();
+                new WebDriverScreenshotOnFailure(driverProvider)).createCandidateSteps();
     }
 
 
