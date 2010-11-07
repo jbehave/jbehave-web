@@ -22,7 +22,7 @@ public class PerScenarioWebDriverSteps extends WebDriverSteps {
 
     @AfterScenario
     public void afterScenario() throws Exception {
-        driverProvider.get().quit();
+        driverProvider.get().close();
     }
 
 }
