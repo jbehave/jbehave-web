@@ -1,5 +1,7 @@
 package org.jbehave.web.selenium;
 
+import static java.lang.Boolean.parseBoolean;
+
 import java.net.MalformedURLException;
 
 import org.openqa.selenium.ScreenOrientation;
@@ -11,24 +13,30 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 /**
- * Provides WebDriver instances based on system property "browser".
- * WebDrivers are created based on the following browser values:
+ * Provides WebDriver instances based on system property "browser":
  * <ul>
- * <li>"firefox": {@link FirefoxDriver}</li>
- * <li>"ie": {@link InternetExplorerDriver}</li>
- * <li>"chrome": {@link ChromeDriver}</li>
- * <li>"html": {@link HtmlUnitDriver}</li>
  * <li>"android": {@link AndroidDriver}</li>
+ * <li>"chrome": {@link ChromeDriver}</li>
+ * <li>"firefox": {@link FirefoxDriver}</li>
+ * <li>"htmlunit": {@link HtmlUnitDriver}</li>
+ * <li>"ie": {@link InternetExplorerDriver}</li>
  * </ul>
- * Browser property values are case-insensitive and defaults to "firefox" if
- * no "browser" system property is found.
- * <p>Android driver also accepts properties "webdriver.android.url" and "webdriver.screen.orientation",
- * defaulting to "http://localhost:8080/hub" and "portrait".</li> 
+ * Property values are case-insensitive and defaults to "firefox" if no
+ * "browser" system property is found.
+ * <p>
+ * The drivers also accept the following properties:
+ * <ul>
+ * <li>"android": "webdriver.android.url" and
+ * "webdriver.android.screenOrientation", defaulting to
+ * "http://localhost:8080/hub" and "portrait".</li>
+ * <li>"htmlunit": "webdriver.htmlunit.javascriptEnabled", defaulting to "true".
+ * </li>
+ * </ul>
  */
 public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
 
     public enum Browser {
-        FIREFOX, IE, CHROME, HTML, ANDROID
+        ANDROID, CHROME, FIREFOX, HTMLUNIT, IE
     }
 
     public void initialize() {
@@ -36,29 +44,52 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
         delegate = createDriver(browser);
     }
 
-    protected WebDriver createDriver(Browser browser) {
+    private WebDriver createDriver(Browser browser) {
         switch (browser) {
-        case FIREFOX:
-        default:
-            return new FirefoxDriver();
-        case IE:
-            return new InternetExplorerDriver();
-        case CHROME:
-            return new ChromeDriver();
-        case HTML:
-            return new HtmlUnitDriver();
         case ANDROID:
-            String url = System.getProperty("webdriver.android.url", "http://localhost:8080/hub");
-            ScreenOrientation orientation = ScreenOrientation.valueOf(System.getProperty("webdriver.screen.orientation", "portrait").toUpperCase());
-            try {
-                AndroidDriver driver = new AndroidDriver(url);
-                driver.rotate(orientation);
-                return driver;
-            } catch (MalformedURLException e) {
-                throw new UnsupportedOperationException(e);
-            }
-
+            return createAndroidDriver();
+        case CHROME:
+            return createChromeDriver();
+        case FIREFOX:
+            return createFirefoxDriver();
+        case HTMLUNIT:
+        default:
+            return createHtmlUnitDriver();
+        case IE:
+            return createInternetExplorerDriver();
         }
+    }
+
+    protected WebDriver createAndroidDriver() {
+        try {
+            String url = System.getProperty("webdriver.android.url", "http://localhost:8080/hub");
+            ScreenOrientation screenOrientation = ScreenOrientation.valueOf(System.getProperty(
+                    "webdriver.android.screenOrientation", "portrait").toUpperCase());
+            AndroidDriver driver = new AndroidDriver(url);
+            driver.rotate(screenOrientation);
+            return driver;
+        } catch (MalformedURLException e) {
+            throw new UnsupportedOperationException(e);
+        }
+    }
+
+    protected ChromeDriver createChromeDriver() {
+        return new ChromeDriver();
+    }
+
+    protected FirefoxDriver createFirefoxDriver() {
+        return new FirefoxDriver();
+    }
+
+    protected WebDriver createHtmlUnitDriver() {
+        HtmlUnitDriver driver = new HtmlUnitDriver();
+        boolean javascriptEnabled = parseBoolean(System.getProperty("webdriver.htmlunit.javascriptEnabled", "true"));
+        driver.setJavascriptEnabled(javascriptEnabled);
+        return driver;
+    }
+
+    protected InternetExplorerDriver createInternetExplorerDriver() {
+        return new InternetExplorerDriver();
     }
 
 }
