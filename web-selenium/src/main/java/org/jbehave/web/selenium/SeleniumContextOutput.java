@@ -13,7 +13,7 @@ public class SeleniumContextOutput extends org.jbehave.core.reporters.Format {
         }
 
         @Override
-        public StoryReporter makeStoryReporter(FilePrintStreamFactory filePrintStreamFactory, StoryReporterBuilder storyReporterBuilder) {
+        public StoryReporter createStoryReporter(FilePrintStreamFactory filePrintStreamFactory, StoryReporterBuilder storyReporterBuilder) {
             return new SeleniumContextStoryReporter(seleniumContext);
         }
     }
