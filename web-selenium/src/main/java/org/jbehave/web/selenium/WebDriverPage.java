@@ -1,11 +1,11 @@
 package org.jbehave.web.selenium;
 
+import java.util.List;
+import java.util.Set;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * Abstract base class for pages that use the WebDriver API. It contains common

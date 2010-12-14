@@ -1,8 +1,5 @@
 package org.jbehave.web.selenium;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import java.lang.reflect.Method;
 
 import org.jbehave.core.configuration.Configuration;
@@ -10,6 +7,9 @@ import org.jbehave.core.steps.StepMonitor;
 import org.junit.Test;
 
 import com.thoughtworks.selenium.Selenium;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class SeleniumConfigurationTest {
     

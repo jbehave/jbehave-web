@@ -1,8 +1,5 @@
 package org.jbehave.web.selenium;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -16,6 +13,9 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.Test;
 
 import com.thoughtworks.selenium.Selenium;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class PerStorySeleniumStepsTest {
 

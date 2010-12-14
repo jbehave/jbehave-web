@@ -1,7 +1,5 @@
 package org.jbehave.web.selenium;
 
-import static java.lang.Boolean.parseBoolean;
-
 import java.net.MalformedURLException;
 
 import org.openqa.selenium.ScreenOrientation;
@@ -11,6 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import static java.lang.Boolean.parseBoolean;
 
 /**
  * Provides WebDriver instances based on system property "browser":

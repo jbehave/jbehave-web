@@ -1,6 +1,8 @@
 package org.jbehave.web.selenium;
 
-public class SeleniumContextStoryReporter extends org.jbehave.core.reporters.NullStoryReporter {
+import org.jbehave.core.reporters.NullStoryReporter;
+
+public class SeleniumContextStoryReporter extends NullStoryReporter {
     private final SeleniumContext seleniumContext;
 
     public SeleniumContextStoryReporter(SeleniumContext seleniumContext) {
@@ -8,7 +10,7 @@ public class SeleniumContextStoryReporter extends org.jbehave.core.reporters.Nul
     }
 
     @Override
-    public void beforeScenario(String title, boolean givenStory) {
+    public void beforeScenario(String title) {
         seleniumContext.setCurrentScenario(title);
     }
 }

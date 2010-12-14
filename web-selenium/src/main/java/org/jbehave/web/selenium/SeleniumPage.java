@@ -1,16 +1,16 @@
 package org.jbehave.web.selenium;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
-
 import java.util.concurrent.TimeUnit;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.Condition;
 import com.thoughtworks.selenium.condition.ConditionRunner;
+import com.thoughtworks.selenium.condition.ConditionRunner.Context;
 import com.thoughtworks.selenium.condition.Not;
 import com.thoughtworks.selenium.condition.Presence;
 import com.thoughtworks.selenium.condition.Text;
-import com.thoughtworks.selenium.condition.ConditionRunner.Context;
+
+import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 /**
  * Abstract base class for pages that use the Selenium API. It contains common

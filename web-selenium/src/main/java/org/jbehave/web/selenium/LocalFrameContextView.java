@@ -1,13 +1,14 @@
 package org.jbehave.web.selenium;
 
+import java.awt.BorderLayout;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
-import java.awt.BorderLayout;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
 
 public class LocalFrameContextView implements ContextView {
 
