@@ -31,9 +31,9 @@ public class TypeWebDriverProvider extends DelegatingWebDriverProvider {
         try {
             delegate = type.newInstance();
         } catch (InstantiationException e) {
-            new UnsupportedOperationException(e);
+            throw new UnsupportedOperationException(e);
         } catch (IllegalAccessException e) {
-            new UnsupportedOperationException(e);
+            throw new UnsupportedOperationException(e);
         }
     }
 
