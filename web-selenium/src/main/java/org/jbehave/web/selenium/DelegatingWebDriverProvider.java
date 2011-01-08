@@ -20,7 +20,7 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
         return delegate;
     }
 
-    public void saveScreenshotTo(String path) {
+    public boolean saveScreenshotTo(String path) {
         WebDriver driver = get();
         if (driver instanceof TakesScreenshot) {
             File file = new File(path);
@@ -29,10 +29,12 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
                 file.createNewFile();
                 byte[] bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
                 IOUtils.write(bytes, new FileOutputStream(file));
+                return true;
             } catch ( Exception e) {
                 throw new RuntimeException("Failed to save screenshot to " + file, e);
             }
         }
+        return false;
     }
 
 }
