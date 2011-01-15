@@ -5,7 +5,6 @@ import org.jbehave.core.reporters.FilePrintStreamFactory;
 import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.reporters.HtmlOutput;
-import org.jbehave.core.steps.CorrelatedException;
 
 import java.io.PrintStream;
 import java.util.Properties;
