@@ -11,13 +11,9 @@ import java.util.Properties;
 
 public class WebDriverHtmlOutput extends HtmlOutput {
 
-    public static final org.jbehave.core.reporters.Format WEB_DRIVER_HTML = new org.jbehave.core.reporters.Format("HTML") {
-        @Override
-        public StoryReporter createStoryReporter(FilePrintStreamFactory factory, StoryReporterBuilder storyReporterBuilder) {
-            factory.useConfiguration(storyReporterBuilder.fileConfiguration("html"));
-            return new org.jbehave.web.selenium.WebDriverHtmlOutput(factory.createPrintStream(), storyReporterBuilder.keywords()).doReportFailureTrace(storyReporterBuilder.reportFailureTrace());
-        }
-    };
+    public static final org.jbehave.core.reporters.Format WEB_DRIVER_HTML = new WebDriverHtmlFormat(false);
+
+    public static final org.jbehave.core.reporters.Format WEB_DRIVER_HTML_WITH_STACK_TRACES = new WebDriverHtmlFormat(true);
 
 
     public WebDriverHtmlOutput(PrintStream output) {
@@ -57,4 +53,18 @@ public class WebDriverHtmlOutput extends HtmlOutput {
     }
 
 
+    private static class WebDriverHtmlFormat extends org.jbehave.core.reporters.Format {
+        private boolean withTraces;
+
+        public WebDriverHtmlFormat(boolean withTraces) {
+            super("HTML");
+            this.withTraces = withTraces;
+        }
+
+        @Override
+        public StoryReporter createStoryReporter(FilePrintStreamFactory factory, StoryReporterBuilder storyReporterBuilder) {
+            factory.useConfiguration(storyReporterBuilder.fileConfiguration("html"));
+            return new WebDriverHtmlOutput(factory.createPrintStream(), new Properties(), storyReporterBuilder.keywords(), withTraces).doReportFailureTrace(storyReporterBuilder.reportFailureTrace());
+        }
+    }
 }
