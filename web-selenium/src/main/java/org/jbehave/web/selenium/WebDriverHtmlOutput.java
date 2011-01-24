@@ -11,10 +11,7 @@ import java.util.Properties;
 
 public class WebDriverHtmlOutput extends HtmlOutput {
 
-    public static final org.jbehave.core.reporters.Format WEB_DRIVER_HTML = new WebDriverHtmlFormat(false);
-
-    public static final org.jbehave.core.reporters.Format WEB_DRIVER_HTML_WITH_STACK_TRACES = new WebDriverHtmlFormat(true);
-
+    public static final org.jbehave.core.reporters.Format WEB_DRIVER_HTML = new WebDriverHtmlFormat();
 
     public WebDriverHtmlOutput(PrintStream output) {
         super(output);
@@ -54,17 +51,15 @@ public class WebDriverHtmlOutput extends HtmlOutput {
 
 
     private static class WebDriverHtmlFormat extends org.jbehave.core.reporters.Format {
-        private boolean withTraces;
 
-        public WebDriverHtmlFormat(boolean withTraces) {
+        public WebDriverHtmlFormat() {
             super("HTML");
-            this.withTraces = withTraces;
         }
 
         @Override
         public StoryReporter createStoryReporter(FilePrintStreamFactory factory, StoryReporterBuilder storyReporterBuilder) {
             factory.useConfiguration(storyReporterBuilder.fileConfiguration("html"));
-            return new WebDriverHtmlOutput(factory.createPrintStream(), new Properties(), storyReporterBuilder.keywords(), withTraces).doReportFailureTrace(storyReporterBuilder.reportFailureTrace());
+            return new WebDriverHtmlOutput(factory.createPrintStream(), storyReporterBuilder.keywords()).doReportFailureTrace(storyReporterBuilder.reportFailureTrace());
         }
     }
 }
