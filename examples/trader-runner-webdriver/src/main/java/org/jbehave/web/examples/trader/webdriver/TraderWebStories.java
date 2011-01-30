@@ -78,10 +78,11 @@ public class TraderWebStories extends JUnitStories {
 
     @Override
     public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), 
+        Configuration configuration = configuration();
+        return new InstanceStepsFactory(configuration, 
                 new TraderWebSteps(pages),
                 new PerStoriesWebDriverSteps(driverProvider), // or PerStoryWebDriverSteps or PerScenarioWebDriverSteps
-                new WebDriverScreenshotOnFailure(driverProvider)).createCandidateSteps();
+                new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder())).createCandidateSteps();
     }
 
 
