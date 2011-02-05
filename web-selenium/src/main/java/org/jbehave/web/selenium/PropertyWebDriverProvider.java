@@ -40,7 +40,7 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
     }
 
     public void initialize() {
-        Browser browser = Browser.valueOf(Browser.class, System.getProperty("browser", "firefox").toUpperCase());
+        Browser browser = Browser.valueOf(Browser.class, toUpperCase(System.getProperty("browser", "firefox")));
         delegate = createDriver(browser);
     }
 
@@ -63,8 +63,8 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
     protected WebDriver createAndroidDriver() {
         try {
             String url = System.getProperty("webdriver.android.url", "http://localhost:8080/hub");
-            ScreenOrientation screenOrientation = ScreenOrientation.valueOf(System.getProperty(
-                    "webdriver.android.screenOrientation", "portrait").toUpperCase());
+            ScreenOrientation screenOrientation = ScreenOrientation.valueOf(toUpperCase(System.getProperty(
+                    "webdriver.android.screenOrientation", "portrait")));
             AndroidDriver driver = new AndroidDriver(url);
             driver.rotate(screenOrientation);
             return driver;
@@ -90,6 +90,10 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
 
     protected InternetExplorerDriver createInternetExplorerDriver() {
         return new InternetExplorerDriver();
+    }
+    
+    protected String toUpperCase(String property) {
+        return property.toUpperCase();
     }
 
 }
