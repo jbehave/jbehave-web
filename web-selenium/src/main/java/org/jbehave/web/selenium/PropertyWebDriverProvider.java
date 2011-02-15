@@ -1,6 +1,7 @@
 package org.jbehave.web.selenium;
 
 import java.net.MalformedURLException;
+import java.util.Locale;
 
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
@@ -40,7 +41,7 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
     }
 
     public void initialize() {
-        Browser browser = Browser.valueOf(Browser.class, System.getProperty("browser", "firefox").toUpperCase());
+        Browser browser = Browser.valueOf(Browser.class, System.getProperty("browser", "firefox").toUpperCase(usingLocale()));
         delegate = createDriver(browser);
     }
 
@@ -64,7 +65,7 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
         try {
             String url = System.getProperty("webdriver.android.url", "http://localhost:8080/hub");
             ScreenOrientation screenOrientation = ScreenOrientation.valueOf(System.getProperty(
-                    "webdriver.android.screenOrientation", "portrait").toUpperCase());
+                    "webdriver.android.screenOrientation", "portrait").toUpperCase(usingLocale()));
             AndroidDriver driver = new AndroidDriver(url);
             driver.rotate(screenOrientation);
             return driver;
@@ -90,6 +91,10 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
 
     protected InternetExplorerDriver createInternetExplorerDriver() {
         return new InternetExplorerDriver();
+    }
+    
+    protected Locale usingLocale() {
+        return Locale.getDefault();
     }
 
 }
