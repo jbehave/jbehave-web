@@ -12,14 +12,14 @@
   <dependencies>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium</artifactId>
-      <version>2.0b1</version>
+      <artifactId>selenium-remote-control</artifactId>
+      <version>2.0b2</version>
     </dependency>
-    <dependency>
+    <!--dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-android-client</artifactId>
-      <version>2.0b1</version>
+      <version>2.0b2</version>
       <optional>true</optional>
-    </dependency>
+    </dependency-->
   </dependencies>
 </project>
