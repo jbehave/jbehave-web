@@ -1,5 +1,6 @@
 package org.jbehave.web.selenium;
 
+import org.jbehave.core.steps.DelegatingStepMonitor;
 import org.jbehave.core.steps.StepMonitor;
 
 import com.thoughtworks.selenium.Selenium;
