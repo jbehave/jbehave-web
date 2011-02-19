@@ -3,6 +3,7 @@ package org.jbehave.web.selenium;
 import java.lang.reflect.Method;
 
 import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.model.StepPattern;
 import org.jbehave.core.steps.DelegatingStepMonitor;
 import org.jbehave.core.steps.StepMonitor;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class SeleniumConfigurationTest {
         Class<String> type = String.class;
         String converted = "converted";
         Class<String> converterClass = String.class;
-        StepMonitor.Pattern pattern = new StepMonitor.Pattern("pattern", "p4tt3rn");
+        StepPattern pattern = new StepPattern("pattern", "p4tt3rn");
         boolean matches = true;
         Method method = null;
         Object stepsInstance = new Object();
