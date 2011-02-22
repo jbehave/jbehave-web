@@ -9,6 +9,9 @@ import org.jbehave.core.reporters.HtmlOutput;
 import java.io.PrintStream;
 import java.util.Properties;
 
+/**
+ * This variation to HtmlOutput inlines a screenshot of the failure taken by WebDriver.
+ */
 public class WebDriverHtmlOutput extends HtmlOutput {
 
     public static final org.jbehave.core.reporters.Format WEB_DRIVER_HTML = new WebDriverHtmlFormat();
@@ -41,14 +44,8 @@ public class WebDriverHtmlOutput extends HtmlOutput {
     private void changeALine() {
         super.overwritePattern("failed",
                 "<div class=\"step failed\">{0} <span class=\"keyword failed\">({1})</span><br/><span class=\"message failed\">{2}</span>" +
-                        "<br/><a color=\"black\" href=\"../screenshots/failed-scenario-{3}.png\"><img src=\"images/failing_screenshot.png\" alt=\"failing screenshot\"/></a></div>\n");
+                        "<br/><a color=\"black\" target=\"jb_scn_shot\" href=\"../screenshots/failed-scenario-{3}.png\"><img src=\"images/failing_screenshot.png\" alt=\"failing screenshot\"/></a></div>\n");
     }
-
-    @Override
-    public void failed(String step, Throwable correlatedFailure) {
-        super.failed(step, correlatedFailure);
-    }
-
 
     private static class WebDriverHtmlFormat extends org.jbehave.core.reporters.Format {
 
