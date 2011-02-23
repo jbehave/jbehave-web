@@ -41,7 +41,7 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
 
     public void initialize() {
         Browser browser = Browser.valueOf(Browser.class, System.getProperty("browser", "firefox").toUpperCase(usingLocale()));
-        delegate = createDriver(browser);
+        delegate.set(createDriver(browser));
     }
 
     private WebDriver createDriver(Browser browser) {

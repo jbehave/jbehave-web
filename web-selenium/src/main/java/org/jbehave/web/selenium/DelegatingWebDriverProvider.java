@@ -14,10 +14,10 @@ import org.openqa.selenium.WebDriver;
  */
 public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
 
-    protected WebDriver delegate;
+    protected ThreadLocal<WebDriver> delegate = new ThreadLocal<WebDriver>();
 
     public WebDriver get() {
-        return delegate;
+        return delegate.get();
     }
 
     public boolean saveScreenshotTo(String path) {

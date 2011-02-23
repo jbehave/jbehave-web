@@ -29,7 +29,7 @@ public class TypeWebDriverProvider extends DelegatingWebDriverProvider {
 
     public void initialize() {
         try {
-            delegate = type.newInstance();
+            delegate.set(type.newInstance());
         } catch (InstantiationException e) {
             throw new UnsupportedOperationException(e);
         } catch (IllegalAccessException e) {
