@@ -56,7 +56,9 @@ public class WebDriverHtmlOutput extends HtmlOutput {
         @Override
         public StoryReporter createStoryReporter(FilePrintStreamFactory factory, StoryReporterBuilder storyReporterBuilder) {
             factory.useConfiguration(storyReporterBuilder.fileConfiguration("html"));
-            return new WebDriverHtmlOutput(factory.createPrintStream(), storyReporterBuilder.keywords()).doReportFailureTrace(storyReporterBuilder.reportFailureTrace());
+            return new WebDriverHtmlOutput(factory.createPrintStream(), storyReporterBuilder.keywords())
+                    .doReportFailureTrace(storyReporterBuilder.reportFailureTrace())
+                    .doCompressFailureTrace(storyReporterBuilder.compressFailureTrace());
         }
     }
 }
