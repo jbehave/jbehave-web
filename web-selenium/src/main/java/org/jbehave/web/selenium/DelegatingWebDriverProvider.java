@@ -19,7 +19,7 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
     public WebDriver get() {
         WebDriver webDriver = delegate.get();
         if (webDriver == null) {
-            throw new NullPointerException("WebDriver not setup yet for this thread. Are you using the right one of PerScenarioWebDriver, PerStoryWebDriver and PerStoriesWebDriver");
+            throw new NullPointerException("WebDriver not setup yet for this thread. Are you using the right one of PerScenarioWebDriverSteps, PerStoryWebDriverSteps and PerStoriesWebDriverSteps");
         }
         return webDriver;
     }
