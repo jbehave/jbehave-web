@@ -27,14 +27,7 @@ public class SauceWebDriverProvider extends DelegatingWebDriverProvider {
 
     public void initialize() {
         try {
-            final URL url = createRemoteURL();
-            RemoteWebDriver remoteWebDriver = new FirefoxDriver(desiredCapabilities) {
-                @Override
-                protected void setCommandExecutor(CommandExecutor ignore) {
-                    super.setCommandExecutor(new HttpCommandExecutor(url));
-                }
-            };
-            delegate.set(remoteWebDriver);
+            delegate.set(new RemoteWebDriver(createRemoteURL(), desiredCapabilities));
         } catch (MalformedURLException e) {
             banner();
             e.printStackTrace();
