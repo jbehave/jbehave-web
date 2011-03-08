@@ -1,6 +1,9 @@
 package org.jbehave.web.selenium;
 
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -19,11 +22,15 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
         desiredCapabilities = DesiredCapabilities.firefox();
         desiredCapabilities.setVersion("3.6.");
         desiredCapabilities.setPlatform(Platform.WINDOWS);
+        desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
     }
 
     public void initialize() {
+
         try {
-            delegate.set(new RemoteWebDriver(createRemoteURL(), desiredCapabilities));
+            WebDriver remoteWebDriver = new RemoteWebDriver(createRemoteURL(), desiredCapabilities);
+            remoteWebDriver = new Augmenter().augment(remoteWebDriver);  // allows instanceof TakesScreenshot
+            delegate.set(remoteWebDriver);
         } catch (MalformedURLException e) {
             banner();
             e.printStackTrace();
