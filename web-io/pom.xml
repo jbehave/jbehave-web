@@ -6,7 +6,6 @@
     <version>3.3-SNAPSHOT</version>
   </parent>
   <artifactId>jbehave-web-io</artifactId>
-  <version>3.3-beta-2</version>
   <packaging>jar</packaging>
   <name>JBehave Web I/O</name>
 
