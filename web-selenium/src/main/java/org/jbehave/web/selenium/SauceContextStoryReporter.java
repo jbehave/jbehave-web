@@ -1,25 +1,19 @@
 package org.jbehave.web.selenium;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
 import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.NullStoryReporter;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.PasswordAuthentication;
 import java.net.URL;
 
-import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceCredentials;
+import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceAccessKey;
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceUser;
 
 public class SauceContextStoryReporter extends NullStoryReporter {
@@ -54,21 +48,32 @@ public class SauceContextStoryReporter extends NullStoryReporter {
     public void afterStory(boolean givenStory) {
         if (sessionId.get() != null) {
             try {
-                String payload = "'{\"tags\":[" + getTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + storyName.get() + "\"}'";
+                String payload = "'{\"tags\":[" + getJobTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}'";
 
-                URL url = new URL("http://" + getSauceCredentials() + "@saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.get().toString());
-                System.out.println("Sauce Job update URL: " + url.toString());
-                System.out.println("Sauce Job update payload: " + payload);
+                URL url = new URL("http://saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.get().toString());
+
+                Authenticator.setDefault(new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(getSauceUser(), getSauceAccessKey().toCharArray());
+                    }
+                });
+
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
-                connection.setRequestMethod("POST");
+                connection.setRequestMethod("PUT");
 
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
                 writer.write(payload);
                 writer.close();
 
                 System.out.println("Sauce Job update return code: " + connection.getResponseCode());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String s;
+                while ((s = reader.readLine()) != null) {
+                    System.out.println(s);
+                }
             } catch (IOException e) {
+                System.err.println("Error " + e.getMessage());
                 e.printStackTrace();
             }
         } else {
@@ -76,7 +81,11 @@ public class SauceContextStoryReporter extends NullStoryReporter {
         }
     }
 
-    private String getTags() {
+    private String getJobName() {
+        return storyName.get();
+    }
+
+    private String getJobTags() {
         return "";
     }
 }

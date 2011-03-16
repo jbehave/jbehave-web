@@ -24,12 +24,16 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
         return username;
     }
 
-    public static String getSauceCredentials() {
+    public static String getSauceAccessKey() {
         String access_key = System.getProperty("SAUCE_ACCESS_KEY");
         if (access_key == null) {
             throw new UnsupportedOperationException("SAUCE_ACCESS_KEY property name variable not specified");
         }
-        return getSauceUser() + ":" + access_key;
+        return access_key;
+    }
+
+    public static String getSauceCredentials() {
+        return getSauceUser() + ":" + getSauceAccessKey();
     }
 
 }
