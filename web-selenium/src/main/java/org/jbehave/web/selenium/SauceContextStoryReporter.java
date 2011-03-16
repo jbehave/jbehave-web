@@ -48,7 +48,7 @@ public class SauceContextStoryReporter extends NullStoryReporter {
     public void afterStory(boolean givenStory) {
         if (sessionId.get() != null) {
             try {
-                String payload = "'{\"tags\":[" + getJobTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}'";
+                String payload = "{\"tags\":[" + getJobTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}";
 
                 URL url = new URL("http://saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.get().toString());
 
