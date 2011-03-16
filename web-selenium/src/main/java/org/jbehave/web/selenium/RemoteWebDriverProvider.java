@@ -1,10 +1,13 @@
 package org.jbehave.web.selenium;
 
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
@@ -26,10 +29,11 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
     }
 
     public void initialize() {
-
         try {
-            WebDriver remoteWebDriver = new RemoteWebDriver(createRemoteURL(), desiredCapabilities);
-            remoteWebDriver = new Augmenter().augment(remoteWebDriver);  // allows instanceof TakesScreenshot
+            WebDriver remoteWebDriver = new ScreenShottingRemoteWebDriver(createRemoteURL(), desiredCapabilities);
+            // Augmenter does not work. Resulting WebDriver is good for exclusive screen-shotting, but not normal
+            // operation as 'session is null'
+            //remoteWebDriver = new Augmenter().augment(remoteWebDriver);  // allows instanceof TakesScreenshot
             delegate.set(remoteWebDriver);
         } catch (MalformedURLException e) {
             banner();
@@ -56,5 +60,20 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
             throw new UnsupportedOperationException("REMOTE_WEBDRIVER_URL property name variable not specified");
         }
         return new URL(url);
+    }
+
+    private static class ScreenShottingRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {
+
+        public ScreenShottingRemoteWebDriver(URL remoteURL, DesiredCapabilities desiredCapabilities) {
+            super(remoteURL, desiredCapabilities);
+        }
+
+        public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+            // Paul: Copied from FirefoxDriver.......
+            // Get the screenshot as base64.
+            String base64 = execute(DriverCommand.SCREENSHOT).getValue().toString();
+            // ... and convert it.
+            return target.convertFromBase64Png(base64);
+        }
     }
 }

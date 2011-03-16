@@ -12,16 +12,24 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
 
     @Override
     public URL createRemoteURL() throws MalformedURLException {
+
+        return new URL("http://" + getSauceCredentials() + "@ondemand.saucelabs.com/wd/hub");
+    }
+
+    public static String getSauceUser() {
         String username = System.getProperty("SAUCE_USERNAME");
-        String access_key = System.getProperty("SAUCE_ACCESS_KEY");
         if (username == null) {
             throw new UnsupportedOperationException("SAUCE_USERNAME property name variable not specified");
         }
+        return username;
+    }
+
+    public static String getSauceCredentials() {
+        String access_key = System.getProperty("SAUCE_ACCESS_KEY");
         if (access_key == null) {
             throw new UnsupportedOperationException("SAUCE_ACCESS_KEY property name variable not specified");
         }
-
-        return new URL("http://" + username + ":" + access_key + "@ondemand.saucelabs.com/wd/hub");
+        return getSauceUser() + ":" + access_key;
     }
 
 }
