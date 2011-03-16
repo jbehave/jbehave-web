@@ -62,7 +62,7 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
         return new URL(url);
     }
 
-    private static class ScreenShottingRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {
+    static class ScreenShottingRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {
 
         public ScreenShottingRemoteWebDriver(URL remoteURL, DesiredCapabilities desiredCapabilities) {
             super(remoteURL, desiredCapabilities);

@@ -1,11 +1,23 @@
 package org.jbehave.web.selenium;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpParams;
 import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.NullStoryReporter;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceCredentials;
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceUser;
@@ -30,7 +42,7 @@ public class SauceContextStoryReporter extends NullStoryReporter {
 
     @Override
     public void beforeScenario(String title) {
-        sessionId.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
+        sessionId.set(((RemoteWebDriverProvider.ScreenShottingRemoteWebDriver) webDriverProvider.get()).getSessionId());
     }
 
     @Override
@@ -42,17 +54,25 @@ public class SauceContextStoryReporter extends NullStoryReporter {
     public void afterStory(boolean givenStory) {
         if (sessionId.get() != null) {
             try {
-                String contentType = "'Content-Type: application/json'";
-                String curlString = "curl -v -X PUT http://" + getSauceCredentials() + "@saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/"
-                        + sessionId.get().toString()
-                        + " -H " + contentType + " -d '{\"tags\":[" + getTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + storyName.get() + "\"}'";
-                System.out.println("---> " + curlString);
-                Runtime.getRuntime().exec(curlString);
+                String payload = "'{\"tags\":[" + getTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + storyName.get() + "\"}'";
+
+                URL url = new URL("http://" + getSauceCredentials() + "@saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.get().toString());
+                System.out.println("Sauce Job update URL: " + url.toString());
+                System.out.println("Sauce Job update payload: " + payload);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+
+                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+                writer.write(payload);
+                writer.close();
+
+                System.out.println("Sauce Job update return code: " + connection.getResponseCode());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("RemoteWebDriver reporting null session ID");
+            System.err.println("RemoteWebDriver reporting null session ID");
         }
     }
 
