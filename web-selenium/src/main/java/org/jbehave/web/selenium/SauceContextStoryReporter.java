@@ -81,11 +81,21 @@ public class SauceContextStoryReporter extends NullStoryReporter {
         }
     }
 
-    private String getJobName() {
+    /**
+     * The name of the job. By default this is the story name.
+     * @return the job name
+     */
+    protected String getJobName() {
         return storyName.get();
     }
 
-    private String getJobTags() {
+    /**
+     * A set of tags to apply to the job, like so:
+     *   "foo", "bar"
+     *
+     * @return a string of comma separated strings in quotes
+     */
+    protected String getJobTags() {
         return "";
     }
 }
