@@ -12,6 +12,8 @@ import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceAccessKey;
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceUser;
@@ -46,38 +48,44 @@ public class SauceContextStoryReporter extends NullStoryReporter {
 
     @Override
     public void afterStory(boolean givenStory) {
-        if (sessionId.get() != null) {
-            try {
-                String payload = "{\"tags\":[" + getJobTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}";
+        try {
+            String payload = "{\"tags\":[" + getJobTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}";
 
-                URL url = new URL("http://saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.get().toString());
+            URL url = new URL("http://saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.get().toString());
 
-                Authenticator.setDefault(new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(getSauceUser(), getSauceAccessKey().toCharArray());
-                    }
-                });
+            Authenticator.setDefault(new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(getSauceUser(), getSauceAccessKey().toCharArray());
+                }
+            });
 
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoOutput(true);
-                connection.setRequestMethod("PUT");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod("PUT");
 
-                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                writer.write(payload);
-                writer.close();
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+            writer.write(payload);
+            writer.close();
 
-                System.out.println("Sauce Job update return code: " + connection.getResponseCode());
+            int rc = connection.getResponseCode();
+            if (rc == 200) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String s;
+
+                // This comes back from Saucelabs:
+                // "video_url": "http://saucelabs.com/jobs/3bd32831ec0d91c423552330b332a59c4/video.flv",
+                Pattern p = Pattern.compile("http.*\\.flv");
                 while ((s = reader.readLine()) != null) {
-                    System.out.println(s);
+                    Matcher matcher = p.matcher(s);
+                    while (matcher.find()) {
+                        System.out.println("Saucelabs Video: " + matcher.group());
+                        break;
+                    }
                 }
-            } catch (IOException e) {
-                System.err.println("Error " + e.getMessage());
-                e.printStackTrace();
             }
-        } else {
-            System.err.println("RemoteWebDriver reporting null session ID");
+        } catch (IOException e) {
+            System.err.println("Error updating Saucelabs job info: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
