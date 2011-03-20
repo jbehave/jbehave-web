@@ -1,14 +1,25 @@
 package org.jbehave.web.runner.wicket;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
+import com.google.inject.Inject;
 import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.embedder.Embedder;
+import org.jbehave.core.embedder.EmbedderControls;
+import org.jbehave.core.embedder.EmbedderMonitor;
+import org.jbehave.core.embedder.MetaFilter;
 import org.jbehave.core.embedder.StoryRunner;
+import org.jbehave.core.failures.BatchFailures;
+import org.jbehave.core.model.Story;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
@@ -45,13 +56,50 @@ public class WebRunnerApplication extends WebApplication {
 
         @Override
         protected void configure() {
+
+            EmbedderControls embedderControls = new EmbedderControls();
+
             bind(Configuration.class).toInstance(configuration());
             bind(StoryRunner.class).toInstance(storyRunner());
             bind(new TypeLiteral<List<CandidateSteps>>(){}).toInstance(candidateSteps());
             bind(FileManager.class).toInstance(fileManager());
+            bind(EmbedderControls.class).toInstance(embedderControls);
+            bind(ExecutorService.class).toInstance(createExecutorService(embedderControls));
+            bind(new TypeLiteral<List<Future<Throwable>>>(){}).toInstance(new ArrayList<Future<Throwable>>());
+            bind(Embedder.class).toInstance(new Embedder() {
+
+                @Override
+                protected EnqueuedStory makeEnqueuedStory(EmbedderControls embedderControls, Configuration configuration,
+                                                          List<CandidateSteps> candidateSteps, BatchFailures batchFailures,
+                                                          MetaFilter filter, String storyPath, Story story,
+                                                          EmbedderMonitor embedderMonitor, StoryRunner storyRunner) {
+                    // want to do something thread-safe with story-reporter here.
+
+                    return new MyEnqueuedStory(storyPath, configuration, candidateSteps, story, filter, embedderControls,
+                            batchFailures, embedderMonitor, storyRunner);
+                }
+
+            });
         }
 
     }
+
+    /**
+     * Creates a {@link java.util.concurrent.ThreadPoolExecutor} using the number of threads defined
+     * in the {@link org.jbehave.core.embedder.EmbedderControls#threads()}
+     *
+     * @return An ExecutorService
+     */
+    protected ExecutorService createExecutorService(EmbedderControls embedderControls) {
+        int threads = embedderControls.threads();
+        if (threads == 1) {
+            // this is necessary for situations where people use the PerStoriesWebDriverSteps class.
+            return new Embedder.NonThreadingExecutorService();
+        } else {
+            return Executors.newFixedThreadPool(threads);
+        }
+    }
+
 
     protected Configuration configuration() {
         return new MostUsefulConfiguration();
@@ -83,6 +131,15 @@ public class WebRunnerApplication extends WebApplication {
 
     public Class<Home> getHomePage() {
         return Home.class;
+    }
+
+    private static class MyEnqueuedStory extends Embedder.EnqueuedStory {
+        private MyEnqueuedStory(String storyPath, Configuration configuration, List<CandidateSteps> candidateSteps,
+                                Story story, MetaFilter filter, EmbedderControls embedderControls, BatchFailures batchFailures,
+                                EmbedderMonitor embedderMonitor, StoryRunner storyRunner) {
+            super(storyPath, configuration, candidateSteps, story, filter, embedderControls,
+                    batchFailures, embedderMonitor, storyRunner);
+        }
     }
 
 }
