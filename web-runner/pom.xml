@@ -11,7 +11,7 @@
 
   <properties>
     <packaging>jar</packaging>
-    <wicket.version>1.4.10</wicket.version>
+    <wicket.version>1.4.16</wicket.version>
   </properties>
 
   <dependencies>
