@@ -32,17 +32,17 @@ public class JBehaveListener {
     private BatchFailures batchFailures;
     private List<Future<Throwable>> futures;
     private Embedder embedder;
-    private final File staticDir;
+    private final File projectDir;
 
     public JBehaveListener(EmbedderControls embedderControls, Configuration configuration, List<CandidateSteps> candidateSteps,
-                           BatchFailures batchFailures, List<Future<Throwable>> futures, Embedder embedder, File staticDir) {
+                           BatchFailures batchFailures, List<Future<Throwable>> futures, Embedder embedder, File projectDir) {
         this.embedderControls = embedderControls;
         this.configuration = configuration;
         this.candidateSteps = candidateSteps;
         this.batchFailures = batchFailures;
         this.futures = futures;
         this.embedder = embedder;
-        this.staticDir = staticDir;
+        this.projectDir = projectDir;
     }
 
     private Server server = new Server(8089);
@@ -67,14 +67,14 @@ public class JBehaveListener {
             }
         }),"*.enqueue");
 
-        ResourceHandler resource_handler = new ResourceHandler();
-        resource_handler.setDirectoriesListed(true);
-        resource_handler.setWelcomeFiles(new String[]{ "run-story.html" });
+        ResourceHandler jbehaveTargetViewDir = new ResourceHandler();
+        jbehaveTargetViewDir.setDirectoriesListed(true);
+        jbehaveTargetViewDir.setWelcomeFiles(new String[]{"run-story.html"});
 
         try {
-            resource_handler.setResourceBase(staticDir.getCanonicalPath());
+            jbehaveTargetViewDir.setResourceBase(projectDir.getCanonicalPath() + "/target/jbehave/view");
             HandlerList handlers = new HandlerList();
-            handlers.setHandlers(new Handler[] { context, resource_handler, new DefaultHandler() });
+            handlers.setHandlers(new Handler[] { context, jbehaveTargetViewDir, new DefaultHandler() });
             server.setHandler(handlers);
             server.start();
         } catch (Exception e) {
