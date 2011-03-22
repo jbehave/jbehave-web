@@ -19,6 +19,7 @@ import org.jbehave.web.io.ZipFileArchiver;
 import org.jbehave.web.runner.wicket.pages.DataFiles;
 import org.jbehave.web.runner.wicket.pages.FindSteps;
 import org.jbehave.web.runner.wicket.pages.Home;
+import org.jbehave.web.runner.wicket.pages.QueueStory;
 import org.jbehave.web.runner.wicket.pages.RunStory;
 
 import com.google.inject.AbstractModule;
@@ -32,9 +33,10 @@ public class WebRunnerApplication extends WebApplication {
         super.init();
         addComponentInstantiationListener(new GuiceComponentInjector(this, modules()));
         mountBookmarkablePage("/home", Home.class);
+        mountBookmarkablePage("/data/files", DataFiles.class);
         mountBookmarkablePage("/steps/find", FindSteps.class);
         mountBookmarkablePage("/story/run", RunStory.class);
-        mountBookmarkablePage("/data/files", DataFiles.class);
+        mountBookmarkablePage("/story/queue", QueueStory.class);        
     }
 
     private Module[] modules() {
