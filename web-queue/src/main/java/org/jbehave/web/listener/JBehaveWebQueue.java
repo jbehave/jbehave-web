@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Future;
 
-public class JBehaveListener {
+public class JBehaveWebQueue {
 
     private EmbedderControls embedderControls;
     private Configuration configuration;
@@ -34,7 +34,7 @@ public class JBehaveListener {
     private Embedder embedder;
     private final File projectDir;
 
-    public JBehaveListener(EmbedderControls embedderControls, Configuration configuration, List<CandidateSteps> candidateSteps,
+    public JBehaveWebQueue(EmbedderControls embedderControls, Configuration configuration, List<CandidateSteps> candidateSteps,
                            BatchFailures batchFailures, List<Future<Throwable>> futures, Embedder embedder, File projectDir) {
         this.embedderControls = embedderControls;
         this.configuration = configuration;

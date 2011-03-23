@@ -5,9 +5,9 @@
     <artifactId>jbehave-web</artifactId>
     <version>3.3-SNAPSHOT</version>
   </parent>
-  <artifactId>jbehave-web-listener</artifactId>
+  <artifactId>jbehave-web-queue</artifactId>
   <packaging>jar</packaging>
-  <name>JBehave Web Listener</name>
+  <name>JBehave Web Queue</name>
 
   <dependencies>
     <dependency>
