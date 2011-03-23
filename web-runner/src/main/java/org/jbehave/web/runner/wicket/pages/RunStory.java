@@ -1,8 +1,5 @@
 package org.jbehave.web.runner.wicket.pages;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
-
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -19,12 +16,17 @@ import org.jbehave.core.configuration.Keywords;
 import org.jbehave.core.embedder.MetaFilter;
 import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.model.Story;
+import org.jbehave.core.reporters.StoryReporter;
+import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.reporters.TxtOutput;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.web.runner.context.StoryContext;
 import org.jbehave.web.runner.context.StoryOutputStream;
 
 import com.google.inject.Inject;
+
+import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 public class RunStory extends Template {
 
@@ -77,8 +79,12 @@ public class RunStory extends Template {
         outputPatterns.setProperty("beforeStory", "{0}\n");
         final Keywords keywords = configuration.keywords();
         final boolean reportFailureTrace = false;
-        configuration.useDefaultStoryReporter(new TxtOutput(new PrintStream(outputStream), outputPatterns, keywords,
-                reportFailureTrace));
+        configuration.useStoryReporterBuilder(new StoryReporterBuilder() {
+            @Override
+            public StoryReporter build(String storyPath) {
+                return new TxtOutput(new PrintStream(outputStream), outputPatterns, keywords, reportFailureTrace);
+            }
+        });
     }
 
     public void run() {
@@ -86,12 +92,8 @@ public class RunStory extends Template {
             try {
                 outputStream.reset();
                 storyContext.clearFailureCause();
-                if (isNotBlank(storyContext.getMetaFilter())) {
-                    MetaFilter metaFilter = new MetaFilter(storyContext.getMetaFilter());
-                    storyRunner.run(configuration, steps, parseStory(storyContext.getInput()), metaFilter);
-                } else {
-                    storyRunner.run(configuration, steps, parseStory(storyContext.getInput()));
-                }
+                MetaFilter metaFilter = ( isNotBlank(storyContext.getMetaFilter()) ? new MetaFilter(storyContext.getMetaFilter()) : MetaFilter.EMPTY );
+                storyRunner.run(configuration, steps, parseStory(storyContext.getInput()), metaFilter);
             } catch (Throwable e) {
                 storyContext.runFailedFor(e);
             }
