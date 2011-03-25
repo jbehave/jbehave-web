@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.failures.BatchFailures;
 
 @SuppressWarnings("serial")
@@ -20,7 +21,7 @@ public class StoryContext implements Serializable {
 	private List<String> messages = new ArrayList<String>();
 	private Throwable cause = null;
     private BatchFailures batchFailures = new BatchFailures();
-    private List<Future<Throwable>> futures = new ArrayList<Future<Throwable>>();
+    private List<Future<Embedder.ThrowableStory>> futures = new ArrayList<Future<Embedder.ThrowableStory>>();
 
 	public StoryContext(){    
 	}
@@ -58,11 +59,11 @@ public class StoryContext implements Serializable {
         this.batchFailures = batchFailures;
     }
 
-    public List<Future<Throwable>> getFutures() {
+    public List<Future<Embedder.ThrowableStory>> getFutures() {
         return futures;
     }
 
-    public void setFutures(List<Future<Throwable>> futures) {
+    public void setFutures(List<Future<Embedder.ThrowableStory>> futures) {
         this.futures = futures;
     }
 

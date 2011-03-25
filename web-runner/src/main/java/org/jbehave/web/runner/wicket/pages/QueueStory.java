@@ -32,7 +32,7 @@ public class QueueStory extends Template {
     private Embedder embedder = embedder();
 
     private BatchFailures batchFailures = new BatchFailures();
-    private List<Future<Throwable>> futures = new ArrayList<Future<Throwable>>();
+    private List<Future<Embedder.ThrowableStory>> futures = new ArrayList<Future<Embedder.ThrowableStory>>();
     private StoryContext storyContext = new StoryContext();
 
     public QueueStory() {

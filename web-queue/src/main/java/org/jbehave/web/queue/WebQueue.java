@@ -26,12 +26,12 @@ public class WebQueue {
 
     private final Embedder embedder;
     private final BatchFailures batchFailures;
-    private final List<Future<Throwable>> futures;
+    private final List<Future<Embedder.ThrowableStory>> futures;
     private final File navigatorDir;
     
     private Server server = new Server(8089);
 
-    public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Throwable>> futures, File navigatorDir) {
+    public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Embedder.ThrowableStory>> futures, File navigatorDir) {
         this.embedder = embedder;
         this.batchFailures = batchFailures;
         this.futures = futures;
