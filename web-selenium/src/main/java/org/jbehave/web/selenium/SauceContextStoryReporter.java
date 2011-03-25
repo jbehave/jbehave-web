@@ -23,7 +23,7 @@ public class SauceContextStoryReporter extends NullStoryReporter {
     private final WebDriverProvider webDriverProvider;
 
     private ThreadLocal<String> storyName = new ThreadLocal<String>();
-    private ThreadLocal<SessionId> sessionId = new ThreadLocal<SessionId>();
+    private ThreadLocal<SessionId> sessionIds = new ThreadLocal<SessionId>();
     private ThreadLocal<Boolean> passed = new ThreadLocal<Boolean>();
 
     public SauceContextStoryReporter(WebDriverProvider webDriverProvider) {
@@ -38,7 +38,7 @@ public class SauceContextStoryReporter extends NullStoryReporter {
 
     @Override
     public void beforeScenario(String title) {
-        sessionId.set(((RemoteWebDriverProvider.ScreenShottingRemoteWebDriver) webDriverProvider.get()).getSessionId());
+        sessionIds.set(((RemoteWebDriverProvider.ScreenShottingRemoteWebDriver) webDriverProvider.get()).getSessionId());
     }
 
     @Override
@@ -48,10 +48,18 @@ public class SauceContextStoryReporter extends NullStoryReporter {
 
     @Override
     public void afterStory(boolean givenStory) {
+
+        SessionId sessionId = sessionIds.get();
+
+        if (sessionId == null ) {
+            // no executed scenarios, as (most likely) excluded
+            return;
+        }
+
         try {
             String payload = "{\"tags\":[" + getJobTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}";
 
-            URL url = new URL("http://saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.get().toString());
+            URL url = new URL("http://saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.toString());
 
             Authenticator.setDefault(new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
