@@ -2,6 +2,7 @@ package org.jbehave.web.selenium;
 
 import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.NullStoryReporter;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 
 import java.io.BufferedReader;
@@ -38,7 +39,7 @@ public class SauceContextStoryReporter extends NullStoryReporter {
 
     @Override
     public void beforeScenario(String title) {
-        sessionIds.set(((RemoteWebDriverProvider.ScreenShottingRemoteWebDriver) webDriverProvider.get()).getSessionId());
+        sessionIds.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
     }
 
     @Override
