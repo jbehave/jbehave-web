@@ -29,7 +29,7 @@ public class WebQueue {
     private final List<Future<Embedder.ThrowableStory>> futures;
     private final File navigatorDir;
     
-    private Server server = new Server(8089);
+    private Server server;
 
     public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Embedder.ThrowableStory>> futures, File navigatorDir) {
         this.embedder = embedder;
@@ -39,6 +39,12 @@ public class WebQueue {
     }
 
     public void start() {
+        String port = System.getProperty("jetty.port");
+        if (port == null) {
+             server = new Server(8089);
+        } else {
+             server = new Server(Integer.parseInt(port));
+        }
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
