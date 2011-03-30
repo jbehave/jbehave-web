@@ -75,7 +75,7 @@ public class WebQueue {
         viewDir.setWelcomeFiles(new String[] { "run-story.html" });
 
         try {
-            viewDir.setResourceBase(navigatorDir.getCanonicalPath() + "/target/jbehave/view");
+            viewDir.setResourceBase(navigatorDir.getCanonicalPath());
             HandlerList handlers = new HandlerList();
             handlers.setHandlers(new Handler[] { context, viewDir, new DefaultHandler() });
             server.setHandler(handlers);
