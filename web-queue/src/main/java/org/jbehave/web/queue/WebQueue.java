@@ -30,12 +30,18 @@ public class WebQueue {
     private final File navigatorDir;
     
     private Server server;
+    private String resultsPage;
 
     public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Embedder.ThrowableStory>> futures, File navigatorDir) {
+        this(embedder, batchFailures, futures, navigatorDir, "navigator.html");
+    }
+
+    public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Embedder.ThrowableStory>> futures, File navigatorDir, String resultsPage) {
         this.embedder = embedder;
         this.batchFailures = batchFailures;
         this.futures = futures;
         this.navigatorDir = navigatorDir;
+        this.resultsPage = resultsPage;
     }
 
     public void start() {
@@ -59,7 +65,8 @@ public class WebQueue {
 
                 embedder.enqueueStory(batchFailures, MetaFilter.EMPTY, futures, job, story);
                 response.setContentType("text/html");
-                response.sendRedirect("/navigator.html?job=" + job);
+                ;
+                response.sendRedirect("/" + resultsPage + "?job=" + job);
             }
         }), "*.enqueue");
 
