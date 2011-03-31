@@ -20,7 +20,6 @@ import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.MetaFilter;
 import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.model.Story;
-import org.jbehave.core.reporters.StoryReporterBuilder;
 
 public class WebQueue {
 
@@ -64,9 +63,7 @@ public class WebQueue {
         viewHandler.setWelcomeFiles(new String[] { configuration.welcomeFile() });
 
         try {
-            StoryReporterBuilder builder = embedder.configuration().storyReporterBuilder();
-            String viewDir = builder.outputDirectory().getPath() + "/" + builder.viewResources().getProperty("view");
-            viewHandler.setResourceBase(configuration.navigatorDirectory().getCanonicalPath() + viewDir);
+            viewHandler.setResourceBase(configuration.navigatorDirectory().getCanonicalPath());
             HandlerList handlers = new HandlerList();
             handlers.setHandlers(new Handler[] { context, viewHandler, new DefaultHandler() });
             server.setHandler(handlers);
