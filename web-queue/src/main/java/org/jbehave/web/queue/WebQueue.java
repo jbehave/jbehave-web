@@ -1,6 +1,5 @@
 package org.jbehave.web.queue;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -21,23 +20,25 @@ import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.MetaFilter;
 import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.model.Story;
+import org.jbehave.core.reporters.StoryReporterBuilder;
 
 public class WebQueue {
 
     private final Embedder embedder;
     private final BatchFailures batchFailures;
     private final List<Future<Embedder.ThrowableStory>> futures;
-    private final File navigatorDir;
-    
-    private Server server = new Server(8089);
+    private final WebQueueConfiguration configuration;
+    private final Server server;
 
-    public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Embedder.ThrowableStory>> futures, File navigatorDir) {
+    public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Embedder.ThrowableStory>> futures, WebQueueConfiguration configuration) {
         this.embedder = embedder;
         this.batchFailures = batchFailures;
         this.futures = futures;
-        this.navigatorDir = navigatorDir;
+        this.configuration = configuration;
+        this.server = new Server(configuration.port());
     }
 
+    @SuppressWarnings("serial")
     public void start() {
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -57,14 +58,16 @@ public class WebQueue {
             }
         }), "*.enqueue");
 
-        ResourceHandler viewDir = new ResourceHandler();
-        viewDir.setDirectoriesListed(true);
-        viewDir.setWelcomeFiles(new String[] { "run-story.html" });
+        ResourceHandler viewHandler = new ResourceHandler();
+        viewHandler.setDirectoriesListed(true);
+        viewHandler.setWelcomeFiles(new String[] { configuration.welcomeFile() });
 
         try {
-            viewDir.setResourceBase(navigatorDir.getCanonicalPath() + "/target/jbehave/view");
+            StoryReporterBuilder builder = embedder.configuration().storyReporterBuilder();
+            String viewDir = builder.outputDirectory().getPath() + "/" + builder.viewResources().getProperty("view");
+            viewHandler.setResourceBase(configuration.navigatorDirectory().getCanonicalPath() + viewDir);
             HandlerList handlers = new HandlerList();
-            handlers.setHandlers(new Handler[] { context, viewDir, new DefaultHandler() });
+            handlers.setHandlers(new Handler[] { context, viewHandler, new DefaultHandler() });
             server.setHandler(handlers);
             server.start();
         } catch (Exception e) {
