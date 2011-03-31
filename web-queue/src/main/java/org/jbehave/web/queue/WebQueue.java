@@ -53,7 +53,6 @@ public class WebQueue {
 
                 embedder.enqueueStory(batchFailures, MetaFilter.EMPTY, futures, job, story);
                 response.setContentType("text/html");
-                ;
                 response.sendRedirect("/" + configuration.navigatorPage() + "?job=" + job);
             }
         }), "*.enqueue");
