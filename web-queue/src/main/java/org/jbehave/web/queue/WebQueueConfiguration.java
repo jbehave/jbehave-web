@@ -4,12 +4,17 @@ import java.io.File;
 
 public class WebQueueConfiguration {
 
-    private File navigatorDir;
+    private File navigatorDirectory = new File("src/main/storynavigator");
+    private String navigatorPage = "navigator.html";
     private int port = 8089;
     private String welcomeFile = "run-story.html";
 
     public File navigatorDirectory() {
-        return navigatorDir;
+        return navigatorDirectory;
+    }
+    
+    public String navigatorPage() {
+        return navigatorPage;
     }
 
     public int port() {
@@ -21,7 +26,12 @@ public class WebQueueConfiguration {
     }
 
     public WebQueueConfiguration useNavigatorDirectory(File navigatorDir) {
-        this.navigatorDir = navigatorDir;
+        this.navigatorDirectory = navigatorDir;
+        return this;
+    }
+
+    public WebQueueConfiguration useNavigatorPage(String navigatorPage){
+        this.navigatorPage = navigatorPage;
         return this;
     }
 

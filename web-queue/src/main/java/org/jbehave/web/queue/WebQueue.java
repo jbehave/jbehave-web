@@ -28,18 +28,18 @@ public class WebQueue {
     private final BatchFailures batchFailures;
     private final List<Future<Embedder.ThrowableStory>> futures;
     private final WebQueueConfiguration configuration;
-    private final Server server;
+    private Server server;
 
     public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Embedder.ThrowableStory>> futures, WebQueueConfiguration configuration) {
         this.embedder = embedder;
         this.batchFailures = batchFailures;
         this.futures = futures;
         this.configuration = configuration;
-        this.server = new Server(configuration.port());
     }
-
+    
     @SuppressWarnings("serial")
     public void start() {
+        this.server = new Server(configuration.port());
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
@@ -54,7 +54,8 @@ public class WebQueue {
 
                 embedder.enqueueStory(batchFailures, MetaFilter.EMPTY, futures, job, story);
                 response.setContentType("text/html");
-                response.sendRedirect("/navigator.html?job=" + job);
+                ;
+                response.sendRedirect("/" + configuration.navigatorPage() + "?job=" + job);
             }
         }), "*.enqueue");
 
