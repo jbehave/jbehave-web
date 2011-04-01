@@ -29,29 +29,16 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
     }
 
     public void initialize() {
+        WebDriver remoteWebDriver = null;
         try {
-            WebDriver remoteWebDriver = new ScreenShottingRemoteWebDriver(createRemoteURL(), desiredCapabilities);
-            // Augmenter does not work. Resulting WebDriver is good for exclusive screen-shotting, but not normal
-            // operation as 'session is null'
-            //remoteWebDriver = new Augmenter().augment(remoteWebDriver);  // allows instanceof TakesScreenshot
-            delegate.set(remoteWebDriver);
+            remoteWebDriver = new ScreenShottingRemoteWebDriver(createRemoteURL(), desiredCapabilities);
         } catch (MalformedURLException e) {
-            banner();
-            e.printStackTrace();
-            throw new UnsupportedOperationException(e);
-        } catch (UnsupportedOperationException e) {
-            banner();
-            e.printStackTrace();
-            throw e;
-        } catch (Throwable e) {
-            banner();
-            e.printStackTrace();
-            throw new UnsupportedOperationException(e);
+            throw new UnsupportedOperationException("urls is bad" + e.getMessage(), e);
         }
-    }
-
-    private void banner() {
-        System.out.println("************** Error Initializing WebDriverProvider *************");
+        // Augmenter does not work. Resulting WebDriver is good for exclusive screen-shotting, but not normal
+        // operation as 'session is null'
+        //remoteWebDriver = new Augmenter().augment(remoteWebDriver);  // allows instanceof TakesScreenshot
+        delegate.set(remoteWebDriver);
     }
 
     public URL createRemoteURL() throws MalformedURLException {
@@ -59,7 +46,7 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
         if (url == null) {
             throw new UnsupportedOperationException("REMOTE_WEBDRIVER_URL property name variable not specified");
         }
-        return new URL(url);
+            return new URL(url);
     }
 
     static class ScreenShottingRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {

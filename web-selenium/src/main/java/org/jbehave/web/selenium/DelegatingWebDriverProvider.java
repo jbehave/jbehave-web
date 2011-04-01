@@ -19,21 +19,13 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
     public WebDriver get() {
         WebDriver webDriver = delegate.get();
         if (webDriver == null) {
-            String msg = "***  WebDriver has not initialized.  This either because the initialize() method of " + this.getClass().getName() + " failed.\n"
-                    + "Refer the build log for error message/exceptions previously sent.\n"
-                    + "Refer also http://jira.codehaus.org/browse/JBEHAVE-400) for who the build is not halted sooner.\n"
-                    + "OR WebDriver may not have been setup yet for this thread. Are you using the right impl class: PerScenarioWebDriverSteps versus PerStoryWebDriverSteps versus PerStoriesWebDriverSteps?";
-            banner(); banner(); banner();
-            System.out.println(msg);
-            banner(); banner(); banner();
-            throw new NullPointerException(msg);
+            throw new NullPointerException("WebDriver may not have been setup yet for " +
+                    "this thread. Are you using the right impl class: PerScenarioWebDriverSteps " +
+                    "versus PerStoryWebDriverSteps versus PerStoriesWebDriverSteps?");
         }
         return webDriver;
     }
 
-    private void banner() {
-        System.out.println("*************************************************************************");
-    }
 
     public boolean saveScreenshotTo(String path) {
         WebDriver driver = get();
