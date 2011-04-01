@@ -1,5 +1,8 @@
 package org.jbehave.web.selenium;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
@@ -10,48 +13,58 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
+/**
+ * <p>Provides a {@link RemoteWebDriver} that connects to a URL specified by system property "REMOTE_WEBDRIVER_URL" 
+ * and allows to take screenshots.</p>
+ * <p>The default {@link DesiredCapabilities}, specified by {@link #defaultDesiredCapabilities()}, are for
+ * Windows Firefox 3.6 allowing screenshots.</p>
+ */
 public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
 
     protected DesiredCapabilities desiredCapabilities;
+
+    public RemoteWebDriverProvider() {
+        this(defaultDesiredCapabilities());
+    }
+
+    public static DesiredCapabilities defaultDesiredCapabilities() {
+        DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+        desiredCapabilities.setVersion("3.6.");
+        desiredCapabilities.setPlatform(Platform.WINDOWS);
+        desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
+        return desiredCapabilities;
+    }
 
     public RemoteWebDriverProvider(DesiredCapabilities desiredCapabilities) {
         this.desiredCapabilities = desiredCapabilities;
     }
 
-    public RemoteWebDriverProvider() {
-        desiredCapabilities = DesiredCapabilities.firefox();
-        desiredCapabilities.setVersion("3.6.");
-        desiredCapabilities.setPlatform(Platform.WINDOWS);
-        desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
-    }
-
     public void initialize() {
-        WebDriver remoteWebDriver = null;
+        URL url = null;
         try {
-            remoteWebDriver = new ScreenShottingRemoteWebDriver(createRemoteURL(), desiredCapabilities);
+            url = createRemoteURL();
         } catch (MalformedURLException e) {
-            throw new UnsupportedOperationException("urls is bad" + e.getMessage(), e);
+            throw new UnsupportedOperationException("Invalid URL " + url + ": " + e.getMessage(), e);
         }
-        // Augmenter does not work. Resulting WebDriver is good for exclusive screen-shotting, but not normal
-        // operation as 'session is null'
-        //remoteWebDriver = new Augmenter().augment(remoteWebDriver);  // allows instanceof TakesScreenshot
+        WebDriver remoteWebDriver = new ScreenshootingRemoteWebDriver(url, desiredCapabilities);
+        // Augmenter does not work. Resulting WebDriver is good for exclusive
+        // screenshooting, but not normal operation as 'session is null'
+        // remoteWebDriver = new Augmenter().augment(remoteWebDriver);
+        // should allow instanceof TakesScreenshot
         delegate.set(remoteWebDriver);
     }
 
     public URL createRemoteURL() throws MalformedURLException {
         String url = System.getProperty("REMOTE_WEBDRIVER_URL");
         if (url == null) {
-            throw new UnsupportedOperationException("REMOTE_WEBDRIVER_URL property name variable not specified");
+            throw new UnsupportedOperationException("REMOTE_WEBDRIVER_URL property not specified");
         }
-            return new URL(url);
+        return new URL(url);
     }
 
-    static class ScreenShottingRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {
+    static class ScreenshootingRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {
 
-        public ScreenShottingRemoteWebDriver(URL remoteURL, DesiredCapabilities desiredCapabilities) {
+        public ScreenshootingRemoteWebDriver(URL remoteURL, DesiredCapabilities desiredCapabilities) {
             super(remoteURL, desiredCapabilities);
         }
 

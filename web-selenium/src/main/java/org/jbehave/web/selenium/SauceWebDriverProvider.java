@@ -3,6 +3,11 @@ package org.jbehave.web.selenium;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ *  Allows to connect to <a href="http://saucelabs.com/">Sauce Labs</a> to run 
+ *  Selenium tests in the cloud.  Requires Sauce credentials, username and access key, which
+ *  can be provided via system properties "SAUCE_USERNAME" and "SAUCE_ACCESS_KEY".
+ */
 public class SauceWebDriverProvider extends RemoteWebDriverProvider {
 
     public SauceWebDriverProvider() {
@@ -12,7 +17,6 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
 
     @Override
     public URL createRemoteURL() throws MalformedURLException {
-
         return new URL("http://" + getSauceCredentials() + "@ondemand.saucelabs.com/wd/hub");
     }
 

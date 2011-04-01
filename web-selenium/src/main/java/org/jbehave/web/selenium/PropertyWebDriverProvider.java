@@ -1,9 +1,7 @@
 package org.jbehave.web.selenium;
 
-import java.net.MalformedURLException;
 import java.util.Locale;
 
-import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
