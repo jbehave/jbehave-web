@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceAccessKey;
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceUser;
 
+/**
+ * A {@link StoryReporter} that passes back to SauceLabs the executed job results.
+ */
 public class SauceContextStoryReporter extends NullStoryReporter {
 
     private final WebDriverProvider webDriverProvider;
