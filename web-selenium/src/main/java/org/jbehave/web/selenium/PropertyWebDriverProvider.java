@@ -1,8 +1,11 @@
 package org.jbehave.web.selenium;
 
+import java.net.MalformedURLException;
 import java.util.Locale;
 
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -13,7 +16,7 @@ import static java.lang.Boolean.parseBoolean;
 /**
  * Provides WebDriver instances based on system property "browser":
  * <ul>
- * <li>"android": AndroidDriver</li>
+ * <li>"android": {@link AndroidDriver}</li>
  * <li>"chrome": {@link ChromeDriver}</li>
  * <li>"firefox": {@link FirefoxDriver}</li>
  * <li>"htmlunit": {@link HtmlUnitDriver}</li>
@@ -45,7 +48,7 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
     private WebDriver createDriver(Browser browser) {
         switch (browser) {
         case ANDROID:
-            return null; // createAndroidDriver();
+            return createAndroidDriver();
         case CHROME:
             return createChromeDriver();
         case FIREFOX:
@@ -58,18 +61,18 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
         }
     }
 
-//    protected WebDriver createAndroidDriver() {
-//        try {
-//            String url = System.getProperty("webdriver.android.url", "http://localhost:8080/hub");
-//            ScreenOrientation screenOrientation = ScreenOrientation.valueOf(System.getProperty(
-//                    "webdriver.android.screenOrientation", "portrait").toUpperCase(usingLocale()));
-//            AndroidDriver driver = new AndroidDriver(url);
-//            driver.rotate(screenOrientation);
-//            return driver;
-//        } catch (MalformedURLException e) {
-//            throw new UnsupportedOperationException(e);
-//        }
-//    }
+    protected WebDriver createAndroidDriver() {
+        try {
+            String url = System.getProperty("webdriver.android.url", "http://localhost:8080/hub");
+            ScreenOrientation screenOrientation = ScreenOrientation.valueOf(System.getProperty(
+                    "webdriver.android.screenOrientation", "portrait").toUpperCase(usingLocale()));
+            AndroidDriver driver = new AndroidDriver(url);
+            driver.rotate(screenOrientation);
+            return driver;
+        } catch (MalformedURLException e) {
+            throw new UnsupportedOperationException(e);
+        }
+    }
 
     protected ChromeDriver createChromeDriver() {
         return new ChromeDriver();
