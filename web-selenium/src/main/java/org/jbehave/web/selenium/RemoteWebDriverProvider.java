@@ -41,12 +41,19 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
 
     public void initialize() {
         URL url = null;
+        WebDriver remoteWebDriver;
         try {
             url = createRemoteURL();
-        } catch (MalformedURLException e) {
-            throw new UnsupportedOperationException("Invalid URL " + url + ": " + e.getMessage(), e);
+            remoteWebDriver = new ScreenshootingRemoteWebDriver(url, desiredCapabilities);
+        } catch (Throwable e) {
+            System.err.println("*******************");
+            System.err.println("***** FAILED ******");
+            System.err.println("*******************");
+            System.err.print(e.getMessage());
+            e.printStackTrace();
+            System.err.println("*******************");
+            throw new UnsupportedOperationException("Connecting to remote URL '" + url + "' failed: " + e.getMessage(), e);
         }
-        WebDriver remoteWebDriver = new ScreenshootingRemoteWebDriver(url, desiredCapabilities);
         // Augmenter does not work. Resulting WebDriver is good for exclusive
         // screenshooting, but not normal operation as 'session is null'
         // remoteWebDriver = new Augmenter().augment(remoteWebDriver);
