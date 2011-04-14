@@ -9,13 +9,12 @@ import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.Embedder.RunningStoriesFailed;
-import org.jbehave.core.embedder.EmbedderControls;
 import org.jbehave.core.io.StoryLoader;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class RemoveWebDriverProviderTest {
+public class RemoteWebDriverProviderTest {
 
     @Test(expected = RunningStoriesFailed.class)
     @Ignore("FIXME")
@@ -46,7 +45,6 @@ public class RemoveWebDriverProviderTest {
         configuration.useStoryLoader(storyLoader);
         Embedder embedder = new Embedder();
         embedder.useConfiguration(configuration);
-        embedder.useEmbedderControls(new EmbedderControls().doBatch(true));
         embedder.useCandidateSteps(new InstanceStepsFactory(configuration, steps).createCandidateSteps());
         embedder.runStoriesAsPaths(Arrays.asList(storyPath));
     }
