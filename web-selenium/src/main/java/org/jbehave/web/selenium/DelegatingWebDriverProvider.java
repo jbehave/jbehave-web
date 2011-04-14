@@ -21,7 +21,8 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
         if (webDriver == null) {
             throw new NullPointerException("WebDriver may not have been setup yet for " +
                     "this thread. Are you using the right impl class: PerScenarioWebDriverSteps " +
-                    "versus PerStoryWebDriverSteps versus PerStoriesWebDriverSteps?");
+                    "versus PerStoryWebDriverSteps versus PerStoriesWebDriverSteps? " +
+                    "Or are you using SauceLabs?  If yes, are you sure you have the user-name and access-key right?");
         }
         return webDriver;
     }
