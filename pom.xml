@@ -25,6 +25,7 @@
     <jbehave.core.version>3.4-SNAPSHOT</jbehave.core.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
+    <jdk.version>1.5</jdk.version>
     <jetty.version>7.2.2.v20101205</jetty.version>
   </properties>
 
@@ -123,8 +124,8 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>2.3.1</version>
           <configuration>
-            <source>1.5</source>
-            <target>1.5</target>
+            <source>${jdk.version}</source>
+            <target>${jdk.version}</target>
           </configuration>
         </plugin>
         <plugin>
