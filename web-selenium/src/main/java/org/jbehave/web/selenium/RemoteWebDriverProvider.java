@@ -14,14 +14,20 @@ import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
- * <p>Provides a {@link RemoteWebDriver} that connects to a URL specified by system property "REMOTE_WEBDRIVER_URL" 
- * and allows to take screenshots.</p>
- * <p>The default {@link DesiredCapabilities}, specified by {@link #defaultDesiredCapabilities()}, are for
- * Windows Firefox 3.6 allowing screenshots.</p>
+ * <p>
+ * Provides a {@link RemoteWebDriver} that connects to a URL specified by system
+ * property "REMOTE_WEBDRIVER_URL" and allows to take screenshots.
+ * </p>
+ * <p>
+ * The default {@link DesiredCapabilities}, specified by
+ * {@link #defaultDesiredCapabilities()}, are for Windows Firefox 3.6 allowing
+ * screenshots.
+ * </p>
  */
 public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
 
     protected DesiredCapabilities desiredCapabilities;
+    private boolean verbose = false;
 
     public RemoteWebDriverProvider() {
         this(defaultDesiredCapabilities());
@@ -46,13 +52,11 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
             url = createRemoteURL();
             remoteWebDriver = new ScreenshootingRemoteWebDriver(url, desiredCapabilities);
         } catch (Throwable e) {
-            System.err.println("*******************");
-            System.err.println("***** FAILED ******");
-            System.err.println("*******************");
-            System.err.print(e.getMessage());
-            e.printStackTrace();
-            System.err.println("*******************");
-            throw new UnsupportedOperationException("Connecting to remote URL '" + url + "' failed: " + e.getMessage(), e);
+            if (verbose) {
+                e.printStackTrace(System.err);
+            }
+            throw new UnsupportedOperationException("Connecting to remote URL '" + url + "' failed: " + e.getMessage(),
+                    e);
         }
         // Augmenter does not work. Resulting WebDriver is good for exclusive
         // screenshooting, but not normal operation as 'session is null'
@@ -82,5 +86,9 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
             // ... and convert it.
             return target.convertFromBase64Png(base64);
         }
+    }
+
+    public void useVerbosity(boolean verbose) {
+        this.verbose = verbose;
     }
 }
