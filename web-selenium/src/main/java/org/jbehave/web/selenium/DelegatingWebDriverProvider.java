@@ -19,14 +19,10 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
     public WebDriver get() {
         WebDriver webDriver = delegate.get();
         if (webDriver == null) {
-            throw new NullPointerException("WebDriver may not have been setup yet for " +
-                    "this thread. Are you using the right impl class: PerScenarioWebDriverSteps " +
-                    "versus PerStoryWebDriverSteps versus PerStoriesWebDriverSteps? " +
-                    "Or are you using SauceLabs?  If yes, are you sure you have the user-name and access-key right?");
+            throw new DelegateWebDriverNotFound();
         }
         return webDriver;
     }
-
 
     public boolean saveScreenshotTo(String path) {
         WebDriver driver = get();
@@ -38,11 +34,19 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
                 byte[] bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
                 IOUtils.write(bytes, new FileOutputStream(file));
                 return true;
-            } catch ( Exception e) {
+            } catch (Exception e) {
                 throw new RuntimeException("Failed to save screenshot to " + file, e);
             }
         }
         return false;
     }
 
+    @SuppressWarnings("serial")
+    public static class DelegateWebDriverNotFound extends RuntimeException {
+        public DelegateWebDriverNotFound() {
+            super("WebDriver has not been found for this thread.\n"
+                    + "Please verify you are using the correct WebDriverProvider, "
+                    + "with the appropriate credentials if using remote acces, e.g. to SauceLabs.");
+        }
+    }
 }
