@@ -53,6 +53,7 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
             remoteWebDriver = new ScreenshootingRemoteWebDriver(url, desiredCapabilities);
         } catch (Throwable e) {
             if (verbose) {
+                System.err.println("*********** Remote WebDriver Initialization Failure ************");
                 e.printStackTrace(System.err);
             }
             throw new UnsupportedOperationException("Connecting to remote URL '" + url + "' failed: " + e.getMessage(),
@@ -61,7 +62,8 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
         // Augmenter does not work. Resulting WebDriver is good for exclusive
         // screenshooting, but not normal operation as 'session is null'
         // remoteWebDriver = new Augmenter().augment(remoteWebDriver);
-        // should allow instanceof TakesScreenshot
+        // should allow instanceof TakesScreenshot.
+        // To take out when this is fixed in Selenium 2.0b4 (beta 4)
         delegate.set(remoteWebDriver);
     }
 
