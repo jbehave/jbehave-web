@@ -46,7 +46,7 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
         public DelegateWebDriverNotFound() {
             super("WebDriver has not been found for this thread.\n"
                     + "Please verify you are using the correct WebDriverProvider, "
-                    + "with the appropriate credentials if using remote acces, e.g. to SauceLabs.");
+                    + "with the appropriate credentials if using remote access, e.g. to SauceLabs.");
         }
     }
 }
