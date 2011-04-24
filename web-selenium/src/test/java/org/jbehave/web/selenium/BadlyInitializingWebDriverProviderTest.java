@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Properties;
 
+import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterStory;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.BeforeStory;
@@ -70,22 +71,23 @@ public class BadlyInitializingWebDriverProviderTest {
                 + "Then a tester is a happy hopper";
         String path = "/path/to/story";
         MySteps steps = new MySteps();
-        MyBeforeAfterScenarioSteps myBeforeAfterScenarioSteps = new MyBeforeAfterScenarioSteps();
-        MyPerStoryWebDriverSteps myPerStorySteps = new MyPerStoryWebDriverSteps(driverProvider);
+        MyPerScenarioSteps perScenarioSteps = new MyPerScenarioSteps();
+        MyPerStorySteps perStorySteps = new MyPerStorySteps(driverProvider);
         OutputStream out = new ByteArrayOutputStream();
-        final TxtOutput reporter = new TxtOutput(new PrintStream(out), new Properties(),
-                new LocalizedKeywords(), true);
-        StoryReporterBuilder builder = new StoryReporterBuilder(){
+        final TxtOutput reporter = new TxtOutput(new PrintStream(out), new Properties(), new LocalizedKeywords(), true);
+        StoryReporterBuilder builder = new StoryReporterBuilder() {
 
             @Override
             public StoryReporter build(String storyPath) {
                 return reporter;
             }
-            
+
         };
-        Configuration configuration = new MostUsefulConfiguration().useStoryReporterBuilder(builder).useStoryControls(new StoryControls().doResetStateBeforeScenario(false));
-        
-        InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps, myPerStorySteps, myBeforeAfterScenarioSteps);
+        Configuration configuration = new MostUsefulConfiguration().useStoryReporterBuilder(builder).useStoryControls(
+                new StoryControls().doResetStateBeforeScenario(false));
+
+        InjectableStepsFactory factory = new InstanceStepsFactory(configuration, steps, perStorySteps,
+                perScenarioSteps);
         try {
             runner.run(configuration, factory.createCandidateSteps(), parser.parseStory(story, path));
         } catch (BeforeOrAfterFailed beforeOrAfterFailed) {
@@ -96,43 +98,44 @@ public class BadlyInitializingWebDriverProviderTest {
         }
         System.out.println(out);
 
-        assertEquals("PerStoryWebDriverSteps.beforeStory()\n"
-                // none of the per-scenario steps or scenario steps or afterStory steps should execute
-                //+ "PerStoryWebDriverSteps.afterStory()\n"
-                , orderedEvents.toString());
+        assertEquals("beforeStory()\n"
+                + "beforeScenario()\n"
+                // steps are not performed
+                + "afterScenario()\n"
+                + "afterStory()\n", orderedEvents.toString());
     }
 
-    public class MyPerStoryWebDriverSteps extends PerStoryWebDriverSteps {
+    public class MyPerStorySteps extends PerStoryWebDriverSteps {
 
-        public MyPerStoryWebDriverSteps(WebDriverProvider driverProvider) {
+        public MyPerStorySteps(WebDriverProvider driverProvider) {
             super(driverProvider);
         }
 
         @Override
         @BeforeStory
         public void beforeStory() throws Exception {
-            orderedEvents.append("PerStoryWebDriverSteps.beforeStory()\n");
+            orderedEvents.append("beforeStory()\n");
             super.beforeStory();
         }
 
         @Override
         @AfterStory
         public void afterStory() throws Exception {
-            orderedEvents.append("PerStoryWebDriverSteps.afterStory()\n");
+            orderedEvents.append("afterStory()\n");
             super.afterStory();
         }
     };
 
-    public class MyBeforeAfterScenarioSteps {
+    public class MyPerScenarioSteps {
 
         @BeforeScenario
         public void beforeScenario() throws Exception {
-            orderedEvents.append("MyBeforeAfterScenarioSteps.beforeScenario()\n");
+            orderedEvents.append("beforeScenario()\n");
         }
 
-        @BeforeScenario
+        @AfterScenario
         public void afterScenario() throws Exception {
-            orderedEvents.append("MyBeforeAfterScenarioSteps.afterScenario()\n");
+            orderedEvents.append("afterScenario()\n");
         }
     }
 
@@ -140,23 +143,23 @@ public class BadlyInitializingWebDriverProviderTest {
 
         @Given("a test")
         public void aTest() {
-            orderedEvents.append("MySteps.aTest()\n");
+            orderedEvents.append("aTest()\n");
         }
 
         @When("a test is executed")
         public void aTestIsExecuted() {
-            orderedEvents.append("MySteps.aTestIsExecuted()\n");
+            orderedEvents.append("aTestIsExecuted()\n");
         }
 
         @When("a test fails")
         public void aTestFails() {
-            orderedEvents.append("MySteps.aTestFails()\n");
+            orderedEvents.append("aTestFails()\n");
             throw new RuntimeException("Test failed");
         }
 
         @Then("a tester is a happy hopper")
         public void aTesterIsHappy() {
-            orderedEvents.append("MySteps.aTesterIsHappy()\n");
+            orderedEvents.append("aTesterIsHappy()\n");
         }
     }
 

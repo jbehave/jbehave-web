@@ -19,12 +19,12 @@ public class RemoteWebDriverProviderTest {
 
     @Test(expected = RunningStoriesFailed.class)
     public void shouldFailUponInitialiseWhenRunningWithPerStoriesWebDriverSteps() throws Throwable {
-        runStory(new MyPerStoriesWebDriverSteps(new RemoteWebDriverProvider()));
+        runStory(new MyPerStoriesWebDriverSteps(new RemoteWebDriverProvider())); // will fail because URL is not set
     }
 
     @Test(expected = RunningStoriesFailed.class)
     public void shouldFailUponInitialiseWhenRunningWithPerStoryWebDriverSteps() throws Throwable {
-        runStory(new MyPerStoryWebDriverSteps(new RemoteWebDriverProvider()));
+        runStory(new MyPerStoryWebDriverSteps(new RemoteWebDriverProvider())); // will fail because URL is not set
     }
 
     private void runStory(WebDriverSteps steps) {
