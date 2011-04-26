@@ -7,7 +7,7 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 
 /**
  * Provides WebDriver instances of given type, instantiating it using the
- * default constructor.
+ * default constructor.  If not type is specified, FirefoxDriver is used.
  */
 public class TypeWebDriverProvider extends DelegatingWebDriverProvider {
 
@@ -30,25 +30,12 @@ public class TypeWebDriverProvider extends DelegatingWebDriverProvider {
     }
 
     public void initialize() {
-
-        String profileName = System.getProperty("JBEHAVE_WEBDRIVER_FIREFOX_PROFILE");
-
-        if (profileName != null && type.getName().equals(FirefoxDriver.class.getName())) {
-
-            ProfilesIni allProfilesIni = new ProfilesIni();
-            FirefoxProfile profile = allProfilesIni.getProfile(profileName);
-            profile.setAcceptUntrustedCertificates(false);
-            delegate.set(new FirefoxDriver(profile));
-
-        } else {
-
-            try {
-                delegate.set(type.newInstance());
-            } catch (InstantiationException e) {
-                throw new UnsupportedOperationException(e);
-            } catch (IllegalAccessException e) {
-                throw new UnsupportedOperationException(e);
-            }
+        try {
+            delegate.set(type.newInstance());
+        } catch (InstantiationException e) {
+            throw new UnsupportedOperationException(e);
+        } catch (IllegalAccessException e) {
+            throw new UnsupportedOperationException(e);
         }
     }
 
