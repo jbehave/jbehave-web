@@ -15,10 +15,10 @@ import java.util.Set;
  */
 public abstract class WebDriverPage implements WebDriver {
 
-    private final WebDriverProvider driverProvider;
+    private final LazyWebDriver lazyWebDriver;
 
     public WebDriverPage(WebDriverProvider driverProvider) {
-        this.driverProvider = driverProvider;
+        this.lazyWebDriver = new LazyWebDriver(driverProvider);
     }
 
     public void get(String url) {
@@ -74,7 +74,7 @@ public abstract class WebDriverPage implements WebDriver {
     }
 
     protected WebDriver webDriver() {
-        return driverProvider.get();
+        return lazyWebDriver;
     }
 
 }

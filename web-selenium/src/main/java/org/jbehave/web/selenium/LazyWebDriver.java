@@ -7,6 +7,10 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Wraps a WebDriverProvider in a way that the provider's get() method is not invoked
+ * until the first method invocation.
+ */
 public class LazyWebDriver implements WebDriver {
 
     private WebDriverProvider wdp;
