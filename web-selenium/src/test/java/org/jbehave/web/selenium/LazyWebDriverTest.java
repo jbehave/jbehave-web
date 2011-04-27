@@ -1,13 +1,13 @@
 package org.jbehave.web.selenium;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.List;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -52,6 +52,7 @@ public class LazyWebDriverTest {
         when(wd.findElement(By.id("foo"))).thenReturn(webElement);
         assertEquals(webElement, lwd.findElement(By.id("foo")));
 
+        @SuppressWarnings("unchecked")
         List<WebElement> webElements = mock(List.class);
         when(wd.findElements(By.id("foo"))).thenReturn(webElements);
         assertEquals(webElements, lwd.findElements(By.id("foo")));

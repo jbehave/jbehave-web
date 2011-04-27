@@ -1,11 +1,11 @@
 package org.jbehave.web.selenium;
 
+import java.util.List;
+import java.util.Set;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * Abstract base class for pages that use the WebDriver API. It contains common
@@ -13,12 +13,12 @@ import java.util.Set;
  * href="http://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>
  * pattern.
  */
-public abstract class WebDriverPage implements WebDriver {
+public abstract class LazyWebDriverPage implements WebDriver {
 
-    private final WebDriverProvider driverProvider;
+    private final LazyWebDriver lazyWebDriver;
 
-    public WebDriverPage(WebDriverProvider driverProvider) {
-        this.driverProvider = driverProvider;
+    public LazyWebDriverPage(LazyWebDriver lazyWebDriver) {
+        this.lazyWebDriver = lazyWebDriver;
     }
 
     public void get(String url) {
@@ -74,7 +74,7 @@ public abstract class WebDriverPage implements WebDriver {
     }
 
     protected WebDriver webDriver() {
-        return driverProvider.get();
+        return lazyWebDriver;
     }
 
 }
