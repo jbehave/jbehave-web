@@ -15,66 +15,88 @@ import java.util.Set;
  */
 public abstract class WebDriverPage implements WebDriver {
 
-    private final LazyWebDriver lazyWebDriver;
+    private WebDriver webDriver;
+    private final WebDriverProvider driverProvider;
 
     public WebDriverPage(WebDriverProvider driverProvider) {
-        this.lazyWebDriver = new LazyWebDriver(driverProvider);
+        this.driverProvider = driverProvider;
+        this.webDriver = new LazyWebDriver(driverProvider);
     }
 
     public void get(String url) {
+        makeNonLazy();
         webDriver().get(url);
     }
 
     public String getCurrentUrl() {
+        makeNonLazy();
         return webDriver().getCurrentUrl();
     }
 
     public String getTitle() {
+        makeNonLazy();
         return webDriver().getTitle();
     }
 
     public List<WebElement> findElements(By by) {
+        makeNonLazy();
         return webDriver().findElements(by);
     }
 
     public WebElement findElement(By by) {
+        makeNonLazy();
         return webDriver().findElement(by);
     }
 
     public String getPageSource() {
+        makeNonLazy();
         return webDriver().getPageSource();
     }
 
     public void close() {
+        makeNonLazy();
         webDriver().close();
     }
 
     public void quit() {
+        makeNonLazy();
         webDriver().quit();
     }
 
     public Set<String> getWindowHandles() {
+        makeNonLazy();
         return webDriver().getWindowHandles();
     }
 
     public String getWindowHandle() {
+        makeNonLazy();
         return webDriver().getWindowHandle();
     }
 
     public TargetLocator switchTo() {
+        makeNonLazy();
         return webDriver().switchTo();
     }
 
     public Navigation navigate() {
+        makeNonLazy();
         return webDriver().navigate();
     }
 
     public Options manage() {
+        makeNonLazy();
         return webDriver().manage();
     }
 
+    private synchronized void makeNonLazy() {
+        if (webDriver instanceof LazyWebDriver) {
+            // No longer lazy, is castable to other interfaces from WebDriver-land.
+            webDriver = driverProvider.get();
+        }
+    }
+
     protected WebDriver webDriver() {
-        return lazyWebDriver;
+        return webDriver;
     }
 
 }

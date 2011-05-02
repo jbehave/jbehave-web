@@ -11,7 +11,11 @@ import org.jbehave.core.annotations.BeforeStory;
  */
 public class PerStoryWebDriverSteps extends WebDriverSteps {
 
+    private Long thread = Thread.currentThread().getId();
+
     public PerStoryWebDriverSteps(WebDriverProvider driverProvider) {
+
+
         super(driverProvider);
     }
 
