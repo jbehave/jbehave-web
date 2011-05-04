@@ -1,5 +1,7 @@
 package org.jbehave.web.selenium;
 
+import org.openqa.selenium.remote.DesiredCapabilities;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -7,8 +9,25 @@ import java.net.URL;
  *  Allows to connect to <a href="http://saucelabs.com/">Sauce Labs</a> to run 
  *  Selenium tests in the cloud.  Requires Sauce credentials, username and access key, which
  *  can be provided via system properties "SAUCE_USERNAME" and "SAUCE_ACCESS_KEY".
+ *
+ *  Firefox on Windows is the default browser choice. This is done via DesiredCapabilities
+ *  passed in through the constructor.  Like so -
+ *
+ *      DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+ *      desiredCapabilities.setVersion("3.6.");
+ *      desiredCapabilities.setPlatform(Platform.WINDOWS);
+ *      desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
+ *
  */
 public class SauceWebDriverProvider extends RemoteWebDriverProvider {
+
+    /**
+     *
+     * @param desiredCapabilities
+     */
+    public SauceWebDriverProvider(DesiredCapabilities desiredCapabilities) {
+        super(desiredCapabilities);
+    }
 
     public SauceWebDriverProvider() {
         super();
