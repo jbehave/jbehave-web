@@ -89,10 +89,8 @@ public abstract class WebDriverPage implements WebDriver {
     }
 
     private synchronized void makeNonLazy() {
-        if (webDriver instanceof LazyWebDriver) {
-            // No longer lazy, is castable to other interfaces from WebDriver-land.
-            webDriver = driverProvider.get();
-        }
+        // keep doing this per call as WebDriver instances changes per thread.
+        webDriver = driverProvider.get();
     }
 
     protected WebDriver webDriver() {
