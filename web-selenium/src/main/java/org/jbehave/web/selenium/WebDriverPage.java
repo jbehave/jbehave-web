@@ -88,7 +88,7 @@ public abstract class WebDriverPage implements WebDriver {
         return webDriver().manage();
     }
 
-    private synchronized void makeNonLazy() {
+    protected synchronized void makeNonLazy() {
         // keep doing this per call as WebDriver instances changes per thread.
         webDriver = driverProvider.get();
     }
