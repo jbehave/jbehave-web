@@ -36,7 +36,7 @@ public class WebDriverScreenshotOnFailure extends WebDriverSteps {
     public void afterScenarioFailure(UUIDExceptionWrapper uuidWrappedFailure) throws Exception {
         String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
         if ( driverProvider.saveScreenshotTo(screenshotPath) ) {
-            System.out.println("Screenshot has been saved to '" + screenshotPath +"'");
+            System.out.println("Screenshot has been saved to '" + screenshotPath +"' pertaining to " + getPageURL());
         } else {
             System.out.println(driverProvider.get().getClass().getName() + " does not support taking screenshots.");
         }
@@ -46,4 +46,11 @@ public class WebDriverScreenshotOnFailure extends WebDriverSteps {
         return MessageFormat.format(screenshotPathPattern, reporterBuilder.outputDirectory(), uuid);
     }
 
+    public String getPageURL() {
+        try {
+            return driverProvider.get().getCurrentUrl();
+        } catch (Exception e) {
+            return "URL unknown";
+        }
+    }
 }
