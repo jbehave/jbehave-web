@@ -33,7 +33,6 @@ public class RemoteWebDriverProviderTest {
         String storyPath = "/path/to/story";
         StoryLoader storyLoader = new StoryLoader() {
 
-            @Override
             public String loadStoryAsText(String storyPath) {
                 return story;
             }
