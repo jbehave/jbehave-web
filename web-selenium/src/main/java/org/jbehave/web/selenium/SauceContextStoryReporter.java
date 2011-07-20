@@ -29,6 +29,7 @@ public class SauceContextStoryReporter extends NullStoryReporter {
     private ThreadLocal<String> storyName = new ThreadLocal<String>();
     private ThreadLocal<SessionId> sessionIds = new ThreadLocal<SessionId>();
     private ThreadLocal<Boolean> passed = new ThreadLocal<Boolean>();
+    private static final Pattern SAUCE_LABS_VIDEO_URL_PATTERN = Pattern.compile("http.*\\.flv");
 
     public SauceContextStoryReporter(WebDriverProvider webDriverProvider) {
         this.webDriverProvider = webDriverProvider;
@@ -61,7 +62,7 @@ public class SauceContextStoryReporter extends NullStoryReporter {
         }
 
         try {
-            String payload = "{\"tags\":[" + getJobTags() + "], \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}";
+            String payload = "{\"tags\":[" + getJobTags() + "], " + getBuildId() + " \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}";
 
             URL url = new URL("http://saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.toString());
 
@@ -82,23 +83,38 @@ public class SauceContextStoryReporter extends NullStoryReporter {
             int rc = connection.getResponseCode();
             if (rc == 200) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String s;
+                String responseLineFromSauceLabs;
 
-                // This comes back from Saucelabs:
-                // "video_url": "http://saucelabs.com/jobs/3bd32831ec0d91c423552330b332a59c4/video.flv",
-                Pattern p = Pattern.compile("http.*\\.flv");
-                while ((s = reader.readLine()) != null) {
-                    Matcher matcher = p.matcher(s);
-                    while (matcher.find()) {
-                        System.out.println("Saucelabs Video: " + matcher.group());
-                        break;
-                    }
+                while ((responseLineFromSauceLabs = reader.readLine()) != null) {
+                    processSauceLabsResponseLine(responseLineFromSauceLabs);
                 }
             }
         } catch (IOException e) {
             System.err.println("Error updating Saucelabs job info: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * By deault, this prints a URL to the Job on SauceLabs.
+     * Refer https://saucelabs.com/docs/sauce-ondemand
+     * @param responseLineFromSauceLabs a line from the response
+     */
+    protected void processSauceLabsResponseLine(String responseLineFromSauceLabs) {
+        // This comes back from Saucelabs:
+        // "video_url": "http://saucelabs.com/jobs/3bd32831ec0d91c423552330b332a59c4/video.flv",
+        Matcher matcher = SAUCE_LABS_VIDEO_URL_PATTERN.matcher(responseLineFromSauceLabs);
+        while (matcher.find()) {
+            System.out.println("Saucelabs Job URL for " + (passed.get() ? "passing" : "failing") + " '" + storyName.get() + "' : " + matcher.group().replace("/video.flv", ""));
+        }
+    }
+
+    private String getBuildId() {
+        String buildId =  System.getProperty("BUILD-ID");
+        if (buildId != null) {
+            return " \"build\":\"" + buildId + "\",";
+        }
+        return "";
     }
 
     /**
