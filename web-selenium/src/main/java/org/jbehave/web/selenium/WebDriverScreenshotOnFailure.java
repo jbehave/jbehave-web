@@ -1,8 +1,8 @@
 package org.jbehave.web.selenium;
 
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.UUID;
-
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterScenario.Outcome;
 import org.jbehave.core.failures.UUIDExceptionWrapper;
@@ -35,10 +35,24 @@ public class WebDriverScreenshotOnFailure extends WebDriverSteps {
     @AfterScenario(uponOutcome = Outcome.FAILURE)
     public void afterScenarioFailure(UUIDExceptionWrapper uuidWrappedFailure) throws Exception {
         String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
-        if ( driverProvider.saveScreenshotTo(screenshotPath) ) {
-            System.out.println("Screenshot of page '"+driverProvider.get().getCurrentUrl()+"' has been saved to '" + screenshotPath +"'");
+        String currentUrl = null;
+        try {
+            currentUrl = driverProvider.get().getCurrentUrl();
+        } catch (Exception e) {
+            currentUrl = "Unable to get current URL from WebDriver; " + e.getMessage();
+            return;
+        }
+        boolean savedIt = false;
+        try {
+            savedIt = driverProvider.saveScreenshotTo(screenshotPath);
+        } catch (Exception e) {
+            System.err.println("Screenshot of page '" + currentUrl + "' has **NOT** been saved to '" + screenshotPath +"' because error '" + e.getMessage() + "' encountered");
+            return;
+        }
+        if (savedIt) {
+            System.out.println("Screenshot of page '" + currentUrl + "' has been saved to '" + screenshotPath +"' with " + new File(screenshotPath).length() + " bytes");
         } else {
-            System.out.println(driverProvider.get().getClass().getName() + " does not support taking screenshots.");
+            System.err.println("Screenshot of page '" + currentUrl + "' has **NOT** been saved as '" + driverProvider.get().getClass().getName() + "' does is not compatible with taking screenshots");
         }
     }
 
