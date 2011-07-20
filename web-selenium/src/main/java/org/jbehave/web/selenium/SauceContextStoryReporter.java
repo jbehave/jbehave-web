@@ -54,6 +54,16 @@ public class SauceContextStoryReporter extends NullStoryReporter {
     @Override
     public void afterStory(boolean givenStory) {
 
+        String storyName = this.storyName.get();
+        if (storyName.equals("BeforeStories")
+                || storyName.equals("AfterStories")
+                || storyName.equals("BeforeStory")
+                || storyName.equals("AfterStory")
+                || storyName.equals("BeforeScenario")
+                || storyName.equals("AfterScenario")) {
+            return;
+        }
+
         SessionId sessionId = sessionIds.get();
 
         if (sessionId == null ) {
