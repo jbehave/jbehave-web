@@ -9,16 +9,21 @@
   <packaging>jar</packaging>
   <name>JBehave Web Selenium</name>
   <description>Selenium and WebDriver API bindings for JBehave</description>
+
+  <properties>
+    <selenium.version>2.2.0</selenium.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>2.1.0</version>
+      <version>${selenium.version}</version>
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-support</artifactId>
-      <version>2.1.0</version>
+      <version>${selenium.version}</version>
     </dependency>
     <!-- Note: 2.0b1 is the latest release of selenium-android-client in Maven Central
          As it's optional it will not be included in the transitive dependencies
@@ -27,7 +32,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-android-driver</artifactId>
-      <version>2.1.0</version>
+      <version>${selenium.version}</version>
       <optional>true</optional>
     </dependency>
   </dependencies>
