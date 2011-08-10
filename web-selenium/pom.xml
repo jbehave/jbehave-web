@@ -12,7 +12,7 @@
   <description>Selenium and WebDriver API bindings for JBehave</description>
 
   <properties>
-    <selenium.version>2.2.0</selenium.version>
+    <selenium.version>2.3.1</selenium.version>
   </properties>
 
   <dependencies>
