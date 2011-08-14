@@ -8,8 +8,8 @@
     <version>3.4-SNAPSHOT</version>
   </parent>
   <artifactId>jbehave-web-flash-webdriver</artifactId>
-  <name>JBehave Web Flash Stories</name>
-  <description>Stories verifying behaviour of Flash app using the WebDriver API of Selenium 2.</description>
+  <name>JBehave Web Flash WebDriver Stories</name>
+  <description>Stories verifying behaviour of a Flash app using the WebDriver API of Selenium 2.</description>
   <packaging>jar</packaging>
   <properties>
     <jbehave.webapp.name>flash-colours</jbehave.webapp.name>
