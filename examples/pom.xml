@@ -42,5 +42,14 @@
         <module>trader-runner-webdriver</module>
       </modules>
     </profile>
+    <profile>
+      <id>flash</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <modules>
+        <module>flash-webdriver</module>
+      </modules>
+    </profile>
   </profiles>
 </project>

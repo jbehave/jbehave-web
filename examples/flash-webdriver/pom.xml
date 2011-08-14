@@ -7,12 +7,12 @@
     <artifactId>jbehave-web-examples</artifactId>
     <version>3.4-SNAPSHOT</version>
   </parent>
-  <artifactId>jbehave-web-flex</artifactId>
-  <name>JBehave Web Flex Stories</name>
-  <description>Stories verifying behaviour of Flex app using the WebDriver API of Selenium 2.</description>
+  <artifactId>jbehave-web-flash-webdriver</artifactId>
+  <name>JBehave Web Flash Stories</name>
+  <description>Stories verifying behaviour of Flash app using the WebDriver API of Selenium 2.</description>
   <packaging>jar</packaging>
   <properties>
-    <jbehave.webapp.name>flex-colours</jbehave.webapp.name>
+    <jbehave.webapp.name>flash-colours</jbehave.webapp.name>
     <selenium.version>2.2.0</selenium.version>
   </properties>
   <dependencies>
@@ -115,7 +115,7 @@
         <artifactId>jetty-maven-plugin</artifactId>
         <configuration>
           <webAppConfig>
-            <contextPath>/flex</contextPath>
+            <contextPath>/flash</contextPath>
           </webAppConfig>
         </configuration>
         <executions>
@@ -123,7 +123,7 @@
             <id>start-jetty</id>
             <phase>pre-integration-test</phase>
             <goals>
-              <goal>run-war</goal>
+              <goal>run</goal>
             </goals>
             <configuration>
               <scanIntervalSeconds>0</scanIntervalSeconds>
