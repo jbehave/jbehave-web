@@ -17,47 +17,9 @@
       <artifactId>jbehave-web-selenium</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.jbehave</groupId>
-      <artifactId>jbehave-core</artifactId>
-      <version>${jbehave.core.version}</version>
-      <classifier>resources</classifier>
-      <type>zip</type>
-    </dependency>
-    <dependency>
-      <groupId>org.jbehave.site</groupId>
-      <artifactId>jbehave-site-resources</artifactId>
-      <version>${jbehave.site.version}</version>
-      <type>zip</type>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-webapp</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/</outputDirectory>
-              <stripVersion>true</stripVersion>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.jbehave.web.examples</groupId>
-                  <artifactId>jbehave-web-trader-runner</artifactId>
-                  <version>${project.version}</version>
-                  <type>war</type>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -94,15 +56,7 @@
       <plugin>
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-maven-plugin</artifactId>
-        <version>${jbehave.core.version}</version>
         <executions>
-          <execution>
-            <id>unpack-view-resources</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>unpack-view-resources</goal>
-            </goals>
-          </execution>
           <execution>
             <id>run-stories</id>
             <phase>integration-test</phase>
