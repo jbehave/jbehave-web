@@ -11,27 +11,36 @@ import org.openqa.selenium.WebElement;
 
 import static org.apache.commons.lang.StringUtils.join;
 
+/**
+ * <p>A {@link WebDriver} decorator that allows interaction with a Flash object via Javascript calls.
+ * The WebDriver must be an instance of {@link JavascriptExecutor}.</p>
+ * 
+ * <p>The Flash object is found via the object ID provided.</p>
+ */
 public class FlashDriver implements WebDriver {
 
-    private WebDriver delegate;
-    private String flashObjectId;
+    protected WebDriver delegate;
+    protected String flashObjectId;
 
-    public FlashDriver(WebDriver driver, String flashObjectId) {
-        this.delegate = driver;
+    public FlashDriver(WebDriver delegate, String flashObjectId) {
+        this.delegate = delegate;
         this.flashObjectId = flashObjectId;
     }
 
     public Object call(String functionName, String... args) {
         if (delegate instanceof JavascriptExecutor) {
-            WebElement flashObject = delegate.findElement(By.id(flashObjectId));
+            WebElement flashObject = findFlashObject(flashObjectId);
             String script = formatJavascript(functionName, args);
-            Object object = ((JavascriptExecutor) delegate).executeScript(script, flashObject);
-            return object;
+            return ((JavascriptExecutor) delegate).executeScript(script, flashObject);
         }
-        throw new RuntimeException("WebDriver not Javascript enabled: " + delegate);
+        throw new JavascriptNotSupported(delegate);
     }
 
-    private String formatJavascript(String functionName, String... args) {
+    protected WebElement findFlashObject(String flashObjectId) {
+        return delegate.findElement(By.id(flashObjectId));
+    }
+
+    protected String formatJavascript(String functionName, String... args) {
         List<String> quotedArgs = new ArrayList<String>();
         for (String arg : args) {
             quotedArgs.add("'" + arg + "'");
@@ -39,20 +48,9 @@ public class FlashDriver implements WebDriver {
         return "return arguments[0]." + functionName + "(" + join(quotedArgs, ",") + ");";
     }
 
+    // Utility methods that map to SWF function calls
     public void click() {
         call("click");
-    }
-
-    public Object getVariable(String variableName) {
-        return call("GetVariable", variableName);
-    }
-
-    public void gotoFrame(int frameNumber) {
-        call("GotoFrame", Integer.toString(frameNumber));
-    }
-
-    public void pan(int x, int y, int mode) {
-        call("Pan", Integer.toString(x), Integer.toString(y), Integer.toString(mode));
     }
 
     public int percentLoaded() {
@@ -110,5 +108,14 @@ public class FlashDriver implements WebDriver {
 
     public Options manage() {
         return delegate.manage();
+    }
+    
+    @SuppressWarnings("serial")
+    public static class JavascriptNotSupported extends RuntimeException {
+
+        public JavascriptNotSupported(WebDriver delegate) {
+            super("Javascript not supported by WebDriver "+delegate);
+        }
+        
     }
 }
