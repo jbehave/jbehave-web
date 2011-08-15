@@ -54,7 +54,7 @@ public class FlashDriver implements WebDriver {
     }
 
     public int percentLoaded() {
-        return new Integer(call("PercentLoaded").toString()).intValue();
+        return Integer.parseInt(call("PercentLoaded").toString());
     }
 
     // WebDriver methods

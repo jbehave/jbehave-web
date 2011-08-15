@@ -1,8 +1,5 @@
-package org.jbehave.web.examples.flash.pages;
+package org.jbehave.web.selenium;
 
-import org.jbehave.web.selenium.FlashDriver;
-import org.jbehave.web.selenium.WebDriverPage;
-import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 
 public abstract class FlashPage extends WebDriverPage {
@@ -16,7 +13,16 @@ public abstract class FlashPage extends WebDriverPage {
         if ( driver instanceof FlashDriver ){
             return (FlashDriver)driver;
         }
-        throw new RuntimeException("WebDriver not Flash enabled" + driver);
+        throw new FlashNotSupported(driver);
+    }
+
+    @SuppressWarnings("serial")
+    public static class FlashNotSupported extends RuntimeException {
+
+        public FlashNotSupported(WebDriver driver) {
+            super("Flash not supported by WebDriver "+driver);
+        }
+        
     }
 
 }

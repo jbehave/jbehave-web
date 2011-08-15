@@ -30,7 +30,6 @@ public class FlashStories extends JUnitStories {
 
     @Override
     public Configuration configuration() {
-        driverProvider.initialize();
         Class<? extends Embeddable> embeddableClass = this.getClass();
         return new SeleniumConfiguration()
                 .useWebDriverProvider(driverProvider)
@@ -42,7 +41,7 @@ public class FlashStories extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new ColorSteps(colorsPage));
+        return new InstanceStepsFactory(configuration(), new ColorSteps(driverProvider, colorsPage));
     }
 
     @Override

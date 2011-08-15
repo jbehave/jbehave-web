@@ -46,34 +46,6 @@
               </artifactItems>
             </configuration>
           </execution>
-          <execution>
-            <id>unpack-report-resources</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>true</overWriteSnapshots>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.jbehave.site</groupId>
-                  <artifactId>jbehave-site-resources</artifactId>
-                  <version>3.0</version>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/jbehave-reports/view</outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.jbehave</groupId>
-                  <artifactId>jbehave-core</artifactId>
-                  <version>${jbehave.core.version}</version>
-                  <classifier>resources</classifier>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/jbehave-reports/view</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -139,7 +111,6 @@
       <plugin>
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-maven-plugin</artifactId>
-        <version>${jbehave.core.version}</version>
         <executions>
           <execution>
             <id>run-stories</id>

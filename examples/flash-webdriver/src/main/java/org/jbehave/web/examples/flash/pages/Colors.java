@@ -2,6 +2,7 @@ package org.jbehave.web.examples.flash.pages;
 
 import java.util.concurrent.TimeUnit;
 
+import org.jbehave.web.selenium.FlashPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 
 public class Colors extends FlashPage {

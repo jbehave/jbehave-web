@@ -11,35 +11,11 @@
   <name>JBehave Web Flash WebDriver Stories</name>
   <description>Stories verifying behaviour of a Flash app using the WebDriver API of Selenium 2.</description>
   <packaging>jar</packaging>
-  <properties>
-    <jbehave.webapp.name>flash-colours</jbehave.webapp.name>
-    <selenium.version>2.2.0</selenium.version>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-selenium</artifactId>
       <version>${project.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-java</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-support</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>${selenium.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-support</artifactId>
-      <version>${selenium.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>
@@ -76,34 +52,6 @@
                   <artifactId>jbehave-web-trader-runner</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-          <execution>
-            <id>unpack-report-resources</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>true</overWriteSnapshots>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.jbehave.site</groupId>
-                  <artifactId>jbehave-site-resources</artifactId>
-                  <version>3.0</version>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/jbehave-reports/view</outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.jbehave</groupId>
-                  <artifactId>jbehave-core</artifactId>
-                  <version>${jbehave.core.version}</version>
-                  <classifier>resources</classifier>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/jbehave-reports/view</outputDirectory>
                 </artifactItem>
               </artifactItems>
             </configuration>
