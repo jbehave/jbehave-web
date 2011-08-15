@@ -9,7 +9,8 @@ public abstract class FlashPage extends WebDriverPage {
     }    
 
     protected FlashDriver flashDriver() {
-        WebDriver driver = this.webDriver();
+        makeNonLazy();
+        WebDriver driver = webDriver();
         if ( driver instanceof FlashDriver ){
             return (FlashDriver)driver;
         }
