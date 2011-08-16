@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jbehave.web</groupId>
     <artifactId>jbehave-web</artifactId>
-    <version>3.4-SNAPSHOT</version>
+    <version>3.4-beta-1</version>
   </parent>
   <artifactId>jbehave-web-queue</artifactId>
   <packaging>jar</packaging>
