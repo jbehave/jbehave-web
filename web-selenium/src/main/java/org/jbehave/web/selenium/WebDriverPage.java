@@ -96,26 +96,31 @@ public abstract class WebDriverPage implements WebDriver, HasInputDevices, Javas
     // From HasInputDevices
 
     public Keyboard getKeyboard() {
+        makeNonLazy();
         return ((HasInputDevices) webDriver()).getKeyboard();
     }
 
     public Mouse getMouse() {
+        makeNonLazy();
         return ((HasInputDevices) webDriver()).getMouse();
     }
 
     // From JavascriptExecutor
 
     public Object executeScript(String s, Object... args) {
+        makeNonLazy();
         return ((JavascriptExecutor) webDriver()).executeScript(s, args);
     }
 
     public Object executeAsyncScript(String s, Object... args) {
+        makeNonLazy();
         return ((JavascriptExecutor) webDriver()).executeAsyncScript(s, args);
     }
 
     // From HasCapabilities
 
     public Capabilities getCapabilities() {
+        makeNonLazy();
         return ((HasCapabilities) webDriver()).getCapabilities();
     }
 
