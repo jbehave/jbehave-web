@@ -1,11 +1,16 @@
 package org.jbehave.web.selenium;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import java.util.List;
 import java.util.Set;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.HasCapabilities;
+import org.openqa.selenium.HasInputDevices;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keyboard;
+import org.openqa.selenium.Mouse;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * Abstract base class for pages that use the WebDriver API. It contains common
@@ -13,7 +18,7 @@ import java.util.Set;
  * href="http://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>
  * pattern.
  */
-public abstract class WebDriverPage implements WebDriver {
+public abstract class WebDriverPage implements WebDriver, HasInputDevices, JavascriptExecutor, HasCapabilities {
 
     private WebDriver webDriver;
     private final WebDriverProvider driverProvider;
@@ -86,6 +91,32 @@ public abstract class WebDriverPage implements WebDriver {
     public Options manage() {
         makeNonLazy();
         return webDriver().manage();
+    }
+
+    // From HasInputDevices
+
+    public Keyboard getKeyboard() {
+        return ((HasInputDevices) webDriver()).getKeyboard();
+    }
+
+    public Mouse getMouse() {
+        return ((HasInputDevices) webDriver()).getMouse();
+    }
+
+    // From JavascriptExecutor
+
+    public Object executeScript(String s, Object... args) {
+        return ((JavascriptExecutor) webDriver()).executeScript(s, args);
+    }
+
+    public Object executeAsyncScript(String s, Object... args) {
+        return ((JavascriptExecutor) webDriver()).executeAsyncScript(s, args);
+    }
+
+    // From HasCapabilities
+
+    public Capabilities getCapabilities() {
+        return ((HasCapabilities) webDriver()).getCapabilities();
     }
 
     protected synchronized void makeNonLazy() {
