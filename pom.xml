@@ -22,7 +22,7 @@
   </modules>
 
   <properties>
-    <jbehave.core.version>3.5-beta-2</jbehave.core.version>
+    <jbehave.core.version>3.5-SNAPSHOT</jbehave.core.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
     <jdk.version>1.5</jdk.version>
