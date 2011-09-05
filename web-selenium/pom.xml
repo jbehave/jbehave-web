@@ -31,5 +31,11 @@
       <version>${selenium.version}</version>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium.fluent</groupId>
+      <artifactId>fluent-selenium</artifactId>
+      <version>1.0-beta-1</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>
