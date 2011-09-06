@@ -4,9 +4,9 @@ import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeScenario;
 
 /**
- * Steps implementation that can be used in WebDriver-based stories. It provides
- * annotated methods to initialise and quit WebDriver before and after
- * scenarios.
+ * Steps implementation that can be used before and after lifecycle in
+ * WebDriver-based stories. It provides annotated methods to initialise
+ * WebDriver before each scenario and quit WebDriver after each scenario.
  * 
  * @author Paul Hammant
  */

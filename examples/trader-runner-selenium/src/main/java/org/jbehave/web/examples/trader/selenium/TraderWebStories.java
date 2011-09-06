@@ -13,10 +13,12 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.SilentStepMonitor;
 import org.jbehave.web.examples.trader.selenium.pages.Pages;
 import org.jbehave.web.examples.trader.selenium.steps.TraderWebSteps;
+import org.jbehave.web.selenium.PerStorySeleniumSteps;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumScreenshotOnFailure;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
+import org.jbehave.web.selenium.SeleniumSteps;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.condition.ConditionRunner;
@@ -33,6 +35,7 @@ public class TraderWebStories extends JUnitStories {
     private Selenium selenium = SeleniumConfiguration.defaultSelenium();
     private ConditionRunner conditionRunner = SeleniumConfiguration.defaultConditionRunner(selenium);
     private Pages pages = new Pages(selenium, conditionRunner);
+    private SeleniumSteps lifecycleSteps = new PerStorySeleniumSteps(selenium);
     private SeleniumContext seleniumContext = new SeleniumContext();
 
     @Override
@@ -52,7 +55,8 @@ public class TraderWebStories extends JUnitStories {
     @Override
     public InjectableStepsFactory stepsFactory() {
         return new InstanceStepsFactory(configuration(),
-                new TraderWebSteps(selenium, pages),
+                new TraderWebSteps(pages),
+                lifecycleSteps,
                 new SeleniumScreenshotOnFailure(selenium));
     }
     
