@@ -6,11 +6,15 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.web.examples.trader.selenium.pages.Pages;
+import org.jbehave.web.selenium.PerStorySeleniumSteps;
 
-public class TraderWebSteps {
+import com.thoughtworks.selenium.Selenium;
+
+public class TraderWebSteps extends PerStorySeleniumSteps {
     private final Pages pages;
 
-    public TraderWebSteps(Pages pages) {
+    public TraderWebSteps(Selenium selenium, Pages pages) {
+        super(selenium);
         this.pages = pages;
     }
 
