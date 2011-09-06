@@ -4,19 +4,16 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.web.examples.flash.pages.Colors;
-import org.jbehave.web.selenium.PerStoriesWebDriverSteps;
-import org.jbehave.web.selenium.WebDriverProvider;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.hamcrest.Matchers.equalTo;
 
-public class ColorSteps extends PerStoriesWebDriverSteps {
+public class ColorSteps {
 
     private final Colors colorsPage;
 
-    public ColorSteps(WebDriverProvider driverProvider, Colors colorsPage) {
-        super(driverProvider);
+    public ColorSteps(Colors colorsPage) {
         this.colorsPage = colorsPage;
     }
 

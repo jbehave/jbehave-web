@@ -13,6 +13,7 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.web.examples.flash.pages.Colors;
 import org.jbehave.web.examples.flash.steps.ColorSteps;
 import org.jbehave.web.selenium.FlashWebDriverProvider;
+import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.WebDriverProvider;
 
@@ -41,7 +42,8 @@ public class FlashStories extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new ColorSteps(driverProvider, colorsPage));
+        return new InstanceStepsFactory(configuration(), new ColorSteps(colorsPage), new PerStoryWebDriverSteps(
+                driverProvider));
     }
 
     @Override
