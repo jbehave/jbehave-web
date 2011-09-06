@@ -24,9 +24,16 @@ public class PerStoryWebDriverStepsTest {
     private final StoryParser parser = new RegexStoryParser();
     private final StoryRunner runner = new StoryRunner();
     private final WebDriver driver = mock(WebDriver.class);
-    private final WebDriverProvider driverProvider = new DefaultWebDriverProvider() {
+    private final WebDriverProvider driverProvider = new WebDriverProvider() {
         public WebDriver get() {
             return driver;
+        }
+
+        public void initialize() {
+        }
+
+        public boolean saveScreenshotTo(String path) {
+            return false;
         }
     };
 

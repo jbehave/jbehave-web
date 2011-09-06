@@ -47,7 +47,7 @@ public class FlashDriverTest {
         FlashPage page = new FlashPage(provider) {
         };
         assertThat(page.flashDriver(), notNullValue());
-
+        provider.get().quit();
     }
 
     @Test(expected = FlashNotSupported.class)
