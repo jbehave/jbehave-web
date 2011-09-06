@@ -2,8 +2,6 @@ package org.jbehave.web.selenium;
 
 import java.util.Arrays;
 
-import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
@@ -18,18 +16,18 @@ import org.junit.Test;
 public class RemoteWebDriverProviderTest {
 
     @Test(expected = RunningStoriesFailed.class)
-    public void shouldFailUponInitialiseWhenRunningWithPerStoriesWebDriverSteps() throws Throwable {
-        runStory(new MyPerStoriesWebDriverSteps(new RemoteWebDriverProvider())); // will fail because URL is not set
+    public void shouldFailUponInitialiseWhenRunningWithPerStoriesSteps() throws Throwable {
+        runStory(new MyPerStoriesSteps(new RemoteWebDriverProvider())); // will fail because URL is not set
     }
 
     @Test(expected = RunningStoriesFailed.class)
-    public void shouldFailUponInitialiseWhenRunningWithPerStoryWebDriverSteps() throws Throwable {
-        runStory(new MyPerStoryWebDriverSteps(new RemoteWebDriverProvider())); // will fail because URL is not set
+    public void shouldFailUponInitialiseWhenRunningWithPerStorySteps() throws Throwable {
+        runStory(new MyPerStorySteps(new RemoteWebDriverProvider())); // will fail because URL is not set
     }
 
     private void runStory(WebDriverSteps steps) {
-        final String story = "Scenario: A simple web scenario\n" + "Given a test\n" + "When a test is executed\n"
-                + "Then a tester is a happy hopper";
+        final String story = "Scenario: A simple web scenario\n" 
+                           + "When a test is executed\n";
         String storyPath = "/path/to/story";
         StoryLoader storyLoader = new StoryLoader() {
 
@@ -48,52 +46,28 @@ public class RemoteWebDriverProviderTest {
         embedder.runStoriesAsPaths(Arrays.asList(storyPath));
     }
 
-    public class MyPerStoriesWebDriverSteps extends PerStoriesWebDriverSteps {
+    public class MyPerStoriesSteps extends PerStoriesWebDriverSteps {
 
-        public MyPerStoriesWebDriverSteps(WebDriverProvider driverProvider) {
+        public MyPerStoriesSteps(WebDriverProvider driverProvider) {
             super(driverProvider);
-        }
-
-        @Given("a test")
-        public void aTest() {
         }
 
         @When("a test is executed")
         public void aTestIsExecuted() {
         }
 
-        @When("a test fails")
-        public void aTestFails() {
-            throw new RuntimeException("Test failed");
-        }
-
-        @Then("a tester is a happy hopper")
-        public void aTesterIsHappy() {
-        }
     };
 
-    public class MyPerStoryWebDriverSteps extends PerStoryWebDriverSteps {
+    public class MyPerStorySteps extends PerStoryWebDriverSteps {
 
-        public MyPerStoryWebDriverSteps(WebDriverProvider driverProvider) {
+        public MyPerStorySteps(WebDriverProvider driverProvider) {
             super(driverProvider);
-        }
-
-        @Given("a test")
-        public void aTest() {
         }
 
         @When("a test is executed")
         public void aTestIsExecuted() {
         }
 
-        @When("a test fails")
-        public void aTestFails() {
-            throw new RuntimeException("Test failed");
-        }
-
-        @Then("a tester is a happy hopper")
-        public void aTesterIsHappy() {
-        }
     };
 
 }
