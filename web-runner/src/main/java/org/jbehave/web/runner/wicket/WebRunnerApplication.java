@@ -30,11 +30,11 @@ public class WebRunnerApplication extends WebApplication {
     @Override
     protected void init() {
         super.init();
-        addComponentInstantiationListener(new GuiceComponentInjector(this, modules()));
-        mountBookmarkablePage("/home", Home.class);
-        mountBookmarkablePage("/data/files", DataFiles.class);
-        mountBookmarkablePage("/steps/find", FindSteps.class);
-        mountBookmarkablePage("/story/run", RunStory.class);
+        getComponentInstantiationListeners().add(new GuiceComponentInjector(this, modules()));
+        mountPage("/home", Home.class);
+        mountPage("/data/files", DataFiles.class);
+        mountPage("/steps/find", FindSteps.class);
+        mountPage("/story/run", RunStory.class);
     }
 
     private Module[] modules() {

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebPage;
@@ -13,25 +12,26 @@ import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.resource.IStringResourceStream;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.resource.PackageResourceStream;
 import org.apache.wicket.velocity.markup.html.VelocityPanel;
 
+@SuppressWarnings("serial")
 public class Template extends WebPage {
 
     /**
      * A MultiLineLabel that uses no markup in the body so it can be rendered by
      * SyntaxHighlighter, driven by the class attribute.
      */
-    @SuppressWarnings("serial")
     public static class NoMarkupMultiLineLabel extends MultiLineLabel {
 
         public NoMarkupMultiLineLabel(String id, String label, String classAttribute) {
             super(id, label);
-            add(new AttributeModifier("class", true, new Model<String>(classAttribute)));
+            add(new AttributeModifier("class", new Model<String>(classAttribute)));
         }
 
         @Override
-        protected void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
+        public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
             String body = getDefaultModelObjectAsString();
             replaceComponentTagBody(markupStream, openTag, body);
         }
@@ -42,21 +42,20 @@ public class Template extends WebPage {
      * A VelocityPanel that escapes Html characters so it can be rendered by
      * SyntaxHighlighter, driven by the class attribute.
      */
-    @SuppressWarnings("serial")
     public static class HtmlEscapingVelocityPanel extends VelocityPanel {
 
-        private final IStringResourceStream templateResource;
+        private final PackageResourceStream templateResource;
 
         @SuppressWarnings("rawtypes")
         public HtmlEscapingVelocityPanel(String id, IModel<? extends Map> model,
-                IStringResourceStream templateResource, String classAttribute) {
+                PackageResourceStream packageResourceStream, String classAttribute) {
             super(id, model);
-            this.templateResource = templateResource;
-            add(new AttributeModifier("class", true, new Model<String>(classAttribute)));
+            this.templateResource = packageResourceStream;
+            add(new AttributeModifier("class", new Model<String>(classAttribute)));
         }
 
         @Override
-        protected IStringResourceStream getTemplateResource() {
+        protected PackageResourceStream getTemplateResource() {
             return templateResource;
         }
 

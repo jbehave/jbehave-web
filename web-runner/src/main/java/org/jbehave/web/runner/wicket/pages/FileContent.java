@@ -5,6 +5,7 @@ import java.io.File;
 import org.apache.commons.lang.StringUtils;
 import org.jbehave.web.io.ResourceFinder;
 
+@SuppressWarnings("serial")
 public class FileContent extends Template {
 
 	public FileContent(File file) {

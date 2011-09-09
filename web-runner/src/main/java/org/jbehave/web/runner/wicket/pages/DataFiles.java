@@ -29,6 +29,7 @@ import org.jbehave.web.runner.context.FileContext;
 
 import com.google.inject.Inject;
 
+@SuppressWarnings("serial")
 public class DataFiles extends Template {
 
     @Inject
@@ -46,7 +47,6 @@ public class DataFiles extends Template {
         add(new FileUploadForm("uploadForm"));
     }
 
-    @SuppressWarnings("serial")
     private class FileListForm extends Form<Void> {
         public FileListForm(String id, List<File> files) {
             super(id);
@@ -91,7 +91,6 @@ public class DataFiles extends Template {
         manager.delete(fileContext.getFiles());
     }
 
-    @SuppressWarnings("serial")
     public class FileContentContainer extends WebMarkupContainer {
 
         public FileContentContainer(String id, List<File> files) {
@@ -120,7 +119,6 @@ public class DataFiles extends Template {
 
     }
 
-    @SuppressWarnings("serial")
     private class FileUploadForm extends Form<Void> {
         private final Collection<FileUpload> uploads = new ArrayList<FileUpload>();
 
@@ -160,7 +158,6 @@ public class DataFiles extends Template {
      * Facade around Wicket's FileUpload backported to more web framework-neutral 
      * Commons FileUpload FileIem, which for some unclear reason was forked to Wicket.
      */
-    @SuppressWarnings("serial")
     public static class UploadFileItem implements FileItem {
 
         private FileUpload upload;

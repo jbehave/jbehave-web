@@ -11,7 +11,7 @@
 
   <properties>
     <packaging>jar</packaging>
-    <wicket.version>1.4.16</wicket.version>
+    <wicket.version>1.5.0</wicket.version>
     <guice.version>3.0</guice.version>
   </properties>
 
@@ -20,11 +20,6 @@
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-io</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.wicket</groupId>
-      <artifactId>wicket</artifactId>
-      <version>${wicket.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.wicket</groupId>
@@ -51,16 +46,6 @@
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-velocity</artifactId>
       <version>${wicket.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.4.2</version>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.14</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>

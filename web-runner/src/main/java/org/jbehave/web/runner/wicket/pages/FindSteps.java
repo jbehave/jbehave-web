@@ -25,6 +25,7 @@ import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
 
+@SuppressWarnings("serial")
 public class FindSteps extends Template {
 
     @Inject
@@ -41,7 +42,6 @@ public class FindSteps extends Template {
         stepdocContext.setStepsInstances(configuration.stepFinder().stepsInstances(this.steps));
     }
 
-    @SuppressWarnings("serial")
     public final class StepsForm extends Form<ValueMap> {
         public StepsForm(final String id) {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
@@ -55,7 +55,6 @@ public class FindSteps extends Template {
                     "stepsInstances.vm"), "brush: java"));
             add(new DropDownChoice<View>("viewSelect", Arrays.asList(View.values())) {
 
-                @Override
                 protected void onSelectionChanged(View newSelection) {
                     stepdocContext.setView(newSelection);
                     updatePanels();
@@ -69,7 +68,6 @@ public class FindSteps extends Template {
             });
             add(new DropDownChoice<Sorting>("sortingSelect", Arrays.asList(Sorting.values())) {
 
-                @Override
                 protected void onSelectionChanged(Sorting newSelection) {
                     stepdocContext.setSorting(newSelection);
                     switch (stepdocContext.getSorting()) {

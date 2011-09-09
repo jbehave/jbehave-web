@@ -28,6 +28,7 @@ import com.google.inject.Inject;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
+@SuppressWarnings("serial")
 public class RunStory extends Template {
 
     @Inject
@@ -46,7 +47,6 @@ public class RunStory extends Template {
         add(new StoryForm("storyForm"));
     }
 
-    @SuppressWarnings("serial")
     public final class StoryForm extends Form<ValueMap> {
         public StoryForm(final String id) {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
