@@ -56,6 +56,7 @@ public class FindStepsTest extends TemplateTest {
         // reset form
         formTester = tester.newFormTester("stepsForm");
         //TODO: following select causes NPE, but app works fine in interactive run
+        //https://issues.apache.org/jira/browse/WICKET-3977
         //formTester.select("sortingSelect", 1);
         // When
         formTester.submit("findButton");
