@@ -104,6 +104,7 @@ public class TraderWebStories extends JUnitStories {
     private Selenium selenium = SeleniumConfiguration.defaultSelenium();
     private ConditionRunner conditionRunner = SeleniumConfiguration.defaultConditionRunner(selenium);
     private Pages pages = new Pages(selenium, conditionRunner);
+    private SeleniumSteps lifecycleSteps = new PerStorySeleniumSteps(selenium);
     private SeleniumContext seleniumContext = new SeleniumContext();
 
     @Override
@@ -114,36 +115,20 @@ public class TraderWebStories extends JUnitStories {
             .useSeleniumContext(seleniumContext)
             .useStepMonitor(new SeleniumStepMonitor(selenium, seleniumContext, new SilentStepMonitor()))
             .useStoryLoader(new LoadFromClasspath(embeddableClass))
-            .useStoryReporterBuilder(new StoryReporterBuilder(){
-
-                    @Override
-                    public StoryReporter reporterFor(String storyPath, Format format) {
-                        if ( format == CONSOLE ){
-                            return new ConsoleOutput(){
-                                @Override
-                                public void beforeScenario(String title) {
-                                    seleniumContext.setCurrentScenario(title);
-                                    super.beforeScenario(title);
-                                }                                
-                            };
-                        } else { 
-                            return super.reporterFor(storyPath, format);
-                        }
-                    }
-                
-                }
-                .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+            .useStoryReporterBuilder(new StoryReporterBuilder()
+                .withCodeLocation(codeLocationFromClass(embeddableClass))
                 .withDefaultFormats()
                 .withFormats(CONSOLE, TXT, HTML, XML));
     }
 
     @Override
-    public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), new TraderWebSteps(pages), new FailingScenarioScreenshotCapture(selenium))
-                .createCandidateSteps();
+    public InjectableStepsFactory stepsFactory() {
+        return new InstanceStepsFactory(configuration(),
+                new TraderWebSteps(pages),
+                lifecycleSteps,
+                new SeleniumScreenshotOnFailure(selenium));
     }
     
-
     @Override
     protected List<String> storyPaths() {
         return new StoryFinder()
@@ -154,12 +139,6 @@ public class TraderWebStories extends JUnitStories {
 ]]>
 </script>
 
-<p>The <b>@BeforeStories</b> and <b>@AfterStories</b> annotations in
-the PerStoriesSeleniumSteps methods allow to start and stop the selenium
-server before and after stories are run. Users can of course override
-the default behaviour, but generally don't need to bother for most use
-cases. There are also a PerStory and PerScenario implementation.</p>
-
 <h3>Using WebDriver API</h3>
 
 <script type="syntaxhighlighter" class="brush: java">
@@ -167,9 +146,17 @@ cases. There are also a PerStory and PerScenario implementation.</p>
 public class TraderWebStories extends JUnitStories {
   
     private WebDriverProvider driverProvider = new PropertyWebDriverProvider();
+    private WebDriverSteps lifecycleSteps = new PerStoriesWebDriverSteps(driverProvider); // or PerStoryWebDriverSteps(driverProvider)
     private Pages pages = new Pages(driverProvider);
     private SeleniumContext context = new SeleniumContext();
     private ContextView contextView = new LocalFrameContextView().sized(500, 100);
+    
+    public TraderWebStories() {
+        // If configuring lifecycle per-stories, you need to ensure that you a same-thread executor
+        if ( lifecycleSteps instanceof PerStoriesWebDriverSteps ){
+            configuredEmbedder().useExecutorService(MoreExecutors.sameThreadExecutor());
+        }
+    }
 
     @Override
     public Configuration configuration() {
@@ -179,39 +166,19 @@ public class TraderWebStories extends JUnitStories {
                 .useWebDriverProvider(driverProvider)
                 .useStepMonitor(new SeleniumStepMonitor(contextView, context, new SilentStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(embeddableClass))
-                .useStoryReporterBuilder(new StoryReporterBuilder() {
-                            @Override
-                            public StoryReporter reporterFor(String storyPath, Format format) {
-                                if (format == IDE_CONSOLE) {
-                                    return new ConsoleOutput() {
-                                        @Override
-                                        public void beforeScenario(String scenarioTitle) {
-                                            context.setCurrentScenario(scenarioTitle);
-                                            super.beforeScenario(scenarioTitle);
-                                        }
-
-                                        @Override
-                                        public void afterStory(boolean givenStory) {
-                                            contextView.close();
-                                            super.afterStory(givenStory);
-                                        }
-                                    };
-                                } else {
-                                    return super.reporterFor(storyPath, format);
-                                }
-                            }
-
-                        }
-                    .withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+                .useStoryReporterBuilder(new StoryReporterBuilder()
+                    .withCodeLocation(codeLocationFromClass(embeddableClass))
                     .withDefaultFormats()
-                    .withFormats(IDE_CONSOLE, TXT, HTML, XML));
+                    .withFormats(CONSOLE, TXT, HTML, XML));
     }
 
     @Override
-    public List<CandidateSteps> candidateSteps() {
-        return new InstanceStepsFactory(configuration(), 
+    public InjectableStepsFactory stepsFactory() {
+        Configuration configuration = configuration();
+        return new InstanceStepsFactory(configuration, 
                 new TraderWebSteps(pages),
-                new FailingScenarioScreenshotCapture(driverProvider)).createCandidateSteps();
+                lifecycleSteps,
+                new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
     }
 
 
@@ -221,15 +188,42 @@ public class TraderWebStories extends JUnitStories {
                 .findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/*.story"), null);
     }
 
+    // This Embedder is used by Maven or Ant and it will override anything set in the constructor
+    public static class SameThreadEmbedder extends Embedder {
+        
+        public SameThreadEmbedder() {
+            useExecutorService(MoreExecutors.sameThreadExecutor());
+        }
+
+    }
+
 }
 ]]>
 </script>
 
-<p>The <b>@BeforeStories</b> and <b>@AfterStories</b> annotations in
-the PerStoriesWebDriverSteps methods allow to start and stop the WebDriver
-before and after stories are run. Users can of course override
-the default behaviour, but generally don't need to bother for most use
-cases. There are also a PerStory and PerScenario implementation.</p>
+<h2>Lifecycle Steps</h2>
+
+<p>JBehave integration with Selenium and WebDriver APIs aims to facilitate common tasks.  Amongst these, one of the most common is the management of the 
+lifecycle, e.g. starting and stopping the browser.</p>
+
+<p>JBehave provides three type of lifecycle management:</p>
+<ol>
+<li>per-stories: via the <a
+            href="javadoc/web-selenium/org/jbehave/web/selenium/PerStoriesSeleniumSteps.html">PerStoriesSeleniumSteps</a> or 
+            <a
+            href="javadoc/web-selenium/org/jbehave/web/selenium/PerStoriesWebDriverSteps.html">PerStoriesWebDriverSteps</a>.</li>
+<li>per-story: via the <a
+            href="javadoc/web-selenium/org/jbehave/web/selenium/PerStorySeleniumSteps.html">PerStorySeleniumSteps</a> or 
+            <a
+            href="javadoc/web-selenium/org/jbehave/web/selenium/PerStoryWebDriverSteps.html">PerStoryWebDriverSteps</a>.</li>
+<li>per-scenario: via the <a
+            href="javadoc/web-selenium/org/jbehave/web/selenium/PerScenarioSeleniumSteps.html">PerScenarioSeleniumSteps</a> or 
+            <a
+            href="javadoc/web-selenium/org/jbehave/web/selenium/PerScenarioWebDriverSteps.html">PerScenarioWebDriverSteps</a>.</li>
+</ol>
+
+<span class="followup">If you are using per-stories lifecycle, you must ensure that you are using a same-thread executor.  C.f. the trader-webdriver example on how to configure the 
+use of a same-thread executor.</span>
 
 <h2>Running Selenium-based tests in an automated way</h2>
 
