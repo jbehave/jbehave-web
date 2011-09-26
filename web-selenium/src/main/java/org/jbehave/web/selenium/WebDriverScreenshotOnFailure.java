@@ -35,24 +35,29 @@ public class WebDriverScreenshotOnFailure extends WebDriverSteps {
     @AfterScenario(uponOutcome = Outcome.FAILURE)
     public void afterScenarioFailure(UUIDExceptionWrapper uuidWrappedFailure) throws Exception {
         String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
-        String currentUrl = null;
+        String currentUrl = "[unknown page title]";
         try {
             currentUrl = driverProvider.get().getCurrentUrl();
         } catch (Exception e) {
-            currentUrl = "Unable to get current URL from WebDriver; " + e.getMessage();
-            return;
         }
         boolean savedIt = false;
         try {
             savedIt = driverProvider.saveScreenshotTo(screenshotPath);
         } catch (Exception e) {
-            System.err.println("Screenshot of page '" + currentUrl + "' has **NOT** been saved to '" + screenshotPath +"' because error '" + e.getMessage() + "' encountered");
-            return;
+            System.out.println("Screenshot of page '" + currentUrl + ". Will try again. Cause: " + e.getMessage());
+            // Try it again.  WebDriver (on SauceLabs at least?) has blank-page and zero length files issues.
+            try {
+                savedIt = driverProvider.saveScreenshotTo(screenshotPath);
+            } catch (Exception e1) {
+                System.err.println("Screenshot of page '" + currentUrl + "' has **NOT** been saved to '" + screenshotPath + "' because error '" + e.getMessage() + "' encountered. Stack trace follows:");
+                e.printStackTrace();
+                return;
+            }
         }
         if (savedIt) {
             System.out.println("Screenshot of page '" + currentUrl + "' has been saved to '" + screenshotPath +"' with " + new File(screenshotPath).length() + " bytes");
         } else {
-            System.err.println("Screenshot of page '" + currentUrl + "' has **NOT** been saved as '" + driverProvider.get().getClass().getName() + "' does is not compatible with taking screenshots");
+            System.err.println("Screenshot of page '" + currentUrl + "' has **NOT** been saved. If there is no error, perhaps the WebDriver type you are using is not compatible with taking screenshots");
         }
     }
 
