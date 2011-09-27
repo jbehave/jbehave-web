@@ -40,11 +40,11 @@ public class SauceLabsContextViewTest {
         slcv.show("Scenario1", "Step1");
         slcv.show("Scenario1", "Step2");
         slcv.show("Scenario2", "Step1");
-        assertThat(script.toString(), Matchers.equalTo("sauce:context:Scenario1" +
-                "sauce:context:Step1" +
-                "sauce:context:Step2" +
-                "sauce:context:Scenario2" +
-                "sauce:context:Step1"));
+        assertThat(script.toString(), Matchers.equalTo("sauce:context=Scenario1" +
+                "sauce:context=Step1" +
+                "sauce:context=Step2" +
+                "sauce:context=Scenario2" +
+                "sauce:context=Step1"));
     }
 
     @Test
@@ -57,6 +57,6 @@ public class SauceLabsContextViewTest {
     @Test
     public void closingMessageShouldBePassedToSauceLabsUsingTheirEncoding() throws Exception {
         slcv.close();
-        assertThat(script.toString(), Matchers.equalTo("sauce:context:JBehave closing ContextView"));
+        assertThat(script.toString(), Matchers.equalTo("sauce:context=JBehave closing ContextView"));
     }
 }

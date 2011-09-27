@@ -22,10 +22,10 @@ public class SauceLabsContextView implements ContextView {
         try {
             JavascriptExecutor je = (JavascriptExecutor) webDriverProvider.get();
             if (!scenario.equals(currentScenario.get())) {
-                je.executeScript("sauce:context:" + scenario);
+                je.executeScript("sauce:context=" + scenario);
                 currentScenario.set(scenario);
             }
-            je.executeScript("sauce:context:" + step);
+            je.executeScript("sauce:context=" + step);
         } catch (Exception e) {
             // fail silently.
         }
