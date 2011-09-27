@@ -25,7 +25,7 @@ public class SeleniumStepMonitor extends DelegatingStepMonitor {
     }
 
     public void performing(String step, boolean dryRun) {
-        contextView.show("<b>" + context.getCurrentScenario() + "</b><br/>" + step);
+        contextView.show(context.getCurrentScenario(), step);
         super.performing(step, dryRun);
     }
 

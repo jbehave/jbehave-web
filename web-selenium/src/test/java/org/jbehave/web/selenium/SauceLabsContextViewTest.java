@@ -37,14 +37,20 @@ public class SauceLabsContextViewTest {
 
     @Test
     public void simpleMessageShouldBePassedToSauceLabsUsingTheirEncoding() throws Exception {
-        slcv.show("boo!");
-        assertThat(script.toString(), Matchers.equalTo("sauce:context:boo!"));
+        slcv.show("Scenario1", "Step1");
+        slcv.show("Scenario1", "Step2");
+        slcv.show("Scenario2", "Step1");
+        assertThat(script.toString(), Matchers.equalTo("sauce:context:Scenario1" +
+                "sauce:context:Step1" +
+                "sauce:context:Step2" +
+                "sauce:context:Scenario2" +
+                "sauce:context:Step1"));
     }
 
     @Test
     public void exceptionThrownBySauceLabsOrWebDriverShouldFailSilently() throws Exception {
         shouldBarf = true;
-        slcv.show("boo!");
+        slcv.show("boo!", "oops");
         assertThat(script.toString(), Matchers.equalTo(""));
     }
 

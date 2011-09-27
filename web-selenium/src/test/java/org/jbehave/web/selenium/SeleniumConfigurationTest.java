@@ -24,7 +24,7 @@ public class SeleniumConfigurationTest {
         SeleniumContext seleniumContext = new SeleniumContext();
         String currentScenario = "current scenario";
         String step = "a step";
-        String context = "<b>"+currentScenario + "</b><br/>" + step;
+        String context = currentScenario + "<br/>" + step;
         boolean dryRun = false;
         Configuration configuration = new SeleniumConfiguration().useSelenium(selenium).useSeleniumContext(
                 seleniumContext).useStepMonitor(new SeleniumStepMonitor(selenium, seleniumContext, stepMonitor));

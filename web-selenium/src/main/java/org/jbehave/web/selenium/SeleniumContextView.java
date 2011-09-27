@@ -14,8 +14,8 @@ public class SeleniumContextView implements ContextView {
         this.selenium = selenium;
     }
 
-    public void show(String message) {
-        selenium.setContext(message);
+    public void show(String scenario, String step) {
+        selenium.setContext(scenario + "<br/>" + step);
     }
 
     public void close() {

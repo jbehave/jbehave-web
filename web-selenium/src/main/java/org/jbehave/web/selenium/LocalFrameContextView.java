@@ -51,11 +51,11 @@ public class LocalFrameContextView implements ContextView {
         return this;
     }
 
-    public synchronized void show(String message) {
+    public synchronized void show(String scenario, String step) {
         if (frame == null) {
             initialize();
         }
-        label.setText("<html>" + message + "</html>");
+        label.setText("<html><b>" + scenario + "</b><br/>" + step + "</html>");
     }
 
     public synchronized void close() {

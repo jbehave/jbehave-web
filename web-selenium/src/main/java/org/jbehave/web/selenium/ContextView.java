@@ -8,12 +8,12 @@ package org.jbehave.web.selenium;
  */
 public interface ContextView {
 
-    void show(String message);
+    void show(String scenario, String step);
     
     void close();
     
     public static class NULL implements ContextView {
-        public void show(String message) {
+        public void show(String scenario, String step) {
         }
 
         public void close() {
