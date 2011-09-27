@@ -2,14 +2,18 @@ package org.jbehave.web.selenium;
 
 public class SeleniumContext {
 	
-	private String currentScenario = "";
+	private ThreadLocal<String> currentScenario = new ThreadLocal<String>();
 
-	public String getCurrentScenario() {
-		return currentScenario;
+    public SeleniumContext() {
+        System.out.println();
+    }
+
+    public String getCurrentScenario() {
+		return currentScenario.get();
 	}
 
 	public void setCurrentScenario(String currentScenario) {
-		this.currentScenario = currentScenario;
+		this.currentScenario.set(currentScenario);
 	}
 
 }

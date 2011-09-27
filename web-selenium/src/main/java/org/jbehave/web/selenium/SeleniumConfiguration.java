@@ -13,14 +13,19 @@ import com.thoughtworks.selenium.condition.JUnitConditionRunner;
  */
 public class SeleniumConfiguration extends Configuration {
 
-    private Selenium selenium = defaultSelenium();
-    private SeleniumContext seleniumContext = new SeleniumContext();
+    private Selenium selenium;
+    private SeleniumContext seleniumContext;
     private WebDriverProvider driverProvider;
 
     public SeleniumConfiguration() {
     }
 
     public Selenium selenium() {
+        synchronized (this) {
+            if (selenium == null) {
+                selenium = defaultSelenium();
+            }
+        }
         return selenium;
     }
 
@@ -30,6 +35,11 @@ public class SeleniumConfiguration extends Configuration {
     }
     
     public SeleniumContext seleniumContext() {
+        synchronized (this) {
+            if (seleniumContext == null) {
+                seleniumContext = new SeleniumContext();
+            }
+        }
         return seleniumContext;
     }
 
