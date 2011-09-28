@@ -26,7 +26,9 @@ public class SauceLabsContextViewTest {
         }
 
         public void initialize() {
+        }
 
+        public void end() {
         }
 
         public boolean saveScreenshotTo(String path) {
@@ -55,8 +57,8 @@ public class SauceLabsContextViewTest {
     }
 
     @Test
-    public void closingMessageShouldBePassedToSauceLabsUsingTheirEncoding() throws Exception {
+    public void closingMessageShouldNotBePassedToSauceLabs() throws Exception {
         slcv.close();
-        assertThat(script.toString(), Matchers.equalTo("sauce:context=JBehave closing ContextView"));
+        assertThat(script.toString(), Matchers.equalTo(""));
     }
 }

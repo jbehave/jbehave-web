@@ -22,7 +22,7 @@ import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceUser;
 /**
  * A {@link StoryReporter} that passes back to SauceLabs the executed job results.
  */
-public class SauceContextStoryReporter extends NullStoryReporter {
+public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
     private final WebDriverProvider webDriverProvider;
 
@@ -31,7 +31,8 @@ public class SauceContextStoryReporter extends NullStoryReporter {
     private ThreadLocal<Boolean> passed = new ThreadLocal<Boolean>();
     private static final Pattern SAUCE_LABS_VIDEO_URL_PATTERN = Pattern.compile("http.*\\.flv");
 
-    public SauceContextStoryReporter(WebDriverProvider webDriverProvider) {
+    public SauceContextStoryReporter(WebDriverProvider webDriverProvider, SeleniumContext seleniumContext) {
+        super(seleniumContext);
         this.webDriverProvider = webDriverProvider;
     }
 
@@ -44,6 +45,7 @@ public class SauceContextStoryReporter extends NullStoryReporter {
     @Override
     public void beforeScenario(String title) {
         sessionIds.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
+        super.beforeScenario(title);
     }
 
     @Override

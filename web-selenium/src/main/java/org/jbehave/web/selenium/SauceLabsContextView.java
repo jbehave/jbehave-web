@@ -11,7 +11,6 @@ public class SauceLabsContextView implements ContextView {
 
     public SauceLabsContextView(WebDriverProvider webDriverProvider) {
         this.webDriverProvider = webDriverProvider;
-        currentScenario.set("");
     }
 
     public void show(String scenario, String step) {
@@ -21,17 +20,15 @@ public class SauceLabsContextView implements ContextView {
     private void sendContextMessage(String scenario, String step) {
         try {
             JavascriptExecutor je = (JavascriptExecutor) webDriverProvider.get();
-            if (!scenario.equals(currentScenario.get())) {
+            if (scenario != null && !scenario.equals(currentScenario.get())) {
                 je.executeScript("sauce:context=" + scenario);
                 currentScenario.set(scenario);
             }
             je.executeScript("sauce:context=" + step);
         } catch (Exception e) {
-            // fail silently.
         }
     }
 
     public void close() {
-        sendContextMessage("", "JBehave closing ContextView");
     }
 }

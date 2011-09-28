@@ -28,6 +28,9 @@ public class LazyWebDriverTest {
             public void initialize() {
             }
 
+            public void end() {
+            }
+
             public boolean saveScreenshotTo(String path) {
                 return false;
             }

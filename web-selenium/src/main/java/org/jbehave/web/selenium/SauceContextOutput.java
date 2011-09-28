@@ -11,15 +11,17 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 public class SauceContextOutput extends Format {
 
     private final WebDriverProvider webDriverProvider;
+    private final SeleniumContext seleniumContext;
 
-    public SauceContextOutput(WebDriverProvider webDriverProvider) {
+    public SauceContextOutput(WebDriverProvider webDriverProvider, SeleniumContext seleniumContext) {
         super("SAUCE_CONTEXT");
         this.webDriverProvider = webDriverProvider;
+        this.seleniumContext = seleniumContext;
     }
 
     @Override
     public StoryReporter createStoryReporter(FilePrintStreamFactory filePrintStreamFactory,
             StoryReporterBuilder storyReporterBuilder) {
-        return new SauceContextStoryReporter(webDriverProvider);
+        return new SauceContextStoryReporter(webDriverProvider, seleniumContext);
     }
 }

@@ -34,6 +34,10 @@ public class WebDriverStepsTest {
         public void initialize() {
         }
 
+        public void end() {
+            driver.quit();
+        }
+
         public boolean saveScreenshotTo(String path) {
             return false;
         }

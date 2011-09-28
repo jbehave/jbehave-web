@@ -9,5 +9,6 @@ public interface WebDriverProvider {
     void initialize();
 
     boolean saveScreenshotTo(String path);
-    
+
+    void end();
 }

@@ -47,7 +47,10 @@ public class BadlyInitializingWebDriverProviderTest {
 
         public void initialize() {
             throw new UnsupportedOperationException("hello, this never makes it to the log");
+        }
 
+        public void end() {
+            throw new UnsupportedOperationException("hello, this never makes it to the log");
         }
 
         public boolean saveScreenshotTo(String path) {
