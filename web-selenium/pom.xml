@@ -11,7 +11,7 @@
   <description>Selenium and WebDriver API bindings for JBehave</description>
 
   <properties>
-    <selenium.version>2.4.0</selenium.version>
+    <selenium.version>2.7.0</selenium.version>
   </properties>
 
   <dependencies>
