@@ -26,7 +26,7 @@ public class GroovyGebFluentWebDriverPage extends FluentWebDriverPage {
         StackTraceElement[] stes = e.getStackTrace()
         for (int i = 0; i < stes.length; i++) {
             StackTraceElement ste = stes[i];
-            if (ste.getClassName().equals(BasePage.class.getName())
+            if (ste.getClassName().equals(GroovyGebFluentWebDriverPage.class.getName())
                     && ste.getMethodName().equals("methodMissing")) {
                 i++
                 def className = ste.getClassName()
