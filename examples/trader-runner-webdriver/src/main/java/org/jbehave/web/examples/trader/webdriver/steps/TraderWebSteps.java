@@ -85,9 +85,9 @@ public class TraderWebSteps {
         pages.runStory().run(story);
     }
     
-    @Then("run is successful")
-    public void runIsSuccessful(){        
-        pages.runStory().runIsSuccessful();
+    @Then("run is successful within timeout of $timeoutInSecs secs")
+    public void runIsSuccessful(int timeoutInSecs){        
+        pages.runStory().runIsSuccessful(timeoutInSecs);
     }
 
     @Then("search returns: \"$stepsOrMethods\"")

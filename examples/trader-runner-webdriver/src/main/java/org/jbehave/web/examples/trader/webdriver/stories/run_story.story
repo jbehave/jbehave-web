@@ -8,4 +8,4 @@ When user runs story "Given a threshold of 10.0
     Then the alert status should be OFF
     When the stock is traded at 11.0
     Then the alert status should be ON"
-Then run is successful
+Then run is successful within timeout of 10 secs
