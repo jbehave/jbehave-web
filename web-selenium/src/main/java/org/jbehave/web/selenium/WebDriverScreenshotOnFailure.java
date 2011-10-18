@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.UUID;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterScenario.Outcome;
+import org.jbehave.core.failures.PendingStepFound;
 import org.jbehave.core.failures.UUIDExceptionWrapper;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 
@@ -34,6 +35,9 @@ public class WebDriverScreenshotOnFailure extends WebDriverSteps {
 
     @AfterScenario(uponOutcome = Outcome.FAILURE)
     public void afterScenarioFailure(UUIDExceptionWrapper uuidWrappedFailure) throws Exception {
+        if (uuidWrappedFailure instanceof PendingStepFound) {
+            return; // we don't take screen-shots for Pending Steps
+        }
         String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
         String currentUrl = "[unknown page title]";
         try {
