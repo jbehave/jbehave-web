@@ -1,7 +1,6 @@
 package org.jbehave.web.selenium;
 
 import org.jbehave.core.model.Story;
-import org.jbehave.core.reporters.NullStoryReporter;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 
@@ -13,8 +12,10 @@ import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Map;
 
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceAccessKey;
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceUser;
@@ -29,11 +30,15 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
     private ThreadLocal<String> storyName = new ThreadLocal<String>();
     private ThreadLocal<SessionId> sessionIds = new ThreadLocal<SessionId>();
     private ThreadLocal<Boolean> passed = new ThreadLocal<Boolean>();
+
+    private Map<String, String> storyToJobIds = new HashMap<String, String>();
+
     private static final Pattern SAUCE_LABS_VIDEO_URL_PATTERN = Pattern.compile("http.*\\.flv");
 
-    public SauceContextStoryReporter(WebDriverProvider webDriverProvider, SeleniumContext seleniumContext) {
+    public SauceContextStoryReporter(WebDriverProvider webDriverProvider, SeleniumContext seleniumContext, java.util.Map<String, String> storyToSauceUrlMap) {
         super(seleniumContext);
         this.webDriverProvider = webDriverProvider;
+        this.storyToJobIds = storyToSauceUrlMap;
     }
 
     @Override
@@ -93,13 +98,12 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
             writer.close();
 
             int rc = connection.getResponseCode();
+            String jobUrl = null;
             if (rc == 200) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String responseLineFromSauceLabs;
+                jobUrl = readResponseLinesFromSauceLabToGetJobUrl(new BufferedReader(new InputStreamReader(connection.getInputStream())));
+                System.out.println("Saucelabs Job URL for " + (passed.get() ? "passing" : "failing") + " '" + storyName + "' : " + jobUrl);
+                storyToJobIds.put(storyName, jobUrl);
 
-                while ((responseLineFromSauceLabs = reader.readLine()) != null) {
-                    processSauceLabsResponseLine(responseLineFromSauceLabs);
-                }
             }
         } catch (IOException e) {
             System.err.println("Error updating Saucelabs job info: " + e.getMessage());
@@ -107,18 +111,29 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
         }
     }
 
+    protected String readResponseLinesFromSauceLabToGetJobUrl(BufferedReader reader) throws IOException {
+        String jobUrl = "";
+        String responseLineFromSauceLabs;
+        while ((responseLineFromSauceLabs = reader.readLine()) != null) {
+            jobUrl = jobUrl + processSauceLabsResponseLine(responseLineFromSauceLabs);
+        }
+        return jobUrl;
+    }
+
     /**
      * By deault, this prints a URL to the Job on SauceLabs.
      * Refer https://saucelabs.com/docs/sauce-ondemand
      * @param responseLineFromSauceLabs a line from the response
      */
-    protected void processSauceLabsResponseLine(String responseLineFromSauceLabs) {
+    protected String processSauceLabsResponseLine(String responseLineFromSauceLabs) {
+        String jobUrl = "";
         // This comes back from Saucelabs:
         // "video_url": "http://saucelabs.com/jobs/3bd32831ec0d91c423552330b332a59c4/video.flv",
         Matcher matcher = SAUCE_LABS_VIDEO_URL_PATTERN.matcher(responseLineFromSauceLabs);
         while (matcher.find()) {
-            System.out.println("Saucelabs Job URL for " + (passed.get() ? "passing" : "failing") + " '" + storyName.get() + "' : " + matcher.group().replace("/video.flv", ""));
+            jobUrl = matcher.group().replace("/video.flv", "");
         }
+        return jobUrl;
     }
 
     private String getBuildId() {
