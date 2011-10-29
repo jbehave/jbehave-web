@@ -40,7 +40,7 @@ public class FlashDriverTest {
 
     @Test
     public void shouldProvideFlashDriver() {
-        FlashWebDriverProvider provider = new FlashWebDriverProvider("flashObjectId");
+        FlashWebDriverProvider provider = new FlashWebDriverProvider("flashObjectId", new FirefoxDriver());
         provider.initialize();
         assertThat(provider.get(), instanceOf(FlashDriver.class));
 

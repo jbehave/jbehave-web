@@ -16,6 +16,7 @@ import org.jbehave.web.selenium.FlashWebDriverProvider;
 import org.jbehave.web.selenium.PerStoryWebDriverSteps;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.WebDriverProvider;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
@@ -26,7 +27,7 @@ import static org.jbehave.core.reporters.Format.XML;
 
 public class FlashStories extends JUnitStories {
 
-    private WebDriverProvider driverProvider = new FlashWebDriverProvider("coloredSquare");
+    private WebDriverProvider driverProvider = new FlashWebDriverProvider("coloredSquare", new FirefoxDriver());
     private Colors colorsPage = new Colors(driverProvider);
 
     @Override
