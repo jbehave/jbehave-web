@@ -49,7 +49,10 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
     @Override
     public void beforeScenario(String title) {
+        // This should really be done per Story, but the webDriverProvider has not done it's thing for this thread yet :-(
         sessionIds.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
+        String payload = "{\"tags\":[" + getJobTags() + "], " + getBuildId() + "\"name\":\" " + getJobName() + "\"}";
+        postJobUpdate(storyName.get(), sessionIds.get(), payload);
         super.beforeScenario(title);
     }
 
@@ -78,8 +81,13 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
             return;
         }
 
+        boolean pass = passed.get().equals(true);
+        String payload = "{ \"passed\":" + pass + "}";
+        postJobUpdate(storyName, sessionId, payload);
+    }
+
+    private void postJobUpdate(String storyName, SessionId sessionId, String payload) {
         try {
-            String payload = "{\"tags\":[" + getJobTags() + "], " + getBuildId() + " \"passed\":\"" + passed.get() + "\",\"name\":\" " + getJobName() + "\"}";
 
             URL url = new URL("http://saucelabs.com/rest/v1/" + getSauceUser() + "/jobs/" + sessionId.toString());
 
