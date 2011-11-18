@@ -5,8 +5,6 @@ import org.openqa.selenium.JavascriptExecutor;
 
 public class SauceLabsContextView implements ContextView {
 
-    ThreadLocal<String> currentScenario = new ThreadLocal<String>();
-
     private WebDriverProvider webDriverProvider;
 
     public SauceLabsContextView(WebDriverProvider webDriverProvider) {
@@ -14,17 +12,13 @@ public class SauceLabsContextView implements ContextView {
     }
 
     public void show(String scenario, String step) {
-        sendContextMessage(scenario, step);
+        sendContextMessage(step);
     }
 
-    private void sendContextMessage(String scenario, String step) {
+    private void sendContextMessage(String step) {
         try {
             JavascriptExecutor je = (JavascriptExecutor) webDriverProvider.get();
-            if (scenario != null && !scenario.equals(currentScenario.get())) {
-                je.executeScript("sauce:context=" + scenario);
-                currentScenario.set(scenario);
-            }
-            je.executeScript("sauce:context=" + step);
+            je.executeScript("sauce:context=Step: " + step);
         } catch (Exception e) {
         }
     }

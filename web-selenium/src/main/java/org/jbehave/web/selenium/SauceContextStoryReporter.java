@@ -1,6 +1,7 @@
 package org.jbehave.web.selenium;
 
 import org.jbehave.core.model.Story;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 
@@ -49,6 +50,7 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
     @Override
     public void beforeScenario(String title) {
+        ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=Scenario: " + title);
         // This should really be done per Story, but the webDriverProvider has not done it's thing for this thread yet :-(
         sessionIds.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
         String payload = "{\"tags\":[" + getJobTags() + "], " + getBuildId() + "\"name\":\" " + getJobName() + "\"}";
@@ -58,7 +60,21 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
     @Override
     public void failed(String step, Throwable cause) {
+        ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(Scenario failed)");
         passed.set(false);
+    }
+
+    @Override
+    public void pending(String step) {
+        ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(Pending Steps Encountered: '"
+                + step + "', " + "No More Steps Processed)");
+    }
+
+
+
+    @Override
+    public void afterScenario() {
+        ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(After Scenario Steps, if any...)");
     }
 
     @Override
