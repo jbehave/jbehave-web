@@ -29,14 +29,28 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
         super(desiredCapabilities);
     }
 
+    /**
+     * With default capabilities and a selenium version specified in getSeleniumVersion()
+     * @see RemoteWebDriverProvider#defaultDesiredCapabilities()
+     * @see SauceWebDriverProvider#getSeleniumVersion()
+     */
     public SauceWebDriverProvider() {
         super();
         desiredCapabilities.setCapability("name", "JBehave");
+        desiredCapabilities.setCapability("selenium-version", getSeleniumVersion());
+    }
+
+    /**
+     * Get selenium version from System property 'selenium.version' if there.
+     * User '2.13.0' if property not set.
+     * @return Selenium version.
+     */
+    protected String getSeleniumVersion() {
         String seVersion = System.getProperty("selenium.version");
         if (seVersion == null) {
-            seVersion = "2.7.0";
+            seVersion = "2.13.0";
         }
-        desiredCapabilities.setCapability("selenium.version", seVersion);
+        return seVersion;
     }
 
     @Override

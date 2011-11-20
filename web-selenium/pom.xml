@@ -11,7 +11,7 @@
   <description>Selenium and WebDriver API bindings for JBehave</description>
 
   <properties>
-    <selenium.version>2.11.0</selenium.version>
+    <selenium.version>2.13.0</selenium.version>
     <groovy.version>1.8.4</groovy.version>
     <gmaven.version>1.3</gmaven.version>
   </properties>

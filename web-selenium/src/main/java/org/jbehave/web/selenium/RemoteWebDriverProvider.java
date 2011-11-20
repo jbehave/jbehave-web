@@ -29,10 +29,18 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
     protected DesiredCapabilities desiredCapabilities;
     private boolean verbose = false;
 
+    /**
+     * With default capabilities
+     * @see RemoteWebDriverProvider#defaultDesiredCapabilities()
+     */
     public RemoteWebDriverProvider() {
         this(defaultDesiredCapabilities());
     }
 
+    /**
+     * Default Desired Capabilities: Windows, Firefox 3.6, 'Takes Screen-Shot'
+     * @return a DesiredCapabilities matching the above.
+     */
     public static DesiredCapabilities defaultDesiredCapabilities() {
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
         desiredCapabilities.setVersion("3.6.");
