@@ -44,7 +44,7 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
     @Override
     public void beforeStory(Story story, boolean givenStory) {
-        storyName.set(story.getName());
+        storyName.set(story.getPath());
         passed.set(true);
     }
 
@@ -100,6 +100,8 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
         boolean pass = passed.get().equals(true);
         String payload = "{ \"passed\":" + pass + "}";
         postJobUpdate(storyName, sessionId, payload);
+        System.out.println("Saucelabs Job URL for " + (passed.get() ? "passing" : "failing") + " '" + storyName + "' : " + storyToJobIds.get(storyName));
+
     }
 
     private void postJobUpdate(String storyName, SessionId sessionId, String payload) {
@@ -125,7 +127,6 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
             String jobUrl = null;
             if (rc == 200) {
                 jobUrl = readResponseLinesFromSauceLabToGetJobUrl(new BufferedReader(new InputStreamReader(connection.getInputStream())));
-                System.out.println("Saucelabs Job URL for " + (passed.get() ? "passing" : "failing") + " '" + storyName + "' : " + jobUrl);
                 storyToJobIds.put(storyName, jobUrl);
 
             }
