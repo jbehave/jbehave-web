@@ -33,7 +33,7 @@ public class SauceContextOutput extends Format {
 
     public static class SauceLabsXRefRoot extends CrossReference.XRefRoot {
 
-        protected final Map<String, String> storyToSauceUrlMap;
+        protected final transient Map<String, String> storyToSauceUrlMap;
 
         public SauceLabsXRefRoot(java.util.Map<String, String> storyToSauceUrlMap) {
             this.storyToSauceUrlMap = storyToSauceUrlMap;
@@ -57,7 +57,7 @@ public class SauceContextOutput extends Format {
 
     public static class SauceLabsCrossReference extends CrossReference {
 
-        protected final Map<String, String> storyToSauceUrlMap;
+        protected final transient Map<String, String> storyToSauceUrlMap;
 
         public SauceLabsCrossReference(Map<String, String> storyToSauceUrlMap) {
             this.storyToSauceUrlMap = storyToSauceUrlMap;
