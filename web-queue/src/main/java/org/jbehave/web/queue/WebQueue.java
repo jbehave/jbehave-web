@@ -1,8 +1,6 @@
 package org.jbehave.web.queue;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.Future;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,22 +15,15 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.jbehave.core.embedder.Embedder;
-import org.jbehave.core.embedder.MetaFilter;
-import org.jbehave.core.failures.BatchFailures;
-import org.jbehave.core.model.Story;
 
 public class WebQueue {
 
     private final Embedder embedder;
-    private final BatchFailures batchFailures;
-    private final List<Future<Embedder.ThrowableStory>> futures;
     private final WebQueueConfiguration configuration;
     private Server server;
 
-    public WebQueue(Embedder embedder, BatchFailures batchFailures, List<Future<Embedder.ThrowableStory>> futures, WebQueueConfiguration configuration) {
+    public WebQueue(Embedder embedder, WebQueueConfiguration configuration) {
         this.embedder = embedder;
-        this.batchFailures = batchFailures;
-        this.futures = futures;
         this.configuration = configuration;
     }
     
@@ -47,13 +38,11 @@ public class WebQueue {
         context.addServlet(new ServletHolder(new HttpServlet() {
             protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
                     IOException {
-                String job = "" + System.currentTimeMillis();
                 String storyInput = request.getParameter("story");
-                Story story = embedder.configuration().storyParser().parseStory(storyInput, job);
-
-                embedder.enqueueStory(batchFailures, MetaFilter.EMPTY, futures, job, story);
+                String storyId = "" + System.currentTimeMillis();
+                embedder.enqueueStoryAsText(storyInput, storyId);
                 response.setContentType("text/html");
-                response.sendRedirect("/" + configuration.navigatorPage() + "?job=" + job);
+                response.sendRedirect("/" + configuration.navigatorPage() + "?job=" + storyId);
             }
         }), "*.enqueue");
 
