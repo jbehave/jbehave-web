@@ -5,11 +5,8 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.jbehave.core.embedder.Embedder;
-import org.jbehave.core.failures.BatchFailures;
 
 @SuppressWarnings("serial")
 public class StoryContext implements Serializable {
@@ -20,8 +17,6 @@ public class StoryContext implements Serializable {
 	private String output = EMPTY;
 	private List<String> messages = new ArrayList<String>();
 	private Throwable cause = null;
-    private BatchFailures batchFailures = new BatchFailures();
-    private List<Future<Embedder.ThrowableStory>> futures = new ArrayList<Future<Embedder.ThrowableStory>>();
 
 	public StoryContext(){    
 	}
@@ -49,23 +44,6 @@ public class StoryContext implements Serializable {
 	public void setOutput(String output) {
 		this.output = output;
 	}
-
-
-    public BatchFailures getBatchFailures() {
-        return batchFailures;
-    }
-
-    public void setBatchFailures(BatchFailures batchFailures) {
-        this.batchFailures = batchFailures;
-    }
-
-    public List<Future<Embedder.ThrowableStory>> getFutures() {
-        return futures;
-    }
-
-    public void setFutures(List<Future<Embedder.ThrowableStory>> futures) {
-        this.futures = futures;
-    }
 
 	public List<String> getFailureMessages() {
 		messages.clear();
