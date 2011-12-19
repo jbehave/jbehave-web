@@ -161,7 +161,7 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
         return jobUrl;
     }
 
-    private String getBuildId() {
+    protected String getBuildId() {
         String buildId =  System.getProperty("BUILD-ID");
         if (buildId != null) {
             return " \"build\":\"" + buildId + "\",";
