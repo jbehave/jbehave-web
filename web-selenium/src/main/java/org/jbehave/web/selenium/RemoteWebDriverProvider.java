@@ -9,8 +9,10 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.CommandExecutor;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.DriverCommand;
+import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
@@ -38,14 +40,16 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
     }
 
     /**
-     * Default Desired Capabilities: Windows, Firefox 3.6, 'Takes Screen-Shot'
+     * Default Desired Capabilities: Any-Platform,
+     * Any Firefox Version, unless something is specified via a system-property "browser.version"
+     * and 'Takes Screen-Shot'
      * @return a DesiredCapabilities matching the above.
      */
     public static DesiredCapabilities defaultDesiredCapabilities() {
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
-        desiredCapabilities.setVersion("3.6.");
-        desiredCapabilities.setPlatform(Platform.WINDOWS);
         desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
+        String bv = System.getProperty("browser.version");
+        desiredCapabilities.setVersion(bv == null ? "3.6." : bv);
         return desiredCapabilities;
     }
 
@@ -58,7 +62,7 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
         WebDriver remoteWebDriver;
         try {
             url = createRemoteURL();
-            remoteWebDriver = new ScreenshootingRemoteWebDriver(url, desiredCapabilities);
+            remoteWebDriver = new ScreenshootingRemoteWebDriver(wrapCommandExecutor(new HttpCommandExecutor(url)), desiredCapabilities);
         } catch (Throwable e) {
             if (verbose) {
                 System.err.println("*********** Remote WebDriver Initialization Failure ************");
@@ -75,6 +79,15 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
         delegate.set(remoteWebDriver);
     }
 
+    /**
+     * Override this to instrument CommandExecutor
+     * @return a CommandExecutor instance.
+     * @param httpCommandExecutor the actual CommandExecutor that communicates over the wire.
+     */
+    protected HttpCommandExecutor wrapCommandExecutor(HttpCommandExecutor httpCommandExecutor) {
+        return httpCommandExecutor;
+    }
+
     public URL createRemoteURL() throws MalformedURLException {
         String url = System.getProperty("REMOTE_WEBDRIVER_URL");
         if (url == null) {
@@ -85,8 +98,8 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
 
     static class ScreenshootingRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {
 
-        public ScreenshootingRemoteWebDriver(URL remoteURL, DesiredCapabilities desiredCapabilities) {
-            super(remoteURL, desiredCapabilities);
+        public ScreenshootingRemoteWebDriver(CommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities) {
+            super(commandExecutor, desiredCapabilities);
         }
 
         public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
