@@ -8,8 +8,11 @@ import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryRunner;
 import org.jbehave.core.steps.CandidateSteps;
+import org.jbehave.core.steps.InjectableStepsFactory;
+import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.Steps;
 import org.jbehave.web.io.ArchivingFileManager;
 import org.jbehave.web.io.FileManager;
@@ -23,7 +26,6 @@ import org.jbehave.web.runner.wicket.pages.RunStory;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
-import com.google.inject.TypeLiteral;
 
 public class WebRunnerApplication extends WebApplication {
 
@@ -38,31 +40,40 @@ public class WebRunnerApplication extends WebApplication {
     }
 
     private Module[] modules() {
-        return new Module[]{new ApplicationModule()};
+        return new Module[] { new ApplicationModule() };
     }
-    
+
     protected class ApplicationModule extends AbstractModule {
 
         @Override
         protected void configure() {
-            bind(Configuration.class).toInstance(configuration());
-            bind(StoryRunner.class).toInstance(storyRunner());
-            bind(new TypeLiteral<List<CandidateSteps>>(){}).toInstance(candidateSteps());
+            bind(Embedder.class).toInstance(embedder());
             bind(FileManager.class).toInstance(fileManager());
         }
 
+    }
+
+    protected Embedder embedder() {
+        Embedder embedder = new Embedder();
+        embedder.useConfiguration(configuration());
+        embedder.useStepsFactory(stepsFactory());
+        return embedder;
+    }
+
+    protected StoryRunner storyRunner() {
+        return embedder().storyRunner();
     }
 
     protected Configuration configuration() {
         return new MostUsefulConfiguration();
     }
 
-    protected StoryRunner storyRunner() {
-        return new StoryRunner();
+    protected InjectableStepsFactory stepsFactory() {
+        return new InstanceStepsFactory(configuration(), candidateSteps().toArray());
     }
 
     protected List<CandidateSteps> candidateSteps() {
-        return Arrays.asList((CandidateSteps)new Steps());
+        return Arrays.<CandidateSteps> asList(new Steps());
     }
 
     protected FileMonitor fileMonitor() {

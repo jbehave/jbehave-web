@@ -2,7 +2,7 @@ package org.jbehave.web.runner.wicket.pages;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Properties;
 
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
@@ -11,15 +11,14 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.value.ValueMap;
-import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.Keywords;
-import org.jbehave.core.embedder.MetaFilter;
-import org.jbehave.core.embedder.StoryRunner;
+import org.jbehave.core.embedder.Embedder;
+import org.jbehave.core.embedder.StoryManager;
+import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.reporters.TxtOutput;
-import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.web.runner.context.StoryContext;
 import org.jbehave.web.runner.context.StoryOutputStream;
 
@@ -32,11 +31,7 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
 public class RunStory extends Template {
 
     @Inject
-    private StoryRunner storyRunner;
-    @Inject
-    private Configuration configuration;
-    @Inject
-    private List<CandidateSteps> steps;
+    private Embedder embedder;
 
     private StoryOutputStream outputStream = new StoryOutputStream();
     private StoryContext storyContext = new StoryContext();
@@ -77,9 +72,9 @@ public class RunStory extends Template {
     private void reportTo(OutputStream ouputStream) {
         final Properties outputPatterns = new Properties();
         outputPatterns.setProperty("beforeStory", "{0}\n");
-        final Keywords keywords = configuration.keywords();
+        final Keywords keywords = embedder.configuration().keywords();
         final boolean reportFailureTrace = false;
-        configuration.useStoryReporterBuilder(new StoryReporterBuilder() {
+        embedder.configuration().useStoryReporterBuilder(new StoryReporterBuilder() {
             @Override
             public StoryReporter build(String storyPath) {
                 return new TxtOutput(new PrintStream(outputStream), outputPatterns, keywords, reportFailureTrace);
@@ -89,20 +84,20 @@ public class RunStory extends Template {
 
     public void run() {
         if (isNotBlank(storyContext.getInput())) {
-            try {
-                outputStream.reset();
-                storyContext.clearFailureCause();
-                MetaFilter metaFilter = ( isNotBlank(storyContext.getMetaFilter()) ? new MetaFilter(storyContext.getMetaFilter()) : MetaFilter.EMPTY );
-                storyRunner.run(configuration, steps, parseStory(storyContext.getInput()), metaFilter);
-            } catch (Throwable e) {
-                storyContext.runFailedFor(e);
+            outputStream.reset();
+            storyContext.clearFailureCause();
+            embedder.useMetaFilters(Arrays.asList(storyContext.getMetaFilter()));
+            StoryManager storyManager = embedder.storyManager();
+            String storyPath = "web-runner";
+            Story story = storyManager.storyOfText(storyContext.getInput(), storyPath);
+            storyManager.runningStory(storyPath, story, embedder.metaFilter(), null);
+            BatchFailures failures = new BatchFailures();
+            storyManager.waitUntilAllDoneOrFailed(failures);
+            if ( !failures.isEmpty() ){
+                storyContext.runFailedFor(failures.values().iterator().next());
             }
             storyContext.setOutput(outputStream.toString());
         }
-    }
-
-    private Story parseStory(String storyInput) {
-        return configuration.storyParser().parseStory(storyInput);
     }
 
 }
