@@ -26,8 +26,10 @@ public class SeleniumConfigurationTest {
         String step = "a step";
         String context = currentScenario + "<br/>" + step;
         boolean dryRun = false;
-        Configuration configuration = new SeleniumConfiguration().useSelenium(selenium).useSeleniumContext(
-                seleniumContext).useStepMonitor(new SeleniumStepMonitor(selenium, seleniumContext, stepMonitor));
+        Configuration configuration = new SeleniumConfiguration()
+                .useSelenium(selenium)
+                .useSeleniumContext(seleniumContext)
+                .useStepMonitor(new SeleniumStepMonitor(selenium, seleniumContext, stepMonitor));
         seleniumContext.setCurrentScenario(currentScenario);
         configuration.stepMonitor().performing(step, dryRun);
         

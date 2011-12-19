@@ -99,7 +99,6 @@ public class BadlyInitializingWebDriverProviderTest {
             assertTrue(rootCause instanceof UnsupportedOperationException);
             assertTrue(rootCause.getMessage().contains("hello"));
         }
-        System.out.println(out);
 
         assertEquals("beforeStory()\n"
                 + "beforeScenario()\n"
