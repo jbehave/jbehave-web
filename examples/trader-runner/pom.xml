@@ -18,12 +18,13 @@
 	</description>
   <properties>
     <jbehave.webapp.name>trader-runner</jbehave.webapp.name>
+    <jbehave.webrunner.version>${project.version}</jbehave.webrunner.version>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-runner</artifactId>
-      <version>${project.version}</version>
+      <version>${jbehave.webrunner.version}</version>
     </dependency>
   </dependencies>
   <build>
