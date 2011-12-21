@@ -1,12 +1,12 @@
 package org.jbehave.web.runner.wicket.pages;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteTextRenderer;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -16,7 +16,6 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.MapModel;
 import org.apache.wicket.util.resource.PackageResourceStream;
-import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.velocity.markup.html.VelocityPanel;
 import org.jbehave.core.embedder.Embedder;
@@ -24,13 +23,12 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
 import org.jbehave.web.runner.context.StepdocContext;
+import org.jbehave.web.runner.context.StepdocContext.SerializableStepdoc;
 import org.jbehave.web.runner.context.StepdocContext.Sorting;
 import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
 
-import static org.apache.commons.collections.CollectionUtils.collect;
-import static org.apache.commons.collections.TransformerUtils.invokerTransformer;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 @SuppressWarnings("serial")
@@ -102,18 +100,11 @@ public class FindSteps extends Template {
 
             });
             add(new Button("findButton"));
-            add(new AutoCompleteTextField<String>("exploringStep", new Model<String>("")) {
-                @SuppressWarnings("unchecked")
+            add(new AutoCompleteTextField<SerializableStepdoc>("exploringStep", new Model<SerializableStepdoc>(), new StepdocAutoCompleteRenderer()) {
                 @Override
-                protected Iterator<String> getChoices(String input) {
-                    if (Strings.isEmpty(input)) {
-                        List<String> emptyList = Collections.emptyList();
-                        return emptyList.iterator();
-                    }
-
-                    return collect(stepdocContext.matchingStepdocs(input), invokerTransformer("asString")).iterator();
+                protected Iterator<SerializableStepdoc> getChoices(String input) {
+                    return stepdocContext.matchingStepdocs(input).iterator();
                 }
-
             });
 
         }
@@ -158,4 +149,10 @@ public class FindSteps extends Template {
         }
     }
 
+    public static class StepdocAutoCompleteRenderer extends AbstractAutoCompleteTextRenderer<SerializableStepdoc> {
+        @Override
+        protected String getTextValue(final SerializableStepdoc object) {
+            return object.asString();
+        }
+    }
 }

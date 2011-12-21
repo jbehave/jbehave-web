@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.codehaus.plexus.util.StringUtils;
 import org.jbehave.core.steps.StepType;
 import org.jbehave.core.steps.Stepdoc;
 
@@ -47,6 +48,9 @@ public class StepdocContext implements Serializable {
 
     public List<SerializableStepdoc> matchingStepdocs(String input) {
         List<SerializableStepdoc> matching = new ArrayList<SerializableStepdoc>();
+        if ( StringUtils.isEmpty(input) ){
+            return matching;
+        }
         for (SerializableStepdoc stepdoc : allStepdocs ) {
             if ( stepdoc.asString().matches(".*"+input+".*")){
                 matching.add(stepdoc);                        
