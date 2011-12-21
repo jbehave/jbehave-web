@@ -1,42 +1,81 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <head>
-    <title>Find Steps</title>
+<title>Find Steps</title>
+<wicket:head>
+    <style>
+div.wicket-aa {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana;
+	font-size: 12px;
+	background-color: white;
+	border-width: 1px;
+	border-color: #cccccc;
+	border-style: solid;
+	padding: 2px;
+	margin: 1px 0 0 0;
+	text-align: left;
+}
+
+div.wicket-aa ul {
+	list-style: none;
+	padding: 2px;
+	margin: 0;
+}
+
+div.wicket-aa ul li.selected {
+	background-color: #FFFF00;
+	padding: 2px;
+	margin: 0;
+}
+</style>
+</wicket:head>
 </head>
 <body>
-<wicket:extend>
-    <form wicket:id="stepsForm" class="stepsForm">
-        <div id="input">
-           <fieldset>
-                <legend>Find</legend>
-                <p>Patterns and methods matching the textual step (if blank all are shown)</p>
-                <p>
-                    <textarea wicket:id="matchingStep" rows="25" cols="100"></textarea>
-                </p>
-                <p>
-                    <input wicket:id="findButton" type="submit" value="Find" /> 
-                    View: <select wicket:id="viewSelect"></select>
-                    Sorting: <select wicket:id="sortingSelect"></select>
-                </p> 
-            </fieldset>
-        </div>
-        <div id="ouput">    
-           <fieldset>
-                <legend>Steps</legend>
-                <p>
+    <wicket:extend>
+        <form wicket:id="stepsForm" class="stepsForm">
+            <div id="input">
+                <fieldset>
+                    <legend>Explore</legend>
+                    <p>Explore the step pattern by typing any part
+                        of it (auto-completed choices will be shown)</p>
+                    <p>
+                        <input wicket:id="exploringStep" size="115"></input>
+                        <span wicket:id="exploredStep"></span>
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>Match</legend>
+                    <p>Match the exact textual step to configured
+                        Java steps (if blank all are shown):</p>
+                    <p>
+                        <textarea wicket:id="matchingStep" rows="5"
+                            cols="100"></textarea>
+                    </p>
+                    <p>
+                        <input wicket:id="findButton" type="submit"
+                            value="Find" /> View: <select
+                            wicket:id="viewSelect"></select> Sorting: <select
+                            wicket:id="sortingSelect"></select>
+                    </p>
+                </fieldset>
+            </div>
+            <div id="ouput">
+                <fieldset>
+                    <legend>Steps</legend>
+                    <p>
                     <pre wicket:id="stepdocs" id="stepdocs">
                     </pre>
-                </p>
-            </fieldset>
-           <fieldset>
-                <legend>Steps Instances</legend>
-                <p>
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>Steps Instances</legend>
+                    <p>
                     <pre wicket:id="stepsInstances" id="stepsInstances">
                     </pre>
-                </p>
-                
-            </fieldset>
-         </div>        
-    </form>
-</wicket:extend>
+                    </p>
+
+                </fieldset>
+            </div>
+        </form>
+    </wicket:extend>
 </body>
 </html>

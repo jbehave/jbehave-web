@@ -1,17 +1,29 @@
 package org.jbehave.web.runner.wicket.pages;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.MapModel;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.handler.BookmarkablePageRequestHandler;
+import org.apache.wicket.request.handler.PageProvider;
 import org.apache.wicket.util.resource.PackageResourceStream;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.velocity.markup.html.VelocityPanel;
 import org.jbehave.core.embedder.Embedder;
@@ -19,6 +31,7 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
 import org.jbehave.web.runner.context.StepdocContext;
+import org.jbehave.web.runner.context.StepdocContext.SerializableStepdoc;
 import org.jbehave.web.runner.context.StepdocContext.Sorting;
 import org.jbehave.web.runner.context.StepdocContext.View;
 
@@ -39,11 +52,55 @@ public class FindSteps extends Template {
 
     public FindSteps() {
         setPageTitle("Find Steps");
-        add(new StepsForm("stepsForm"));
+
         stepFinder = embedder.configuration().stepFinder();
         candidateSteps = embedder.stepsFactory().createCandidateSteps();
         stepdocContext.setAllStepdocs(stepFinder.stepdocs(candidateSteps));
         stepdocContext.setStepsInstances(stepFinder.stepsInstances(candidateSteps));
+
+        StepsForm form = new StepsForm("stepsForm");
+        add(form);
+
+        final AutoCompleteTextField<String> field = new AutoCompleteTextField<String>("exploringStep", new Model<String>("")) {
+            @Override
+            protected Iterator<String> getChoices(String input) {
+                if (Strings.isEmpty(input)) {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+
+                return matchingPatterns(input).iterator();
+            }
+
+            private List<String> matchingPatterns(String input) {
+                List<String> patterns = new ArrayList<String>();
+                for (SerializableStepdoc stepdoc : stepdocContext.getAllStepdocs()) {
+                    String pattern = stepdoc.asString();
+                    if ( pattern.matches(".*"+input+".*")){
+                        patterns.add(pattern);                        
+                    }
+                }
+                return patterns;
+            }
+        };
+        final Label label = new Label("exploredStep", field.getDefaultModel());
+        label.setOutputMarkupId(true);
+        form.add(label);
+        field.add(new AjaxFormSubmitBehavior(form, "change") {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target) {
+                BookmarkablePageRequestHandler bookmarkablePageRequestHandler = new BookmarkablePageRequestHandler(
+                        new PageProvider(Home.class));
+                RequestCycle requestCycle = RequestCycle.get();
+                requestCycle.urlFor(bookmarkablePageRequestHandler);
+                target.add(label);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target) {
+            }
+        });
+        form.add(field);
     }
 
     public final class StepsForm extends Form<ValueMap> {

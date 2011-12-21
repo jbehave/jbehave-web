@@ -160,6 +160,10 @@ public class StepdocContext implements Serializable {
             return methodSignature;
         }
 
+        public String asString(){
+            return startingWord + " " + pattern;
+        }
+        
         @Override
         public String toString() {
             return ToStringBuilder.reflectionToString(this).toString();
