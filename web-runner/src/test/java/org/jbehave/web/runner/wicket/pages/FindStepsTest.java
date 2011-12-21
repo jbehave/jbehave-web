@@ -3,11 +3,13 @@ package org.jbehave.web.runner.wicket.pages;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.util.tester.FormTester;
+import org.hamcrest.Matchers;
 import org.jbehave.core.steps.StepType;
 import org.jbehave.web.runner.context.StepdocContext.SerializableStepdoc;
 import org.junit.Test;
@@ -70,7 +72,6 @@ public class FindStepsTest extends TemplateTest {
         }
     }
 
-
     @Test
     public void shouldFindStepsInstances() {
         //Given
@@ -80,9 +81,13 @@ public class FindStepsTest extends TemplateTest {
         formTester.submit("findButton");
         // Then
         List<Class<?>> stepsClasses = modelObject(formTester, "stepsInstances");
-        assertThat(stepsClasses.size(), equalTo(2));
-        assertThat(stepsClasses.get(0).getName(), equalTo(TestSteps.class.getName()));
-        assertThat(stepsClasses.get(1).getName(), equalTo(OtherTestSteps.class.getName()));
+        assertThat(stepsClasses.size(), equalTo(2));     
+        List<String> names = new ArrayList<String>();
+        for (Class<?> stepsClass : stepsClasses) {
+            names.add(stepsClass.getName());
+        }
+        assertThat(names, Matchers.hasItem(TestSteps.class.getName()));
+        assertThat(names, Matchers.hasItem(OtherTestSteps.class.getName()));
     }
 
     @SuppressWarnings("unchecked")

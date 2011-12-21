@@ -1,7 +1,5 @@
 package org.jbehave.web.runner.wicket.pages;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +14,9 @@ import org.apache.wicket.model.util.MapModel;
 import org.apache.wicket.util.resource.PackageResourceStream;
 import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.velocity.markup.html.VelocityPanel;
-import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.steps.CandidateSteps;
+import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
 import org.jbehave.web.runner.context.StepdocContext;
 import org.jbehave.web.runner.context.StepdocContext.Sorting;
@@ -25,21 +24,26 @@ import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
 
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+
 @SuppressWarnings("serial")
 public class FindSteps extends Template {
 
     @Inject
-    private Configuration configuration;
-    @Inject
-    private List<CandidateSteps> steps;
+    private Embedder embedder;
 
     private StepdocContext stepdocContext = new StepdocContext();
+
+    private StepFinder stepFinder;
+    private List<CandidateSteps> candidateSteps;
 
     public FindSteps() {
         setPageTitle("Find Steps");
         add(new StepsForm("stepsForm"));
-        stepdocContext.setAllStepdocs(configuration.stepFinder().stepdocs(this.steps));
-        stepdocContext.setStepsInstances(configuration.stepFinder().stepsInstances(this.steps));
+        stepFinder = embedder.configuration().stepFinder();
+        candidateSteps = embedder.stepsFactory().createCandidateSteps();
+        stepdocContext.setAllStepdocs(stepFinder.stepdocs(candidateSteps));
+        stepdocContext.setStepsInstances(stepFinder.stepsInstances(candidateSteps));
     }
 
     public final class StepsForm extends Form<ValueMap> {
@@ -124,7 +128,7 @@ public class FindSteps extends Template {
         stepdocContext.clearStepdocs();
         String matchingStep = stepdocContext.getMatchingStep();
         if (isNotBlank(matchingStep)) {
-            stepdocContext.addStepdocs(configuration.stepFinder().findMatching(matchingStep, steps));
+            stepdocContext.addStepdocs(stepFinder.findMatching(matchingStep, candidateSteps));
         } else {
             stepdocContext.addAllStepdocs();
         }
