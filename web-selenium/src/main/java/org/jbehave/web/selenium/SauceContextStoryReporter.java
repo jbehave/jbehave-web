@@ -2,6 +2,7 @@ package org.jbehave.web.selenium;
 
 import org.jbehave.core.model.Story;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
 
@@ -50,31 +51,63 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
     @Override
     public void beforeScenario(String title) {
-        ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=Scenario: " + title);
-        // This should really be done per Story, but the webDriverProvider has not done it's thing for this thread yet :-(
-        sessionIds.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
-        String payload = "{\"tags\":[" + getJobTags() + "], " + getBuildId() + "\"name\":\" " + getJobName() + "\"}";
-        postJobUpdate(storyName.get(), sessionIds.get(), payload);
-        super.beforeScenario(title);
+        try {
+            super.beforeScenario(title);
+            ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=Scenario: " + title);
+            // This should really be done per Story, but the webDriverProvider has not done it's thing for this thread yet :-(
+            sessionIds.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
+            String payload = "{\"tags\":[" + getJobTags() + "], " + getBuildId() + "\"name\":\" " + getJobName() + "\"}";
+            postJobUpdate(storyName.get(), sessionIds.get(), payload);
+        } catch (WebDriverException e) {
+            if (e.getMessage().startsWith("Error communicating with the remote browser. It may have died.")) {
+                // do nothing, it's likely that SauceLabs timed out the job on their system.
+            } else {
+                throw e;
+            }
+        }
     }
 
     @Override
     public void failed(String step, Throwable cause) {
-        ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(Scenario failed)");
-        passed.set(false);
+        try {
+            passed.set(false);
+            ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(Scenario failed)");
+        } catch (WebDriverException e) {
+            if (e.getMessage().startsWith("Error communicating with the remote browser. It may have died.")) {
+                // do nothing, it's likely that SauceLabs timed out the job on their system.
+            } else {
+                throw e;
+            }
+        }
     }
 
     @Override
     public void pending(String step) {
-        ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(Pending Steps Encountered: '"
-                + step + "', " + "No More Steps Processed)");
+        try {
+            ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(Pending Steps Encountered: '"
+                    + step + "', " + "No More Steps Processed)");
+        } catch (WebDriverException e) {
+            if (e.getMessage().startsWith("Error communicating with the remote browser. It may have died.")) {
+                // do nothing, it's likely that SauceLabs timed out the job on their system.
+            } else {
+                throw e;
+            }
+        }
     }
 
 
 
     @Override
     public void afterScenario() {
-        ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(After Scenario Steps, if any...)");
+        try {
+            ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(After Scenario Steps, if any...)");
+        } catch (WebDriverException e) {
+            if (e.getMessage().startsWith("Error communicating with the remote browser. It may have died.")) {
+                // do nothing, it's likely that SauceLabs timed out the job on their system.
+            } else {
+                throw e;
+            }
+        }
     }
 
     @Override
@@ -131,8 +164,7 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
             }
         } catch (IOException e) {
-            System.err.println("Error updating Saucelabs job info: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("SauceContextStoryReporter: Error updating Saucelabs job info: " + e.getMessage());
         }
     }
 

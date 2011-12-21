@@ -7,6 +7,7 @@ import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 
 /**
  * Delegating abstract implementation that provides {@link WebDriver}s specified
@@ -34,11 +35,15 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
         if (driver instanceof TakesScreenshot) {
             File file = new File(path);
             try {
+                byte[] bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
                 file.getParentFile().mkdirs();
                 file.createNewFile();
-                byte[] bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
                 IOUtils.write(bytes, new FileOutputStream(file));
                 return true;
+            } catch (WebDriverException e) {
+                if (e.getMessage().indexOf("Job on Sauce already complete.") == -1) {
+                    throw new RuntimeException("Failed to save screenshot to " + file, e);
+                }
             } catch (Exception e) {
                 throw new RuntimeException("Failed to save screenshot to " + file, e);
             }
@@ -51,7 +56,9 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
         public DelegateWebDriverNotFound() {
             super("WebDriver has not been found for this thread.\n"
                     + "Please verify you are using the correct WebDriverProvider, "
-                    + "with the appropriate credentials if using remote access, e.g. to SauceLabs.");
+                    + "with the appropriate credentials if using remote access, " +
+                      "e.g. to SauceLabs: -DSAUCE_USERNAME=xxxxxx " +
+                      "-DSAUCE_ACCESS_KEY=xxx-xxxx-xxxx-xxxx-xxx ");
         }
     }
 }
