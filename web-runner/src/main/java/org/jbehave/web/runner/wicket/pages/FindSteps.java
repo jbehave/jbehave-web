@@ -1,6 +1,5 @@
 package org.jbehave.web.runner.wicket.pages;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,12 +24,13 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
 import org.jbehave.web.runner.context.StepdocContext;
-import org.jbehave.web.runner.context.StepdocContext.SerializableStepdoc;
 import org.jbehave.web.runner.context.StepdocContext.Sorting;
 import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
 
+import static org.apache.commons.collections.CollectionUtils.collect;
+import static org.apache.commons.collections.TransformerUtils.invokerTransformer;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 @SuppressWarnings("serial")
@@ -103,6 +103,7 @@ public class FindSteps extends Template {
             });
             add(new Button("findButton"));
             add(new AutoCompleteTextField<String>("exploringStep", new Model<String>("")) {
+                @SuppressWarnings("unchecked")
                 @Override
                 protected Iterator<String> getChoices(String input) {
                     if (Strings.isEmpty(input)) {
@@ -110,19 +111,9 @@ public class FindSteps extends Template {
                         return emptyList.iterator();
                     }
 
-                    return matchingPatterns(input).iterator();
+                    return collect(stepdocContext.matchingStepdocs(input), invokerTransformer("asString")).iterator();
                 }
 
-                private List<String> matchingPatterns(String input) {
-                    List<String> patterns = new ArrayList<String>();
-                    for (SerializableStepdoc stepdoc : stepdocContext.getAllStepdocs()) {
-                        String pattern = stepdoc.asString();
-                        if ( pattern.matches(".*"+input+".*")){
-                            patterns.add(pattern);                        
-                        }
-                    }
-                    return patterns;
-                }
             });
 
         }
