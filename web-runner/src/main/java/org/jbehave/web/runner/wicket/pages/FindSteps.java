@@ -8,10 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -19,9 +16,6 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.MapModel;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.BookmarkablePageRequestHandler;
-import org.apache.wicket.request.handler.PageProvider;
 import org.apache.wicket.util.resource.PackageResourceStream;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.value.ValueMap;
@@ -58,49 +52,8 @@ public class FindSteps extends Template {
         stepdocContext.setAllStepdocs(stepFinder.stepdocs(candidateSteps));
         stepdocContext.setStepsInstances(stepFinder.stepsInstances(candidateSteps));
 
-        StepsForm form = new StepsForm("stepsForm");
-        add(form);
+        add(new StepsForm("stepsForm"));
 
-        final AutoCompleteTextField<String> field = new AutoCompleteTextField<String>("exploringStep", new Model<String>("")) {
-            @Override
-            protected Iterator<String> getChoices(String input) {
-                if (Strings.isEmpty(input)) {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-
-                return matchingPatterns(input).iterator();
-            }
-
-            private List<String> matchingPatterns(String input) {
-                List<String> patterns = new ArrayList<String>();
-                for (SerializableStepdoc stepdoc : stepdocContext.getAllStepdocs()) {
-                    String pattern = stepdoc.asString();
-                    if ( pattern.matches(".*"+input+".*")){
-                        patterns.add(pattern);                        
-                    }
-                }
-                return patterns;
-            }
-        };
-        final Label label = new Label("exploredStep", field.getDefaultModel());
-        label.setOutputMarkupId(true);
-        form.add(label);
-        field.add(new AjaxFormSubmitBehavior(form, "change") {
-            @Override
-            protected void onSubmit(AjaxRequestTarget target) {
-                BookmarkablePageRequestHandler bookmarkablePageRequestHandler = new BookmarkablePageRequestHandler(
-                        new PageProvider(Home.class));
-                RequestCycle requestCycle = RequestCycle.get();
-                requestCycle.urlFor(bookmarkablePageRequestHandler);
-                target.add(label);
-            }
-
-            @Override
-            protected void onError(AjaxRequestTarget target) {
-            }
-        });
-        form.add(field);
     }
 
     public final class StepsForm extends Form<ValueMap> {
@@ -149,6 +102,29 @@ public class FindSteps extends Template {
 
             });
             add(new Button("findButton"));
+            add(new AutoCompleteTextField<String>("exploringStep", new Model<String>("")) {
+                @Override
+                protected Iterator<String> getChoices(String input) {
+                    if (Strings.isEmpty(input)) {
+                        List<String> emptyList = Collections.emptyList();
+                        return emptyList.iterator();
+                    }
+
+                    return matchingPatterns(input).iterator();
+                }
+
+                private List<String> matchingPatterns(String input) {
+                    List<String> patterns = new ArrayList<String>();
+                    for (SerializableStepdoc stepdoc : stepdocContext.getAllStepdocs()) {
+                        String pattern = stepdoc.asString();
+                        if ( pattern.matches(".*"+input+".*")){
+                            patterns.add(pattern);                        
+                        }
+                    }
+                    return patterns;
+                }
+            });
+
         }
 
         @Override
