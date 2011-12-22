@@ -29,6 +29,7 @@ import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
 
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 @SuppressWarnings("serial")
@@ -106,7 +107,6 @@ public class FindSteps extends Template {
                     return stepdocContext.matchingStepdocs(input).iterator();
                 }
             });
-
         }
 
         @Override
@@ -152,7 +152,7 @@ public class FindSteps extends Template {
     public static class StepdocAutoCompleteRenderer extends AbstractAutoCompleteTextRenderer<SerializableStepdoc> {
         @Override
         protected String getTextValue(final SerializableStepdoc object) {
-            return object.asString();
+            return escapeHtml(object.asString());
         }
     }
 }
