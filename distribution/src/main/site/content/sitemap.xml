@@ -7,6 +7,7 @@
     <page>javadoc.html</page>
     <page>tutorials.html</page>
     <page>release-notes.html</page>
+    <page>building-source.html</page>
     <page>source-repository.html</page>
   </section>
   <section>
@@ -24,5 +25,5 @@
     <page>using-selenium.html</page>
     <page>page-objects.html</page>
     <page>using-sauce-labs.html</page>
-  </section>  
+  </section>
 </sitemap>
