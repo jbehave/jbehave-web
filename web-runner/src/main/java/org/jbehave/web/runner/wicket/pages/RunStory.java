@@ -2,7 +2,6 @@ package org.jbehave.web.runner.wicket.pages;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.Properties;
 
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
@@ -24,6 +23,7 @@ import org.jbehave.web.runner.context.StoryOutputStream;
 
 import com.google.inject.Inject;
 
+import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
@@ -33,10 +33,14 @@ public class RunStory extends Template {
     @Inject
     private Embedder embedder;
 
+    private StoryManager storyManager;
+
     private StoryOutputStream outputStream = new StoryOutputStream();
     private StoryContext storyContext = new StoryContext();
 
+
     public RunStory() {
+        storyManager = embedder.storyManager();
         reportTo(outputStream);
         setPageTitle("Run Story");
         add(new StoryForm("storyForm"));
@@ -86,16 +90,15 @@ public class RunStory extends Template {
         if (isNotBlank(storyContext.getInput())) {
             outputStream.reset();
             storyContext.clearFailureCause();
-            embedder.useMetaFilters(Arrays.asList(storyContext.getMetaFilter()));
-            StoryManager storyManager = embedder.storyManager();
-            String storyPath = "web-runner";
+            embedder.useMetaFilters(asList(storyContext.getMetaFilter()));
+            String storyPath = "web-runner-"+System.currentTimeMillis();
             Story story = storyManager.storyOfText(storyContext.getInput(), storyPath);
-            storyManager.runningStory(storyPath, story, embedder.metaFilter(), null);
+            storyManager.runningStories(asList(story), embedder.metaFilter(), null);
             BatchFailures failures = new BatchFailures();
             storyManager.waitUntilAllDoneOrFailed(failures);
             if ( !failures.isEmpty() ){
                 storyContext.runFailedFor(failures.values().iterator().next());
-            }
+            }            
             storyContext.setOutput(outputStream.toString());
         }
     }

@@ -15,7 +15,7 @@ public class FindSteps extends AbstractPage {
     }
 
     public void pageIsShown() {
-        found("Patterns and methods matching the textual step");
+        found("Match");
     }
 
     public void find(String step) {
