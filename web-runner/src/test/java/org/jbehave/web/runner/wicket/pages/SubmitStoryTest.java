@@ -1,5 +1,6 @@
 package org.jbehave.web.runner.wicket.pages;
 
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.util.tester.FormTester;
 import org.junit.Test;
 
@@ -24,8 +25,8 @@ public class SubmitStoryTest extends TemplateTest {
         String storyAsText = "Given a step\nWhen step is executed\nThen step is successful";
         formTester.setValue("input", storyAsText);
         formTester.submit("runButton");
-        String output = formTester.getForm().get("output").getDefaultModelObjectAsString();
-        assertThat(output, containsString("web-"));
+        BookmarkablePageLink<?> link = (BookmarkablePageLink<?>) formTester.getForm().get("viewLink");
+        assertThat(link.getBody().toString(), containsString("web-"));
     }
 
 }

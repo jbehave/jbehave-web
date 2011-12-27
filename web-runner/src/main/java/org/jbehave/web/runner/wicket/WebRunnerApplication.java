@@ -23,7 +23,7 @@ import org.jbehave.web.runner.wicket.pages.DataFiles;
 import org.jbehave.web.runner.wicket.pages.FindSteps;
 import org.jbehave.web.runner.wicket.pages.Home;
 import org.jbehave.web.runner.wicket.pages.RunStory;
-import org.jbehave.web.runner.wicket.pages.StoryView;
+import org.jbehave.web.runner.wicket.pages.ViewStory;
 import org.jbehave.web.runner.wicket.pages.SubmitStory;
 
 import com.google.inject.AbstractModule;
@@ -40,7 +40,7 @@ public class WebRunnerApplication extends WebApplication {
         mountPage("/steps/find", FindSteps.class);
         mountPage("/story/run", RunStory.class);
         mountPage("/story/submit", SubmitStory.class);
-        mountPage("/story/view", StoryView.class);
+        mountPage("/story/view", ViewStory.class);
     }
 
     private Module[] modules() {

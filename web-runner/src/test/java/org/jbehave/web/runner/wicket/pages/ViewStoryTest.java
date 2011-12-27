@@ -2,9 +2,9 @@ package org.jbehave.web.runner.wicket.pages;
 
 import org.junit.Test;
 
-public class StoryViewTest extends TemplateTest {
+public class ViewStoryTest extends TemplateTest {
 
-    private Class<StoryView> pageClass = StoryView.class;
+    private Class<ViewStory> pageClass = ViewStory.class;
 
     @Test
     public void shouldRenderPage() {

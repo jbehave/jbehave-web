@@ -1,32 +1,30 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <head>
-    <title>Submit Story</title>
+<title>Submit Story</title>
 </head>
 <body>
-<wicket:extend>
-    <form wicket:id="storyForm" class="storyForm">
-        <div id="storyInput">
-           <fieldset>
-                <legend>Story Input</legend>
-                <p>
-                    <textarea wicket:id="input" rows="25" cols="100"></textarea>
-                </p>
-                <p>
-                    Meta Filter (optional and only supported by JBehave Core 3.1+):
-                </p>
-                <p>
-                    <textarea wicket:id="metaFilter" rows="2" cols="100"></textarea>
-                </p>
-                <p>
-                    <input wicket:id="runButton" type="submit" value="Submit" />
-                </p> 
-                <p>
-                    <pre wicket:id="output">
-                    </pre>
-                </p>
-            </fieldset>
-        </div>
-    </form>
-</wicket:extend>
+    <wicket:extend>
+        <form wicket:id="storyForm" class="storyForm">
+            <div id="storyInput">
+                <fieldset>
+                    <legend>Story Input</legend>
+                    <p>
+                        <textarea wicket:id="input" rows="25" cols="100"></textarea>
+                    </p>
+                    <p>Meta Filter (optional and only supported by
+                        JBehave Core 3.1+):</p>
+                    <p>
+                        <textarea wicket:id="metaFilter" rows="2"
+                            cols="100"></textarea>
+                    </p>
+                    <p>
+                        <input wicket:id="runButton" type="submit"
+                            value="Submit" /> <a href="#"
+                            wicket:id="viewLink"></a>
+                    </p>
+                </fieldset>
+            </div>
+        </form>
+    </wicket:extend>
 </body>
 </html>

@@ -6,8 +6,11 @@ import java.util.Date;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.value.ValueMap;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryManager;
@@ -48,13 +51,16 @@ public class SubmitStory extends Template {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
             add(new TextArea<String>("input", new PropertyModel<String>(storyContext, "input")).setType(String.class));
             add(new TextArea<String>("metaFilter", new PropertyModel<String>(storyContext, "metaFilter")).setType(String.class));
-            add(new NoMarkupMultiLineLabel("output", new PropertyModel<String>(storyContext, "output"), "brush: plain"));
             add(new Button("runButton"));
+            add(new BookmarkablePageLink<String>("viewLink", ViewStory.class, new PageParameters()));            
         }
 
         @Override
         public final void onSubmit() {
             run();
+            BookmarkablePageLink<?> link = (BookmarkablePageLink<?>) get("viewLink");
+            link.setBody(new Model<String>(storyContext.getOutput()));
+            link.getPageParameters().set("id", storyContext.getOutput());
         }
     }
 

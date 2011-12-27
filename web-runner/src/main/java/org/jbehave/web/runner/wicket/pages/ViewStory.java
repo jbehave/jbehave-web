@@ -30,7 +30,9 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.io.IOUtils;
+import org.apache.wicket.util.string.StringValue;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryManager;
 import org.jbehave.core.embedder.StoryManager.StoryStatus;
@@ -39,7 +41,7 @@ import org.jbehave.core.reporters.StoryReporterBuilder;
 import com.google.inject.Inject;
 
 @SuppressWarnings("serial")
-public class StoryView extends Template {
+public class ViewStory extends Template {
 
     @Inject
     private Embedder embedder;
@@ -48,13 +50,23 @@ public class StoryView extends Template {
 
     private StatusCache statusCache;
 
-    protected Status selected;
-
-    public StoryView() {
-        setPageTitle("Story View");
+    public ViewStory(PageParameters parameters) {
+        setPageTitle("View Story");
         storyManager = embedder.storyManager();
-
         statusCache = new StatusCache(storyManager);
+        add(new StatusDataTable("table", columns()));
+        add(new NoMarkupMultiLineLabel("output", "", "brush: plain"));        
+        showOutput(parameters);
+    }
+
+    private void showOutput(PageParameters parameters) {
+        StringValue id = parameters.get("id");
+        if ( !id.isNull() ){
+            outputAs(id.toString(), "txt");            
+        }
+    }
+
+    private List<IColumn<Status>> columns() {
         List<IColumn<Status>> columns = new ArrayList<IColumn<Status>>();
         columns.add(new PropertyColumn<Status>(new Model<String>("Id"), "id", "id"));
         columns.add(new PropertyColumn<Status>(new Model<String>("Done"), "done", "done"));
@@ -64,10 +76,7 @@ public class StoryView extends Template {
                 cellItem.add(new ActionPanel(componentId, model));
             }
         });
-
-        add(new StatusDataTable("table", columns));
-        add(new NoMarkupMultiLineLabel("output", "", "brush: plain"));
-
+        return columns;
     }
 
     protected String url(String path, String ext) {
@@ -195,7 +204,7 @@ public class StoryView extends Template {
 
         protected List<Status> getIndex(SortParam sort) {
             final int multiplier = (sort.isAscending() ? 1 : -1);
-            List<Status> index = new ArrayList<StoryView.Status>(map.values());
+            List<Status> index = new ArrayList<ViewStory.Status>(map.values());
             if (sort == null || sort.getProperty().equals("id")) {
                 Collections.sort(index, new Comparator<Status>() {
                     public int compare(Status arg0, Status arg1) {
