@@ -40,8 +40,8 @@ public class RunStory extends Template {
 
 
     public RunStory() {
-        storyManager = embedder.storyManager();
         reportTo(outputStream);
+        storyManager = embedder.storyManager();
         setPageTitle("Run Story");
         add(new StoryForm("storyForm"));
     }
