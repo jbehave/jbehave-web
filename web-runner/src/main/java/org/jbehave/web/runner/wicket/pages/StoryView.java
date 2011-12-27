@@ -50,26 +50,22 @@ public class StoryView extends Template {
 
     protected Status selected;
 
-    @SuppressWarnings("unchecked")
     public StoryView() {
         setPageTitle("Story View");
         storyManager = embedder.storyManager();
+        
         statusCache = new StatusCache(storyManager);
-        add(new NoMarkupMultiLineLabel("output", "", "brush: plain"));
-
-        List<IColumn<?>> columns = new ArrayList<IColumn<?>>();
-
-        columns.add(new PropertyColumn(new Model<String>("Id"), "id", "id"));
-        columns.add(new PropertyColumn(new Model<String>("Done"), "done", "done"));
-        columns.add(new PropertyColumn(new Model<String>("Failed"), "failed", "failed"));
-
+        List<IColumn<Status>> columns = new ArrayList<IColumn<Status>>();
+        columns.add(new PropertyColumn<Status>(new Model<String>("Id"), "id", "id"));
+        columns.add(new PropertyColumn<Status>(new Model<String>("Done"), "done", "done"));
+        columns.add(new PropertyColumn<Status>(new Model<String>("Failed"), "failed", "failed"));
         columns.add(new AbstractColumn<Status>(new Model<String>("Output")) {
             public void populateItem(Item<ICellPopulator<Status>> cellItem, String componentId, IModel<Status> model) {
                 cellItem.add(new ActionPanel(componentId, model));
             }
         });
 
-        DefaultDataTable view = new DefaultDataTable("table", columns, new SortableStatusDataProvider(), 8);
+        StatusDataTable view = new StatusDataTable("table", columns);
 
         // IModel statusList = new LoadableDetachableModel() {
         // protected Object load() {
@@ -102,6 +98,7 @@ public class StoryView extends Template {
         // add(container);
 
         add(view);
+        add(new NoMarkupMultiLineLabel("output", "", "brush: plain"));
 
     }
 
@@ -127,7 +124,7 @@ public class StoryView extends Template {
 
         public ActionPanel(final String id, IModel<Status> model) {
             super(id, model);
-            add(new Link("txt") {
+            add(new Link<Status>("txt") {
                 @Override
                 public void onClick() {
                     Status status = (Status) getParent().getDefaultModelObject();
@@ -137,7 +134,14 @@ public class StoryView extends Template {
         }
     }
 
-    public class SortableStatusDataProvider extends SortableDataProvider<Status> {
+    class StatusDataTable extends DefaultDataTable<Status>{
+
+        public StatusDataTable(String id, List<IColumn<Status>> columns) {
+            super(id, columns, new SortableStatusDataProvider(), 10);
+        }
+        
+    }
+    class SortableStatusDataProvider extends SortableDataProvider<Status> {
         public SortableStatusDataProvider() {
             // set default sort
             setSort("id", SortOrder.ASCENDING);
@@ -157,7 +161,7 @@ public class StoryView extends Template {
 
     }
 
-    public class DetachableStatusModel extends LoadableDetachableModel<Status> {
+    class DetachableStatusModel extends LoadableDetachableModel<Status> {
         private final String id;
 
         public DetachableStatusModel(Status s) {
@@ -185,7 +189,7 @@ public class StoryView extends Template {
 
     }
 
-    public class StatusCache {
+    class StatusCache {
         private final Map<String, Status> map = Collections.synchronizedMap(new HashMap<String, Status>());
         private final StoryManager storyManager;
 
@@ -255,7 +259,7 @@ public class StoryView extends Template {
 
     }
 
-    public class Status implements IClusterable {
+    class Status implements IClusterable {
         private String id;
 
         private boolean done;
