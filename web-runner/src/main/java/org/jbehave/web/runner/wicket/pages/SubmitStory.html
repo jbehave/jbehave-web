@@ -1,0 +1,37 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+    <title>Submit Story</title>
+</head>
+<body>
+<wicket:extend>
+    <form wicket:id="storyForm" class="storyForm">
+        <div id="storyInput">
+           <fieldset>
+                <legend>Story Input</legend>
+                <p>
+                    <textarea wicket:id="input" rows="25" cols="100"></textarea>
+                </p>
+                <p>
+                    Mata Filter (optional and only supported by JBehave Core 3.1+):
+                </p>
+                <p>
+                    <textarea wicket:id="metaFilter" rows="2" cols="100"></textarea>
+                </p>
+                <p>
+                    <input wicket:id="runButton" type="submit" value="Run" />
+                </p> 
+            </fieldset>
+        </div>
+        <div id="storyOutput">    
+           <fieldset>
+                <legend>Story Output</legend>
+                <p>
+                    <pre wicket:id="output">
+                    </pre>
+                </p>
+            </fieldset>
+         </div>        
+    </form>
+</wicket:extend>
+</body>
+</html>

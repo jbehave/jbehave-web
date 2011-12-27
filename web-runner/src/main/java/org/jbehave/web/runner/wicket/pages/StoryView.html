@@ -4,18 +4,18 @@
 </head>
 <body>
     <wicket:extend>
-        <table wicket:id="storyContainer">
-            <tr>
-                <th>path</th>
-                <th>done</th>
-                <th>failed</th>
-            </tr>
-            <tr wicket:id="storyStatus">
-                <td><span wicket:id="path">path</span></td>
-                <td><span wicket:id="done">done</span></td>
-                <td><span wicket:id="failed">failed</span></td>
-            </tr>
-        </table>
+        <div id="storyView">    
+            <table class="view" cellspacing="0" wicket:id="table">[table]</table>
+        </div>
+        <div id="storyOutput">    
+           <fieldset>
+                <legend>Story Output</legend>
+                <p>
+                    <pre wicket:id="output">
+                    </pre>
+                </p>
+            </fieldset>
+         </div>        
     </wicket:extend>
 </body>
 </html>
