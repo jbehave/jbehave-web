@@ -53,7 +53,7 @@ public class StoryView extends Template {
     public StoryView() {
         setPageTitle("Story View");
         storyManager = embedder.storyManager();
-        
+
         statusCache = new StatusCache(storyManager);
         List<IColumn<Status>> columns = new ArrayList<IColumn<Status>>();
         columns.add(new PropertyColumn<Status>(new Model<String>("Id"), "id", "id"));
@@ -65,46 +65,14 @@ public class StoryView extends Template {
             }
         });
 
-        StatusDataTable view = new StatusDataTable("table", columns);
-
-        // IModel statusList = new LoadableDetachableModel() {
-        // protected Object load() {
-        // return storyManager.list();
-        // }
-        // };
-        // ListView<Status> view = new ListView<Status>("storyStatus",
-        // statusList) {
-        // protected void populateItem(final ListItem<Status> item) {
-        // Status status = item.getModelObject();
-        // item.add(new Label("path", status.getPath()));
-        // item.add(new Label("done", status.isDone().toString()));
-        // item.add(new Label("failed", status.isFailed().toString()));
-        // item.add(new ExternalLink("html", linkFor(status.getPath(), ".html"),
-        // "html"));
-        // }
-        // };
-
-        // // encapsulate ListView in a WebMarkupContainer to allow update
-        // WebMarkupContainer container = new
-        // WebMarkupContainer("storyContainer");
-        // // generate a markup-id so the contents can be updated through an
-        // AJAX
-        // container.setOutputMarkupId(true);
-        // container.add(new
-        // AjaxSelfUpdatingTimerBehavior(Duration.seconds(1)));
-        // // add the view to the container
-        // container.add(view);
-        // // finally add the container to the page
-        // add(container);
-
-        add(view);
+        add(new StatusDataTable("table", columns));
         add(new NoMarkupMultiLineLabel("output", "", "brush: plain"));
 
     }
 
     protected String url(String path, String ext) {
         StoryReporterBuilder builder = embedder.configuration().storyReporterBuilder();
-        return builder.codeLocation().toExternalForm() + "/"+ StringUtils.substringBefore(path, "story") + ext;
+        return builder.codeLocation().toExternalForm() + "/" + StringUtils.substringBefore(path, "story") + ext;
     }
 
     protected void outputAs(String id, String ext) {
@@ -134,13 +102,14 @@ public class StoryView extends Template {
         }
     }
 
-    class StatusDataTable extends DefaultDataTable<Status>{
+    class StatusDataTable extends DefaultDataTable<Status> {
 
         public StatusDataTable(String id, List<IColumn<Status>> columns) {
             super(id, columns, new SortableStatusDataProvider(), 10);
         }
-        
+
     }
+
     class SortableStatusDataProvider extends SortableDataProvider<Status> {
         public SortableStatusDataProvider() {
             // set default sort
