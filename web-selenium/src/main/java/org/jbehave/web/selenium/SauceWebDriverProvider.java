@@ -48,9 +48,13 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
     protected String getSeleniumVersion() {
         String seVersion = System.getProperty("selenium.version");
         if (seVersion == null) {
-            seVersion = "2.13.0";
+            return getDefaultSeleniumVersion();
         }
         return seVersion;
+    }
+
+    protected String getDefaultSeleniumVersion() {
+        return "2.14.0";
     }
 
     @Override
