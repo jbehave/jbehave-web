@@ -30,6 +30,11 @@ public class Template extends WebPage {
             add(new AttributeModifier("class", new Model<String>(classAttribute)));
         }
 
+        public NoMarkupMultiLineLabel(String id, IModel<String> model, String classAttribute) {
+            super(id, model);
+            add(new AttributeModifier("class", new Model<String>(classAttribute)));
+        }
+
         @Override
         public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
             String body = getDefaultModelObjectAsString();

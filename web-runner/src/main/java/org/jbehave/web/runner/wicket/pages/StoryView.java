@@ -107,7 +107,7 @@ public class StoryView extends Template {
 
     protected String url(String path, String ext) {
         StoryReporterBuilder builder = embedder.configuration().storyReporterBuilder();
-        return builder.codeLocation().toExternalForm() + StringUtils.substringBefore(path, "story") + ext;
+        return builder.codeLocation().toExternalForm() + "/"+ StringUtils.substringBefore(path, "story") + ext;
     }
 
     protected void outputAs(String id, String ext) {
@@ -133,7 +133,6 @@ public class StoryView extends Template {
                     Status status = (Status) getParent().getDefaultModelObject();
                     outputAs(status.getId(), this.getId());
                 }
-
             });
         }
     }
@@ -179,12 +178,6 @@ public class StoryView extends Template {
             return Long.valueOf(id).hashCode();
         }
 
-        /**
-         * Used for dataview with ReuseIfModelsEqualStrategy item reuse strategy
-         * 
-         * @see org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy
-         * @see java.lang.Object#equals(java.lang.Object)
-         */
         @Override
         public boolean equals(final Object obj) {
             return EqualsBuilder.reflectionEquals(this, obj);
