@@ -233,3 +233,27 @@ table td {
 	margin-left: 5px;
 	font-size: xx-small;
 }
+
+div.wicket-aa {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana;
+    font-size: 12px;
+    background-color: white;
+    border-width: 1px;
+    border-color: #ccc;
+    border-style: solid;
+    padding: 2px;
+    margin: 1px 0 0 0;
+    text-align: left;
+}
+
+div.wicket-aa ul {
+    list-style: none;
+    padding: 2px;
+    margin: 0;
+}
+
+div.wicket-aa ul li.selected {
+    background-color: #090;
+    padding: 2px;
+    margin: 0;
+}

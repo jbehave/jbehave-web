@@ -2,14 +2,18 @@ package org.jbehave.web.runner.wicket.pages;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteTextRenderer;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.MapModel;
 import org.apache.wicket.util.resource.PackageResourceStream;
 import org.apache.wicket.util.value.ValueMap;
@@ -19,11 +23,13 @@ import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.StepFinder;
 import org.jbehave.core.steps.Stepdoc;
 import org.jbehave.web.runner.context.StepdocContext;
+import org.jbehave.web.runner.context.StepdocContext.SerializableStepdoc;
 import org.jbehave.web.runner.context.StepdocContext.Sorting;
 import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
 
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 @SuppressWarnings("serial")
@@ -39,11 +45,14 @@ public class FindSteps extends Template {
 
     public FindSteps() {
         setPageTitle("Find Steps");
-        add(new StepsForm("stepsForm"));
+
         stepFinder = embedder.configuration().stepFinder();
         candidateSteps = embedder.stepsFactory().createCandidateSteps();
         stepdocContext.setAllStepdocs(stepFinder.stepdocs(candidateSteps));
         stepdocContext.setStepsInstances(stepFinder.stepsInstances(candidateSteps));
+
+        add(new StepsForm("stepsForm"));
+
     }
 
     public final class StepsForm extends Form<ValueMap> {
@@ -92,6 +101,12 @@ public class FindSteps extends Template {
 
             });
             add(new Button("findButton"));
+            add(new AutoCompleteTextField<SerializableStepdoc>("exploringStep", new Model<SerializableStepdoc>(), new StepdocAutoCompleteRenderer()) {
+                @Override
+                protected Iterator<SerializableStepdoc> getChoices(String input) {
+                    return stepdocContext.matchingStepdocs(input).iterator();
+                }
+            });
         }
 
         @Override
@@ -134,4 +149,10 @@ public class FindSteps extends Template {
         }
     }
 
+    public static class StepdocAutoCompleteRenderer extends AbstractAutoCompleteTextRenderer<SerializableStepdoc> {
+        @Override
+        protected String getTextValue(final SerializableStepdoc object) {
+            return escapeHtml(object.asString());
+        }
+    }
 }

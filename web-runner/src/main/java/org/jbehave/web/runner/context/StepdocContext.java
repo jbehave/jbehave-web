@@ -1,7 +1,5 @@
 package org.jbehave.web.runner.context;
 
-import static java.util.Arrays.asList;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,8 +7,11 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.codehaus.plexus.util.StringUtils;
 import org.jbehave.core.steps.StepType;
 import org.jbehave.core.steps.Stepdoc;
+
+import static java.util.Arrays.asList;
 
 @SuppressWarnings("serial")
 public class StepdocContext implements Serializable {
@@ -43,6 +44,19 @@ public class StepdocContext implements Serializable {
 
     public List<SerializableStepdoc> getStepdocs() {
         return stepdocs;
+    }
+
+    public List<SerializableStepdoc> matchingStepdocs(String input) {
+        List<SerializableStepdoc> matching = new ArrayList<SerializableStepdoc>();
+        if ( StringUtils.isEmpty(input) ){
+            return matching;
+        }
+        for (SerializableStepdoc stepdoc : allStepdocs ) {
+            if ( stepdoc.asString().matches(".*"+input+".*")){
+                matching.add(stepdoc);                        
+            }
+        }
+        return matching;
     }
 
     public void addAllStepdocs() {
@@ -160,6 +174,10 @@ public class StepdocContext implements Serializable {
             return methodSignature;
         }
 
+        public String asString(){
+            return startingWord + " " + pattern;
+        }
+        
         @Override
         public String toString() {
             return ToStringBuilder.reflectionToString(this).toString();
