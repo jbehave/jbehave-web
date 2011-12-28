@@ -15,15 +15,15 @@ the application.</p>
 
 <p>The Web Runner is a Wicket-based application and provides a base application class, <a
     href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
-which only requires the specification of the CandidateSteps for the
+which only requires the specification of the InjectableStepsFactory for the
 story running, e.g.:</p>
 <script type="syntaxhighlighter" class="brush: java">
 <![CDATA[
 public class TraderRunnerApplication extends WebRunnerApplication {
 
-    protected List<CandidateSteps> candidateSteps() {
+    protected InjectableStepsFactory stepsFactory() {
         return new InstanceStepsFactory(configuration(), new TraderSteps(new TradingService()),
-                new StockExchangeSteps()).createCandidateSteps();
+                new StockExchangeSteps());
     }
 
 }
