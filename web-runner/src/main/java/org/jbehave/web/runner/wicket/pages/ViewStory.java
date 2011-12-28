@@ -35,7 +35,7 @@ import org.apache.wicket.util.io.IOUtils;
 import org.apache.wicket.util.string.StringValue;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryManager;
-import org.jbehave.core.embedder.StoryManager.StoryStatus;
+import org.jbehave.core.embedder.StoryManager.StoryOutcome;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 
 import com.google.inject.Inject;
@@ -177,8 +177,8 @@ public class ViewStory extends Template {
         }
 
         public void reload() {
-            for (StoryStatus status : storyManager.list()) {
-                add(new Status(status));
+            for (StoryOutcome outcome : storyManager.outcomes()) {
+                add(new Status(outcome));
             }
             if ( anyDone() ){
                 embedder.generateReportsView();
@@ -259,10 +259,10 @@ public class ViewStory extends Template {
 
         private boolean failed;
 
-        public Status(StoryStatus status) {
-            this.id = status.getPath();
-            this.done = status.isDone();
-            this.failed = status.isFailed();
+        public Status(StoryOutcome outcome) {
+            this.id = outcome.getPath();
+            this.done = outcome.isDone();
+            this.failed = outcome.isFailed();
         }
 
         public String getId() {
