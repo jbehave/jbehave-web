@@ -27,8 +27,8 @@ Runner:</p>
 
 <h2>Run Story</h2>
 
-<p>The Run Story page allows the user to run any textual story and
-to display the result in the same page.</p>
+<p>The Run Story page allows the user to run synchronously any textual story, waiting for it to complete, and
+displaying the result in the same page.</p>
 
 <ul>
 	<li>From Menu, click on <b>Run Story</b>, which will take you to a
@@ -44,6 +44,35 @@ to display the result in the same page.</p>
 	JBehave via a command-line interface. This includes any details of
 	failed and pending steps. If any failures occur, the user has the stack
 	trace in an expandable section below.</li>
+</ul>
+
+<h2>Submit Story</h2>
+
+<p>The Submit Story page allows the user to run asynchronously any textual story.  The result can be then viewed (once completed) in the View Story page.
+</p>
+
+<ul>
+    <li>From Menu, click on <b>Submit Story</b>, which will take you to a
+    page where you can enter your textual story.</li>
+    <li>Input textual story in textarea (e.g you can cut &amp; paste
+    the sample scenarios found in the <a
+        href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/resources/trader.story">trader
+    story</a>) and click on <b>Submit</b> button.</li>
+    <li>Optionally, a meta filter can be specified.  This requires the Web Runner to 
+    be built using JBehave Core 3.1+.</li>
+    <li>Upon execution, a story path (a timestamped id) is generated and an clickable link is provided to the View Story page.</li>
+</ul>
+
+<h2>View Story</h2>
+
+<p>The View Story page allows the user to view all the stories run (synchronously or asynchronously) and view the output as text.
+</p>
+
+<ul>
+    <li>From Menu, click on <b>View Story</b>, which will take you to a
+    page where all the stories run as displayed.</li>
+    <li>The columns of the table are sortable by clicking on the header links.</li>
+    <li>Each story output can be viewed as text by clicking on the corresponding 'txt' link.</li>
 </ul>
 
 <h2>Find Steps</h2>

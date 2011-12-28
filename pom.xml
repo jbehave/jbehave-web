@@ -19,7 +19,6 @@
     <module>web-resources</module>
     <module>web-selenium</module>
     <module>web-runner</module>
-    <module>web-queue</module>
   </modules>
 
   <properties>

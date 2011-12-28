@@ -24,11 +24,6 @@
     </dependency>
     <dependency>
       <groupId>org.jbehave.web</groupId>
-      <artifactId>jbehave-web-queue</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-runner</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -73,26 +68,6 @@
                 <artifactItem>
                   <groupId>${pom.groupId}</groupId>
                   <artifactId>jbehave-web-selenium</artifactId>
-                  <version>${project.version}</version>
-                  <classifier>javadoc</classifier>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-          <execution>
-            <id>unpack-javadoc-web-queue</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/site/javadoc/web-queue</outputDirectory>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>true</overWriteSnapshots>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>${pom.groupId}</groupId>
-                  <artifactId>jbehave-web-queue</artifactId>
                   <version>${project.version}</version>
                   <classifier>javadoc</classifier>
                 </artifactItem>

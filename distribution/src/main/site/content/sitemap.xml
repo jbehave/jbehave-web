@@ -11,10 +11,6 @@
     <page>source-repository.html</page>
   </section>
   <section>
-    <name>Web Queue</name>
-    <page>using-web-queue.html</page>
-  </section>
-  <section>
     <name>Web Runner</name>
     <page>customising-web-runner.html</page>
     <page>using-web-runner.html</page>
