@@ -81,7 +81,7 @@ public class ViewStory extends Template {
 
     protected String url(String path, String ext) {
         StoryReporterBuilder builder = embedder.configuration().storyReporterBuilder();
-        return builder.codeLocation().toExternalForm() + "/" + StringUtils.substringBefore(path, "story") + ext;
+        return builder.codeLocation().toExternalForm() + "/" + path + "." + ext;
     }
 
     protected void outputAs(String id, String ext) {
@@ -180,6 +180,21 @@ public class ViewStory extends Template {
             for (StoryStatus status : storyManager.list()) {
                 add(new Status(status));
             }
+            if ( anyDone() ){
+                embedder.generateReportsView();
+                embedder.generateCrossReference();
+            }
+        }
+
+        private Boolean anyDone() {
+            boolean anyDone = false;
+            for ( Status status : map.values() ){
+                if  (status.isDone()){
+                    anyDone = true;
+                    break;
+                }
+            }
+            return anyDone;
         }
 
         public Status get(String id) {

@@ -99,6 +99,6 @@ public class RunStory extends Template {
     }
 
     private String storyPath() {
-        return "web-" + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date(System.currentTimeMillis())) + ".story";
+        return "web-" + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date(System.currentTimeMillis()));
     }
 }

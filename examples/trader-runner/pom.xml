@@ -11,9 +11,9 @@
   <packaging>war</packaging>
   <name>JBehave Web Trader Runner</name>
   <description>
-	Trader/Trading example launching with JBehaveWeb for interactive testing of stories
+	Trader/Trading example launching with JBehave Web for running of stories
 	
-	Run mvn jetty:run 
+	Run mvn jetty:run-war 
 	Then go to http://localhost:8080 to play with it.	
 	</description>
   <properties>
@@ -34,7 +34,35 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>unpack-resources</id>
+            <id>unpack-resources-core</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${user.home}/jbehave/view</outputDirectory>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <excludes>**/*.class</excludes>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.jbehave</groupId>
+                  <artifactId>jbehave-core</artifactId>
+                  <version>${jbehave.core.version}</version>
+                  <classifier>resources</classifier>
+                  <type>zip</type>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.jbehave.site</groupId>
+                  <artifactId>jbehave-site-resources</artifactId>
+                  <version>${jbehave.site.version}</version>
+                  <type>zip</type>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <execution>
+            <id>unpack-resources-web</id>
             <phase>process-resources</phase>
             <goals>
               <goal>unpack</goal>
@@ -53,6 +81,7 @@
               </artifactItems>
             </configuration>
           </execution>
+
         </executions>
       </plugin>
       <plugin>

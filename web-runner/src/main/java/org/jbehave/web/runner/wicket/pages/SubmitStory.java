@@ -15,6 +15,7 @@ import org.apache.wicket.util.value.ValueMap;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryManager;
 import org.jbehave.core.model.Story;
+import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.web.runner.context.StoryContext;
 
 import com.google.inject.Inject;
@@ -22,7 +23,9 @@ import com.google.inject.Inject;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromPath;
+import static org.jbehave.core.reporters.Format.HTML;
 import static org.jbehave.core.reporters.Format.TXT;
+import static org.jbehave.core.reporters.Format.XML;
 
 @SuppressWarnings("serial")
 public class SubmitStory extends Template {
@@ -43,16 +46,17 @@ public class SubmitStory extends Template {
 
     private void reportToDirectory(String path) {
         embedder.configuration().storyReporterBuilder().withCodeLocation(codeLocationFromPath(path))
-                .withFormats(TXT);
+                .withDefaultFormats().withFormats(HTML, TXT, XML).withCrossReference(new CrossReference());
     }
 
     public final class StoryForm extends Form<ValueMap> {
         public StoryForm(final String id) {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
             add(new TextArea<String>("input", new PropertyModel<String>(storyContext, "input")).setType(String.class));
-            add(new TextArea<String>("metaFilter", new PropertyModel<String>(storyContext, "metaFilter")).setType(String.class));
+            add(new TextArea<String>("metaFilter", new PropertyModel<String>(storyContext, "metaFilter"))
+                    .setType(String.class));
             add(new Button("runButton"));
-            add(new BookmarkablePageLink<String>("viewLink", ViewStory.class, new PageParameters()));            
+            add(new BookmarkablePageLink<String>("viewLink", ViewStory.class, new PageParameters()));
         }
 
         @Override
@@ -75,8 +79,7 @@ public class SubmitStory extends Template {
     }
 
     private String storyPath() {
-        return "web-" + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date(System.currentTimeMillis()))
-                + ".story";
+        return "web-" + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date(System.currentTimeMillis()));
     }
 
 }
