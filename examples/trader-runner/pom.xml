@@ -58,6 +58,11 @@
                   <version>${jbehave.site.version}</version>
                   <type>zip</type>
                 </artifactItem>
+                <artifactItem>
+                  <groupId>org.jbehave</groupId>
+                  <artifactId>jbehave-navigator</artifactId>
+                  <version>${jbehave.core.version}</version>
+                </artifactItem>
               </artifactItems>
             </configuration>
           </execution>
@@ -81,7 +86,6 @@
               </artifactItems>
             </configuration>
           </execution>
-
         </executions>
       </plugin>
       <plugin>
