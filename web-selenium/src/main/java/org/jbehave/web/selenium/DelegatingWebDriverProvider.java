@@ -2,6 +2,7 @@ package org.jbehave.web.selenium;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.OutputType;
@@ -34,19 +35,15 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
         WebDriver driver = get();
         if (driver instanceof TakesScreenshot) {
             File file = new File(path);
+            byte[] bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+            file.getParentFile().mkdirs();
             try {
-                byte[] bytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-                file.getParentFile().mkdirs();
                 file.createNewFile();
                 IOUtils.write(bytes, new FileOutputStream(file));
-                return true;
-            } catch (WebDriverException e) {
-                if (e.getMessage().indexOf("Job on Sauce already complete.") == -1) {
-                    throw new RuntimeException("Failed to save screenshot to " + file, e);
-                }
-            } catch (Exception e) {
-                throw new RuntimeException("Failed to save screenshot to " + file, e);
+            } catch (IOException e) {
+                throw new RuntimeException("Can't save file", e);
             }
+            return true;
         }
         return false;
     }

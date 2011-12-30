@@ -8,6 +8,7 @@ import org.jbehave.core.annotations.AfterScenario.Outcome;
 import org.jbehave.core.failures.PendingStepFound;
 import org.jbehave.core.failures.UUIDExceptionWrapper;
 import org.jbehave.core.reporters.StoryReporterBuilder;
+import org.openqa.selenium.WebDriverException;
 
 /**
  * WebDriverSteps that save screenshot upon failure in a scenario outcome.
@@ -47,6 +48,9 @@ public class WebDriverScreenshotOnFailure extends WebDriverSteps {
         boolean savedIt = false;
         try {
             savedIt = driverProvider.saveScreenshotTo(screenshotPath);
+        } catch (RemoteWebDriverProvider.SauceLabsJobHasEnded e) {
+            System.err.println("Screenshot of page '" + currentUrl + "' has **NOT** been saved. The SauceLabs job has ended, possibly timing out on their end.");
+            return;
         } catch (Exception e) {
             System.out.println("Screenshot of page '" + currentUrl + ". Will try again. Cause: " + e.getMessage());
             // Try it again.  WebDriver (on SauceLabs at least?) has blank-page and zero length files issues.

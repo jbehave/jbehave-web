@@ -72,12 +72,8 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
         try {
             passed.set(false);
             ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(Scenario failed)");
-        } catch (WebDriverException e) {
-            if (e.getMessage().startsWith("Error communicating with the remote browser. It may have died.")) {
-                // do nothing, it's likely that SauceLabs timed out the job on their system.
-            } else {
-                throw e;
-            }
+        } catch (RemoteWebDriverProvider.SauceLabsJobHasEnded e) {
+            // do nothing.
         }
     }
 

@@ -1,7 +1,12 @@
 package org.jbehave.web.selenium;
 
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.remote.Command;
+import org.openqa.selenium.remote.CommandExecutor;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.Response;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -31,13 +36,22 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
 
     /**
      * With default capabilities and a selenium version specified in getSeleniumVersion()
-     * @see RemoteWebDriverProvider#defaultDesiredCapabilities()
+     * @see RemoteWebDriverProvider#makeDesiredCapabilities
      * @see SauceWebDriverProvider#getSeleniumVersion()
      */
     public SauceWebDriverProvider() {
         super();
-        desiredCapabilities.setCapability("name", "JBehave");
-        desiredCapabilities.setCapability("selenium-version", getSeleniumVersion());
+    }
+
+    @Override
+    protected DesiredCapabilities makeDesiredCapabilities() {
+        DesiredCapabilities dc = super.makeDesiredCapabilities();
+        dc.setCapability("name", "JBehave");
+        dc.setCapability("selenium-version", getSeleniumVersion());
+        dc.setCapability("max-duration", getMaxDuration());
+        dc.setCapability("command-timeout", getCommandTimeout());
+        dc.setCapability("idle-timeout", getIdleTimeout());
+        return dc;
     }
 
     /**
@@ -81,5 +95,49 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
     public static String getSauceCredentials() {
         return getSauceUser() + ":" + getSauceAccessKey();
     }
+
+    /**
+     * Max duration of Job on Sauce Labs.  If you don't override this,
+     * and have not set a value on system property 'SAUCE_MAX_DURATION',
+     * 30 minutes is the default.
+     * @return max duration in seconds
+     */
+    protected String getMaxDuration() {
+        String maxDuration = System.getProperty("SAUCE_MAX_DURATION");
+        if (maxDuration == null) {
+            return "" + (30 * 60);
+        }
+        return maxDuration;
+    }
+
+    /**
+     * Command Timeout for an individual command for a Job on Sauce Labs.
+     * If you don't override this, and you don't specify a value on
+     * a system property 'SAUCE_COMMAND_TIMEOUT', then 300 seconds is the default.
+     * @return command timeout in seconds
+     */
+    protected String getCommandTimeout() {
+        String commandTimeout = System.getProperty("SAUCE_COMMAND_TIMEOUT");
+        if (commandTimeout == null) {
+            return "300";
+        }
+        return commandTimeout;
+    }
+
+    /**
+     * Idle Timeout for a Job on Sauce Labs.
+     * If you don't override this, and don't specify a value on the system
+     * property 'SAUCE_IDLE_TIMEOUT', then 90 seconds is the default.
+     * @return command timeout in seconds
+     */
+    protected String getIdleTimeout() {
+        String idleTimeout = System.getProperty("SAUCE_IDLE_TIMEOUT");
+        if (idleTimeout == null) {
+            return "90";
+        }
+        return idleTimeout;
+    }
+
+
 
 }

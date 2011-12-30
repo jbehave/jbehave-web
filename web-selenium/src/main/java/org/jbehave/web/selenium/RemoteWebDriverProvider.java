@@ -2,9 +2,9 @@ package org.jbehave.web.selenium;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -14,6 +14,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.Response;
 
 /**
  * <p>
@@ -22,21 +23,21 @@ import org.openqa.selenium.remote.RemoteWebDriver;
  * </p>
  * <p>
  * The default {@link DesiredCapabilities}, specified by
- * {@link #defaultDesiredCapabilities()}, are for Windows Firefox 3.6 allowing
+ * {@link #makeDesiredCapabilities()}, are for Windows Firefox 3.6 allowing
  * screenshots.
  * </p>
  */
 public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
 
-    protected DesiredCapabilities desiredCapabilities;
+    private final DesiredCapabilities desiredCapabilities;
     private boolean verbose = false;
 
     /**
      * With default capabilities
-     * @see RemoteWebDriverProvider#defaultDesiredCapabilities()
+     * @see RemoteWebDriverProvider#makeDesiredCapabilities()
      */
     public RemoteWebDriverProvider() {
-        this(defaultDesiredCapabilities());
+        this(null);
     }
 
     /**
@@ -45,16 +46,28 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
      * and 'Takes Screen-Shot'
      * @return a DesiredCapabilities matching the above.
      */
-    public static DesiredCapabilities defaultDesiredCapabilities() {
+    protected DesiredCapabilities makeDesiredCapabilities() {
         DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
         desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
-        String bv = System.getProperty("browser.version");
-        desiredCapabilities.setVersion(bv == null ? "3.6." : bv);
+        desiredCapabilities.setVersion(getBrowserVersion());
         return desiredCapabilities;
     }
 
+    /**
+     * Get the default browser version for use on the Remote system.
+     * @return "3.6" or whatever you have specified on system property 'browser.version'
+     */
+    protected String getBrowserVersion() {
+        String bv = System.getProperty("browser.version");
+        return bv == null ? "3.6." : bv;
+    }
+
     public RemoteWebDriverProvider(DesiredCapabilities desiredCapabilities) {
-        this.desiredCapabilities = desiredCapabilities;
+        if (desiredCapabilities == null) {
+            this.desiredCapabilities = makeDesiredCapabilities();
+        } else {
+            this.desiredCapabilities = desiredCapabilities;
+        }
     }
 
     public void initialize() {
@@ -82,10 +95,10 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
     /**
      * Override this to instrument CommandExecutor
      * @return a CommandExecutor instance.
-     * @param httpCommandExecutor the actual CommandExecutor that communicates over the wire.
+     * @param commandExecutor a CommandExecutor that communicates over the wire.
      */
-    protected HttpCommandExecutor wrapCommandExecutor(HttpCommandExecutor httpCommandExecutor) {
-        return httpCommandExecutor;
+    protected CommandExecutor wrapCommandExecutor(CommandExecutor commandExecutor) {
+        return commandExecutor;
     }
 
     public URL createRemoteURL() throws MalformedURLException {
@@ -98,6 +111,8 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
 
     static class ScreenshootingRemoteWebDriver extends RemoteWebDriver implements TakesScreenshot {
 
+        private boolean sauceJobEnded = false;
+
         public ScreenshootingRemoteWebDriver(CommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities) {
             super(commandExecutor, desiredCapabilities);
         }
@@ -108,6 +123,31 @@ public class RemoteWebDriverProvider extends DelegatingWebDriverProvider {
             String base64 = execute(DriverCommand.SCREENSHOT).getValue().toString();
             // ... and convert it.
             return target.convertFromBase64Png(base64);
+        }
+
+        @Override
+        protected Response execute(String driverCommand, Map<String, ?> parameters) {
+            if (sauceJobEnded) {
+                throw new SauceLabsJobHasEnded();
+            }
+            try {
+                return super.execute(driverCommand, parameters);
+            } catch (WebDriverException e) {
+                if (e.getMessage().indexOf("Job on Sauce is already complete") > -1) {
+                    sauceJobEnded = true;
+                    throw new SauceLabsJobHasEnded();
+                }
+                throw e;
+            } catch (RuntimeException e) {
+                throw e;
+            }
+        }
+    }
+
+    public static class SauceLabsJobHasEnded extends WebDriverException {
+        public SauceLabsJobHasEnded() {
+            super("SauceLabs job has ended.  It may have timed-out previously.  Not even screen-shots, " +
+                    "after-scenario or after-story steps are possible after this for this WebDriver instance");
         }
     }
 
