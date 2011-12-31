@@ -95,14 +95,13 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
     @Override
     public void afterScenario() {
+        String as = "(After Scenario Steps, if any...)";
         try {
-            ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=(After Scenario Steps, if any...)");
+            ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=" + as);            
+        } catch (RemoteWebDriverProvider.SauceLabsJobHasEnded e) {
+            System.err.println("Couldn't set context as Sauce Labs job has ended");
         } catch (WebDriverException e) {
-            if (e.getMessage().startsWith("Error communicating with the remote browser. It may have died.")) {
-                // do nothing, it's likely that SauceLabs timed out the job on their system.
-            } else {
-                throw e;
-            }
+            System.err.println("Unexpected WebDriver error while trying to set context '" + as + "' : " + e.getMessage());
         }
     }
 
