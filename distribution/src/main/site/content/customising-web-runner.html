@@ -14,7 +14,7 @@ instances required to match the textual steps need to be configured in
 the application.</p>
 
 <p>The Web Runner is a Wicket-based application and provides a base application class, <a
-    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
+    href="https://github.com/jbehave/jbehave-web/blob/master/web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
 which only requires the specification of the InjectableStepsFactory for the
 story running, e.g.:</p>
 <script type="syntaxhighlighter" class="brush: java">
@@ -30,7 +30,7 @@ public class TraderRunnerApplication extends WebRunnerApplication {
 ]]>
 </script>
 <p>The user can optionaly override any of the protected methods of <a
-    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
+    href="https://github.com/jbehave/jbehave-web/blob/master/web-runner/src/main/java/org/jbehave/web/runner/wicket/WebRunnerApplication.java">WebRunnerApplication</a>
 which return instances of the configurable components of the Web Runner.</p>
 
 <p>The application class name then needs to be configured in the <b>WicketFilter</b> in your <b>web.xml</b>:</p>
@@ -107,7 +107,7 @@ which return instances of the configurable components of the Web Runner.</p>
 <h2>Running with Maven</h2>
 
 <p>Maven users can model their own module on the <a
-    href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner">trader
+    href="https://github.com/jbehave/jbehave-web/blob/master/examples/trader-runner">trader
 runner example</a></p>
 
 <h2>Running with Ant</h2>
@@ -122,7 +122,7 @@ runner example</a></p>
     <li>Edit <b>webapp/WEB-INF/web.xml</b> to configure the
     Application class name that you've defined, replacing the <b>org.jbehave.web.runner.wicket.WebRunnerApplication</b>
     class name with your fully-qualified Application class name. See <a
-        href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/java/org/jbehave/web/examples/trader/runner/TraderRunnerApplication.java">TraderRunnerApplication</a>
+        href="https://github.com/jbehave/jbehave-web/blob/master/examples/trader-runner/src/main/java/org/jbehave/web/examples/trader/runner/TraderRunnerApplication.java">TraderRunnerApplication</a>
     for an example of how easy it is. The minimal requirement is to
     specify the one or more instances of Steps that you need to run the
     stories.</li>

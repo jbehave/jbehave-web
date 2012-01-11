@@ -14,7 +14,7 @@ be able to access the results of story running without needing access to
 developer resources, e.g. source control or build systems.</p>
 
 <p>A fully functional example webapp is provided in <a
-	href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=tree;f=examples/trader-runner">trader
+	href="https://github.com/jbehave/jbehave-web/blob/master/examples/trader-runner">trader
 runner example</a>. We'll be using this example to illustrate the use of Web
 Runner:</p>
 
@@ -35,10 +35,9 @@ displaying the result in the same page.</p>
 	page where you can enter your textual story.</li>
 	<li>Input textual story in textarea (e.g you can cut &amp; paste
 	the sample scenarios found in the <a
-		href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/resources/trader.story">trader
-	story</a>) and click on <b>Run</b> button.</li>
-	<li>Optionally, a meta filter can be specified.  This requires the Web Runner to 
-	be built using JBehave Core 3.1+.</li>
+		href="https://github.com/jbehave/jbehave-web/blob/master/examples/trader-runner/src/main/resources/trader.story">trader.story</a>) 
+        and click on <b>Run</b> button.</li>
+	<li>Optionally, a meta filter can be specified.</li>
 	<li>Upon execution, the output of the story is shown below. By
 	default the same output is shown as the one you would see when running
 	JBehave via a command-line interface. This includes any details of
@@ -56,10 +55,9 @@ displaying the result in the same page.</p>
     page where you can enter your textual story.</li>
     <li>Input textual story in textarea (e.g you can cut &amp; paste
     the sample scenarios found in the <a
-        href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/resources/trader.story">trader
-    story</a>) and click on <b>Submit</b> button.</li>
-    <li>Optionally, a meta filter can be specified.  This requires the Web Runner to 
-    be built using JBehave Core 3.1+.</li>
+        href="https://github.com/jbehave/jbehave-web/blob/master/examples/trader-runner/src/main/resources/trader.story">trader.story</a>) 
+        and click on <b>Submit</b> button.</li>
+    <li>Optionally, a meta filter can be specified.</li>
     <li>Upon execution, a story path (a timestamped id) is generated and an clickable link is provided to the View Story page.</li>
 </ul>
 
@@ -75,26 +73,36 @@ displaying the result in the same page.</p>
     <li>Each story output can be viewed as text by clicking on the corresponding 'txt' link.</li>
 </ul>
 
-<h2>Find Steps</h2>
+<h2>Explore Steps</h2>
 
-<p>The Find Steps page allows the user to find steps (i.e. methods
-in steps instances classes) and to display the patterns and the
-associated methods.</p>
+<p>The Find Steps page allows the user to explore available steps pattern by auto-completion and to display the patterns 
+in a drop-down list.</p>
+
+<ul>
+    <li>From Menu, click on <b>Find Steps</b>, which will take you to
+    a page where you have an <b>Explore</b> panel.</li>
+    <li>Start typing in the input field (e.g you can type "Given" to display all the Given type step patterns).</li>
+    <li>The auto-completed list will include any step pattern that matches in part the input text.</li>
+</ul>
+
+<h2>Match Steps</h2>
+
+<p>The Find Steps page allows the user to find methods in steps classes that match a given complete textual step and 
+to display them.</p>
 
 <ul>
 	<li>From Menu, click on <b>Find Steps</b>, which will take you to
-	a page where you can enter your textual step.</li>
-	<li>Input textual step in textarea (e.g you can cut &amp; paste a
+	a page where you can enter your complete textual step.</li>
+	<li>Input the complete textual step in textarea (e.g you can cut &amp; paste a
 	step from the sample scenarios found in the <a
-		href="http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git;a=blob;f=examples/trader-runner/src/main/resources/trader.story">trader
-	story</a>) and click on <b>Find</b> button.</li>
-	<li>A blank input will simply show all the steps that are
-	configured.</li>
+        href="https://github.com/jbehave/jbehave-web/blob/master/examples/trader-runner/src/main/resources/trader.story">trader.story</a>) 
+	   and click on <b>Find</b> button.</li>
+	<li>A blank input will simply show all the methods that are configured.</li>
 	<li>Upon execution, the steps found are shown below. By default,
 	only the patterns are shown, but you can choose to also display
 	associated methods.</li>
 	<li>The final section shows the steps instances that were
-	configured and were used to find steps.</li>
+	configured and were used to find the steps.</li>
 </ul>
 
 <h2>Data Files</h2>
