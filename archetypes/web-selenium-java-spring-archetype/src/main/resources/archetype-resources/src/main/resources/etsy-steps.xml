@@ -1,0 +1,25 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+  <bean id="driverProvider" class="org.jbehave.web.selenium.FirefoxWebDriverProvider" >
+  </bean>
+  
+  <bean id="pageFactory" class="${package}.pages.PageFactory">
+     <constructor-arg ref="driverProvider"/>
+  </bean>  
+  
+  <bean id="lifecycleSteps" class="${package}.steps.LifecycleSteps">
+     <constructor-arg ref="driverProvider"/>
+  </bean>  
+
+  <bean id="etsySteps" class="${package}.steps.EtsyDotComSteps">
+     <constructor-arg ref="pageFactory"/>
+  </bean>  
+
+</beans>

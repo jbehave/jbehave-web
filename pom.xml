@@ -18,6 +18,7 @@
     <module>web-resources</module>
     <module>web-selenium</module>
     <module>web-runner</module>
+    <module>archetypes</module>
   </modules>
 
   <properties>

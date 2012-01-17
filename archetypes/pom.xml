@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jbehave.web</groupId>
+    <artifactId>jbehave-web</artifactId>
+    <version>3.5-SNAPSHOT</version>
+  </parent>
+  <artifactId>jbehave-web-archetypes</artifactId>
+  <packaging>pom</packaging>
+  <name>JBehave Web Archetypes</name>
+  <description>Archetypes provided by JBehave Web</description>
+
+  <properties>
+    <jbehave.web.version>${project.version}</jbehave.web.version>
+    <maven.archetype.version>2.2</maven.archetype.version>
+  </properties>
+
+  <modules>
+    <module>web-selenium-java-spring-archetype</module>
+  </modules>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>META-INF/**</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>META-INF/**</include>
+        </includes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/../src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.archetype</groupId>
+        <artifactId>archetype-packaging</artifactId>
+        <version>${maven.archetype.version}</version>
+      </extension>
+    </extensions>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-archetype-plugin</artifactId>
+          <version>${maven.archetype.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.gmaven</groupId>
+        <artifactId>gmaven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>delete-local-archetype-catalog</id>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <source>
+                if ( project.packaging == 'pom' ){
+                def localArchetypeCatalog = new
+                File(System.getProperty('user.home'),
+                '.m2/archetype-catalog.xml').absolutePath
+                ant.delete(file: "${localArchetypeCatalog}", verbose:
+                true)
+                }
+              </source>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
