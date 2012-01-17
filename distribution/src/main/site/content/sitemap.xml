@@ -22,4 +22,8 @@
     <page>page-objects.html</page>
     <page>using-sauce-labs.html</page>
   </section>
+  <section>
+    <name>Archetypes</name>
+    <page>archetypes.html</page>
+  </section>
 </sitemap>
