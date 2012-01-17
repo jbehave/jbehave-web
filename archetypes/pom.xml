@@ -17,6 +17,7 @@
   </properties>
 
   <modules>
+    <module>web-selenium-groovy-pico-archetype</module>
     <module>web-selenium-java-spring-archetype</module>
   </modules>
 
