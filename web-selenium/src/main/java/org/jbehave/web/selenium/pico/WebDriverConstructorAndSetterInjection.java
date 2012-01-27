@@ -1,4 +1,4 @@
-package org.jbehave.web.selenium;
+package org.jbehave.web.selenium.pico;
 
 import groovy.lang.MetaClass;
 import org.openqa.selenium.WebElement;
@@ -15,8 +15,9 @@ import org.picocontainer.injectors.SetterInjector;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
-public class WebdriverConstructorAndSetterInjection extends CompositeInjection {
-    public WebdriverConstructorAndSetterInjection() {
+@SuppressWarnings("serial")
+public class WebDriverConstructorAndSetterInjection extends CompositeInjection {
+    public WebDriverConstructorAndSetterInjection() {
         super(new ConstructorInjection(),
                 new SetterInjection() {
                     @Override
@@ -24,16 +25,16 @@ public class WebdriverConstructorAndSetterInjection extends CompositeInjection {
                         return new SetterInjector<T>(componentKey, componentImplementation, parameters, monitor, "set", "", false, true) {
                             @Override
                             protected boolean isInjectorMethod(Method method) {
-                                Class<?> pType = method.getParameterTypes()[0];
+                                Class<?> type = method.getParameterTypes()[0];
                                 // WebElements as properties, are not injected by PicoContainer.
                                 // See http://code.google.com/p/selenium/wiki/PageFactory
                                 // Similarly, there are some inner-class properties made by Groovy's
                                 // compiler that should not be injected.
-                                if (pType.equals(WebElement.class) || pType.getName().matches("^.*Component$")) {
+                                if (type.equals(WebElement.class) || type.getName().matches("^.*Component$")) {
                                     return false;
                                 }
                                 // Groovy classes have a setMetaClass(MetaClass mc) method which we don't want to inject into.
-                                return pType != MetaClass.class && super.isInjectorMethod(method);
+                                return type != MetaClass.class && super.isInjectorMethod(method);
                             }
                         };
                     }
