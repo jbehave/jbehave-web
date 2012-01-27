@@ -2,6 +2,8 @@ package org.jbehave.web.selenium;
 
 import groovy.lang.MetaClass;
 import junit.framework.TestCase;
+
+import org.jbehave.web.selenium.pico.WebdriverConstructorAndSetterInjection;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
