@@ -1,4 +1,4 @@
-package org.jbehave.web.selenium;
+package org.jbehave.web.selenium.pico;
 
 import groovy.lang.MetaClass;
 import org.openqa.selenium.WebElement;
