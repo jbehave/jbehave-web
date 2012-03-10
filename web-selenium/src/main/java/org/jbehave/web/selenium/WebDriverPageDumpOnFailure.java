@@ -62,6 +62,7 @@ public class WebDriverPageDumpOnFailure extends WebDriverSteps {
             }
         }
         if (source != null) {
+            new File(pageDumpPath).getParentFile().mkdirs();
             FileWriter fw = new FileWriter(pageDumpPath);
             fw.write(source);
             fw.close();
