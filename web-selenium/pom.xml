@@ -30,7 +30,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.0-beta-6</version>
+      <version>1.0</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
