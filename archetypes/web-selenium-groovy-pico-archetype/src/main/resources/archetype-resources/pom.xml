@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.0-beta-4</version>
+      <version>1.0</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
@@ -59,22 +59,6 @@
       <version>${selenium.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.github.tanob</groupId>
-      <artifactId>groobe</artifactId>
-      <version>1.1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.hamcrest</groupId>
-          <artifactId>hamcrest-all</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.picocontainer</groupId>
-      <artifactId>picocontainer</artifactId>
-      <version>2.14.1</version>
-    </dependency>
-    <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-pico</artifactId>
       <version>${jbehave.core.version}</version>
@@ -86,9 +70,19 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>org.picocontainer</groupId>
+      <artifactId>picocontainer</artifactId>
+      <version>2.14.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
       <version>${groovy.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.tanob</groupId>
+      <artifactId>groobe</artifactId>
+      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.geb</groupId>
