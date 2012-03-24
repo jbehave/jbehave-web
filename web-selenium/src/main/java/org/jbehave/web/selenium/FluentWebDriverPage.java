@@ -101,11 +101,11 @@ public abstract class FluentWebDriverPage extends WebDriverPage implements Fluen
         return fluentWebDriver().select(by);
     }
 
-    public FluentWebElements selects() {
+    public FluentSelects selects() {
         return fluentWebDriver().selects();
     }
 
-    public FluentWebElements selects(By by) {
+    public FluentSelects selects(By by) {
         return fluentWebDriver().selects(by);
     }
 
@@ -237,6 +237,38 @@ public abstract class FluentWebDriverPage extends WebDriverPage implements Fluen
         return fluentWebDriver().tables(by);
     }
 
+    public FluentWebElement fieldset() {
+        return fluentWebDriver().fieldset();
+    }
+
+    public FluentWebElements fieldsets() {
+        return fluentWebDriver().fieldsets();
+    }
+
+    public FluentWebElement fieldset(By by) {
+        return fluentWebDriver().fieldset(by);
+    }
+
+    public FluentWebElements fieldsets(By by) {
+        return fluentWebDriver().fieldsets(by);
+    }
+
+    public FluentWebElement legend() {
+        return fluentWebDriver().legend();
+    }
+
+    public FluentWebElements legends() {
+        return fluentWebDriver().legends();
+    }
+
+    public FluentWebElement legend(By by) {
+        return fluentWebDriver().legend(by);
+    }
+
+    public FluentWebElements legends(By by) {
+        return fluentWebDriver().legends(by);
+    }
+
     public FluentWebElement tr() {
         return fluentWebDriver().tr();
     }
@@ -363,6 +395,22 @@ public abstract class FluentWebDriverPage extends WebDriverPage implements Fluen
 
     public FluentWebElements options(By by) {
         return fluentWebDriver().options(by);
+    }
+
+    public FluentWebElement map() {
+        return fluentWebDriver().map();
+    }
+
+    public FluentWebElements maps() {
+        return fluentWebDriver().maps();
+    }
+
+    public FluentWebElement map(By by) {
+        return fluentWebDriver().map(by);
+    }
+
+    public FluentWebElements maps(By by) {
+        return fluentWebDriver().maps(by);
     }
 
     public FluentWebDriver within(Period period) {

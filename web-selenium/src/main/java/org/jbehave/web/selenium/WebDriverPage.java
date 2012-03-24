@@ -2,6 +2,8 @@ package org.jbehave.web.selenium;
 
 import java.util.List;
 import java.util.Set;
+
+import org.jbehave.core.annotations.BeforeScenario;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
