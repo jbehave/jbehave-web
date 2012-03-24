@@ -22,12 +22,12 @@ import org.openqa.selenium.WebElement;
  */
 public abstract class WebDriverPage implements WebDriver, HasInputDevices, JavascriptExecutor, HasCapabilities {
 
-    private WebDriver webDriver;
+    private ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
     private final WebDriverProvider driverProvider;
 
     public WebDriverPage(WebDriverProvider driverProvider) {
         this.driverProvider = driverProvider;
-        this.webDriver = new LazyWebDriver(driverProvider);
+        this.webDriver.set(new LazyWebDriver(driverProvider));
     }
 
     public void get(String url) {
@@ -128,11 +128,11 @@ public abstract class WebDriverPage implements WebDriver, HasInputDevices, Javas
 
     protected synchronized void makeNonLazy() {
         // keep doing this per call as WebDriver instances changes per thread.
-        webDriver = driverProvider.get();
+        webDriver.set(driverProvider.get());
     }
 
     protected WebDriver webDriver() {
-        return webDriver;
+        return webDriver.get();
     }
 
 }
