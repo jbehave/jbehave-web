@@ -5,6 +5,106 @@
 </head>
 <body>
 
+<h1>JBehave Web - Version 3.5 (Mar 29, 2012)</h1>
+         
+<h2>        Bug
+</h2>
+<ul>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-654'>JBEHAVE-654</a>] -         LocalFrameContextView is succeptible to something like XSS (not a security issue though)
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-682'>JBEHAVE-682</a>] -         SauceContextStoryReporter should be handle cancel jobs on the SauceLabs stack (timeouts)
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-750'>JBEHAVE-750</a>] -         WebDriverPage + FluentWebDriver page should more strictly honor the WebDriverProver way of operating
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-752'>JBEHAVE-752</a>] -         SeleniumScreenshotOnFailure paths should use File.separator for better cross-platform support
+</li>
+</ul>
+        
+<h2>        Improvement
+</h2>
+<ul>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-603'>JBEHAVE-603</a>] -         Add retry and better logging for situations where WebDriverScreenshotOnFailure can&#39;t retrieve and save the screenshot.
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-605'>JBEHAVE-605</a>] -         Allow choice of Selenium version on Saucelabs - via system property : selenium.version
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-613'>JBEHAVE-613</a>] -         PicoConainer Injection type for typical Groovy+WebDriver cases
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-616'>JBEHAVE-616</a>] -         Screenshots don&#39;t need to be taken for pending steps
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-618'>JBEHAVE-618</a>] -         Show SauceLabs URL in StoryNavigator JSON output
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-620'>JBEHAVE-620</a>] -         Allow FlashDriver javascript-enabled delegate to be injected 
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-658'>JBEHAVE-658</a>] -         WebRunner should be responsible for all running functionality (sync and async)
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-676'>JBEHAVE-676</a>] -         Allow Build-ID on Saucelabs to be overridable
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-677'>JBEHAVE-677</a>] -         Allow Wrapping of Selenium2 CommandExecutor for Instrumentation purposes
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-678'>JBEHAVE-678</a>] -         Smarter setting of browser version on SauceLabs
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-685'>JBEHAVE-685</a>] -         Allow for specification of default Selenium version on SauceLabs, upgrade to 2.14
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-692'>JBEHAVE-692</a>] -         Improve SauceLabs settings interop.
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-693'>JBEHAVE-693</a>] -         Improve robustness around job timeout on SauceLabs
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-714'>JBEHAVE-714</a>] -         Move optional web-selenium classes to separate package so they can be excluded by OSGi compilers that don&#39;t play well with optional dependencies 
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-719'>JBEHAVE-719</a>] -         Upgrade Groovy dependency to 1.8.6, and Selenium to 2.19
+</li>
+</ul>
+    
+<h2>        New Feature
+</h2>
+<ul>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-604'>JBEHAVE-604</a>] -         Add SauceLabs ContextView  
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-612'>JBEHAVE-612</a>] -         Groovy base page classes in web-selenium
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-669'>JBEHAVE-669</a>] -         WebRunner FindSteps should allow auto-completion of step patterns
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-670'>JBEHAVE-670</a>] -         WebRunner should manage the run context of multiple stories
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-707'>JBEHAVE-707</a>] -         Add Maven web archetypes
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-734'>JBEHAVE-734</a>] -         Page dump (capture of HTML) snapshot for failing tests, similar to screenshots
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-742'>JBEHAVE-742</a>] -         Command Journal for FirefoxDriver 
+</li>
+</ul>
+        
+<h2>        Task
+</h2>
+<ul>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-606'>JBEHAVE-606</a>] -         Upgrade Selenium to 2.7
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-614'>JBEHAVE-614</a>] -         Groovy 1.8.3 upgrade
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-629'>JBEHAVE-629</a>] -         Groovy 1.8.4 upgrade
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-630'>JBEHAVE-630</a>] -         Selenium 2.11 upgrade
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-631'>JBEHAVE-631</a>] -         Geb Upgrade (0.6.1)
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-632'>JBEHAVE-632</a>] -         Fluent Selenium (1.0 beta-4) upgrade
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-684'>JBEHAVE-684</a>] -         Upgrade to Maven 3 for reporting and distribution
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-706'>JBEHAVE-706</a>] -         Upgrade to Selenium 2.16.1
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-708'>JBEHAVE-708</a>] -         Upgrade Selenium to 2.17, Groovy to 1.8.5, and Guava to 11.0.1
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-735'>JBEHAVE-735</a>] -         Selenium 2.20 upgrade
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-738'>JBEHAVE-738</a>] -         Upgrade fluent-selenium to 1.0-beta-5
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-741'>JBEHAVE-741</a>] -         Upgrade to the released version of fluent-selenium
+</li>
+<li>[<a href='https://jira.codehaus.org/browse/JBEHAVE-749'>JBEHAVE-749</a>] -         Upgrade Fluent Selenium to 1.3
+</li>
+</ul>
+        
 <h1>JBehave Web - Version 3.4.3 (Nov 28, 2011)</h1>          
             
 <h2>        Bug
