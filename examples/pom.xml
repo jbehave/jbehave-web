@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jbehave.web</groupId>
     <artifactId>jbehave-web</artifactId>
-    <version>3.5-SNAPSHOT</version>
+    <version>3.6-SNAPSHOT</version>
   </parent>
   <groupId>org.jbehave.web.examples</groupId>
   <artifactId>jbehave-web-examples</artifactId>
@@ -63,7 +63,7 @@
                   <pluginExecutionFilter>
                     <groupId>org.jbehave</groupId>
                     <artifactId>jbehave-maven-plugin</artifactId>
-                    <versionRange>[3.5-SNAPSHOT,)</versionRange>
+                    <versionRange>[3.6-SNAPSHOT,)</versionRange>
                     <goals>
                       <goal>unpack-view-resources</goal>
                     </goals>
