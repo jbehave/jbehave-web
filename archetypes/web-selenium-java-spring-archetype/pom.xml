@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jbehave.web</groupId>
     <artifactId>jbehave-web-archetypes</artifactId>
-    <version>3.5-SNAPSHOT</version>
+    <version>3.5</version>
   </parent>
 
   <artifactId>jbehave-web-selenium-java-spring-archetype</artifactId>
