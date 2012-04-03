@@ -5,11 +5,14 @@ import org.junit.Before
 import org.junit.Test
 import org.openqa.selenium.By
 import org.openqa.selenium.TimeoutException
+import org.openqa.selenium.WebDriver
 import static org.mockito.Mockito.mock
+import static org.mockito.Mockito.when
 
 public class GroovyWebDriverPageTest {
 
     private WebDriverProvider provider = mock(WebDriverProvider.class)
+    private WebDriver driver = mock(WebDriver.class)
     private WebDriverPage page = makeGroovyWebDriverPage(provider)
 
     protected WebDriverPage makeGroovyWebDriverPage(WebDriverProvider webDriverProvider) {
@@ -21,6 +24,7 @@ public class GroovyWebDriverPageTest {
 
     @Before
     def void before() {
+        when(provider.get()).thenReturn(driver);
         GrooBe.activate()
     }
 

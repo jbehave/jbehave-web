@@ -1,9 +1,5 @@
 package org.jbehave.web.selenium;
 
-import java.util.List;
-import java.util.Set;
-
-import org.jbehave.core.annotations.BeforeScenario;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
@@ -14,6 +10,9 @@ import org.openqa.selenium.Mouse;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * Abstract base class for pages that use the WebDriver API. It contains common
  * page methods, with a view to implement the <a
@@ -22,117 +21,100 @@ import org.openqa.selenium.WebElement;
  */
 public abstract class WebDriverPage implements WebDriver, HasInputDevices, JavascriptExecutor, HasCapabilities {
 
-    private ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
     private final WebDriverProvider driverProvider;
 
     public WebDriverPage(WebDriverProvider driverProvider) {
         this.driverProvider = driverProvider;
-        this.webDriver.set(new LazyWebDriver(driverProvider));
+    }
+
+
+    protected WebDriverProvider getDriverProvider() {
+        return driverProvider;
     }
 
     public void get(String url) {
-        makeNonLazy();
-        webDriver().get(url);
+        driverProvider.get().get(url);
     }
 
     public String getCurrentUrl() {
-        makeNonLazy();
-        return webDriver().getCurrentUrl();
+        return driverProvider.get().getCurrentUrl();
     }
 
     public String getTitle() {
-        makeNonLazy();
-        return webDriver().getTitle();
+        return driverProvider.get().getTitle();
     }
 
     public List<WebElement> findElements(By by) {
-        makeNonLazy();
-        return webDriver().findElements(by);
+        
+        return driverProvider.get().findElements(by);
     }
 
     public WebElement findElement(By by) {
-        makeNonLazy();
-        return webDriver().findElement(by);
+        
+        return driverProvider.get().findElement(by);
     }
 
     public String getPageSource() {
-        makeNonLazy();
-        return webDriver().getPageSource();
+        
+        return driverProvider.get().getPageSource();
     }
 
     public void close() {
-        makeNonLazy();
-        webDriver().close();
+        
+        driverProvider.get().close();
     }
 
     public void quit() {
-        makeNonLazy();
-        webDriver().quit();
+        
+        driverProvider.get().quit();
     }
 
     public Set<String> getWindowHandles() {
-        makeNonLazy();
-        return webDriver().getWindowHandles();
+        
+        return driverProvider.get().getWindowHandles();
     }
 
     public String getWindowHandle() {
-        makeNonLazy();
-        return webDriver().getWindowHandle();
+        
+        return driverProvider.get().getWindowHandle();
     }
 
     public TargetLocator switchTo() {
-        makeNonLazy();
-        return webDriver().switchTo();
+        return driverProvider.get().switchTo();
     }
 
     public Navigation navigate() {
-        makeNonLazy();
-        return webDriver().navigate();
+        return driverProvider.get().navigate();
     }
 
     public Options manage() {
-        makeNonLazy();
-        return webDriver().manage();
+        return driverProvider.get().manage();
     }
 
     // From HasInputDevices
 
     public Keyboard getKeyboard() {
-        makeNonLazy();
-        return ((HasInputDevices) webDriver()).getKeyboard();
+        return ((HasInputDevices) driverProvider.get()).getKeyboard();
     }
 
     public Mouse getMouse() {
-        makeNonLazy();
-        return ((HasInputDevices) webDriver()).getMouse();
+        return ((HasInputDevices) driverProvider.get()).getMouse();
     }
 
     // From JavascriptExecutor
 
     public Object executeScript(String s, Object... args) {
-        makeNonLazy();
-        return ((JavascriptExecutor) webDriver()).executeScript(s, args);
+        return ((JavascriptExecutor) driverProvider.get()).executeScript(s, args);
     }
 
     public Object executeAsyncScript(String s, Object... args) {
-        makeNonLazy();
-        return ((JavascriptExecutor) webDriver()).executeAsyncScript(s, args);
+        return ((JavascriptExecutor) driverProvider.get()).executeAsyncScript(s, args);
     }
 
     // From HasCapabilities
 
     public Capabilities getCapabilities() {
-        makeNonLazy();
-        return ((HasCapabilities) webDriver()).getCapabilities();
-    }
-
-    protected synchronized void makeNonLazy() {
-        // keep doing this per call as WebDriver instances changes per thread.
-        webDriver.set(driverProvider.get());
-    }
-
-    protected WebDriver webDriver() {
-        return webDriver.get();
+        return ((HasCapabilities) driverProvider.get()).getCapabilities();
     }
 
 }

@@ -24,7 +24,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.3</version>
+      <version>1.5.1</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>

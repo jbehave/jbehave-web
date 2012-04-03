@@ -10,8 +10,7 @@ public abstract class FluentWebDriverPage extends WebDriverPage implements Fluen
     }
 
     private FluentWebDriverImpl fluentWebDriver() {
-        makeNonLazy();
-        return new FluentWebDriverImpl(webDriver());
+        return new FluentWebDriverImpl(getDriverProvider().get());
     }
     
     public FluentWebElement span() {
