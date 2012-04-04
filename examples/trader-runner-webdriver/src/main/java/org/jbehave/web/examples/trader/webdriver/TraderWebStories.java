@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.embedder.Embedder;
+import org.jbehave.core.embedder.executors.SameThreadExecutors;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
@@ -25,8 +25,6 @@ import org.jbehave.web.selenium.WebDriverProvider;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.jbehave.web.selenium.WebDriverSteps;
 
-import com.google.common.util.concurrent.MoreExecutors;
-
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
@@ -44,7 +42,7 @@ public class TraderWebStories extends JUnitStories {
     
     public TraderWebStories() {
         if ( lifecycleSteps instanceof PerStoriesWebDriverSteps ){
-            configuredEmbedder().useExecutorService(MoreExecutors.sameThreadExecutor());
+            configuredEmbedder().useExecutorService(new SameThreadExecutors().create(configuredEmbedder().embedderControls()));
         }
     }
 
@@ -78,11 +76,4 @@ public class TraderWebStories extends JUnitStories {
                 .findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/*.story"), null);
     }
 
-    public static class SameThreadEmbedder extends Embedder {
-        
-        public SameThreadEmbedder() {
-            useExecutorService(MoreExecutors.sameThreadExecutor());
-        }
-
-    }
 }
