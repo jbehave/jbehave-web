@@ -2,12 +2,8 @@ package org.jbehave.web.selenium
 
 import com.github.tanob.groobe.GrooBe
 import geb.Browser
-import org.jbehave.web.selenium.FluentWebDriverPage
-import org.jbehave.web.selenium.WebDriverProvider
 
 public class GroovyGebFluentWebDriverPage extends FluentWebDriverPage {
-
-    private browser
 
     public GroovyGebFluentWebDriverPage(WebDriverProvider driverProvider) {
         super(driverProvider);
@@ -44,10 +40,8 @@ public class GroovyGebFluentWebDriverPage extends FluentWebDriverPage {
     }
 
     private Browser getBrowser() {
-        if (browser == null) {
-            browser = new Browser()
-            browser.setDriver(webDriver())
-        }
+        def browser = new Browser()
+        browser.setDriver(getDriverProvider().get())
         browser
     }
 

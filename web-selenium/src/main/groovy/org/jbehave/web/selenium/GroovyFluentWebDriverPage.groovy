@@ -16,7 +16,8 @@ public class GroovyFluentWebDriverPage extends FluentWebDriverPage {
     }
 
     def waitFor(int timeout, int retry, Class<? extends RuntimeException>... ignoreThese = new Class<? extends RuntimeException>[0], Closure block) {
-        def wdw = new WebDriverWait(webDriver(), timeout)
+        def get = getDriverProvider().get()
+        def wdw = new WebDriverWait(get, timeout)
                         .pollingEvery(retry, TimeUnit.MILLISECONDS)
                         .ignoreAll(asList(ignoreThese))
                         .ignoring(NoSuchElementException.class) // standard
