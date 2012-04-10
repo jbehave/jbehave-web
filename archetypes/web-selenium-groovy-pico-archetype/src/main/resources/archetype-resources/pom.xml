@@ -11,9 +11,9 @@
     <jbehave.core.version>$jbehaveCoreVersion</jbehave.core.version>
     <jbehave.web.version>$jbehaveWebVersion</jbehave.web.version>
     <jbehave.site.version>$jbehaveSiteVersion</jbehave.site.version>
-    <selenium.version>2.16.1</selenium.version>
+    <selenium.version>2.20.0</selenium.version>
     <gmaven.version>1.3</gmaven.version>
-    <groovy.version>1.8.4</groovy.version>
+    <groovy.version>1.8.6</groovy.version>
   </properties>
 
   <dependencies>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.0</version>
+      <version>1.5.1</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
@@ -82,12 +82,12 @@
     <dependency>
       <groupId>com.github.tanob</groupId>
       <artifactId>groobe</artifactId>
-      <version>1.1</version>
+      <version>1.2</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.geb</groupId>
       <artifactId>geb-core</artifactId>
-      <version>0.6.1</version>
+      <version>0.7.0</version>
     </dependency>
   </dependencies>
 

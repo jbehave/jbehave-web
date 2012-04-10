@@ -13,7 +13,7 @@
     <jbehave.web.version>$jbehaveWebVersion</jbehave.web.version>
     <jbehave.site.version>$jbehaveSiteVersion</jbehave.site.version>
     <jetty.version>7.2.2.v20101205</jetty.version>
-    <selenium.version>2.16.1</selenium.version>
+    <selenium.version>2.20.0</selenium.version>
   </properties>
 
   <dependencies>
