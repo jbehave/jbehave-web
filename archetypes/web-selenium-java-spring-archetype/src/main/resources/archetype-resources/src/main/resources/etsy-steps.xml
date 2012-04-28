@@ -14,19 +14,19 @@
     <constructor-arg ref="driverProvider"/>
   </bean>
 
-  <bean id="lifecycleSteps" class="${package}.etsy.steps.LifecycleSteps">
+  <bean id="lifecycleSteps" class="${package}.steps.LifecycleSteps">
     <constructor-arg ref="driverProvider"/>
   </bean>
 
-  <bean id="journaledSteps" class="${package}.etsy.steps.JournaledStoriesSteps">
+  <bean id="journaledSteps" class="${package}.steps.JournaledStoriesSteps">
     <constructor-arg ref="driverProvider"/>
   </bean>
 
-  <bean id="pageFactory" class="${package}.etsy.pages.PageFactory">
+  <bean id="pageFactory" class="${package}.pages.PageFactory">
      <constructor-arg ref="driverProvider"/>
   </bean>  
   
-  <bean id="etsySteps" class="${package}.etsy.steps.EtsyDotComSteps">
+  <bean id="etsySteps" class="${package}.steps.EtsyDotComSteps">
      <constructor-arg ref="pageFactory"/>
   </bean>  
 
