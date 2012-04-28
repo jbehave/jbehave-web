@@ -9,17 +9,26 @@
 
   <bean id="driverProvider" class="org.jbehave.web.selenium.FirefoxWebDriverProvider" >
   </bean>
-  
-  <bean id="pageFactory" class="${package}.pages.PageFactory">
-     <constructor-arg ref="driverProvider"/>
-  </bean>  
-  
-  <bean id="lifecycleSteps" class="${package}.steps.LifecycleSteps">
-     <constructor-arg ref="driverProvider"/>
-  </bean>  
 
-  <bean id="etsySteps" class="${package}.steps.EtsyDotComSteps">
+  <bean id="webDriverProvider" class="org.jbehave.web.selenium.PerStoryWebDriverSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
+  <bean id="lifecycleSteps" class="${package}.etsy.steps.LifecycleSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
+  <bean id="journaledSteps" class="${package}.etsy.steps.JournaledStoriesSteps">
+    <constructor-arg ref="driverProvider"/>
+  </bean>
+
+  <bean id="pageFactory" class="${package}.etsy.pages.PageFactory">
+     <constructor-arg ref="driverProvider"/>
+  </bean>  
+  
+  <bean id="etsySteps" class="${package}.etsy.steps.EtsyDotComSteps">
      <constructor-arg ref="pageFactory"/>
   </bean>  
+
 
 </beans>

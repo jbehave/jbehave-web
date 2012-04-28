@@ -1,7 +1,7 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-package ${package}.steps;
+package ${package}.etsy.steps;
 
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
@@ -9,14 +9,14 @@ import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import ${package}.pages.AdvancedSearch;
-import ${package}.pages.Buy;
-import ${package}.pages.CartContents;
-import ${package}.pages.Home;
-import ${package}.pages.PageFactory;
-import ${package}.pages.SearchResults;
-import ${package}.pages.Site;
-import ${package}.pages.Treasury;
+import ${package}.etsy.pages.AdvancedSearch;
+import ${package}.etsy.pages.Buy;
+import ${package}.etsy.pages.CartContents;
+import ${package}.etsy.pages.Home;
+import ${package}.etsy.pages.PageFactory;
+import ${package}.etsy.pages.SearchResults;
+import ${package}.etsy.pages.Site;
+import ${package}.etsy.pages.Treasury;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 

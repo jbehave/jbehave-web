@@ -1,7 +1,7 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-package ${package}.steps;
+package ${package}.etsy.steps;
 
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.web.selenium.WebDriverProvider;

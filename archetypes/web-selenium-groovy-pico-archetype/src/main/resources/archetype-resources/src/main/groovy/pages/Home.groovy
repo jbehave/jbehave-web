@@ -14,6 +14,7 @@ class Home extends GroovyGebFluentWebDriverPage {
     super(webDriverProvider)
   }
 
+
   def go() {
     get("http://www.etsy.com")
   }

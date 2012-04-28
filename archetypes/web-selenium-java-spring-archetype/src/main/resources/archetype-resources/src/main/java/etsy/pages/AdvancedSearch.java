@@ -1,24 +1,23 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-package ${package}.pages;
+package ${package}.etsy.pages;
 
 import org.jbehave.web.selenium.FluentWebDriverPage;
 import org.jbehave.web.selenium.WebDriverProvider;
 
 import static org.openqa.selenium.By.className;
 import static org.openqa.selenium.By.id;
-import static org.openqa.selenium.By.linkText;
 import static org.openqa.selenium.By.xpath;
 
-public class Home extends FluentWebDriverPage {
+public class AdvancedSearch extends FluentWebDriverPage {
 
-    public Home(WebDriverProvider webDriverProvider) {
+    public AdvancedSearch(WebDriverProvider webDriverProvider) {
         super(webDriverProvider);
     }
 
     public void go() {
-        get("http://www.etsy.com");
+        get("http://www.etsy.com/search_advanced.php");
     }
 
     public void go(String section) {
@@ -27,14 +26,16 @@ public class Home extends FluentWebDriverPage {
     }
 
     public void search(String thing) {
-//        within(secs(100)).title().shouldBe("kittens");
-        div(id("search-facet")).click();
-        li(className("all")).click();
         input(id("search-query")).sendKeys(thing);
-        button(id("search_submit")).click();
+        input(id("search_submit")).click();
     }
 
-    public void goToBuySection() {
-        link(linkText("Buy")).click();
+    public void subCategory(String subCategory) {
+        select(className("handmade")).selectByValue(subCategory.toLowerCase());
     }
+
+    public void searchFor(String thing) {
+        input(id("search_query")).sendKeys(thing).submit();
+    }
+    
 }
