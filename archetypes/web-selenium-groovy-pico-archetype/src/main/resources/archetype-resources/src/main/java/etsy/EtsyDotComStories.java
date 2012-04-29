@@ -3,14 +3,12 @@
 #set( $symbol_escape = '\' )
 package ${package}.etsy;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.failures.FailingUponPendingStep;
+import org.jbehave.core.failures.PendingStepStrategy;
 import org.jbehave.core.failures.RethrowingFailure;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
@@ -33,7 +31,6 @@ import org.jbehave.web.selenium.SeleniumContext;
 import org.jbehave.web.selenium.SeleniumContextOutput;
 import org.jbehave.web.selenium.SeleniumStepMonitor;
 import org.jbehave.web.selenium.WebDriverProvider;
-//import org.jbehave.web.selenium.WebDriverPageDumpOnFailure;
 import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.picocontainer.Characteristics;
 import org.picocontainer.MutablePicoContainer;
@@ -47,6 +44,9 @@ import org.picocontainer.injectors.CompositeInjection;
 import org.picocontainer.injectors.ConstructorInjection;
 import org.picocontainer.injectors.SetterInjection;
 
+import java.util.HashMap;
+import java.util.List;
+
 import static java.util.Arrays.asList;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
@@ -54,18 +54,12 @@ import static org.jbehave.web.selenium.WebDriverHtmlOutput.WEB_DRIVER_HTML;
 
 public class EtsyDotComStories extends JUnitStories {
 
-    private String metaFilter;
-
     public EtsyDotComStories() {
 
-        final java.util.Map<String, String> storyToSauceUrlMap = new HashMap<String, String>();
-
-        CrossReference crossReference = new SauceContextOutput.SauceLabsCrossReference(storyToSauceUrlMap) {
-            public String getMetaFilter() {
-                return metaFilter;
-            }
-
-        }.withJsonOnly().withOutputAfterEachStory(true).excludingStoriesWithNoExecutedScenarios(true);
+        PendingStepStrategy pendingStepStrategy = new FailingUponPendingStep();
+        CrossReference crossReference = new SauceContextOutput.SauceLabsCrossReference(new HashMap<String, String>())
+                .withJsonOnly().withOutputAfterEachStory(true).withPendingStepStrategy(pendingStepStrategy)
+                .excludingStoriesWithNoExecutedScenarios(true);
 
         SeleniumContext seleniumContext = new SeleniumContext();
         WebDriverProvider driverProvider;
@@ -76,7 +70,8 @@ public class EtsyDotComStories extends JUnitStories {
             driverProvider = new SauceWebDriverProvider();
             formats = new Format[] { new SeleniumContextOutput(seleniumContext), CONSOLE, WEB_DRIVER_HTML };
             contextView = new SauceLabsContextView(driverProvider);
-            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider, seleniumContext, storyToSauceUrlMap));
+            crossReference.withThreadSafeDelegateFormat(new SauceContextOutput(driverProvider, seleniumContext,
+                    new HashMap<String, String>()));
         } else if (System.getProperty("REMOTE") != null) {
             driverProvider = new RemoteWebDriverProvider();
             formats = new Format[] { CONSOLE, WEB_DRIVER_HTML };
@@ -93,9 +88,8 @@ public class EtsyDotComStories extends JUnitStories {
                 .withCrossReference(crossReference);
 
         Configuration configuration = new SeleniumConfiguration().useWebDriverProvider(driverProvider)
-                .useSeleniumContext(seleniumContext)
-                .useFailureStrategy(new RethrowingFailure())
-                .usePendingStepStrategy(new FailingUponPendingStep())
+                .useSeleniumContext(seleniumContext).useFailureStrategy(new RethrowingFailure())
+                .usePendingStepStrategy(pendingStepStrategy)
                 .useStoryControls(new StoryControls().doResetStateBeforeScenario(false))
                 .useStepMonitor(new SeleniumStepMonitor(contextView, seleniumContext, crossReference.getStepMonitor()))
                 .useStoryLoader(new LoadFromClasspath(EtsyDotComStories.class))
@@ -110,7 +104,8 @@ public class EtsyDotComStories extends JUnitStories {
         final Storing store = (Storing) new Storing().wrap(new CompositeInjection(new ConstructorInjection(),
                 new SetterInjection("set", "setMetaClass")));
         ClassLoader currentClassLoader = this.getClass().getClassLoader();
-        final DefaultClassLoadingPicoContainer pageObjects = new DefaultClassLoadingPicoContainer(currentClassLoader, store, primordial);
+        final DefaultClassLoadingPicoContainer pageObjects = new DefaultClassLoadingPicoContainer(currentClassLoader,
+                store, primordial);
         pageObjects.change(Characteristics.USE_NAMES);
         // This loads all the Groovy page objects - can be stateful
         pageObjects.visit(new ClassName("pages.Home"), ".*${symbol_escape}${symbol_escape}.class", true,
@@ -127,7 +122,8 @@ public class EtsyDotComStories extends JUnitStories {
         // Before And After Steps registered by instance
         steps.addComponent(new PerStoryWebDriverSteps(driverProvider));
         steps.addComponent(new WebDriverScreenshotOnFailure(driverProvider, configuration.storyReporterBuilder()));
-        //steps.addComponent(new WebDriverPageDumpOnFailure(driverProvider, configuration.storyReporterBuilder()));
+        // steps.addComponent(new WebDriverPageDumpOnFailure(driverProvider,
+        // configuration.storyReporterBuilder()));
         steps.addComponent(new PerStoriesContextView(contextView));
         useStepsFactory(new PicoStepsFactory(configuration, steps));
 
@@ -135,8 +131,9 @@ public class EtsyDotComStories extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(), asList("**/" + System.getProperty("storyFilter", "*")
-                + ".story"), null);
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(),
+                asList("**/" + System.getProperty("storyFilter", "*") + ".story"),
+                asList("**/etsy_given.story"));
     }
 
     public static class PerStoriesContextView {
@@ -165,7 +162,5 @@ public class EtsyDotComStories extends JUnitStories {
             store.resetCacheForThread();
         }
     }
-
-
 
 }

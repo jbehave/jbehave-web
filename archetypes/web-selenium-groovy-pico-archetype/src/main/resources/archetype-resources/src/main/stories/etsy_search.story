@@ -12,6 +12,8 @@ I want to search for an item in a sub category
 
 Scenario: Advanced Search for a hat
 
+GivenStories: etsy_given.story
+
 Given I am searching on Etsy.com
 When I specify the Knitting sub category
 And I search for hat

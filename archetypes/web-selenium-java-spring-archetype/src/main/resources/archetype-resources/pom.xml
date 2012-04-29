@@ -12,7 +12,7 @@
     <jbehave.web.version>$jbehaveWebVersion</jbehave.web.version>
     <jbehave.site.version>$jbehaveSiteVersion</jbehave.site.version>
     <fluent.selenium.version>1.5.1</fluent.selenium.version>
-    <selenium.version>2.20.0</selenium.version>
+    <selenium.version>2.21.0</selenium.version>
     <ignore.failures>true</ignore.failures>
     <threads>1</threads>
     <skip>false</skip>
@@ -28,8 +28,13 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
   <dependencies>
+    <dependency>
+      <groupId>org.jbehave</groupId>
+      <artifactId>jbehave-core</artifactId>
+      <version>${jbehave.core.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.jbehave</groupId>
       <artifactId>jbehave-core</artifactId>
@@ -48,6 +53,10 @@
       <artifactId>jbehave-web-selenium</artifactId>
       <version>${jbehave.web.version}</version>
       <exclusions>
+        <exclusion>
+          <groupId>org.jbehave</groupId>
+          <artifactId>jbehave-core</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-java</artifactId>
@@ -113,7 +122,11 @@
             <target>1.5</target>
           </configuration>
         </plugin>
-
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
         <!--This plugin's configuration is used to store Eclipse m2e settings 
           only. It has no influence on the Maven build itself. -->
         <plugin>
@@ -166,6 +179,32 @@
       </resource>
     </resources>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-resources-core</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/jbehave/view</outputDirectory>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <excludes>**/*.class</excludes>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.jbehave</groupId>
+                  <artifactId>jbehave-navigator</artifactId>
+                  <version>${jbehave.core.version}</version>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-maven-plugin</artifactId>

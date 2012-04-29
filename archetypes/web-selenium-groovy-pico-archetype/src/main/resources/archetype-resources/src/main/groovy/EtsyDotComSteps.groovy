@@ -2,8 +2,18 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 import com.github.tanob.groobe.GrooBe
-import org.jbehave.core.annotations.*
-import pages.*
+import org.jbehave.core.annotations.Alias
+import org.jbehave.core.annotations.Composite
+import org.jbehave.core.annotations.Given
+import org.jbehave.core.annotations.Then
+import org.jbehave.core.annotations.When
+import pages.AdvancedSearch
+import pages.Buy
+import pages.CartContents
+import pages.Home
+import pages.SearchResults
+import pages.Site
+import pages.Treasury
 
 public class EtsyDotComSteps {
 
@@ -41,6 +51,11 @@ public class EtsyDotComSteps {
   def cartIsEmptyAndOnStartPage() {
     home.go()
     cartIsEmpty();
+  }
+
+  @Given("today has a y in its name")
+  def todayHasAYInItsName() {
+      // all days have y in their name
   }
 
   @Then("the cart will be empty")
