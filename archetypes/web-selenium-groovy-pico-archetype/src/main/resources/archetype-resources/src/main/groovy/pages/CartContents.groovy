@@ -7,6 +7,8 @@ import org.jbehave.web.selenium.WebDriverProvider
 import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
 import org.openqa.selenium.By
 
+import static org.openqa.selenium.By.id;
+
 class CartContents extends GroovyGebFluentWebDriverPage {
 
   Site site
@@ -18,7 +20,7 @@ class CartContents extends GroovyGebFluentWebDriverPage {
   def hasItem(String item) {
     go "http://www.etsy.com/cart"
     try {
-      ${symbol_dollar}("div${symbol_pound}listing-${symbol_dollar}item")
+      div(id("listing-" + item))
     } catch (ex) {
       return false // could also be that html has changed
     }

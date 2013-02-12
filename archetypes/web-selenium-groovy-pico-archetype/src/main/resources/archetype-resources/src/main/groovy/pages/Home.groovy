@@ -26,8 +26,6 @@ class Home extends GroovyGebFluentWebDriverPage {
 
   def search(String thing) {
     manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS)
-    ${symbol_dollar}("${symbol_pound}search-facet").click()
-    ${symbol_dollar}(".all").click()
     ${symbol_dollar}("${symbol_pound}search-query") << thing
     ${symbol_dollar}("${symbol_pound}search_submit").click()
   }

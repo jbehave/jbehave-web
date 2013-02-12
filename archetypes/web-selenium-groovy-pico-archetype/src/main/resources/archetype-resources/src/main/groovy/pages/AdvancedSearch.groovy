@@ -4,8 +4,9 @@
 package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
-import org.openqa.selenium.support.ui.Select
 import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select
 
 class AdvancedSearch extends GroovyGebFluentWebDriverPage {
 
@@ -28,7 +29,7 @@ class AdvancedSearch extends GroovyGebFluentWebDriverPage {
   }
 
   def subCategory(String subCategory) {
-    new Select(${symbol_dollar}("select.handmade").getElement(0)).selectByValue(subCategory.toLowerCase())
+    link(By.partialLinkText(subCategory)).click();
   }
 
   def searchFor(String thing) {

@@ -5,6 +5,7 @@ package pages
 
 import org.jbehave.web.selenium.WebDriverProvider
 import org.jbehave.web.selenium.GroovyGebFluentWebDriverPage
+import org.openqa.selenium.By;
 
 class Buy extends GroovyGebFluentWebDriverPage {
 
@@ -13,6 +14,7 @@ class Buy extends GroovyGebFluentWebDriverPage {
   }
 
   def selectTreasury() {
-    ${symbol_dollar}("${symbol_pound}treasury-panel-button").click()
+      link(By.partialLinkText("Treasury")).click()
   }
+  
 }
