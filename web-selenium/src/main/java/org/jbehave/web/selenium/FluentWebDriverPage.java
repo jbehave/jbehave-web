@@ -1,18 +1,34 @@
 package org.jbehave.web.selenium;
 
 import org.openqa.selenium.By;
-import org.seleniumhq.selenium.fluent.*;
+import org.seleniumhq.selenium.fluent.FluentSelect;
+import org.seleniumhq.selenium.fluent.FluentSelects;
+import org.seleniumhq.selenium.fluent.FluentWebDriver;
+import org.seleniumhq.selenium.fluent.FluentWebElement;
+import org.seleniumhq.selenium.fluent.FluentWebElements;
+import org.seleniumhq.selenium.fluent.Period;
+import org.seleniumhq.selenium.fluent.TestableString;
+import org.seleniumhq.selenium.fluent.internal.NegatingFluentWebDriver;
 
-public abstract class FluentWebDriverPage extends WebDriverPage implements FluentWebDriver {
+public abstract class FluentWebDriverPage extends WebDriverPage {
+
+    private ThreadLocal<FluentWebDriver> fluentWebDriver = new ThreadLocal<FluentWebDriver>();
 
     public FluentWebDriverPage(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
 
-    private FluentWebDriverImpl fluentWebDriver() {
-        return new FluentWebDriverImpl(getDriverProvider().get());
+    private FluentWebDriver fluentWebDriver() {
+        if (fluentWebDriver.get() == null) {
+            fluentWebDriver.set(makeFluentWebDriver());
+        }
+        return fluentWebDriver.get();
     }
-    
+
+    protected FluentWebDriver makeFluentWebDriver() {
+        return new FluentWebDriver(getDriverProvider().get());
+    }
+
     public FluentWebElement span() {
         return fluentWebDriver().span();
     }
@@ -415,6 +431,10 @@ public abstract class FluentWebDriverPage extends WebDriverPage implements Fluen
 
     public FluentWebDriver within(Period period) {
         return fluentWebDriver().within(period);
+    }
+
+    public NegatingFluentWebDriver without(Period period) {
+        return fluentWebDriver().without(period);
     }
 
     public TestableString url() {
