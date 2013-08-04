@@ -445,4 +445,12 @@ public abstract class FluentWebDriverPage extends WebDriverPage {
         return fluentWebDriver().title();
     }
 
+    public FluentWebDriver.BooleanResultsAdapter has() {
+        return fluentWebDriver().has();
+    }
+
+    public FluentWebDriver.BooleanResultsAdapter hasMissing() {
+        return fluentWebDriver().hasMissing();
+    }
+
 }
