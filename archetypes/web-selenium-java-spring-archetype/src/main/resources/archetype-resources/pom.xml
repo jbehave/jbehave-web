@@ -11,8 +11,8 @@
     <jbehave.core.version>$jbehaveCoreVersion</jbehave.core.version>
     <jbehave.web.version>$jbehaveWebVersion</jbehave.web.version>
     <jbehave.site.version>$jbehaveSiteVersion</jbehave.site.version>
-    <fluent.selenium.version>1.11</fluent.selenium.version>
-    <selenium.version>2.33.0</selenium.version>
+    <fluent.selenium.version>1.11.1</fluent.selenium.version>
+    <selenium.version>2.34.0</selenium.version>
     <ignore.failures>true</ignore.failures>
     <threads>1</threads>
     <skip>false</skip>
