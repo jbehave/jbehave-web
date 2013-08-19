@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -65,7 +66,14 @@ public class PropertyWebDriverProviderTest {
         createProviderForProperty("ie");
         assertThat(provider.get(), instanceOf(InternetExplorerDriver.class));
     }
-    
+
+    @Test
+    @Ignore("Only when PhantomJS is available")
+    public void shouldSupportPhantomJSByProperty() {
+        createProviderForProperty("phantomjs");
+        assertThat(provider.get(), instanceOf(PhantomJSDriver.class));
+    }
+
     private void createProviderForProperty(String browser) {
         if (browser != null) {
             System.setProperty("browser", browser);
