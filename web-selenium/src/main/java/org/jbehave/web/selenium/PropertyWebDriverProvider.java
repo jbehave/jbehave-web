@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import static java.lang.Boolean.parseBoolean;
 
@@ -21,6 +22,7 @@ import static java.lang.Boolean.parseBoolean;
  * <li>"firefox": {@link FirefoxDriver}</li>
  * <li>"htmlunit": {@link HtmlUnitDriver}</li>
  * <li>"ie": {@link InternetExplorerDriver}</li>
+ * <li>"phantomjs": {@link PhantomJSDriver}</li>
  * </ul>
  * Property values are case-insensitive and defaults to "firefox" if no
  * "browser" system property is found.
@@ -37,7 +39,7 @@ import static java.lang.Boolean.parseBoolean;
 public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
 
     public enum Browser {
-        ANDROID, CHROME, FIREFOX, HTMLUNIT, IE
+        ANDROID, CHROME, FIREFOX, HTMLUNIT, IE, PHANTOMJS
     }
 
     public void initialize() {
@@ -58,6 +60,8 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
             return createHtmlUnitDriver();
         case IE:
             return createInternetExplorerDriver();
+        case PHANTOMJS:
+            return createPhantomJSDriver();
         }
     }
 
@@ -92,7 +96,11 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
     protected InternetExplorerDriver createInternetExplorerDriver() {
         return new InternetExplorerDriver();
     }
-    
+
+    protected WebDriver createPhantomJSDriver() {
+        return new PhantomJSDriver();
+    }
+
     protected Locale usingLocale() {
         return Locale.getDefault();
     }
