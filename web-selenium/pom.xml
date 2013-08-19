@@ -69,6 +69,11 @@
       <version>2.14.1</version>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>com.github.detro.ghostdriver</groupId>
+      <artifactId>phantomjsdriver</artifactId>
+      <version>1.0.4</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
