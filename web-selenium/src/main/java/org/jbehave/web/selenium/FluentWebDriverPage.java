@@ -429,6 +429,230 @@ public abstract class FluentWebDriverPage extends WebDriverPage {
         return fluentWebDriver().maps(by);
     }
 
+    public FluentWebElement address() {
+        return fluentWebDriver().address();
+    }
+
+    public FluentWebElements addresses() {
+        return fluentWebDriver().addresses();
+    }
+
+    public FluentWebElement address(By by) {
+        return fluentWebDriver().address(by);
+    }
+
+    public FluentWebElements addresses(By by) {
+        return fluentWebDriver().addresses(by);
+    }
+
+    public FluentWebElement header() {
+        return fluentWebDriver().header();
+    }
+
+    public FluentWebElements headers() {
+        return fluentWebDriver().headers();
+    }
+
+    public FluentWebElement header(By by) {
+        return fluentWebDriver().header(by);
+    }
+
+    public FluentWebElements headers(By by) {
+        return fluentWebDriver().headers(by);
+    }
+
+    public FluentWebElement footer() {
+        return fluentWebDriver().footer();
+    }
+
+    public FluentWebElements footers() {
+        return fluentWebDriver().footers();
+    }
+
+    public FluentWebElement footer(By by) {
+        return fluentWebDriver().footer(by);
+    }
+
+    public FluentWebElements footers(By by) {
+        return fluentWebDriver().footers(by);
+    }
+
+    public FluentWebElement b() {
+        return fluentWebDriver().b();
+    }
+
+    public FluentWebElements bs() {
+        return fluentWebDriver().bs();
+    }
+
+    public FluentWebElement b(By by) {
+        return fluentWebDriver().b(by);
+    }
+
+    public FluentWebElements bs(By by) {
+        return fluentWebDriver().bs(by);
+    }
+
+    public FluentWebElement object() {
+        return fluentWebDriver().object();
+    }
+
+    public FluentWebElements objects() {
+        return fluentWebDriver().objects();
+    }
+
+    public FluentWebElement object(By by) {
+        return fluentWebDriver().object(by);
+    }
+
+    public FluentWebElements objects(By by) {
+        return fluentWebDriver().objects(by);
+    }
+
+    public FluentWebElement pre() {
+        return fluentWebDriver().pre();
+    }
+
+    public FluentWebElements pres() {
+        return fluentWebDriver().pres();
+    }
+
+    public FluentWebElement pre(By by) {
+        return fluentWebDriver().pre(by);
+    }
+
+    public FluentWebElements pres(By by) {
+        return fluentWebDriver().pres(by);
+    }
+
+    public FluentWebElement figure() {
+        return fluentWebDriver().figure();
+    }
+
+    public FluentWebElements figures() {
+        return fluentWebDriver().figures();
+    }
+
+    public FluentWebElement figure(By by) {
+        return fluentWebDriver().figure(by);
+    }
+
+    public FluentWebElements figures(By by) {
+        return fluentWebDriver().figures(by);
+    }
+
+    public FluentWebElement acronym() {
+        return fluentWebDriver().acronym();
+    }
+
+    public FluentWebElements acronyms() {
+        return fluentWebDriver().acronyms();
+    }
+
+    public FluentWebElement acronym(By by) {
+        return fluentWebDriver().acronym(by);
+    }
+
+    public FluentWebElements acronyms(By by) {
+        return fluentWebDriver().acronyms(by);
+    }
+
+    public FluentWebElement abbr() {
+        return fluentWebDriver().abbr();
+    }
+
+    public FluentWebElements abbrs() {
+        return fluentWebDriver().abbrs();
+    }
+
+    public FluentWebElement abbr(By by) {
+        return fluentWebDriver().abbr(by);
+    }
+
+    public FluentWebElements abbrs(By by) {
+        return fluentWebDriver().abbrs(by);
+    }
+
+    public FluentWebElement blockquote() {
+        return fluentWebDriver().blockquote();
+    }
+
+    public FluentWebElements blockquotes() {
+        return fluentWebDriver().blockquotes();
+    }
+
+    public FluentWebElement blockquote(By by) {
+        return fluentWebDriver().blockquote(by);
+    }
+
+    public FluentWebElements blockquotes(By by) {
+        return fluentWebDriver().blockquotes(by);
+    }
+
+    public FluentWebElement area() {
+        return fluentWebDriver().area();
+    }
+
+    public FluentWebElements areas() {
+        return fluentWebDriver().areas();
+    }
+
+    public FluentWebElement area(By by) {
+        return fluentWebDriver().area(by);
+    }
+
+    public FluentWebElements areas(By by) {
+        return fluentWebDriver().areas(by);
+    }
+
+    public FluentWebElement label() {
+        return fluentWebDriver().label();
+    }
+
+    public FluentWebElements labels() {
+        return fluentWebDriver().labels();
+    }
+
+    public FluentWebElement label(By by) {
+        return fluentWebDriver().label(by);
+    }
+
+    public FluentWebElements labels(By by) {
+        return fluentWebDriver().labels(by);
+    }
+
+    public FluentWebElement nav() {
+        return fluentWebDriver().nav();
+    }
+
+    public FluentWebElements navs() {
+        return fluentWebDriver().navs();
+    }
+
+    public FluentWebElement nav(By by) {
+        return fluentWebDriver().nav(by);
+    }
+
+    public FluentWebElements navs(By by) {
+        return fluentWebDriver().navs(by);
+    }
+
+    public FluentWebElement tbody() {
+        return fluentWebDriver().tbody();
+    }
+
+    public FluentWebElements tbodys() {
+        return fluentWebDriver().tbodys();
+    }
+
+    public FluentWebElement tbody(By by) {
+        return fluentWebDriver().tbody(by);
+    }
+
+    public FluentWebElements tbodys(By by) {
+        return fluentWebDriver().tbodys(by);
+    }
+
     public FluentWebDriver within(Period period) {
         return fluentWebDriver().within(period);
     }

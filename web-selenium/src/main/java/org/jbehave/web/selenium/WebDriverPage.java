@@ -1,18 +1,18 @@
 package org.jbehave.web.selenium;
 
-import java.util.List;
-import java.util.Set;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.HasCapabilities;
-import org.openqa.selenium.HasInputDevices;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keyboard;
-import org.openqa.selenium.Mouse;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.HasInputDevices;
+import org.openqa.selenium.interactions.Keyboard;
+import org.openqa.selenium.interactions.Mouse;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Abstract base class for pages that use the WebDriver API. It contains common
