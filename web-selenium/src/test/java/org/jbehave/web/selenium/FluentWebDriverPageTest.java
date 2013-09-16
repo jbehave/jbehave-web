@@ -70,6 +70,10 @@ public class FluentWebDriverPageTest {
         && !name.equals("newFluentWebElements")
         && !name.equals("actualFindIt")
         && !name.equals("actualFindThem")
+        && !name.equals("actualFindElement")
+        && !name.equals("actualFindElements")
+        && !name.equals("findElement")
+        && !name.equals("findElements")
         && !name.equals("findIt")
         && !name.equals("findThem");
     }
