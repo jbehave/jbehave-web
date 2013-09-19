@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jbehave.web</groupId>
     <artifactId>jbehave-web</artifactId>
-    <version>3.6-beta-1</version>
+    <version>3.6-SNAPSHOT</version>
   </parent>
   <artifactId>jbehave-web-archetypes</artifactId>
   <packaging>pom</packaging>
