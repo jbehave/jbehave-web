@@ -11,7 +11,7 @@
   <description>Selenium and WebDriver API bindings for JBehave</description>
 
   <properties>
-    <selenium.version>2.36.0</selenium.version>
+    <selenium.version>2.37.0</selenium.version>
     <groovy.version>1.8.6</groovy.version>
   </properties>
 
@@ -24,7 +24,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.14.2</version>
+      <version>1.14.4</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
