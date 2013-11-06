@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.UUID;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterScenario.Outcome;
+import org.jbehave.core.annotations.ScenarioType;
 import org.jbehave.core.failures.PendingStepFound;
 import org.jbehave.core.failures.UUIDExceptionWrapper;
 import org.jbehave.core.reporters.StoryReporterBuilder;
@@ -34,7 +35,12 @@ public class WebDriverScreenshotOnFailure extends WebDriverSteps {
         this.screenshotPathPattern = screenshotPathPattern;
     }
 
-    @AfterScenario(uponOutcome = Outcome.FAILURE)
+    @AfterScenario(uponType = ScenarioType.EXAMPLE, uponOutcome = Outcome.FAILURE)
+    public void afterScenarioWithExamplesFailure(UUIDExceptionWrapper uuidWrappedFailure) throws Exception {
+        afterScenarioFailure(uuidWrappedFailure);
+    }
+
+    @AfterScenario(uponType = ScenarioType.NORMAL, uponOutcome = Outcome.FAILURE)
     public void afterScenarioFailure(UUIDExceptionWrapper uuidWrappedFailure) throws Exception {
         if (uuidWrappedFailure instanceof PendingStepFound) {
             return; // we don't take screen-shots for Pending Steps
