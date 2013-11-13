@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jbehave.web</groupId>
@@ -11,7 +12,7 @@
   <description>Selenium and WebDriver API bindings for JBehave</description>
 
   <properties>
-    <selenium.version>2.37.0</selenium.version>
+    <selenium.version>2.37.1</selenium.version>
     <groovy.version>2.1.8</groovy.version>
   </properties>
 
@@ -24,7 +25,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.14.4</version>
+      <version>1.14.5</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
@@ -74,7 +75,7 @@
       <artifactId>phantomjsdriver</artifactId>
       <version>1.0.4</version>
       <exclusions>
-        <!-- phantomjsdriver 1.0.4 has a dep on Selenium 2.33 :-(  -->
+        <!-- phantomjsdriver 1.0.4 has a dep on Selenium 2.33 :-( -->
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-remote-driver</artifactId>
@@ -88,6 +89,20 @@
   </dependencies>
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>parse-version</id>
+            <goals>
+              <goal>parse-version</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.codehaus.gmaven</groupId>
         <artifactId>gmaven-plugin</artifactId>
@@ -126,6 +141,76 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.4.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Version>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${build.timestamp}</Bundle-Version>
+            <Bundle-SymbolicName>org.jbehave.web.selenium</Bundle-SymbolicName>
+            <Export-Package>org.jbehave.web.*</Export-Package>
+            <Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
+            <Eclipse-ExtensibleAPI>true</Eclipse-ExtensibleAPI>
+            <Import-Package>
+              javax.swing.*;resolution:=optional,
+              org.openqa.selenium.android;resolution:=optional,
+              !org.openqa.selenium.iphone,
+              org.openqa.selenium.*;version="${selenium.version}",
+              com.thoughtworks.selenium.*;version="${selenium.version}",
+              com.thoughtworks.xstream.*;version="1.4.4",
+              *
+            </Import-Package>
+          </instructions>
+        </configuration>
+        <executions>
+          <execution>
+            <id>bundle-manifest</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <excludeResources>true</excludeResources>
+          <excludes>
+            <exclude>**/jars/**</exclude>
+          </excludes>
+          <archive>
+            <manifestEntries>
+              <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+              <Bundle-Name>${project.name}</Bundle-Name>
+              <Bundle-SymbolicName>org.jbehave.web.selenium.source</Bundle-SymbolicName>
+              <Bundle-Vendor>${project.organization.name}</Bundle-Vendor>
+              <Bundle-Version>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${build.timestamp}</Bundle-Version>
+              <Eclipse-SourceBundle>org.jbehave.web.selenium;version="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.${build.timestamp}";roots:="."</Eclipse-SourceBundle>
+            </manifestEntries>
+          </archive>
+        </configuration>
       </plugin>
     </plugins>
     <pluginManagement>
