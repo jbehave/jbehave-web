@@ -5,7 +5,6 @@ package org.jbehave.web.selenium;
  * The principal use case is to fill a gap of functionality passing 
  * from Selenium API (with Selenium#setContext()) to WebDriver API
  * where this functionality is not available.
- * @deprecated Use org.jbehave.core.steps.ContextView
  */
 public interface ContextView {
 
