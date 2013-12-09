@@ -1,6 +1,11 @@
 package org.jbehave.web.selenium;
 
-public class SeleniumContext {
+import org.jbehave.core.steps.StepContext;
+
+/**
+ * @deprecated Use org.jbehave.core.steps.StepContext
+ */
+public class SeleniumContext extends StepContext {
 	
 	private ThreadLocal<String> currentScenario = new ThreadLocal<String>();
 
