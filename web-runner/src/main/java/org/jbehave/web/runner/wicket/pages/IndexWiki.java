@@ -1,8 +1,6 @@
 package org.jbehave.web.runner.wicket.pages;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.wicket.markup.html.basic.Label;

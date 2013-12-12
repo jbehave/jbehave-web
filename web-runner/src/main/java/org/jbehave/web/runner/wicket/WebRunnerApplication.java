@@ -75,7 +75,8 @@ public class WebRunnerApplication extends WebApplication {
 	}
 
 	protected ResourceIndexer resourceIndexer() {
-		return new IndexFromRedmine();
+		WikiConfiguration configuration = wikiConfiguration();
+		return new IndexFromRedmine(configuration.getUsername(), configuration.getPassword());
 	}
 
 	protected StoryRunner storyRunner() {
