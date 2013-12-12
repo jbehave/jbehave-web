@@ -1,3 +1,0 @@
-#foreach( $resource in $resources )
-${resource.name} (${resource.uri})
-#end

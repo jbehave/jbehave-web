@@ -47,7 +47,7 @@ public class IndexWiki extends Template {
 				@Override
 				public void populateItem(final ListItem<SerializableResource> item) {
 					final SerializableResource resource = (SerializableResource) item.getModelObject();
-			        Link<SerializableResource> link = new Link<SerializableResource>("resource_link") {
+			        item.add(new Link<SerializableResource>("view_resource") {
 			            @Override
 			            public void onClick() {
 			                PageParameters pageParameters = new PageParameters();
@@ -55,18 +55,27 @@ public class IndexWiki extends Template {
 			                pageParameters.add("uri", resource.getUri());
 							setResponsePage(ViewResource.class, pageParameters);
 			            }
-			        };
-			        item.add(link);
+			        });
+			        item.add(new Link<SerializableResource>("run_resource") {
+			            @Override
+			            public void onClick() {
+			                PageParameters pageParameters = new PageParameters();
+			                pageParameters.add("name", resource.getName());
+			                pageParameters.add("uri", resource.getUri());
+							setResponsePage(RunResource.class, pageParameters);
+			            }
+			        });
 					item.add(new Label("name"));
 				}
 			}).setVersioned(false);
+			indexResources();
 		}
 
 		@Override
 		public final void onSubmit() {
 			indexResources();
 		}
-
+		
 		private void indexResources() {
 			String uri = configurer.getURI();
 			Map<String, Resource> resources = indexer.indexResources(uri);
@@ -75,7 +84,7 @@ public class IndexWiki extends Template {
 			PropertyListView<SerializableResource> view = (PropertyListView<SerializableResource>) get("resourcesList");
 			view.setDefaultModel(new ListModel<SerializableResource>(wikiContext.getSerializableResources()));
 		}
-
 	}
+
 
 }
