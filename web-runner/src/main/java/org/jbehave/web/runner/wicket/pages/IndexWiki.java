@@ -6,10 +6,12 @@ import java.util.Map;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.value.ValueMap;
 import org.jbehave.core.io.rest.Resource;
 import org.jbehave.core.io.rest.ResourceIndexer;
@@ -43,9 +45,19 @@ public class IndexWiki extends Template {
 			add(new Button("updateButton"));
 			add(new PropertyListView<SerializableResource>("resourcesList", new ArrayList<SerializableResource>()) {
 				@Override
-				public void populateItem(final ListItem<SerializableResource> listItem) {
-					listItem.add(new Label("name"));
-					listItem.add(new Label("uri"));
+				public void populateItem(final ListItem<SerializableResource> item) {
+					final SerializableResource resource = (SerializableResource) item.getModelObject();
+			        Link<SerializableResource> link = new Link<SerializableResource>("resource_link") {
+			            @Override
+			            public void onClick() {
+			                PageParameters pageParameters = new PageParameters();
+			                pageParameters.add("name", resource.getName());
+			                pageParameters.add("uri", resource.getUri());
+							setResponsePage(ViewResource.class, pageParameters);
+			            }
+			        };
+			        item.add(link);
+					item.add(new Label("name"));
 				}
 			}).setVersioned(false);
 		}
@@ -59,6 +71,7 @@ public class IndexWiki extends Template {
 			String uri = configurer.getURI();
 			Map<String, Resource> resources = indexer.indexResources(uri);
 			wikiContext.setResources(resources);		
+			@SuppressWarnings("unchecked")
 			PropertyListView<SerializableResource> view = (PropertyListView<SerializableResource>) get("resourcesList");
 			view.setDefaultModel(new ListModel<SerializableResource>(wikiContext.getSerializableResources()));
 		}

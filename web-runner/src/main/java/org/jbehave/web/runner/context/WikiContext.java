@@ -62,6 +62,10 @@ public class WikiContext implements Serializable {
 		public String getUri() {
 			return uri;
 		}
-		
+				
+		@Override
+		public String toString() {
+			return ToStringBuilder.reflectionToString(this);
+		}
 	}
 }

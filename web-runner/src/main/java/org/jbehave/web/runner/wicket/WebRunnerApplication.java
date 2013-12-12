@@ -10,8 +10,11 @@ import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.embedder.StoryRunner;
+import org.jbehave.core.io.ResourceLoader;
+import org.jbehave.core.io.rest.RESTClient.Type;
 import org.jbehave.core.io.rest.ResourceIndexer;
 import org.jbehave.core.io.rest.redmine.IndexFromRedmine;
+import org.jbehave.core.io.rest.redmine.LoadFromRedmine;
 import org.jbehave.core.steps.CandidateSteps;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
@@ -58,6 +61,7 @@ public class WebRunnerApplication extends WebApplication {
             bind(Embedder.class).toInstance(embedder());
             bind(FileManager.class).toInstance(fileManager());
             bind(ResourceIndexer.class).toInstance(resourceIndexer());
+            bind(ResourceLoader.class).toInstance(resourceLoader());
             bind(WikiConfigurer.class).toInstance(wikiConfiguration());
         }
 
@@ -70,7 +74,8 @@ public class WebRunnerApplication extends WebApplication {
         return embedder;
     }
 
-    protected WikiConfiguration wikiConfiguration() {
+
+	protected WikiConfiguration wikiConfiguration() {
 		return new WikiConfiguration("http://demo.redmine.org/projects/jbehave-rest/wiki/");
 	}
 
@@ -79,6 +84,11 @@ public class WebRunnerApplication extends WebApplication {
 		return new IndexFromRedmine(configuration.getUsername(), configuration.getPassword());
 	}
 
+    protected ResourceLoader resourceLoader() {
+		WikiConfiguration configuration = wikiConfiguration();
+		return new LoadFromRedmine(Type.JSON, configuration.getUsername(), configuration.getPassword());
+	}
+    
 	protected StoryRunner storyRunner() {
         return embedder().storyRunner();
     }
