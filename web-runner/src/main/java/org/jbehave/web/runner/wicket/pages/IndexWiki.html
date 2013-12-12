@@ -1,0 +1,31 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+<title>Wiki Index</title>
+</head>
+<body>
+	<wicket:extend>
+		<form wicket:id="indexForm" class="indexForm">
+			<div id="input">
+				<fieldset>
+					<legend>Wiki URI</legend>
+					<p>
+						<label wicket:id="uri"> </label>
+					</p>
+					<p>
+						<input wicket:id="updateButton" type="submit" value="Update" />
+					</p>
+				</fieldset>
+			</div>
+			<div id="ouput">
+				<fieldset>
+					<legend>Resources</legend>
+					<p>
+					<pre wicket:id="resources" id="indexForm">
+                    </pre>
+					</p>
+				</fieldset>
+			</div>
+		</form>
+	</wicket:extend>
+</body>
+</html>

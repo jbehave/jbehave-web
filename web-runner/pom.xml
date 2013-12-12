@@ -17,6 +17,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.jbehave</groupId>
+      <artifactId>jbehave-rest</artifactId>
+      <version>${jbehave.core.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.jbehave.web</groupId>
       <artifactId>jbehave-web-io</artifactId>
       <version>${project.version}</version>
