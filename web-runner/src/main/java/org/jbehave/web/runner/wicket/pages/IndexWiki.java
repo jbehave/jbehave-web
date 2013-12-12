@@ -17,7 +17,7 @@ import org.jbehave.core.io.rest.Resource;
 import org.jbehave.core.io.rest.ResourceIndexer;
 import org.jbehave.web.runner.context.WikiContext;
 import org.jbehave.web.runner.context.WikiContext.SerializableResource;
-import org.jbehave.web.runner.wicket.WikiConfiguration;
+import org.jbehave.web.runner.wicket.WikiConfigurer;
 
 import com.google.inject.Inject;
 
@@ -26,10 +26,10 @@ public class IndexWiki extends Template {
 
 	@Inject
 	private ResourceIndexer indexer;
-	// @Inject
-	private WikiConfiguration configuration = new WikiConfiguration(
-			"http://demo.redmine.org/projects/jbehave-rest/wiki");
-
+	
+	@Inject
+	private WikiConfigurer configurer;
+	
 	private WikiContext wikiContext = new WikiContext();
 
 	public IndexWiki() {
@@ -41,7 +41,7 @@ public class IndexWiki extends Template {
 		public IndexForm(final String id) {
 			super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
 			setMarkupId("indexForm");
-			add(new Label("uri", configuration.getURI()));
+			add(new Label("uri", configurer.getURI()));
 			add(new Button("updateButton"));
 			add(new PropertyListView<SerializableResource>("resourcesList", new ArrayList<SerializableResource>()) {
 				@Override
@@ -58,7 +58,7 @@ public class IndexWiki extends Template {
 		}
 
 		private void indexResources() {
-			String uri = configuration.getURI();
+			String uri = configurer.getURI();
 			Map<String, Resource> resources = indexer.indexResources(uri);
 			wikiContext.setResources(resources);		
 			PropertyListView<SerializableResource> view = (PropertyListView<SerializableResource>) get("resourcesList");

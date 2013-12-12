@@ -1,6 +1,6 @@
 package org.jbehave.web.runner.wicket;
 
-public class WikiConfiguration {
+public class WikiConfiguration implements WikiConfigurer {
 
 	private String uri;
 	

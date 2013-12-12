@@ -58,7 +58,7 @@ public class WebRunnerApplication extends WebApplication {
             bind(Embedder.class).toInstance(embedder());
             bind(FileManager.class).toInstance(fileManager());
             bind(ResourceIndexer.class).toInstance(resourceIndexer());
-            bind(WikiConfiguration.class).toInstance(wikiConfiguration());
+            bind(WikiConfigurer.class).toInstance(wikiConfiguration());
         }
 
     }
