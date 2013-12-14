@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
@@ -47,6 +48,7 @@ public class IndexWiki extends Template {
 				@Override
 				public void populateItem(final ListItem<SerializableResource> item) {
 					final SerializableResource resource = (SerializableResource) item.getModelObject();
+			        item.add(new ExternalLink("edit_resource", resource.getUri()));
 			        item.add(new Link<SerializableResource>("view_resource") {
 			            @Override
 			            public void onClick() {

@@ -76,7 +76,7 @@ public class WebRunnerApplication extends WebApplication {
 
 
 	protected WikiConfiguration wikiConfiguration() {
-		return new WikiConfiguration("http://demo.redmine.org/projects/jbehave-rest/wiki/");
+		return new WikiConfiguration("http://demo.redmine.org/projects/jbehave-rest/wiki");
 	}
 
 	protected ResourceIndexer resourceIndexer() {
