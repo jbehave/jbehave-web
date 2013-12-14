@@ -5,8 +5,6 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Properties;
 
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
@@ -48,7 +46,7 @@ public class RunResource extends Template {
         add(new NoMarkupMultiLineLabel("output", "", "brush: plain"));        
         add(new NoMarkupMultiLineLabel("failure", new PropertyModel<String>(storyContext, "failureStackTrace"),
                 "brush: java; gutter: false; collapse: true"));
-        showOutput(parameters);
+        loadAndRun(parameters.get("uri").toString());
 	}
 	
     private void reportTo(OutputStream ouputStream) {
@@ -63,21 +61,19 @@ public class RunResource extends Template {
         });
     }
 
-    private void showOutput(PageParameters parameters) {
-		String uri = parameters.get("uri").toString();
-		String content = loader.loadResourceAsText(uri);
-		storyContext.setInput(content);
-		run();
+    private void loadAndRun(String uri) {
+		String input = loader.loadResourceAsText(uri);
+		storyContext.setInput(input);
+		run(uri);
         MultiLineLabel output = (MultiLineLabel) get("output");
-        output.setDefaultModelObject(content);
+        output.setDefaultModelObject(storyContext.getOutput());
     }
     
-    private void run() {
+    private void run(String storyPath) {
         if (isNotBlank(storyContext.getInput())) {
             outputStream.reset();
             storyContext.clearFailureCause();
             embedder.useMetaFilters(asList(storyContext.getMetaFilter()));
-            String storyPath = storyPath();
             Story story = storyManager.storyOfText(storyContext.getInput(), storyPath);
             storyManager.runningStories(asList(story), embedder.metaFilter(), null);
             BatchFailures failures = new BatchFailures();
@@ -87,10 +83,6 @@ public class RunResource extends Template {
             }
             storyContext.setOutput(outputStream.toString());
         }
-    }
-
-    private String storyPath() {
-        return "web-" + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date(System.currentTimeMillis()));
     }
 
 }
