@@ -48,26 +48,26 @@ public class IndexWiki extends Template {
 				@Override
 				public void populateItem(final ListItem<SerializableResource> item) {
 					final SerializableResource resource = (SerializableResource) item.getModelObject();
+					item.add(new Label("path", resource.getPath()));
 			        item.add(new ExternalLink("edit_resource", resource.getUri()));
 			        item.add(new Link<SerializableResource>("view_resource") {
 			            @Override
 			            public void onClick() {
 			                PageParameters pageParameters = new PageParameters();
-			                pageParameters.add("name", resource.getName());
 			                pageParameters.add("uri", resource.getUri());
 							setResponsePage(ViewResource.class, pageParameters);
 			            }
 			        });
-			        item.add(new Link<SerializableResource>("run_resource") {
+			        Link<SerializableResource> runLink = new Link<SerializableResource>("run_resource") {
 			            @Override
 			            public void onClick() {
 			                PageParameters pageParameters = new PageParameters();
-			                pageParameters.add("name", resource.getName());
 			                pageParameters.add("uri", resource.getUri());
 							setResponsePage(RunResource.class, pageParameters);
 			            }
-			        });
-					item.add(new Label("name"));
+			        };
+			        runLink.setEnabled(resource.hasAncestors());
+					item.add(runLink);
 				}
 			}).setVersioned(false);
 			indexResources();
@@ -81,10 +81,10 @@ public class IndexWiki extends Template {
 		private void indexResources() {
 			String uri = configurer.getURI();
 			Map<String, Resource> resources = indexer.indexResources(uri);
-			wikiContext.setResources(resources);		
+			wikiContext.setIndex(resources);		
 			@SuppressWarnings("unchecked")
 			PropertyListView<SerializableResource> view = (PropertyListView<SerializableResource>) get("resourcesList");
-			view.setDefaultModel(new ListModel<SerializableResource>(wikiContext.getSerializableResources()));
+			view.setDefaultModel(new ListModel<SerializableResource>(wikiContext.getResources()));
 		}
 	}
 
