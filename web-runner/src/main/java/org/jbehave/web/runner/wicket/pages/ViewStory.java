@@ -14,7 +14,6 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
@@ -31,6 +30,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.io.IOUtils;
 import org.apache.wicket.util.string.StringValue;
 import org.jbehave.core.embedder.Embedder;
@@ -66,12 +66,12 @@ public class ViewStory extends Template {
         }
     }
 
-    private List<IColumn<Status>> columns() {
-        List<IColumn<Status>> columns = new ArrayList<IColumn<Status>>();
-        columns.add(new PropertyColumn<Status>(new Model<String>("Id"), "id", "id"));
-        columns.add(new PropertyColumn<Status>(new Model<String>("Done"), "done", "done"));
-        columns.add(new PropertyColumn<Status>(new Model<String>("Failed"), "failed", "failed"));
-        columns.add(new AbstractColumn<Status>(new Model<String>("Output")) {
+    private List<IColumn<Status,String>> columns() {
+        List<IColumn<Status,String>> columns = new ArrayList<IColumn<Status,String>>();
+        columns.add(new PropertyColumn<Status,String>(new Model<String>("Id"), "id", "id"));
+        columns.add(new PropertyColumn<Status,String>(new Model<String>("Done"), "done", "done"));
+        columns.add(new PropertyColumn<Status,String>(new Model<String>("Failed"), "failed", "failed"));
+        columns.add(new AbstractColumn<Status,String>(new Model<String>("Output")) {
             public void populateItem(Item<ICellPopulator<Status>> cellItem, String componentId, IModel<Status> model) {
                 cellItem.add(new ActionPanel(componentId, model));
             }
@@ -111,25 +111,25 @@ public class ViewStory extends Template {
         }
     }
 
-    class StatusDataTable extends DefaultDataTable<Status> {
+    class StatusDataTable extends DefaultDataTable<Status,String> {
 
-        public StatusDataTable(String id, List<IColumn<Status>> columns) {
+        public StatusDataTable(String id, List<IColumn<Status,String>> columns) {
             super(id, columns, new SortableStatusDataProvider(), 10);
         }
 
     }
 
-    class SortableStatusDataProvider extends SortableDataProvider<Status> {
+    class SortableStatusDataProvider extends SortableDataProvider<Status,String> {
         public SortableStatusDataProvider() {
             // set default sort
             setSort("id", SortOrder.ASCENDING);
         }
 
-        public Iterator<? extends Status> iterator(int first, int count) {
+        public Iterator<? extends Status> iterator(long first, long count) {
             return statusCache.find(first, count, getSort()).iterator();
         }
 
-        public int size() {
+        public long size() {
             return statusCache.getCount();
         }
 

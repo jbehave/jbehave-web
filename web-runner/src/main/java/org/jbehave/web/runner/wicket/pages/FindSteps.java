@@ -1,11 +1,15 @@
 package org.jbehave.web.runner.wicket.pages;
 
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.wicket.core.util.resource.PackageResourceStream;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AbstractAutoCompleteTextRenderer;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.markup.html.form.Button;
@@ -15,7 +19,6 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.MapModel;
-import org.apache.wicket.util.resource.PackageResourceStream;
 import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.velocity.markup.html.VelocityPanel;
 import org.jbehave.core.embedder.Embedder;
@@ -28,9 +31,6 @@ import org.jbehave.web.runner.context.StepdocContext.Sorting;
 import org.jbehave.web.runner.context.StepdocContext.View;
 
 import com.google.inject.Inject;
-
-import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 @SuppressWarnings("serial")
 public class FindSteps extends Template {
