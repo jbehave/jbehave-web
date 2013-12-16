@@ -24,10 +24,10 @@ import org.jbehave.core.io.rest.Resource;
 import org.jbehave.core.io.rest.ResourceIndexer;
 import org.jbehave.web.runner.context.WikiContext;
 import org.jbehave.web.runner.wicket.WikiConfigurer;
-import org.jbehave.web.runner.wicket.pages.tree.ResourceSet;
-import org.jbehave.web.runner.wicket.pages.tree.ResourceTreeProvider;
-import org.jbehave.web.runner.wicket.pages.tree.SelectableTreeContent;
-import org.jbehave.web.runner.wicket.pages.tree.TreeResource;
+import org.jbehave.web.runner.wicket.tree.ResourceSet;
+import org.jbehave.web.runner.wicket.tree.ResourceTreeProvider;
+import org.jbehave.web.runner.wicket.tree.SelectableTreeContent;
+import org.jbehave.web.runner.wicket.tree.TreeResource;
 
 import com.google.inject.Inject;
 

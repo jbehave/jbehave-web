@@ -1,4 +1,4 @@
-package org.jbehave.web.runner.wicket.pages.tree;
+package org.jbehave.web.runner.wicket.tree;
 
 import java.util.Iterator;
 import java.util.List;

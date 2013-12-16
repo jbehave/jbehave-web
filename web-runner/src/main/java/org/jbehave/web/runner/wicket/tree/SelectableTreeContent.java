@@ -1,4 +1,4 @@
-package org.jbehave.web.runner.wicket.pages.tree;
+package org.jbehave.web.runner.wicket.tree;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;

@@ -11,7 +11,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jbehave.core.io.rest.Resource;
-import org.jbehave.web.runner.wicket.pages.tree.TreeResource;
+import org.jbehave.web.runner.wicket.tree.TreeResource;
 
 @SuppressWarnings("serial")
 public class WikiContext implements Serializable {
