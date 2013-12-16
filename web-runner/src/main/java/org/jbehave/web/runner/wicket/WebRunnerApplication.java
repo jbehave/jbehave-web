@@ -31,6 +31,7 @@ import org.jbehave.web.runner.wicket.pages.IndexWiki;
 import org.jbehave.web.runner.wicket.pages.RunStory;
 import org.jbehave.web.runner.wicket.pages.SubmitStory;
 import org.jbehave.web.runner.wicket.pages.ViewStory;
+import org.jbehave.web.runner.wicket.pages.WikiTree;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
@@ -48,6 +49,7 @@ public class WebRunnerApplication extends WebApplication {
         mountPage("/story/submit", SubmitStory.class);
         mountPage("/story/view", ViewStory.class);
         mountPage("/wiki/index", IndexWiki.class);
+        mountPage("/wiki/tree", WikiTree.class);
     }
 
     private Module[] modules() {

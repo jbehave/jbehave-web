@@ -1,0 +1,21 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+<title>Wiki Tree</title>
+</head>
+<body>
+	<wicket:extend>
+		<form wicket:id="treeForm">
+			<p>
+				<a wicket:id="collapseAll">collapse all</a> <a wicket:id="expandAll">expand
+					all</a>
+			</p>
+			<p>
+				<div wicket:id="tree">[tree]</div>
+			</p>
+
+			<input type="submit" wicket:id="submit" value="OK" />
+		</form>
+	</wicket:extend>
+</body>
+</html>
+

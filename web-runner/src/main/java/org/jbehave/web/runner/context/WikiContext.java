@@ -11,12 +11,14 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jbehave.core.io.rest.Resource;
+import org.jbehave.web.runner.wicket.pages.tree.TreeResource;
 
 @SuppressWarnings("serial")
 public class WikiContext implements Serializable {
 
 	private String uri;
 	private List<SerializableResource> resources;
+	private List<TreeResource> treeRoots;
 
 	public WikiContext() {
 	}
@@ -32,6 +34,14 @@ public class WikiContext implements Serializable {
 
 	public void setIndex(Map<String, Resource> index) {
 		toList(index);
+	}
+
+	public List<TreeResource> getTreeRoots() {
+		return treeRoots;
+	}
+
+	public void setTreeRoots(List<TreeResource> treeResources) {
+		this.treeRoots = treeResources;		
 	}
 
 	public String getURI() {
@@ -127,4 +137,5 @@ public class WikiContext implements Serializable {
 		}
 
 	}
+
 }
