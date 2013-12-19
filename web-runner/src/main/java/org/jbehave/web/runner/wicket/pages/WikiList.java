@@ -23,7 +23,7 @@ import org.jbehave.web.runner.wicket.WikiConfigurer;
 import com.google.inject.Inject;
 
 @SuppressWarnings("serial")
-public class IndexWiki extends Template {
+public class WikiList extends Template {
 
 	@Inject
 	private ResourceIndexer indexer;
@@ -33,7 +33,7 @@ public class IndexWiki extends Template {
 	
 	private WikiContext wikiContext = new WikiContext();
 
-	public IndexWiki() {
+	public WikiList() {
 		setPageTitle("Wiki Index");
 		add(new IndexForm("indexForm"));
 	}

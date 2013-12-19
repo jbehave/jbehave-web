@@ -10,21 +10,21 @@ import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.Session;
 
 @SuppressWarnings("serial")
-public class ResourceSet implements Set<TreeResource>,
+public class TreeResourceSet implements Set<TreeResource>,
 		Serializable {
 
-	private static MetaDataKey<ResourceSet> KEY = new MetaDataKey<ResourceSet>(){};
+	private static MetaDataKey<TreeResourceSet> KEY = new MetaDataKey<TreeResourceSet>(){};
 
 	private Set<String> names = new HashSet<String>();
 
 	private boolean inverse;
 
-	public void expandAll() {
+	public void expandTree() {
 		names.clear();
 		inverse = true;
 	}
 
-	public void collapseAll() {
+	public void collapseTree() {
 		names.clear();
 		inverse = false;
 	}
@@ -95,10 +95,10 @@ public class ResourceSet implements Set<TreeResource>,
 		throw new UnsupportedOperationException();
 	}
 
-	public static ResourceSet get() {
-		ResourceSet set = Session.get().getMetaData(KEY);
+	public static TreeResourceSet get() {
+		TreeResourceSet set = Session.get().getMetaData(KEY);
 		if (set == null) {
-			set = new ResourceSet();
+			set = new TreeResourceSet();
 			Session.get().setMetaData(KEY, set);
 		}
 		return set;

@@ -28,7 +28,7 @@ import org.jbehave.core.io.rest.Resource;
 import org.jbehave.core.io.rest.ResourceIndexer;
 import org.jbehave.web.runner.context.WikiContext;
 import org.jbehave.web.runner.wicket.WikiConfigurer;
-import org.jbehave.web.runner.wicket.tree.ResourceSet;
+import org.jbehave.web.runner.wicket.tree.TreeResourceSet;
 import org.jbehave.web.runner.wicket.tree.ResourceTreeProvider;
 import org.jbehave.web.runner.wicket.tree.SelectableTreeContent;
 import org.jbehave.web.runner.wicket.tree.TreeResource;
@@ -81,17 +81,17 @@ public class WikiTree extends Template {
 
 			add(new Label("uri", configurer.getURI()));
 
-			add(new Link<Void>("expandAll") {
+			add(new Link<Void>("expandTree") {
 				@Override
 				public void onClick() {
-					ResourceSet.get().expandAll();
+					TreeResourceSet.get().expandTree();
 				}
 			});
 
-			add(new Link<Void>("collapseAll") {
+			add(new Link<Void>("collapseTree") {
 				@Override
 				public void onClick() {
-					ResourceSet.get().collapseAll();
+					TreeResourceSet.get().collapseTree();
 				}
 			});
 
@@ -220,7 +220,7 @@ public class WikiTree extends Template {
 			AbstractReadOnlyModel<Set<TreeResource>> {
 		@Override
 		public Set<TreeResource> getObject() {
-			return ResourceSet.get();
+			return TreeResourceSet.get();
 		}
 	}
 }

@@ -27,7 +27,6 @@ import org.jbehave.web.io.ZipFileArchiver;
 import org.jbehave.web.runner.wicket.pages.DataFiles;
 import org.jbehave.web.runner.wicket.pages.FindSteps;
 import org.jbehave.web.runner.wicket.pages.Home;
-import org.jbehave.web.runner.wicket.pages.IndexWiki;
 import org.jbehave.web.runner.wicket.pages.RunStory;
 import org.jbehave.web.runner.wicket.pages.SubmitStory;
 import org.jbehave.web.runner.wicket.pages.ViewStory;
@@ -48,7 +47,6 @@ public class WebRunnerApplication extends WebApplication {
         mountPage("/story/run", RunStory.class);
         mountPage("/story/submit", SubmitStory.class);
         mountPage("/story/view", ViewStory.class);
-        mountPage("/wiki/index", IndexWiki.class);
         mountPage("/wiki/tree", WikiTree.class);
     }
 

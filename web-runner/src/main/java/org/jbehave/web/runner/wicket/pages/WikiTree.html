@@ -6,21 +6,23 @@
 	<wicket:extend>
 		<form wicket:id="treeForm">
 			<p>
-
-				<label wicket:id="uri"> </label> <input wicket:id="updateButton"
-					type="submit" value="Update Resources" />
+				<label wicket:id="uri"> </label>
 			</p>
 			<p>
-				<a wicket:id="collapseAll">collapse all</a> <a wicket:id="expandAll">expand
-					all</a>
+				<input wicket:id="updateButton" type="submit"
+					value="Update Resources" />
+			</p>
+			<p>
+				Tree: <a wicket:id="collapseTree">collapse</a> <a wicket:id="expandTree">expand</a>
 			</p>
 			<p>
 			<div wicket:id="tree">[tree]</div>
 			</p>
-
+			<p>
 			<input type="submit" wicket:id="editButton" value="Edit" /> <input
-				type="submit" wicket:id="viewButton" value="View" /> <input type="submit"
-				wicket:id="runButton" value="Run" />
+				type="submit" wicket:id="viewButton" value="View" /> <input
+				type="submit" wicket:id="runButton" value="Run" />
+			<p>
 		</form>
 	</wicket:extend>
 </body>
