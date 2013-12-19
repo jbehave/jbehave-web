@@ -5,24 +5,28 @@
 <body>
 	<wicket:extend>
 		<form wicket:id="treeForm">
-			<p>
-				<label wicket:id="uri"> </label>
-			</p>
-			<p>
-				<input wicket:id="updateButton" type="submit"
-					value="Update Resources" />
-			</p>
-			<p>
-				Tree: <a wicket:id="collapseTree">collapse</a> <a wicket:id="expandTree">expand</a>
-			</p>
-			<p>
+			<div>
+				<p>
+					<label wicket:id="uri"> </label>
+				</p>
+				<p>
+					<input wicket:id="updateButton" type="submit" value="Update" />
+				</p>
+			</div>
+			<div>
+				<a wicket:id="collapseTree"><img
+					src="images/jbehave/tree-collapse.png" alt="collapse all" /></a> <a
+					wicket:id="expandTree"><img
+					src="images/jbehave/tree-expand.png" alt="expand all" /></a>
+			</div>
 			<div wicket:id="tree">[tree]</div>
-			</p>
-			<p>
-			<input type="submit" wicket:id="editButton" value="Edit" /> <input
-				type="submit" wicket:id="viewButton" value="View" /> <input
-				type="submit" wicket:id="runButton" value="Run" />
-			<p>
+			<div>
+				<p>
+					<input type="submit" wicket:id="editButton" value="Edit" /> <input
+						type="submit" wicket:id="viewButton" value="View" /> <input
+						type="submit" wicket:id="runButton" value="Run" />
+				</p>
+			</div>
 		</form>
 	</wicket:extend>
 </body>
