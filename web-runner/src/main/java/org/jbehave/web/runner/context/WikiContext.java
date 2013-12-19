@@ -18,7 +18,7 @@ public class WikiContext implements Serializable {
 
 	private String uri;
 	private List<SerializableResource> resources;
-	private List<TreeResource> treeRoots;
+	private List<TreeResource> treeRoots = new ArrayList<TreeResource>();
 
 	public WikiContext() {
 	}

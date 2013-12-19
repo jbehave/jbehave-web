@@ -20,9 +20,17 @@ public class ViewResource extends Template {
 	
     private void showOutput(PageParameters parameters) {
 		String uri = parameters.get("uri").toString();
-		String content = loader.loadResourceAsText(uri);
+		String content = resourceContent(uri);
         MultiLineLabel output = (MultiLineLabel) get("output");
         output.setDefaultModelObject(content);
     }
+
+	private String resourceContent(String uri) {
+		try {
+			return loader.loadResourceAsText(uri);
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
 
 }

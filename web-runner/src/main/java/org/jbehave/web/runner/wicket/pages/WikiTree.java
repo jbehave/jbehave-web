@@ -13,12 +13,16 @@ import org.apache.wicket.extensions.markup.html.repeater.tree.NestedTree;
 import org.apache.wicket.extensions.markup.html.repeater.tree.theme.HumanTheme;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.pages.RedirectPage;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.component.IRequestablePage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.value.ValueMap;
 import org.jbehave.core.io.rest.Resource;
 import org.jbehave.core.io.rest.ResourceIndexer;
@@ -75,6 +79,8 @@ public class WikiTree extends Template {
 			});
 			add(tree);
 
+			add(new Label("uri", configurer.getURI()));
+
 			add(new Link<Void>("expandAll") {
 				@Override
 				public void onClick() {
@@ -89,24 +95,60 @@ public class WikiTree extends Template {
 				}
 			});
 
-			add(new Button("submit") {
+			add(new Button("editButton") {
 				@Override
 				public void onSubmit() {
+					if (content.hasSelection()) {
+						TreeResource selected = content.getSelected();
+						setResponsePage(new RedirectPage(selected.getUri()));
+					}
 				}
 			});
-			// add(new Label("uri", configurer.getURI()));
-			// add(new Button("updateButton"));
+			add(new Button("viewButton") {
+				@Override
+				public void onSubmit() {
+					if (content.hasSelection()) {
+						TreeResource selected = content.getSelected();
+						forwardTo(selected.getUri(), ViewResource.class);
+					}
+				}
+
+			});
+			add(new Button("runButton") {
+				@Override
+				public void onSubmit() {
+					if (content.hasSelection()) {
+						TreeResource selected = content.getSelected();
+						forwardTo(selected.getUri(), RunResource.class);
+					}
+				}
+			});
+			add(new Button("updateButton") {
+				@Override
+				public void onSubmit() {
+					indexResources();
+				}
+			});
 		}
 
-		@Override
-		public final void onSubmit() {
-			indexResources();
+		private void forwardTo(String uri,
+				Class<? extends IRequestablePage> pageClass) {
+			PageParameters pageParameters = new PageParameters();
+			pageParameters.add("uri", uri);
+			setResponsePage(pageClass, pageParameters);
 		}
 
 		private void indexResources() {
-			String uri = configurer.getURI();
-			Map<String, Resource> index = indexer.indexResources(uri);
-			wikiContext.setTreeRoots(treeRoots(treeResources(index)));
+			try {
+				String uri = configurer.getURI();
+				Map<String, Resource> index = indexer.indexResources(uri);
+				wikiContext.setTreeRoots(treeRoots(treeResources(index)));
+			} catch (Exception e) {
+				List<TreeResource> roots = new ArrayList<TreeResource>();
+				roots.add(new TreeResource(new Resource("http://wiki", "Wiki")));
+				wikiContext.setTreeRoots(roots);
+				// Allow for failures in indexing resources
+			}
 		}
 
 		private Map<String, TreeResource> treeResources(

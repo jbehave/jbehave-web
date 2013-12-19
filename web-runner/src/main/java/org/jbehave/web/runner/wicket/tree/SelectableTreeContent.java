@@ -22,7 +22,18 @@ public class SelectableTreeContent {
 			selected.detach();
 		}
 	}
+	
+	public boolean hasSelection(){
+		return selected != null;
+	}
 
+	public TreeResource getSelected(){
+		if ( selected != null ){
+			return selected.getObject();
+		}
+		return null;
+	}
+	
 	protected boolean isSelected(TreeResource resource) {
 		IModel<TreeResource> model = provider.model(resource);
 
@@ -44,7 +55,6 @@ public class SelectableTreeContent {
 		}
 
 		selected = provider.model(resource);
-
 		tree.updateNode(resource, target);
 	}
 

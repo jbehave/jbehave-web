@@ -62,12 +62,19 @@ public class RunResource extends Template {
     }
 
     private void loadAndRun(String uri) {
-		String input = loader.loadResourceAsText(uri);
-		storyContext.setInput(input);
+		storyContext.setInput(loadResource(uri));
 		run(uri);
         MultiLineLabel output = (MultiLineLabel) get("output");
         output.setDefaultModelObject(storyContext.getOutput());
     }
+
+	private String loadResource(String uri) {
+		try {
+			return loader.loadResourceAsText(uri);
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
     
     private void run(String storyPath) {
         if (isNotBlank(storyContext.getInput())) {
