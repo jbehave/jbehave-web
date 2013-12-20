@@ -126,5 +126,30 @@ automatically unzipped when upload to the server.</p>
 	<li>Use the <b>Delete</b> button to delete any selected files.</li>
 </ul>
 
+<h2>Wiki</h2>
+
+<p>The Wiki page allows the user to view the resources contained on a Wiki.  The root URI of
+the Wiki is configured in the <a
+		href="javadoc/web-runner/org/jbehave/web/runner/wicket/WebRunnerApplication.html#wikiConfiguration()">WebRunnerApplication#wikiConfiguration()</a>.
+</p>
+<p>
+The resources are displayed in a tree view representing the hierarchical structure of the 
+Wiki resources.  The 'Update' button allows to refresh and update the view, if the Wiki content has changed.
+The tree view can collapsed and expanded node by node or all at once using the links provided.  
+</p>
+<p>
+Each wiki resource in the tree is selectable.  Once selected it can be:
+<ul>
+	<li>Edited:  the user is forwarded to the page on the wiki</li>
+	<li>Viewed:  the user is shown the content of the page in the Web Runner</li>
+	<li>Run:  the content of the page is executed as a story</li>
+</ul>
+</p>
+<p><b>NOTE:</b> At this stage the Web Runner has no way of distinguishing which of the wiki resources 
+are real stories and which are container pages.  For the latter, it will treat them as stories without
+real executable content, i.e. without scenarios.   Going forward, some criteria can be introduced to
+establish the nature of the resource by inspecting its content, e.g. one can look for the scenario keyword.
+</p>
+
 </body>
 </html>
