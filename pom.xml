@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.jbehave.web</groupId>
   <artifactId>jbehave-web</artifactId>
-  <version>3.6-beta-2</version>
+  <version>3.6-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBehave Web</name>
   <description>JBehave Web provides a web integration layer for Behaviour-Driven Development</description>
@@ -408,7 +408,7 @@
     <connection>scm:git:git://git.codehaus.org/jbehave-web.git</connection>
     <developerConnection>scm:git:ssh://git@git.codehaus.org/jbehave-web.git</developerConnection>
     <url>http://git.codehaus.org/gitweb.cgi?p=jbehave-web.git</url>
-    <tag>jbehave-web-3.6-beta-2</tag>
+    <tag>HEAD</tag>
   </scm>
 
 </project>
