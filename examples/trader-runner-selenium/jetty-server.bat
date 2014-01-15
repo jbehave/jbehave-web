@@ -1,4 +1,6 @@
 @ECHO off
+TITLE Jetty Server on 8080
+ECHO Running from: %CD%
 :: starts server
 IF NOT DEFINED STARTDIR (
     SET "STARTDIR=..\trader-runner"

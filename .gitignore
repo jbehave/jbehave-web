@@ -7,3 +7,5 @@ target/
 *.ipr
 *.iws
 velocity.log*
+examples/trader-runner-selenium/selenium-server*.jar
+examples/trader-runner-selenium/*.exe
