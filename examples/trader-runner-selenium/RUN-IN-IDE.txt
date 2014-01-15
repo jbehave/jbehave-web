@@ -16,3 +16,5 @@ To run in IDE:
 - open terminal window and run
     .\jetty-server.bat
 - run stories in IDE
+    for example: within IntelliJ-IDEA 13.0, right click on 'web-runner'
+	or 'web-selenium' and choose "Run 'All Tests'".
