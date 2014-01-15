@@ -1,11 +1,18 @@
+LINUX:
+
 To run in IDE:
-
 - open terminal window and run
+    ./jetty-server.sh
+- open terminal window and run
+    ./selenium-server.sh
+- run stories in IDE
 
-./jetty-server.sh
+WINDOWS:
 
-- open terminal window and run 
-
-./selenium-server.sh
-
+To run in IDE:
+- open terminal window and run
+    .\startWebDriverGridHub.bat
+    .\startWebDriverGridNode.bat
+- open terminal window and run
+    .\jetty-server.bat
 - run stories in IDE
