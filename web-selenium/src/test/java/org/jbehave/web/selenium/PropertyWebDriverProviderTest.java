@@ -1,19 +1,17 @@
 package org.jbehave.web.selenium;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openqa.selenium.android.AndroidDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 
 public class PropertyWebDriverProviderTest {
 
@@ -44,13 +42,6 @@ public class PropertyWebDriverProviderTest {
         assertThat(provider.get(), instanceOf(HtmlUnitDriver.class));
         HtmlUnitDriver driver = (HtmlUnitDriver)provider.get();
         assertThat(driver.isJavascriptEnabled(), is(true));
-    }
-
-    @Test
-    @Ignore("Only when Android is available")
-    public void shouldSupportAndroidByProperty() {
-        createProviderForProperty("android");
-        assertThat(provider.get(), instanceOf(AndroidDriver.class));
     }
 
     @Test
