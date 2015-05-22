@@ -14,23 +14,18 @@ JBehave is a collection of extension for JBehave that extend its capabilities in
 
 Canonical information for JBehave:
 
-1. [News](http://jbehave.org).
-2. [Documentation](http://jbehave.org/documentation/).
-3. [User mail-list](http://xircles.codehaus.org/lists/user@jbehave.codehaus.org)
-4. Jars in [Maven Repositories](http://mvnrepository.com/search.html?query=jbehave)
+1. [Documentation](http://jbehave.org/).
+2. [User mailing list](http://jbehave.org/mailing-lists.html)
 
 ## Contributing and Developing
 
-Please report issues, feature requests on the Codehaus [issue
-tracker](http://jira.codehaus.org/browse/JBEHAVE) or discuss them on the
-[dev mail-list](http://xircles.codehaus.org/lists/dev@jbehave.codehaus.org). 
-
-Keep an eye on the  [Bamboo Continuous Integration](http://builds.codehaus.org/browse/JBEHAVE) server for JBehave builds.
+Please report issues, feature requests on JIRA [issue tracker](http://jbehave.org/issue-tracking.html) or discuss them on the
+[dev mailing list](http://jbehave.org/mailing-lists.html). 
 
 ### Depended-on Technologies
 
-JDK required: 5.0 (or above)
-[Maven](http://maven.apache.org) required (2.2.1 or above, 3.0 or above for reporting).
+JDK required: 1.7 (or above)
+[Maven](http://maven.apache.org) required (3.0 or above).
 
 ### Encoding
 
@@ -40,7 +35,7 @@ Configure Maven by adding "-Dfile.encoding=UTF-8" to $MAVEN_OPTS
 ### IDE Integration
 
 Maven is supported in Intellij IDEA out-of-the-box 
-Maven is supported in Eclipse via [m2eclipse plugin](http://m2eclipse.sonatype.org/)
+Maven is supported in Eclipse out-of-the-box
 
 ### Building
 
