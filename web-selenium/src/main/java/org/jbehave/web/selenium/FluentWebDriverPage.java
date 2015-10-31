@@ -12,20 +12,11 @@ import org.seleniumhq.selenium.fluent.internal.NegatingFluentWebDriver;
 
 public abstract class FluentWebDriverPage extends WebDriverPage {
 
-    private ThreadLocal<FluentWebDriver> fluentWebDriver = new ThreadLocal<FluentWebDriver>();
-
     public FluentWebDriverPage(WebDriverProvider driverProvider) {
         super(driverProvider);
     }
 
     private FluentWebDriver fluentWebDriver() {
-        if (fluentWebDriver.get() == null) {
-            fluentWebDriver.set(makeFluentWebDriver());
-        }
-        return fluentWebDriver.get();
-    }
-
-    protected FluentWebDriver makeFluentWebDriver() {
         return new FluentWebDriver(getDriverProvider().get());
     }
 

@@ -25,7 +25,6 @@ public class FirefoxWebDriverProvider extends DelegatingWebDriverProvider {
     private static final String JOURNAL_FIREFOX_COMMANDS = System.getProperty("JOURNAL_FIREFOX_COMMANDS", "false");
 
     public static final String FIREFOX_PROFILE = "JBEHAVE_WEBDRIVER_FIREFOX_PROFILE";
-    public static final Map<Integer,Long> driverToThreadMap = new HashMap<Integer,Long>(11);
     public void initialize() {
         String profileName = System.getProperty(FIREFOX_PROFILE);
         final FirefoxBinary binary = new FirefoxBinary();
@@ -46,13 +45,6 @@ public class FirefoxWebDriverProvider extends DelegatingWebDriverProvider {
             fireFoxDriverz[0] = firefoxDriver;
 
             delegate.set(firefoxDriver);
-            if(driverToThreadMap.containsKey(System.identityHashCode(firefoxDriver))){
-                // TODO - take out all this driverToThreadMap
-                // For debugging during development
-                // throw new Error("Duplicate Driver !!!!!!!");
-            }else{
-              driverToThreadMap.put(System.identityHashCode(firefoxDriver),Thread.currentThread().getId());
-            }
 
         }
         firefoxDriver.setCommandExecutor(new OverridableCommandExecutor(firefoxDriver.getCommandExecutor()));
@@ -101,7 +93,6 @@ public class FirefoxWebDriverProvider extends DelegatingWebDriverProvider {
         @Override
         protected void stopClient(){
             super.stopClient();
-            driverToThreadMap.remove(System.identityHashCode(fireFoxDriverz[0]));
             FirefoxWebDriverProvider.this.ending();
         }
 

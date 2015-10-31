@@ -27,7 +27,8 @@ public abstract class DelegatingWebDriverProvider implements WebDriverProvider {
 
     public void end() {
         delegate.get().quit();
-        delegate.set(null);
+        delegate.remove();
+
     }
 
     public boolean saveScreenshotTo(String path) {
