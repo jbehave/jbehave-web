@@ -644,6 +644,22 @@ public abstract class FluentWebDriverPage extends WebDriverPage {
         return fluentWebDriver().tbodys(by);
     }
 
+    public FluentWebElements elements() {
+        return fluentWebDriver().elements();
+    }
+
+    public FluentWebElements elements(By by) {
+        return fluentWebDriver().elements(by);
+    }
+
+    public FluentWebElement element(By by) {
+        return fluentWebDriver().element(by);
+    }
+
+    public FluentWebElement element() {
+        return fluentWebDriver().element();
+    }
+
     public FluentWebDriver within(Period period) {
         return fluentWebDriver().within(period);
     }
@@ -667,5 +683,6 @@ public abstract class FluentWebDriverPage extends WebDriverPage {
     public FluentWebDriver.BooleanResultsAdapter hasMissing() {
         return fluentWebDriver().hasMissing();
     }
+
 
 }
