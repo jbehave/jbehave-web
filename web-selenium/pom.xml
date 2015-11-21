@@ -66,7 +66,7 @@
     <dependency>
       <groupId>org.picocontainer</groupId>
       <artifactId>picocontainer</artifactId>
-      <version>2.14.3</version>
+      <version>2.15</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -74,14 +74,18 @@
       <artifactId>phantomjsdriver</artifactId>
       <version>1.2.1</version>
       <exclusions>
-        <!-- phantomjsdriver 1.0.4 has a dep on Selenium 2.33 :-(  -->
+        <!--
+           phantomjsdriver 1.2.1 has a dep on Selenium 2.44 :-(
+           Refer:
+           http://mvnrepository.com/artifact/com.codeborne/phantomjsdriver/1.2.1
+        -->
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-remote-driver</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-server</artifactId>
+          <artifactId>selenium-java</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
