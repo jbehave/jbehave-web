@@ -10,7 +10,7 @@ start()
 # ----- Execute the commands -----------------------------------------
 
 MODULE=$1
-if [ "$MODULE" == "" ]; then
+if test -z "$MODULE"; then
 MODULE="../trader-runner"
 fi
 

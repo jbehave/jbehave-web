@@ -10,10 +10,10 @@ start()
 
 M2_REPOSITORY=$1
 VERSION=$2
-if [ "$M2_REPOSITORY" == "" ]; then
+if test -z "$MODULE"; then
 M2_REPOSITORY="$HOME/.m2/repository"
 fi
-if [ "$VERSION" == "" ]; then
+if test -z "$VERSION"; then
 VERSION="1.0.2"
 fi
 
