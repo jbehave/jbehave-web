@@ -196,6 +196,38 @@ public abstract class FluentWebDriverPage extends WebDriverPage {
         return fluentWebDriver().h4s(by);
     }
 
+    public FluentWebElement h5() {
+        return fluentWebDriver().h5();
+    }
+
+    public FluentWebElement h5(By by) {
+        return fluentWebDriver().h5(by);
+    }
+
+    public FluentWebElements h5s() {
+        return fluentWebDriver().h5s();
+    }
+
+    public FluentWebElements h5s(By by) {
+        return fluentWebDriver().h5s(by);
+    }
+
+    public FluentWebElement h6() {
+        return fluentWebDriver().h6();
+    }
+
+    public FluentWebElement h6(By by) {
+        return fluentWebDriver().h6(by);
+    }
+
+    public FluentWebElements h6s() {
+        return fluentWebDriver().h6s();
+    }
+
+    public FluentWebElements h6s(By by) {
+        return fluentWebDriver().h6s(by);
+    }
+
     public FluentWebElement p() {
         return fluentWebDriver().p();
     }
@@ -640,6 +672,10 @@ public abstract class FluentWebDriverPage extends WebDriverPage {
         return fluentWebDriver().tbody(by);
     }
 
+    public FluentWebElement body() {
+        return fluentWebDriver().body();
+    }
+    
     public FluentWebElements tbodys(By by) {
         return fluentWebDriver().tbodys(by);
     }

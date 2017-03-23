@@ -11,20 +11,29 @@
   <description>Selenium and WebDriver API bindings for JBehave</description>
 
   <properties>
-    <selenium.version>2.48.2</selenium.version>
-    <groovy.version>2.1.8</groovy.version>
+    <selenium.version>3.3.1</selenium.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>${selenium.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-leg-rc</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>1.15</version>
+      <version>1.17</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
@@ -36,25 +45,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>15.0</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-all</artifactId>
-      <version>${groovy.version}</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.github.tanob</groupId>
-      <artifactId>groobe</artifactId>
-      <version>1.2</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.gebish</groupId>
-      <artifactId>geb-core</artifactId>
-      <version>0.9.1</version> <!-- 0.12.2 -->
+      <version>21.0</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -72,7 +63,7 @@
     <dependency>
       <groupId>com.codeborne</groupId>
       <artifactId>phantomjsdriver</artifactId>
-      <version>1.2.1</version>
+      <version>1.4.1</version>
       <exclusions>
         <!--
            phantomjsdriver 1.2.1 has a dep on Selenium 2.44 :-(
@@ -92,45 +83,6 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.gmaven</groupId>
-        <artifactId>gmaven-plugin</artifactId>
-        <configuration>
-          <source>
-            project.addCompileSourceRoot("src/main/groovy")
-            project.addTestCompileSourceRoot("src/test/groovy")
-          </source>
-          <providerSelection>1.7</providerSelection>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.codehaus.gmaven.runtime</groupId>
-            <artifactId>gmaven-runtime-1.7</artifactId>
-            <version>${gmaven.version}</version>
-            <exclusions>
-              <exclusion>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-          <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>${groovy.version}</version>
-          </dependency>
-        </dependencies>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generateStubs</goal>
-              <goal>compile</goal>
-              <goal>generateTestStubs</goal>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 </project>

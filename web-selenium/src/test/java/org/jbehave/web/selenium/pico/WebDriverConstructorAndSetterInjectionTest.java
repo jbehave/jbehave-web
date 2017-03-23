@@ -1,6 +1,5 @@
 package org.jbehave.web.selenium.pico;
 
-import groovy.lang.MetaClass;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +22,6 @@ public class WebDriverConstructorAndSetterInjectionTest {
     public void setUp() throws Exception {
         mpc.addComponent("Hello");
         mpc.addComponent(mock(WebElement.class));
-        mpc.addComponent(mock(MetaClass.class));
     }
 
     @Test
@@ -47,12 +45,6 @@ public class WebDriverConstructorAndSetterInjectionTest {
     @Test
     public void webElementShouldNotBeAllowed() {
         WontDoThis2 result = mpc.addComponent(WontDoThis2.class).getComponent(WontDoThis2.class);
-        assertThat(result.field, nullValue());
-    }
-
-    @Test
-    public void metaClassShouldNotBeAllowed() {
-        WontDoThis3 result = mpc.addComponent(WontDoThis3.class).getComponent(WontDoThis3.class);
         assertThat(result.field, nullValue());
     }
 
@@ -85,13 +77,6 @@ public class WebDriverConstructorAndSetterInjectionTest {
     public static class WontDoThis2 {
         private WebElement field;
         public void setField(WebElement field) {
-            this.field = field;
-        }
-    }
-
-    public static class WontDoThis3 {
-        private MetaClass field;
-        public void setField(MetaClass field) {
             this.field = field;
         }
     }

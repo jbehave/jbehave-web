@@ -1,6 +1,5 @@
 package org.jbehave.web.selenium.pico;
 
-import groovy.lang.MetaClass;
 import org.openqa.selenium.WebElement;
 import org.picocontainer.ComponentAdapter;
 import org.picocontainer.ComponentMonitor;
@@ -33,8 +32,7 @@ public class WebDriverConstructorAndSetterInjection extends CompositeInjection {
                                 if (type.equals(WebElement.class) || type.getName().matches("^.*Component$")) {
                                     return false;
                                 }
-                                // Groovy classes have a setMetaClass(MetaClass mc) method which we don't want to inject into.
-                                return type != MetaClass.class && super.isInjectorMethod(method);
+                                return  super.isInjectorMethod(method);
                             }
                         };
                     }
