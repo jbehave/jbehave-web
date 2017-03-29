@@ -72,15 +72,6 @@
 
   <profiles>
     <profile>
-      <id>selenium</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <modules>
-        <module>trader-runner-selenium</module>
-      </modules>
-    </profile>
-    <profile>
       <id>webdriver</id>
       <activation>
         <activeByDefault>true</activeByDefault>

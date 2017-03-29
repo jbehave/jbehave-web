@@ -13,7 +13,9 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.value.ValueMap;
 import org.jbehave.core.embedder.Embedder;
+import org.jbehave.core.embedder.PerformableTree;
 import org.jbehave.core.embedder.StoryManager;
+import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.web.runner.context.StoryContext;
@@ -21,7 +23,7 @@ import org.jbehave.web.runner.context.StoryContext;
 import com.google.inject.Inject;
 
 import static java.util.Arrays.asList;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.jbehave.core.io.CodeLocations.codeLocationFromPath;
 import static org.jbehave.core.reporters.Format.HTML;
 import static org.jbehave.core.reporters.Format.TXT;
@@ -73,7 +75,9 @@ public class SubmitStory extends Template {
             embedder.useMetaFilters(asList(storyContext.getMetaFilter()));
             String storyPath = storyPath();
             Story story = storyManager.storyOfText(storyContext.getInput(), storyPath);
-            storyManager.runningStories(asList(story), embedder.metaFilter(), null);
+            BatchFailures failures = new BatchFailures();
+            PerformableTree.RunContext runContext = new PerformableTree.RunContext(embedder.configuration(), embedder.stepsFactory(), embedder.embedderMonitor(), embedder.metaFilter(), failures);
+            storyManager.runningStories(runContext, asList(story));
             storyContext.setOutput(storyPath);
         }
     }

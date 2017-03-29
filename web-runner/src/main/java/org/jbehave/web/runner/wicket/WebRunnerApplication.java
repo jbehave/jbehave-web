@@ -9,7 +9,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.Embedder;
-import org.jbehave.core.embedder.StoryRunner;
+import org.jbehave.core.embedder.StoryManager;
 import org.jbehave.core.io.ResourceLoader;
 import org.jbehave.core.io.rest.RESTClient.Type;
 import org.jbehave.core.io.rest.ResourceIndexer;
@@ -89,8 +89,8 @@ public class WebRunnerApplication extends WebApplication {
 		return new LoadFromRedmine(Type.JSON, configuration.getUsername(), configuration.getPassword());
 	}
     
-	protected StoryRunner storyRunner() {
-        return embedder().storyRunner();
+	protected StoryManager storyManager() {
+        return embedder().storyManager();
     }
 
     protected Configuration configuration() {

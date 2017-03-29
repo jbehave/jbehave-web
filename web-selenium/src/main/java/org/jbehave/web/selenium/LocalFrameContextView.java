@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 public class LocalFrameContextView implements ContextView {
 
@@ -57,7 +57,7 @@ public class LocalFrameContextView implements ContextView {
         if (frame == null) {
             initialize();
         }
-        label.setText("<html><b>" + StringEscapeUtils.escapeHtml(scenario) + "</b><br/>" + StringEscapeUtils.escapeHtml(step) + "</html>");
+        label.setText("<html><b>" + StringEscapeUtils.escapeHtml4(scenario) + "</b><br/>" + StringEscapeUtils.escapeHtml4(step) + "</html>");
     }
 
     public synchronized void close() {

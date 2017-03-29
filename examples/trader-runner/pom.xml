@@ -122,13 +122,13 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.mortbay.jetty</groupId>
+        <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <configuration>
-          <webAppConfig>
-            <contextPath>/${jbehave.webapp.name}</contextPath>
-          </webAppConfig>
-          <webApp>${project.build.directory}/${jbehave.webapp.name}.war</webApp>
+          <war>${project.build.directory}/${jbehave.webapp.name}.war</war>
+          <webApp>
+            <contextPath>/trader-runner</contextPath>
+          </webApp>
         </configuration>
       </plugin>
     </plugins>

@@ -8,8 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jbehave.core.io.rest.Resource;
 import org.jbehave.web.runner.wicket.tree.TreeResource;
 

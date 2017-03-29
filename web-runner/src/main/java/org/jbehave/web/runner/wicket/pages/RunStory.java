@@ -15,6 +15,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 import org.jbehave.core.configuration.Keywords;
 import org.jbehave.core.embedder.Embedder;
+import org.jbehave.core.embedder.PerformableTree;
 import org.jbehave.core.embedder.StoryManager;
 import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.model.Story;
@@ -27,7 +28,7 @@ import org.jbehave.web.runner.context.StoryOutputStream;
 import com.google.inject.Inject;
 
 import static java.util.Arrays.asList;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @SuppressWarnings("serial")
 public class RunStory extends Template {
@@ -88,9 +89,10 @@ public class RunStory extends Template {
             embedder.useMetaFilters(asList(storyContext.getMetaFilter()));
             String storyPath = storyPath();
             Story story = storyManager.storyOfText(storyContext.getInput(), storyPath);
-            storyManager.runningStories(asList(story), embedder.metaFilter(), null);
             BatchFailures failures = new BatchFailures();
-            storyManager.waitUntilAllDoneOrFailed(failures);
+            PerformableTree.RunContext runContext = new PerformableTree.RunContext(embedder.configuration(), embedder.stepsFactory(), embedder.embedderMonitor(), embedder.metaFilter(), failures);
+            storyManager.runningStories(runContext, asList(story));
+            storyManager.waitUntilAllDoneOrFailed(runContext);
             if (!failures.isEmpty()) {
                 storyContext.runFailedFor(failures.values().iterator().next());
             }

@@ -23,11 +23,11 @@
   </modules>
 
   <properties>
-    <jbehave.core.version>3.9.5</jbehave.core.version>
+    <jbehave.core.version>4.1</jbehave.core.version>
     <jbehave.site.version>3.3</jbehave.site.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
-    <jdk.version>1.5</jdk.version>
-    <jetty.version>7.2.2.v20101205</jetty.version>
+    <jdk.version>1.6</jdk.version>
+    <jetty.version>9.4.2.v20170220</jetty.version>
     <gmaven.version>1.5</gmaven.version>
   </properties>
 
@@ -275,22 +275,15 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.mortbay.jetty</groupId>
+          <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
           <version>${jetty.version}</version>
           <configuration>
-            <webAppConfig>
-              <contextPath>/${jbehave.webapp.name}</contextPath>
-            </webAppConfig>
-            <webApp>${project.build.directory}/${jbehave.webapp.name}.war</webApp>
-            <connectors>
-              <connector
-                implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                <port>8080</port>
-                <maxIdleTime>60000</maxIdleTime>
-              </connector>
-            </connectors>
+            <war>${project.build.directory}/${jbehave.webapp.name}.war</war>
             <scanIntervalSeconds>5</scanIntervalSeconds>
+            <webApp>
+              <contextPath>/${jbehave.webapp.name}</contextPath>
+            </webApp>
           </configuration>
         </plugin>
       </plugins>

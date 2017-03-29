@@ -1,7 +1,7 @@
 package org.jbehave.web.runner.wicket.pages;
 
-import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -152,7 +152,7 @@ public class FindSteps extends Template {
     public static class StepdocAutoCompleteRenderer extends AbstractAutoCompleteTextRenderer<SerializableStepdoc> {
         @Override
         protected String getTextValue(final SerializableStepdoc object) {
-            return escapeHtml(object.asString());
+            return escapeHtml4(object.asString());
         }
     }
 }

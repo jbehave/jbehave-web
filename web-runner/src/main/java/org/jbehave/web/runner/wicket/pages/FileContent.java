@@ -2,7 +2,7 @@ package org.jbehave.web.runner.wicket.pages;
 
 import java.io.File;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jbehave.web.io.ResourceFinder;
 
 @SuppressWarnings("serial")

@@ -11,7 +11,7 @@
 
   <properties>
     <packaging>jar</packaging>
-    <wicket.version>6.12.0</wicket.version>
+    <wicket.version>7.6.0</wicket.version>
     <guice.version>3.0</guice.version>
   </properties>
 
@@ -115,7 +115,7 @@
             </configuration>
           </plugin>
           <plugin>
-            <groupId>org.mortbay.jetty</groupId>
+            <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-maven-plugin</artifactId>
             <configuration>
               <webAppConfig>

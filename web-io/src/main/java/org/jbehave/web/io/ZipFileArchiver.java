@@ -1,7 +1,7 @@
 package org.jbehave.web.io;
 
 import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
-import static org.apache.commons.lang.StringUtils.remove;
+import static org.apache.commons.lang3.StringUtils.remove;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +18,7 @@ import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * File archiver for zip files

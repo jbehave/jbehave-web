@@ -62,13 +62,14 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.mortbay.jetty</groupId>
+        <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <configuration>
-          <webApp>${project.build.directory}/jbehave-web-trader-runner.war</webApp>
-          <webAppConfig>
+          <war>${project.build.directory}/jbehave-web-trader-runner.war</war>
+          <daemon>true</daemon>
+          <webApp>
             <contextPath>/trader-runner</contextPath>
-          </webAppConfig>
+          </webApp>
         </configuration>
         <executions>
           <execution>
@@ -79,7 +80,6 @@
             </goals>
             <configuration>
               <scanIntervalSeconds>0</scanIntervalSeconds>
-              <daemon>true</daemon>
             </configuration>
           </execution>
           <execution>

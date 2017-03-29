@@ -10,7 +10,7 @@ import com.thoughtworks.selenium.condition.Text;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * Abstract base class for pages that use the Selenium API. It contains common

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -179,7 +179,7 @@ public class DataFiles extends Template {
         }
 
         public String getFieldName() {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Not implemented");
         }
 
         public InputStream getInputStream() throws IOException {
@@ -191,7 +191,7 @@ public class DataFiles extends Template {
         }
 
         public OutputStream getOutputStream() throws IOException {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Not implemented");
         }
 
         public long getSize() {
@@ -199,27 +199,27 @@ public class DataFiles extends Template {
         }
 
         public String getString() {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Not implemented");
         }
 
         public String getString(String encoding) throws UnsupportedEncodingException {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Not implemented");
        }
 
         public boolean isFormField() {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Not implemented");
         }
 
         public boolean isInMemory() {
-            throw new NotImplementedException();            
+            throw new NotImplementedException("Not implemented");
         }
 
         public void setFieldName(String name) {
-            throw new NotImplementedException();           
+            throw new NotImplementedException("Not implemented");
         }
 
         public void setFormField(boolean state) {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Not implemented");
         }
 
         public void write(File file) throws Exception {
