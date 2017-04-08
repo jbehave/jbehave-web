@@ -12,7 +12,7 @@
   <properties>
     <packaging>jar</packaging>
     <wicket.version>7.6.0</wicket.version>
-    <guice.version>3.0</guice.version>
+    <guice.version>4.1.0</guice.version>
   </properties>
 
   <dependencies>
