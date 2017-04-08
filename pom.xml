@@ -27,7 +27,7 @@
     <jbehave.site.version>3.3</jbehave.site.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
     <jdk.version>1.6</jdk.version>
-    <jetty.version>9.4.2.v20170220</jetty.version>
+    <jetty.version>9.4.3.v20170317</jetty.version>
     <gmaven.version>1.5</gmaven.version>
   </properties>
 
