@@ -17,11 +17,6 @@
   <dependencies>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-api</artifactId>
-      <version>${selenium.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>${selenium.version}</version>
     </dependency>
@@ -72,13 +67,17 @@
       <version>1.4.1</version>
       <exclusions>
         <!--
-           phantomjsdriver 1.2.1 has a dep on Selenium 2.44 :-(
+           phantomjsdriver 1.4.1 has a dep on Selenium 3.1.0 :-(
            Refer:
-           http://mvnrepository.com/artifact/com.codeborne/phantomjsdriver/1.2.1
+           http://mvnrepository.com/artifact/com.codeborne/phantomjsdriver/1.4.1
         -->
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
           <artifactId>selenium-remote-driver</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.seleniumhq.selenium</groupId>
+          <artifactId>selenium-api</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.seleniumhq.selenium</groupId>
