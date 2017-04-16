@@ -179,7 +179,7 @@
               <configuration>
                 <failOnError>false</failOnError>
                 <links>
-                  <link>http://java.sun.com/j2se/1.5/docs/api</link>
+                  <link>http://docs.oracle.com/javase/6/docs/api</link>
                 </links>
               </configuration>
             </execution>
