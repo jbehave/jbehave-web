@@ -70,14 +70,14 @@ public class RunStory extends Template {
         }
     }
 
-    private void reportTo(OutputStream ouputStream) {
+    private void reportTo(final OutputStream anOuputStream) {
         final Properties outputPatterns = new Properties();
-        final Keywords keywords = embedder.configuration().keywords();
-        final boolean reportFailureTrace = false;
+        final Keywords aKeywords = embedder.configuration().keywords();
+        final boolean aReportFailureTrace = false;
         embedder.configuration().useStoryReporterBuilder(new StoryReporterBuilder() {
             @Override
             public StoryReporter build(String storyPath) {
-                return new TxtOutput(new PrintStream(outputStream), outputPatterns, keywords, reportFailureTrace);
+                return new TxtOutput(new PrintStream(anOuputStream), outputPatterns, aKeywords, aReportFailureTrace);
             }
         });
     }
@@ -90,12 +90,7 @@ public class RunStory extends Template {
             String storyPath = storyPath();
             Story story = storyManager.storyOfText(storyContext.getInput(), storyPath);
             BatchFailures failures = new BatchFailures();
-            PerformableTree.RunContext runContext = new PerformableTree.RunContext(embedder.configuration(), embedder.stepsFactory(), embedder.embedderMonitor(), embedder.metaFilter(), failures);
-            storyManager.runningStories(runContext, asList(story));
-            storyManager.waitUntilAllDoneOrFailed(runContext);
-            if (!failures.isEmpty()) {
-                storyContext.runFailedFor(failures.values().iterator().next());
-            }
+            storyManager.runStories(asList(story), embedder.metaFilter(), failures);
             storyContext.setOutput(outputStream.toString());
         }
     }
