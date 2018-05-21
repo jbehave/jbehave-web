@@ -9,7 +9,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
@@ -34,14 +33,6 @@ public class PropertyWebDriverProviderTest {
     public void shouldSupportFirefoxByProperty() {
         createProviderForProperty("firefox");
         assertThat(provider.get(), instanceOf(FirefoxDriver.class));
-    }
-
-    @Test
-    public void shouldSupportHtmlUnitByProperty() {
-        createProviderForProperty("htmlunit");
-        assertThat(provider.get(), instanceOf(HtmlUnitDriver.class));
-        HtmlUnitDriver driver = (HtmlUnitDriver)provider.get();
-        assertThat(driver.isJavascriptEnabled(), is(true));
     }
 
     @Test

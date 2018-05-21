@@ -7,7 +7,6 @@ import java.util.Locale;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
@@ -16,7 +15,6 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
  * <ul>
  * <li>"chrome": {@link ChromeDriver}</li>
  * <li>"firefox": {@link FirefoxDriver}</li>
- * <li>"htmlunit": {@link HtmlUnitDriver}</li>
  * <li>"ie": {@link InternetExplorerDriver}</li>
  * <li>"phantomjs": {@link PhantomJSDriver}</li>
  * </ul>
@@ -47,13 +45,11 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
         switch (browser) {
         case ANDROID:
             return createAndroidDriver();
-        case CHROME:
+        default:
             return createChromeDriver();
         case FIREFOX:
             return createFirefoxDriver();
         case HTMLUNIT:
-        default:
-            return createHtmlUnitDriver();
         case IE:
             return createInternetExplorerDriver();
         case PHANTOMJS:
@@ -71,13 +67,6 @@ public class PropertyWebDriverProvider extends DelegatingWebDriverProvider {
 
     protected FirefoxDriver createFirefoxDriver() {
         return new FirefoxDriver();
-    }
-
-    protected WebDriver createHtmlUnitDriver() {
-        HtmlUnitDriver driver = new HtmlUnitDriver();
-        boolean javascriptEnabled = parseBoolean(System.getProperty("webdriver.htmlunit.javascriptEnabled", "true"));
-        driver.setJavascriptEnabled(javascriptEnabled);
-        return driver;
     }
 
     protected InternetExplorerDriver createInternetExplorerDriver() {
