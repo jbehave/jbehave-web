@@ -14,6 +14,7 @@ import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +28,10 @@ import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceUser;
  */
 public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
+    /**
+     * Used to output the session id and job name to the stdout, so that a Sauce CI plugin can parse the output.
+     */
+    private static final String SAUCE_SESSION_ID = "SauceOnDemandSessionID={0} job-name={1}";
     private final WebDriverProvider webDriverProvider;
 
     private ThreadLocal<String> storyName = new ThreadLocal<String>();
@@ -57,6 +62,7 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
             // This should really be done per Story, but the webDriverProvider has not done it's thing for this thread yet :-(
             sessionIds.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
             String payload = "{\"tags\":[" + getJobTags() + "], " + getBuildId() + "\"name\":\" " + getJobName() + "\"}";
+            System.out.println(MessageFormat.format(SAUCE_SESSION_ID, new Object[]{sessionIds.get(), getJobName()}));
             postJobUpdate(storyName.get(), sessionIds.get(), payload);
         } catch (WebDriverException e) {
             if (e.getMessage().startsWith("Error communicating with the remote browser. It may have died.")) {
