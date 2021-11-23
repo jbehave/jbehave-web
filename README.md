@@ -72,7 +72,7 @@ Note:  profiles are additive and the default profile is always active.
 
 ## Related
 
-See also the [jbehave-core](jbehave-core) sister project for web extensions to JBehave, and [jbehave-tutorial](jbehave-tutorial) for a decent example of JBehave testing of a web application.
+See also the [jbehave-core](https://github.com/jbehave/jbehave-core) sister project for web extensions to JBehave, and [jbehave-tutorial](https://github.com/jbehave/jbehave-tutorial) for a decent example of JBehave testing of a web application.
 
 ## License
 
